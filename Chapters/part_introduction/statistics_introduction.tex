@@ -1,0 +1,141 @@
+\chapter{Introduction to Statistics}
+\label{chp:statistics_introduction}
+Let the observed outcome of a statistical experiment be described by the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ (see chapter \ref{chp:probaiblity_theory}), where as opposed to the case in probability theory, $\mathbb{P}$ is now unknown. A generic number of random variables are defined on the sample space viz~\cite{orbanz2009functional,tausk2023basic, drewitz2019introduction,chan2021introduction}
+\begin{equation}
+	X_i: \Omega \mapsto \Omega_{X_i},
+\end{equation} 
+where $\Omega_{X_i}$ is part of the probability space $(\Omega_{X_i},\mathcal{F}_{X_i},\mathbb{P}_{X_i})$, where
+\begin{equation}
+	\mathbb{P}_{X_i} = \mathbb{P}\circ X_i^{-1}
+\end{equation}
+is the push forward measure (see definition \ref{def:image_measure}) of $\mathbb{P}$ with respect to $X_i$. The joint probability measure can be defined viz
+\begin{equation}
+	\mathbb{P}_{X_1,\dots X_n}= \mathbb{P}\circ(X_1,\dots X_n)^{-1}.
+\end{equation}
+on the measurable space 
+\begin{equation}
+	(\Omega_{X_1} \dots\times \Omega_{X_n}, \mathcal{F}_{X_1} \dots \otimes \mathcal{F}_{X_n})
+\end{equation}
+which for brevity will be written $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. Depending on the discrete or continuous nature of the different random variables, there are discrete (PMF, see definition \ref{def:pmf}) or continuous probability distributions (PDF, see definition \ref{def:pdf}) associated to the joint probability measure. All probability distributions related to the random variables can be derived from the joint probability distribution via marginalization (see theorem \ref{theorem:law_of_total_probability}).
+
+\begin{definition}[Set of Probability Measures]
+	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. It is assumed, often based on prior information, that $\mathbb{P}_{X_1,\dots X_n}\in \mathcal{P}'\subseteq \mathcal{P}$, which is described in parametric form viz
+	\begin{equation}
+		\mathcal{P}'=\{\mathbb{P}_{X_1,\dots X_n}(w)| w \in \Omega_W\},
+	\end{equation}
+	where $\Omega_W$ is called the parameter space.
+\end{definition}
+\begin{definition}[Parameter Space]
+	\label{def:parameter_space}
+	$\mathbb{P}_{X_1,\dots X_n}(w)\in \mathcal{P}'$ is specified by parameters $w\in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}.
+\end{definition}
+
+\begin{definition}[Identifiable statistical model]
+	A statistical model is identifiable if $w\in \Omega_W \mapsto \mathbb{P}_{X_1,\dots X_n}(w)\in \mathcal{P}'$ is injective (one-to-one).
+\end{definition}
+
+The parameters $w\in \Omega_W$ can either be viewed as fixed constants or the realization of a random variable.
+\begin{axiom}[Parameter Fixedness]
+	\label{ax:parameter_fixed}
+	The parameter $w\in \Omega_W$ is treated as a fixed but unknown constant in the statistical model.
+\end{axiom}
+\begin{axiom}[Parameter as a Random Variable]
+	\label{ax:parameter_variable}
+	The parameter $w\in \Omega_W$ is treated as a realization of a random variable. In this case, the parameter space must be endowed with a $\sigma$-algebra ($\mathcal{F}_W$) and a probability measure ($\mathbb{P}_W$) that must be the result of another measure pushed forward (see definition \ref{def:image_measure}) with respect to the random variable $W$. This means
+	\begin{equation}
+		W: \Omega \mapsto \Omega_W
+	\end{equation}
+	is defined as a random variable that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to the probability space $(\Omega_W,\mathcal{F}_W,\mathbb{P}_W)$, and where
+	\begin{equation}
+		\mathbb{P}_W: \mathcal{F}_W \mapsto [0,1],
+	\end{equation}
+	is called the prior measure, which is the push forward measure of $\mathbb{P}$ with respect to $W$, i.e.
+	\begin{equation}
+		\mathbb{P}_W = \mathbb{P}\circ W^{-1}.
+	\end{equation}
+\end{axiom}
+
+For both Axiom \ref{ax:parameter_fixed} and Axiom \ref{ax:parameter_variable}, the value of a parameter is considered fixed. Axiom \ref{ax:parameter_variable} introduces a random variable $W$ not to add randomness to the parameter $w$ but to model uncertainty or variability about the fixed but unknown parameter value. Observations of the random variables $X_1,\dots X_n$ are used to a) estimate the parameters if they are fixed and b) estimate the joint probability distribution of the parameters if they are random variables. Hence, given a set of observations of the random variables $X_1,\dots X_n$ and defining an appropriate subset $\mathcal{P}'$ for the joint probability measure, probability theory can be used to answer statistical questions. This highlights the dual nature of statistics, comprised of two integral parts.
+\begin{enumerate}
+	\item The first part involves the formulation and evaluation of probabilistic models, a process situated within the realm of the philosophy of science. This phase grapples with the foundational aspects of constructing models that accurately represent the problem at hand.
+	\item The second part concerns itself with extracting answers after assuming a specific model. Here, statistics becomes a practical application of probability theory, involving not only theoretical considerations but also numerical analysis in real-world scenarios.
+\end{enumerate}
+This duality underscores the interdisciplinary nature of statistics, bridging the gap between the conceptual and the applied aspects of probability theory.  
+
+\section{Interpretation of a Probability Measure} 
+Although probability measures\index{Probability measure interpretation} are well defined (see chapter \ref{chp:probaiblity_theory}), their interpretation is not defined beyond their definition. For this reason there are two broadly accepted interpretations of probability; objective and subjective. 
+
+\begin{definition}[Objective Probability Measure]
+	\label{def:objective_probability}
+	Let $\mathbb{P}$ denote a generic probability measure defined on the generic probability space $(\Omega,\mathcal{F},\mathbb{P})$. The "objective probability measure"-interpretation define $\mathbb{P}$ as the long-run or limiting frequency of an event, $E$. That is, let $m$ be the number of occurrences of $E$, and let $n$ be the number of experiments, then~\cite{Leamer1978}
+	\begin{equation}
+		\mathbb{P}(E) \equiv \lim_{{n \to \infty}} \bigg(\frac{m}{n}\bigg)
+	\end{equation}
+	define the probability measure as the limit of a relative frequency.
+\end{definition}
+
+\begin{definition}[Sugeno Measure]
+	\label{def:sugeno_measure}
+	Let $(\Omega, \mathcal{F})$ be a measurable space (definition \ref{def:measurable_space}) and $\text{Bel}: \mathcal{F} \to [0, 1]$ a Sugeno measure iff~\cite{shafer1987}
+	\begin{enumerate}
+		\item \textbf{Non-negativity}: $\text{Bel}(\emptyset) = 0$,
+		\item \textbf{Normalization}: $\text{Bel}(\Omega) = 1$,
+		\item \textbf{Monotonicity}: For all $A, B \in \mathcal{F}$, if $A \subseteq B$, then $\text{Bel}(A) \leq \text{Bel}(B)$.
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Subjective Probability Measure]
+	\label{def:subjective_probability}
+	A subjective probability measure is a numerical representation of rational beliefs. Formally, it is a probability measure (definition \ref{def:probability}) $\mathbb{P}$ on a measurable space $(\Omega, \mathcal{F})$ that fulfills the definition of a Sugeno measure (definition \ref{def:sugeno_measure}) ~\cite{shafer1987,hoff2009first}.
+\end{definition}
+
+\begin{theorem}
+	Any probability measure $\mathbb{P}$ on $(\Omega, \mathcal{F})$ is a Sugeno measure.
+\end{theorem}
+\begin{proof}
+	Let $\mathbb{P}$ be a probability measure on $(\Omega, \mathcal{F})$. By definition, $\mathbb{P}$ satisfies:
+	\begin{enumerate}
+		\item $\mathbb{P}(\emptyset) = 0$ and $\mathbb{P}(\Omega) = 1$ (Boundary Conditions).
+		\item If $A, B \in \mathcal{F}$ and $A \subseteq B$, then $\mathbb{P}(A) \leq \mathbb{P}(B)$ (Monotonicity).
+	\end{enumerate}
+	Thus, $\mathbb{P}$ is a Sugeno measure.
+\end{proof}
+
+\begin{corollary}
+	Since a probability measure $\mathbb{P}$ satisfies the axioms of a Sugeno measure, it can be interpreted as a belief function.
+\end{corollary}
+
+
+\begin{definition}[Frequentist Statistics]
+	Frequentist statistics is a paradigm that adopts axiom \ref{ax:parameter_fixed} and the definition \ref{def:objective_probability} of probability. 
+\end{definition}
+
+\begin{definition}[Bayesian Statistics]
+	\label{def:bayesian_statistics}
+	Bayesian statistics is a paradigm that adopts axiom \ref{ax:parameter_variable} and the definition \ref{def:subjective_probability} of probability. 
+\end{definition}
+
+\begin{example}
+	\label{def:frequentist_statistics}
+	In the Frequentist approach one can say; if an experiment is repeated many times, in (e.g.) $95 \%$ of these cases the computed confidence interval will contain the true parameter value.\newline
+	In the Bayesian approach one can say; given the observed data, there is a $95 \%$ probability that the value of the true parameter lies within the Bayesian interval.\newline
+	Note how in the Frequentist approach the true parameter is fixed and the confidence interval is varying. In the Bayesian approach the interval is fixed and the true parameter is varying. 
+\end{example}
+
+\begin{example}
+	Consider a Bayesian statistical model involving both a normal distribution and a beta distribution. The parameter space $\mathbb{W}$ includes the parameters $\mu$ and $\sigma$ representing the mean and standard deviation, respectively, for the normal distribution, as well as the parameters $a$ and $b$ for the beta distribution, meaning 
+\begin{equation}
+\mathbb{W} = \{\mu, \sigma, a, b\}.
+\end{equation}
+The random variable $W: \Gamma \mapsto \mathbb{W}$ must be a vector 
+\begin{equation}
+	W = \begin{pmatrix}
+		W_\mu & W_\sigma & W_a & W_b
+		\end{pmatrix}^T,
+\end{equation}
+such that each individual parameter has an associated probability distribution.
+\end{example}
+
+\section{Relaxation of Notation}
+\label{sec:notation}
+Fortunately, a lot of the details around probability spaces and measures can be abstracted in the practical application of statistics. For this reason, in the remainder of the book, where the practical application of statistics is considered, the notation and formalization especially around probability spaces, algebras, probability measures ect. is relaxed considerably -- which is the norm, by the way. Specifically, in the rest of this book, $p$ will be used to denote anything related to probability distributions or measures and the probability for a random variable to take on a specific value , e.g. $p(X=x)$, will usually be denoted $p(x)$ for shorthand. This relaxation of notation facilitates advanced manipulation of probabilities, which would otherwise be incredibly cumbersome. It is, however, beneficial to have some background knowledge about the formal definitions, hence this introduction.

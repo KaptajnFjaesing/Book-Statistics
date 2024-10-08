@@ -1,0 +1,8 @@
+data/calendar.csv
+data/sales_train_validation.csv
+data/sample_submission.csv
+data/sell_prices.csv
+src/__pycache__/
+examples/__pycache__/
+examples/models/
+src/development/

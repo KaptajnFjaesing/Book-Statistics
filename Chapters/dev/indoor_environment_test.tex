@@ -1,0 +1,716 @@
+\documentclass[fleqn,usenatbib,nofootinbib]{revtex4-2}
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+\makeatletter
+\renewcommand{\p@subsection}{}
+\renewcommand{\p@subsubsection}{}
+\makeatother
+
+%\usepackage{newtxtext,newtxmath}
+\usepackage[T1]{fontenc}
+%\DeclareRobustCommand{\VAN}[3]{#2}
+%\let\VANthebibliography\thebibliography
+%\def\thebibliography{\DeclareRobustCommand{\VAN}[3]{##3}\VANthebibliography}
+
+%%%%% AUTHORS - PLACE YOUR OWN PACKAGES HERE %%%%%
+
+\usepackage{graphicx}	% Including figure files
+\usepackage{amsmath}	% Advanced maths commands
+\usepackage{amssymb}	% Extra maths symbols
+\usepackage[toc,page]{appendix}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+	pdftitle={Overleaf Example},
+	pdfpagemode=FullScreen,
+}
+
+\renewcommand{\arraystretch}{1.2}
+
+\begin{document}
+	\label{firstpage}
+	\title[Analysing the Impact of ACTIVE]{Analysing the Impact of VELUX Active with Netatmo on the Quality of the Indoor Environment}
+	
+	
+	
+	% The list of authors, and the short list which is used in the headers.
+	% If you need two or more lines of authors, add an extra line using \newauthor
+	\author{Jonas Petersen$^{1}$}
+	\email{jonas.petersen@velux.com}% Your name
+	\author{Morten Badensoe$^{2}$}
+	\email{morten.badenso@velux.com}% Your name
+	\author{Thorbjoern Asmussen$^{3}$}
+	\email{thorbjorn.asmussen@velux.com}% Your name
+	\affiliation{$^{1}$Smart Product Technology (SPT), VELUX A/S}
+	\affiliation{$^{2}$Smart Product Enablement (SPE), VELUX A/S}
+	\affiliation{$^{3}$Daylight Energy and Indoor Climate (DEIC), VELUX A/S}
+	
+	
+	
+	% These dates will be filled out by the publisher
+	\date{\today}
+	
+	
+	\date{\today} % Leave empty to omit a date
+	
+	\begin{abstract}
+		In this study an analysis of the impact of VELUX Active with Netatmo (ACTIVE) on the quality of the indoor environment (IE) is conducted. The impact of ACTIVE is considered for distinct geographical regions and days and hence enable a detailed analysis of how the impact changes over time and geographical regions. The main result is that ACTIVE -- for a European set of geographical regions -- has a measureable impact on the IE for $\sim 10\%$ of considered days in the period $01/02/2021$-$31/01/2022$ with the impact being positive for $ \sim 80\%$ of those days. Negative impacts tend to occur under winter conditions. 
+	\end{abstract}
+	
+	\keywords{VELUX, VELUX Active with Netatmo, Indoor Environment}
+	
+	\maketitle
+	
+	\section{Introduction}
+	\label{sec:intro}
+	The general human population spend on average around $90\%$ of their time inside buildings~\citep{Freijer2000,Yassi2001}. Considering this number, the effect of indoor air quality on human health is of great importance and concern, e.g. see~\citep{Rumchev2004,Arif2007,Qian2010,Billionnet2011,Ayoko2014}. Indoor air quality is a complex quantity defined in terms of a host of variables including carbon dioxide ($\rm CO_2$), air humidity and temperature with dependencies including i) activities of the residents~\citep{Morawska2003,Edwards2006,Eklund2008,Buonanno2009,Buonanno2012}, ii) furniture~\citep{Yrieix2010}, iii) building materials~\citep{Missia2010} and iv) season~\citep{Schlink2004}. \newline
+	Besides the influence on people's health, the indoor air quality and its control is central in relation to the global emission of carbon as $30\%- 40\%$ of worldwide energy consumption is related to buildings~~\citep{Ramesh2010}. 
+	Hence, controlling the indoor air quality in an energy efficient way can both positively influence human health but also help bring down the energy consumption and consequently the emission of carbon. With this in mind VELUX in $2018$ launched a control system of the indoor environment (IE) -- called "VELUX ACTIVE with NETATMO", or ACTIVE for short -- aimed at improving the IE, energy consumption and user experience via control of VELUX products (roof windows and associated shutters and blinds). In this study ACTIVE is taken to be comprised of three key functions
+	\begin{enumerate}
+		\item User initiated control,
+		\item Scheduled control,
+		\item Sensor based control,
+	\end{enumerate}
+	where the user initiated control is control of the windows initiated by the user, e.g. via the VELUX app, scheduled control is planned ventilation schedules defined by the user and the sensor based control is an algorithmic control based on measurements of temperature, relative humidity and carbon dioxide as well as associated user inputs. This study will investigate the impact of the current (2018-2022) version of ACTIVE (neglecting the impact of shutters and blinds) on the IE.
+	
+	\section{Defining a Good Indoor Environment}
+	\label{sec:rev}
+	In order to determine the impact of ACTIVE on the quality of the IE, it is necessary first to define what a good IE is in terms of the variables controlled by ACTIVE. To this end, the scientific litterature related to the ideal ranges of the variables controlled by ACTIVE is reviewed as well as international standards, primarily EN 16798-1~\citep{EN16798-1} (Energy performance of buildings - Ventilation for buildings - Part 1: Indoor environmental input parameters for design and assessment of energy performance of buildings addressing indoor air quality, thermal environment, lighting and acoustics). EN 16798-1 uses four design categories, I to IV. This has also been adopted by the Active House Alliance where VELUX is a founding member. The different categories are based on the expected number of dissatisfied occupants where category I is equal to $15$ percent dissatisfied, II is $20$ percent, III $30$ percent and IV is $40$ percent. In the Active House specifications categories 1 and 2 represent the expected IE in new homes, 3 in renovated homes (renovated within the last $10-15$ years) and 4 in existing non-renovated homes (built $15-20$ years ago).
+
+	
+	\subsection{Carbon Dioxide}
+	The level of carbon dioxide ($CO_2$) is considered as a main proxy related to poor air quality (popularly termed sick building syndrome (SBS)) in buildings~\citep{Bourbeau1997,Backman1999,Seppanen1999,Apte2000a,Apte2000b,Engvall2001,Daisey2003,Seppanen2004,Mendell2005,Haverinen2011,Tsai2012,Lu2015,Petersen2015} and level of ventilation. Upon reviewing $21$ studies including more than $30 000$ subjects residing in more than $400$ buildings distributed across the world, \citet{Seppanen1999} conclude that sickness related to time spent inside buildings correlate with low ventilation rates or high $CO_2$ levels. \citet{Apte2000a} investigate the correlation between the difference in $CO_2$ between outside and inside and the severity of respiratory symptoms. They find the severity of symptoms may significantly increase for a difference in $CO_2$ of $\mathcal{O}(100\text{ppm})$. \citet{Tsai2012} report an increase in eye irritation and respiratory symptoms when the level of $CO_2$ exceeds $\sim 800$ ppm. \citet{Petersen2015} analyze the effect of reducing the level of $CO_2$ in classrooms in relation to cognitive performance and conclude a reduction of $CO_2$ (from typical classroom levels) significantly impacts the cognitive performance in a positive direction. Considering the literature it is clear that controlling the level of $CO_2$ in buildings is a central parameter in ensuring a good indoor environment. Table \ref{tab:1} shows the category system defined by EN 16798-1 (Table B.12) and by Active House Alliance in the latest Specification 3.0 (AHS) which quantify levels of $CO_2$ inside a building relative to outside (typically around $\sim 400$ ppm~\citep{EN16798-1}).
+	\begin{table}[h]
+		\centering
+		\caption{$CO_2$ levels.}
+		\label{tab:1}
+		\begin{tabular}{lcc}
+			\hline
+			Category & EN 16798-1:2019 [ppm] & AHS v3.0 [ppm] \\
+			\hline
+			\hline
+			I & $550$ & 400 \\
+			II & $800$ & 550 \\
+			III & $1350$ & 800 \\
+			IV & $1350$ & 1100\\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Air Humidity}
+	The air humidity from ACTIVE is given by the relative air humidity (RH). RH for an air-water mixture is defined as the ratio of the partial pressure of water vapor in the mixture divided by the equilibrium vapor pressure at the given temperature. $\text{RH}=1$ (defined as the dew point) define the point at which the air is saturated with water vapor. The ideal range of RH is a complex issue defined by studies of human discomfort, mite conditions, fungi conditions, ... Figure \ref{fig:ster} from \citet{sterling1985} show an example of the optimum zone and how different variables depend on RH. Aside from impacting the health of the occupants, RH is also connected with the health of the building. Excess moisture levels for prolonged periods can lead to damage of the building, in particular organic material like wood.
+	\begin{figure}[h]
+		\center{
+			\includegraphics[width=0.6 \textwidth]{figs/sterling1985}
+		}
+		\caption{\label{fig:ster} The figure show the Sterling chart from \citet{sterling1985} which illustrate the optimum range of relative humidity for human health.}
+	\end{figure}
+	In dwellings, it is often impractical to control the relative humidity since the impact of ventilation (mechanical or natural) on the indoor relative humidity is highly dependent on the outdoor humidity. In winter the outdoor air has less absolute moisture content than indoors due to the lower outdoor temperature and it is often possible to maintain a low indoor relative humidity through ventilation (mechanical or natural). In summer, the indoor and outdoor temperatures are close and so are the moisture content. For this reason, the degree to which the indoor relative humidity can be controlled via ventilation is limited. In dwellings, experts do not recommend to use either humidifiers nor dehumidifiers as the risks (e.g. of Legionella) is deemed higher than the benefits. However, evaluating the relative humidity will give an indication of the state of the building and the IE. Expanding the range to $0.2\lesssim RH\lesssim 0.7$ is a more realistic level and is the recommended to use in EN 16798-1, Table B.16. However, the recommendation from the expert authors of the standard is not to use active systems to control the humidity level due to the limitations set by the outside environment. Dispite this, the humidity is included in this analysis because it is regulated by ACTIVE on terms equal to temperature and $CO_2$.
+	
+	\subsection{Temperature}
+	The ideal temperature range is connected with comfort and to a certain degree health. Because people over time adapt to the temperature of the environment~\citep{Humphreys1998}, the ideal temperature range depends on the outside temperature. however, there is no consensus regarding one single set of upper and lower temperature limits. Table \ref{tab:temperature} show the ideal temperature range as a function of the indoor temperature, $T$, and the running mean of the outdoor temprature, $T_{rm}$. The running mean is calculated as a weighted average with bigger weight the to previous day and lesser and lesser to the days before that. Typically during summer $T_{rm}\sim18-19 ^\circ \ C$, depending on location.
+		\begin{table}[H]
+		\centering
+		\caption{The ideal temperature range for adaptive thermal comfort according to Active House Specifications 3.0}
+		\label{tab:temperature}
+		\begin{tabular}{lc}
+			\hline
+			Category & Ideal temperature range \\
+			\hline
+			\hline
+			I & $21 ^\circ C <T < 0.33 \times T_{rm} + 20.8 ^\circ C$  \\
+			II & $20 ^\circ C < T < 0.33 \times T_{rm} + 21.8 ^\circ C$  \\
+			III & $19 ^\circ C < T < 0.33 \times T_{rm} + 22.8 ^\circ C$ \\
+			IV & $18 ^\circ C < T < 0.33 \times T_{rm} + 23.8 ^\circ C$ \\
+			
+			\hline
+		\end{tabular}
+	\end{table}
+	In situations where no outdoor temperature is available -- which is the case in this study -- fixed temperature ranges can -- with caution -- be used.\newline \citet{Tham2019} investigate the impacts of indoor temperature, $T$, on health established by the scientific literature. The study consider health issues related to respiratory, blood pressure, core temperature, blood glucose, mental health and cognition, heat-health symptoms, physical functioning and influenza transmission. \citet{Tham2019} note that five of the reviewed studies reported the temperatures at which health outcomes worsened, with thresholds ranging between $26^\circ \ C\lesssim T \lesssim 32 ^\circ \ C$. \newline 
+	\citet{Jevons2016} review the scientific literature from the United Kingdom and countries with a similar climate and conclude that\newline 
+	
+	\emph{Although evidence was limited, a strong argument for setting thresholds remains. The effects observed on the general population and the effects on those more vulnerable makes a case for a recommended minimum temperature for all. Health messages should be clear and simple, allowing informed choices to be made. A threshold of $18 ^\circ C$ was considered the evidence based and practical minimum temperature at which a home should be kept during winter in England.}\newline
+	
+	\citet{Goromosov1968} report an ideal temperature between $T\gtrsim15^\circ \ C$ and $T\lesssim 22^\circ \ C$~\citep{rubner1907} or $T\lesssim 25^\circ \ C$~\citep{marsak1931,slonim1952} based on the human energy expenditure being minimal in this range. This range was later revised by the World Health Organization (WHO)~\citep{world1984} to $18^\circ \ C\lesssim T\lesssim 24^\circ \ C$, however with the underlying reasons for these revisions being unclear. Regarding the temperature guidelines from WHO \citet{Kenny2018} write\newline 
+	
+	\emph{These guidelines remained in place and, to the best of our knowledge, have remained unchallenged. While the WHO guidance on thermal comfort in dwellings and the temperature range are frequently referred to and have been acknowledged as the range with which health is optimally protected, the evidence supporting this is still lacking.}\newline
+	
+	Combining all information on fixed temperature ranges, a conservative estimate of the ideal indoor temperature range in this case is $18^\circ \ C\lesssim T\lesssim 26^\circ \ C$ are ideal, with a less conservative range (with a slight risk of health issues for a maintained temperature in the extremes of the range) being $15^\circ \ C\lesssim T\lesssim 32^\circ \ C$. From an adaptive point of view, the range $20^\circ \ C\lesssim T\lesssim 28^\circ \ C$ can be argued by considering category II with $T_{rm} \sim 18.5 ^\circ C$.
+
+	\section{Data}
+	All data analyses considered in this study are made using data from CONFORMED in the ACTIVE folder in the VELUX data lake. The data contain sensor and product data from VELUX ACTIVE with NETATMO. The data is transformed to three tables
+	\begin{enumerate}
+		\item Home table: Home ID, Home Country, Home Latitude, Home Longitude, Home City, Home Street, Home Timezone, Rooms,
+		\item Measurements table: Home ID, Room ID, Device ID, Module ID, Time, Temperature, Relative Humidity, $CO_2$, runDate, Device Firmware Edition, Module Type, Module Position, Event Source, Home Country, Local Time, Day of Year, Windows Present,
+		\item Email table: Home ID, Email,
+	\end{enumerate}
+	where "Rooms" contain room specific information, runDate is the date at which the data has been processed and windows present detail whether or not windows with ACTIVE are present in the given room.
+	
+	\section{Method}
+	\label{sec:method}
+	In this study the quality of the IE will be quantified by the deviation from a set of ideal ranges. The ideal ranges are -- in accordance with the litterature reviewed in section \ref{sec:rev} -- defined viz
+	\begin{enumerate}
+		\item $CO_2\leq 950 \ ppm$,
+		\item $0.2\leq RH \leq 0.7$,
+		\item $20^\circ\ C \leq T \leq 28 ^\circ\ C$.
+	\end{enumerate}
+	The ideal IE defined by the above ranges will be referred to as $\rm IE^*$. The deviation from the above ranges is quantified\footnote{The potential terms are generated with inspiration from the connection between the potential and probability distributions known from Hamiltonian Monte Carlo; $V=-\ln(p)$ and $p=\prod_sp^{(s)}$ for $p^{(1)}\sim p^{(2)}\sim \mathcal{N}$ and $p^{(3)}\sim gamma$.} by the potential (cost function)
+	\begin{equation}
+			V \equiv \underbrace{\bigg(\frac{T-a_0}{a_1}\bigg)^2}_{\equiv \tilde{V}_1(T)}+\underbrace{\bigg(\frac{RH-a_2}{a_3}\bigg)^2}_{\equiv \tilde{V}_2(RH)}+\underbrace{\begin{cases}
+				\big(1-\frac{a_4}{2}\big)\ln(CO_{2})+\frac{a_4CO_{2}}{2a_5}+a_6 & \text{for }  CO_2 \geq 400 ppm\\
+				0 & \text{for }  CO_2 < 400 ppm
+			\end{cases}}_{\equiv \tilde{V}_3(CO_2)}
+			\label{eq:pot}
+	\end{equation}
+	where $a_{0-6}$ are parameters that are determined by requiring that i) $\tilde{V}_{k} =0$, with $k=1,2,3$, is a global minimum for an ideal value and ii) $\tilde{V}_k=1$ at a boundary value. For temperature and relative humidity, the ideal values are taken to be the central values of the ideal ranges whereas for $CO_2$ it is taken to be $400$ ppm, corresponding to the approximate value of outside. The boundary values define the boundary to the ideal ranges. The two criteria ensure the relative normalization between the potential terms. Let $x_1^{(ideal)} \equiv 24^\circ \ C \, \wedge \, x_1^{(bou)} \equiv  20^\circ \ C $, $x_2^{(ideal)} \equiv 0.45 \, \wedge \, x_2^{(bou)} \equiv  0.2$, $x_3^{(ideal)} \equiv 400 ppm \, \wedge \, x_3^{(bou)} \equiv  950 ppm$, then criteria i) and ii) can be formulated mathematically as	
+	\begin{enumerate}
+		\item $\tilde{V}_k(x_k^{(ideal)}) = 0$ for $k=1,2,3$,
+		\item $\frac{d \tilde{V}_{k}(x)}{dx}\big|_{x= x_k^{(ideal)}} = 0 \, \wedge \, \frac{d^2 \tilde{V}_{k}(x)}{dx^2}\big|_{x=x_k^{(ideal)}} > 0 $ for $k=1,2,3$,
+		\item $\tilde{V}_k(x_k^{(bou)}) = 1$ for $k=1,2,3$.
+	\end{enumerate}
+	Imposing criteria $1-3$ yield
+	\begin{equation}
+		\begin{split}
+			a_0 &= x_1^{(ideal)},\\
+			a_1 &=|x_1^{(ideal)}-x_1^{(bou)}|,\\
+			a_2 &=x_2^{(ideal)},\\
+			a_3 &=|x_2^{(ideal)}-x_2^{(bou)}|,\\
+			a_4 &=2\bigg[\bigg(\ln\bigg(\frac{x_3^{(ideal)}}{x_3^{(bou)}}\bigg)+\frac{x_3^{(bou)}}{x_3^{(ideal)}}-1\bigg)^{-1}+1\bigg],\\
+			a_5 &=\frac{a_4x_3^{(ideal)}}{a_4-2},\\
+			a_6 &=-\big(1-\frac{a_4}{2}\big)\ln(x_3^{(ideal)})-\frac{a_4x_3^{(ideal)}}{2a_5},\\
+		\end{split}
+	\end{equation}
+	Figure \ref{fig:s1} show the penalty of each potential term for common input values.
+	\begin{figure}[h]
+		\center{
+			\includegraphics[width=1\textwidth]{figs/potential_terms}
+		}
+		\caption{\label{fig:s1} The contribution of the penalty terms as function of their respective inputs.}
+	\end{figure}
+	Intuitively, it is clear that the IE can be quantified by integrating $V$ over time and summing over all rooms. Doing this for rooms with (set $g_1$) and without (set $g_2$) ACTIVE will enable an analysis of the impact of ACTIVE. Two factors go into determining the sets $g_1$ and $g_2$; i) whether or not a window is registered to a room and ii) if the window has been opened at any time. i) can be checked directly from the data whereas ii) can be determined by considering the number of window events with a current position above $0$ for the $j$'th room, $\psi_{j}$. If no windows are registered to a room or windows are registered but $\psi_{j}=0$, the room will be assigned to the set $g_2$. Otherwise the room will be assigned to the set $g_1$. In order for the criterion $\psi_{j}=0$ to be representative, data from more than $7$ days are required. \newline
+	Given the notation defined above, the IE can be quantified by summing $V$ for all time ($t$) and rooms (subscript $j$) for each of the sets $g_s$. That is
+	\begin{equation}
+		\text{\rm quality of the IE for $g_s$} \sim \sum_{j\in g_s}\int_{t_j^{(1)}}^{t_j^{(2)}}V_{j}(t)dt,
+		\label{eq:ie0}
+	\end{equation}
+	where $t_j^{(1,2)}$ denote the initial and final time of measurement for the $j$'th room. There may be a difference in both measurement time and the number of rooms, so a better quantification of the IE would be 
+	\begin{equation}
+		\text{\rm quality of the IE for $g_s$} \sim \frac{1}{n_{g_s}}\sum_{j\in g_s}\frac{\int_{t_j^{(1)}}^{t_j^{(2)}}V_{j}(t)dt}{\int_{t_j^{(1)}}^{t_j^{(2)}}dt}.
+		\label{eq:ie1}
+	\end{equation}
+	Large gaps in data would significantly distort both equation \eqref{eq:ie1} and $\psi$. For this reason, data from a room is discarded if there are time gaps larger than half an hour or there is data from less than half the considered time interval (there should be 5 minutes between measurements with no breaks). On the time scale of a year, almost all rooms will have large time gaps at some point, so imposing the above criteria will result in no data. To work around this issue, the analysis is done over a time period of one day and repeated for all days. Most rooms do not have major time gaps every day, so in this way most of the data can be retained whilst retaining the data quality. Denoting the day by the subscript $n$, equation \eqref{eq:ie1} can then be updated viz
+	\begin{equation}
+		\text{\rm quality of the IE for $g_{n,s}$} \sim \frac{1}{n_{g_{n,s}}}\sum_{j\in g_{n,s}}\frac{\int_{t_{n,j}^{(1)}}^{t_{n,j}^{(2)}}V_{j}(t)dt}{\int_{t_{n,j}^{(1)}}^{t_{n,j}^{(2)}}dt}.
+		\label{eq:ie2}
+	\end{equation}
+	As will be shown in section \ref{sec:analysis} the outside environment has a significant impact on the IE. This means equation \eqref{eq:ie2} has a significant dependence on the geographical region of the rooms. A disproportionate number of rooms from a given geographical region in either of the sets $g_{n,s}$ would result in a bias of equation \eqref{eq:ie2}. This bias can be counteracted by by comparing only rooms in a limited geographical region with comparable climate. In this study countries with an approximately uniform climate will be used as geographical regions. Adding a country index, $c$, to the sets then yield
+	\begin{equation}
+		\text{\rm quality of the IE for $g_{c,n,s}$} \sim \frac{1}{n_{g_{c,n,s}}}\sum_{j\in g_{c,n,s}}\kappa_{n,j}
+		\label{eq:ie3}
+	\end{equation}
+	with
+	\begin{equation}
+		\kappa_{n,j}\equiv \frac{\int_{t_{n,j}^{(1)}}^{t_{n,j}^{(2)}}V_{j}(t)dt}{\int_{t_{n,j}^{(1)}}^{t_{n,j}^{(2)}}dt}.
+		\label{eq:kappa}
+	\end{equation}
+	$\Upsilon_{c,n,1} \equiv  \{\kappa_{n,j}\}_{j\in g_{c,n,s=1}}$ and $\Upsilon_{c,n,2} \equiv \{\kappa_{n,j}\}_{j\in g_{c,n,s=2}}$ for each day make up distinct gamma distributions (see appendix \ref{app:gamma}) if ACTIVE has a measureable impact on the IE. Hence, equation \eqref{eq:ie3} actually propose comparing these distributions by collapsing them to their respective arithmetic means and comparing these. In the process of collapsing the distributions to their respective arithmetic means a lot of information is lost and subsequent analyses suffer as a consequence. A better approach is to compare the entire distributions. This line of thought leads to the analysis of the Bayes factor (BF) conducted in section \ref{sec:approach}. It also invites a deeper discussion around the distribution(s) of $\kappa$; as touched upon, $\kappa$ in general depend on a host of systematic effects including the room, inhabitants, geography and time. In order to be exact, $\kappa$ for each day for each room should be considered as a sample of $1$ from a unique distribution. From this approach it is however not possible to extract any information (due to the sample size of $1$). Instead, $\kappa$ from a (small) geographical region and a given day is approximated to follow the same distribution. Under this approximation the distribution of $\kappa$ will be dynamic as samples from new rooms are added but, under the assumptions that i) subsets of rooms can be approximated to be sampled from the same distribution and ii) the number of these subsets is finite ($n_{subsets}<\infty$), the distribution will settle for a sample size $n_{sample}\gg n_{subsets}$. For each subset $\sim100$ data points are needed in order to reliably detect moderate differences between distributions~\citep{kelter2020}. Hence, in general
+	\begin{equation}
+		n_{sample}\gg  100n_{subsets}
+		\label{eq:crit}
+	\end{equation}
+	in order to detect moderate (and larger) differences between distributions. The magnitude of the differences between the distributions depend on i) how much information $\kappa$ contain and ii) if there is a fundamental difference between the distributions. $\kappa$ has purposefully been defined (equation \eqref{eq:kappa}) to maximize the information in an (approximately) unbiased way and consequently the potential to differentiate between the distributions. For this reason, the difference between distributions is expected to be at least moderate and consequently a more relaxed criterion of $n_{samples}>100$ is imposed. The analysis of differences in the distributions of $\kappa$ in section \ref{sec:analysis} detail that this sample size is sufficient to detect (at least) large differences. 
+	
+	\subsection{Approach}
+	\label{sec:approach}
+	The approach of this study will be to test -- for each considered day (subscript $n$) in the period $01/02/2021$-$31/01/2022$ and for each geographical region (country subscript $c$) -- whether $\Upsilon_{c,n,s}$ (for $s=1,2$) are samples from the same distribution (hypothesis A) or not (hypothesis B), corresponding to ACTIVE having a measureable impact on the IE (hypothesis B) or not (hypothesis A). The impact of ACTIVE on the IE can then tested by considering the BF as a function of $n$ and $c$. The BF is the ratio between the probabilities of the two hypotheses being true~\citep{Sivia2006,murphy2013}. Defining  $\Upsilon_{c,n,0}\equiv \Upsilon_{c,n,1}\cup \Upsilon_{c,n,2}$, the BF can be written	
+	\begin{equation}
+		\begin{split}
+			\rm BF_{c,n} &\equiv \frac{p(A|\Upsilon_{c,n,0},I)}{p(B|\Upsilon_{c,n,0},I)}\\
+			&= \frac{p(\Upsilon_{c,n,0}|A,I)}{p(\Upsilon_{c,n,0}|B,I)}\frac{p(A|I)}{p(B|I)},
+		\end{split}
+	\end{equation}
+	where Bayes theorem has been used for the second equality and the normalization $p(\Upsilon_{c,n,0}|I)$ cancels out between the denominator and nominator. All probabilities are conditional on the background information, I, because there is no such thing as an absolute probability~\citep{Sivia2006}. Assuming there is no bias towards any hypothesis $\frac{p(A|I)}{p(B|I)}=1$ and so
+	\begin{equation}
+		\begin{split}
+			\rm BF_{c,n} &= \frac{p(\Upsilon_{c,n,0}|A,I)}{\prod_{s=1,2}p(\Upsilon_{c,n,s}|B,I)}\\
+			&=\frac{\int p(\Upsilon_{c,n,0}|A,\theta,I) p(\theta|A,I) d\theta}{\prod_{s=1,2}\int p(\Upsilon_{c,n,s}|B,\theta_s,I) p(\theta_s|B,I)d\theta_s}
+		\end{split},
+		\label{eq:prob}
+	\end{equation}
+	where it has been used that according to hypothesis $B$, $p(\Upsilon_{c,n,0}|B,I) =p(\Upsilon_{c,n,1}|B,I)p(\Upsilon_{c,n,2}|B,I)$. The only difference between the three integrals in equation \eqref{eq:prob} is the data and coefficients used. For this reason the remainder of this section will focus on the integral in the nominator
+	\begin{equation}
+		\begin{split}
+			p(\Upsilon_{c,n,0}|A,I) = \int p(\Upsilon_{c,n,0}|A,\theta,I)p(\theta|A,I)d\theta
+		\end{split}
+	\end{equation}
+	and the generalization to the denominator should be straightforward. A prerequisite for evaluating the integral is assigning probabilities $p(\Upsilon_{c,n,0}|A,\theta,I)$ and $p(\theta|A,I)$. $p(\theta|A,I)$ represents the prior belief about the parameters $\theta$ whereas $p(\Upsilon_{c,n,0}|A,\theta,I)$ has to capture the nature of the data given the hypothesis, parameters and background information. Appendix \ref{app:maxent} show how the Gamma distribution can be derived for the latter from the principle of maximum entropy, meaning
+	\begin{equation}
+		p(\Upsilon_{c,n,0}|A,\theta,I) = \prod_{j\in g_{c,n,0}}\frac{(\frac{a}{2b})^{\frac{a}{2}}}{\Gamma\big(\frac{a}{2}\big)}\kappa_j^{\frac{a}{2}-1}e^{-\frac{a\kappa_j}{2b}}
+		\label{eq:p2}
+	\end{equation}
+	where $\theta =\{a,b\}$ and $\Gamma$ denotes the gamma function. Assuming a uniform prior on the parameters of the beta distribution ($a,b$)
+	\begin{equation}
+		p(\theta|A,I) = \frac{1}{(a_{max}-a_{min})(b_{max}-b_{min})}.
+		\label{prior2}
+	\end{equation}
+	Given equations \eqref{eq:p2} and \eqref{prior2} $p(\Upsilon_{c,n,0}|A,I)$ can be evaluated numerically e.g. via importance sampling or Nested sampling (see appendix \ref{app:NS}). Because the prior distribution is much wider than the likelihood distribution, importance sampling provides an uncertainty plauged estimate of the BF. For this reason Nested sampling will be used in this study. Considering the number of calculations of the BF required, the "nestle" Python package is used with (some of) the results being checked by a self-developed (less efficient) algorithm.
+	
+	\section{Results and Data Analysis}
+	\label{sec:analysis}
+	In order to gauge the order of magnitude effect of the time and geographical dependence of $\kappa$ a best estimate of the expected value, $b$ (see appendix \ref{app:gamma}), is expedient to consider. The best estimate of $\kappa$ will collapse the distribution to a single point and thus contain less information, however, for the purpose of loosely analysing order of magnitude effects it is both sufficient and adaquate. The best estimate of $b$ is defined by the most probable value, meaning
+	\begin{equation}
+		\begin{split}
+			b_{c,n,s}^* &= \arg\max_b(p(b|\Upsilon_{c,n,s},B,I))\\
+			&= \arg\max_b(\ln(p(b|\Upsilon_{c,n,s},B,I))),
+		\end{split}
+	\end{equation}
+	with
+	\begin{equation}
+		\begin{split}
+			p(b|\Upsilon_{c,n,s},B,I)&=\int_0^\infty \frac{p(\Upsilon_{c,n,s}|B,a,b,I)p(a,b|B,I)}{p(\Upsilon_{c,n,s}|B,I)}da\\
+			&\approx \frac{p(\Upsilon_{c,n,s}|B,a_0,b,I)p(a_0,b|B,I)}{p(\Upsilon_{c,n,s}|B,I)}\\
+		\end{split}
+	\end{equation} 
+	and $a_0$ defined as the value of $a$ corresponding to the maximum of the integral (corresponding to inserting $\delta(a-a_0)$ in the integral). Taking the prior $p(a_0,b|B,I)$ to be uniform yield
+	\begin{equation}
+		\begin{split}
+			b_{c,n,s}^* &\approx \arg\max_b(\ln(p(\Upsilon_{c,n,s}|B,a_0,b,I)))\\
+			&= \frac{\sum_{j\in g_{c,n,s}}\kappa_{n,j}}{\sum_{q\in g_{c,n,s}}},
+		\end{split}
+	\end{equation}
+	which is the arithmetic mean, also equal to the maximum likelihood estimate of $b$. For the second equality equation \eqref{eq:p2} with $a=a_0$ has been used. The value of $\kappa$ is approximated -- using the trapezoidal rule -- viz
+	\begin{equation}
+		\begin{split}
+			\kappa_{n,j}\simeq \frac{\sum_{i\in \tilde{g}_{c,n,s,j}}(V_{j}(t_i)+V_{j}(t_{i-1}))\Delta t_{i}}{2\sum_{l\in\tilde{g}_{c,n,s,j}}\Delta t_{l}},
+		\end{split}
+		\label{eq:kappa2}
+	\end{equation}
+	where $\tilde{g}_{c,n,0,j}$ denote the set of time measurements for the $j$'th room for the $n$'th day for the $c$'th country for the $s$'th set and $\Delta t_{i}\equiv t_{i}-t_{i-1}$.	In keeping with the discussion around sample size in section \ref{sec:method} more than $100$ data points is required for each day. Additionally, more than $80\%$ of days are required in order to have time series of comparable length. This yield a set of $11$ countries of which USA and China are discarded because their massive geographical size break the assumption that countries have a uniform climate. Figures \ref{fig:a0} -\ref{fig:a9} (top right and bottom right) in appendix \ref{app:figs} show the arithmetic mean of $\kappa$ as a function of time in the period $01/02/2021$-$31/01/2022$ for the $9$ remaining countries. The figures also detail how the different variables and boundaries of $\rm IE^*$ contribute to $\kappa$. From the figures a strong seasonal dependence as well as interesting geographical differences and correlations can be observed by eye. Table \ref{tab:results2} detail the components dominating $\kappa$ for the different countries and European seasons. From the table it is clear that in general low temperature ($T< 20^\circ \ C$ denoted by $T_l$ in table \ref{tab:results2}) and high $CO_2$ (denoted by $C$ in table \ref{tab:results2}) dominate the IE.
+	
+	\begin{table}[H]
+		\centering
+		\caption{The table shows a loose estimate (made by examining figures \ref{fig:a0}-\ref{fig:a9} in appendix \ref{app:figs} by eye) of what dominates the IE for the European seasons. The seasons are defined with spring: $60-157$ DOY, summer: $158-243$ DOY, autumn: $244-334$ DOY and winter: $235-59$ DOY. $\rm C$ means $CO_2$ is dominant, $\rm H_{l}$ means low humidity is dominant, $\rm H_{h}$ means high humidity is dominant, $\rm T_{l}$ means low temperature is dominant and $\rm T_{h}$ means high temperature is dominant.}
+		\label{tab:results2}
+		\begin{tabular}{l l l l l }
+			\hline
+			Country & Winter & Spring  & Summer  & Autumn    \\
+			\hline
+			DEU & $\rm T_{l}$, $\rm C$ & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm T_{h}$, $\rm H_h$ & $\rm C$, $\rm T_l$  \\
+			FRA & $\rm T_{l}$ 		   & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm H_h$ 				& $\rm C$, $\rm T_l$, $\rm H_h$   \\
+			DNK & $\rm T_{l}$, $\rm C$ & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm T_{h}$, $\rm H_h$ & $\rm C$   \\
+			BEL & $\rm T_{l}$		   & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm T_{h}$, $\rm H_h$ & $\rm C$, $\rm T_l$, $\rm H_h$  \\
+			GBR & $\rm T_{l}$          & $\rm T_{l}$          & $\rm C$, $\rm T_{h}$, $\rm H_h$, $\rm T_{l}$  & $\rm C$, $\rm T_l$, $\rm H_h$   \\
+			AUT & $\rm T_{l}$, $\rm C$ & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm T_{h}$, $\rm H_h$ & $\rm C$   \\
+			ITA & $\rm T_{l}$, $\rm C$ & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm T_{h}$ 	        & $\rm C$ \\
+			NLD & $\rm T_{l}$          & $\rm T_{l}$ 		  & $\rm C$, $\rm T_{h}$, $\rm H_h$, $\rm T_{l}$    & $\rm T_l$, $\rm H_h$   \\
+			POL & $\rm T_{l}$, $\rm C$ & $\rm T_{l}$, $\rm C$ & $\rm C$, $\rm T_{h}$, $\rm H_h$ &  $\rm C$   \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	Figures \ref{fig:a0} - \ref{fig:a9} (top left) in appendix \ref{app:figs} show the BF as a function of time and geographical region, using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of $\ln(BF)$ with the black band denoting the uncertainty (from the Nested sampling algorithm). The shaded regions explain how the value of $\ln(BF)$ should be interpreted (see the legend). The region of undecisive evidence is defined between~\citep{Jeffreys61} $\frac{1}{3}\leq BF \leq 3$, meaning there is strong support for either hypothesis if the given hypothesis is more than $3$ times likelier than the opposing hypothesis. For each geographical region (country) the impact factor, $I^{BF}_{c}$, of the BF is defined as the fraction of days where ACTIVE has a measureable impact (positive or negative) on the IE.	The BF, and consequently the impact factor, do not contain information about how ACTIVE impact the IE (positive or negative). This information is contained in the distributions of $\kappa$ for the particular days. Therefore, the nature and magnitude of the impact of ACTIVE can be gauged by considering
+	\begin{equation}
+		\zeta_{c,n} = b_{c,n,s=2}^*-b_{c,n,s=1}^*,
+	\end{equation}
+	A positive/negative value of $\zeta_{c,n}$ correspond to a positive/negative impact of ACTIVE on the particular day for the particular country. By analysing $\zeta$ for days where $\ln(\rm BF_{c,n})+\delta\ln(\rm BF_{c,n})<\ln(3^{-1})$ it can be determined whether the impact of ACTIVE is positive or negative. The green/red dots in figures \ref{fig:a0} - \ref{fig:a9} (top right) in appendix \ref{app:figs} denote the days where ACTIVE has a positive/negative impact. The positive/negative impact factors, $I^{BF,+}_c/I^{BF,-}_{c}$, are defined by a positive/negative value of $\zeta_{c,n}$ for days where ACTIVE has an impact. The positive/negative impact factors are in turn used to define the impact difference viz
+	\begin{equation}
+		\Delta I^{BF}_c\equiv I^{BF}_c(I^{BF,+}_c-I^{BF,+}_c).
+	\end{equation}
+	$\Delta I^{BF}_{c}\in (-1,1)$ denote the difference in days with positive and negative impact relative to the number of days considered. $\Delta I^{BF}_{c}=1$ correspond to ACTIVE having a measureable, positive impact on the IE every day of the considered time period and so it should be the goal of VELUX to maxize $\Delta I^{BF}_{c}$. Table \ref{tab:results0} shows the rounded mean number of rooms with ACTIVE ($[\langle n_1\rangle]$) and without ACTIVE ($[\langle n_2\rangle]$) alongside the different impact factors and $\max(\{|\zeta_{c,n}|\}_n)$ for the considered set of countries. $\max(\{|\zeta_{c,n}|\}_n)$ describe the maximum difference in distribution ($\kappa$) means over the entire period, and thus provide an order of magnitude estimate of the maximum effect of ACTIVE in terms of difference in $\kappa$. The maximum value of $\zeta$ come from Great Britain on ($04/12/20221$) where ACTIVE has a positive impact. Figure \ref{fig:g0} show the distributions of $\kappa$ for this day and country (recall that a low value of $\kappa$ is favorable). From the figure it is clear that the difference is primarily sourced by a difference in the right tails of the distributions. This means that although there are days where ACTIVE has a statistically highly significant impact (e.g. see figures \ref{fig:a0}-\ref{fig:a9} (top left) in appendix \ref{app:figs}), that impact is limited to relatively small differences in the tails of the distributions. In appendix \ref{app:sanity} a sanity check related to distribution differences is performed. In this sanity check the details and influence of the tails is further discussed. 
+	\begin{figure}[h]
+		\center{
+			\includegraphics[width=0.6\textwidth]{figs/dist_diff}
+		}
+		\caption{\label{fig:g0} The distributions of $\kappa$ for Great Britain on $04/12/20221$.}
+	\end{figure}	
+	Table \ref{tab:results0} reveals that ACTIVE -- for all $9$ countries considered -- has a measureable impact on the IE for $13\%$ of the considered days, with a positive impact for $83\%$ of those days. In relation to the impact factors, it is worth noting the curious cases of GBR and ITA; both have a significant positive impacts with no negative impact days. Comparing figures \ref{fig:a5} and \ref{fig:a7} (top left) and (bottom left), it is also clear that these countries are unique in having extraordinarily large tail differences. This could indicate that there are systematic effects that significantly impact the groups of rooms with and without ACTIVE for GBR and ITA -- perhaps the assumption of a uniform climate is poor for these countries. The countries of Denmark (DNK), Belgium (BEL), Austria (AUT) and Netherlands (NLD) are the ones with the most uniform climate included in the analysis.
+	\begin{table}[H]
+		\centering
+		\caption{The table show the rounded mean number of rooms with ACTIVE ($[\langle n_1\rangle]$) and without ACTIVE ($[\langle n_2\rangle]$) alongside the different impact factors for the considered set of countries.}
+		\label{tab:results0}
+		\begin{tabular}{l r r r r r r r}
+			\hline
+			Country  &$[\langle n_1\rangle]$ & $[\langle n_2\rangle]$ & $I^{BF}$ & $I^{BF,+}$ & $I^{BF,-}$ & $\Delta I^{BF}$ & $\max(\{|\zeta|\})$\\
+			\hline
+			\hline
+			DEU &                    $5067$ &                    $2275$ &   $\frac{24}{363}$ &     $\frac{8}{24}$ &  $\frac{16}{24}$ &          $-0.02$ &                $0.17$ \\
+			FRA &                    $2055$ &                     $978$ &   $\frac{32}{363}$ &     $\frac{6}{32}$ &   $\frac{26}{32}$ &          $-0.06$ &                $0.37$ \\
+			DNK &                    $2450$ &                     $129$ &    $\frac{5}{323}$ &      $\frac{0}{5}$ &    $\frac{5}{5}$ &          $-0.02$ &                $0.24$ \\
+			BEL &                     $627$ &                     $219$ &   $\frac{13}{359}$ &    $\frac{12}{13}$ &   $\frac{1}{13}$ &           $0.03$ &                $0.29$ \\
+			GBR &                    $3458$ &                     $215$ &  $\frac{188}{355}$ &  $\frac{188}{188}$ &  $\frac{0}{188}$ &            $0.53$ &                $1.08$ \\
+			AUT &                    $1042$ &                     $213$ &   $\frac{25}{357}$ &    $\frac{22}{25}$ &   $\frac{3}{25}$ &           $0.05$ &                $0.33$ \\
+			ITA &                    $1923$ &                     $156$ &   $\frac{72}{346}$ &    $\frac{72}{72}$ &   $\frac{0}{72}$ &           $0.21$ &                $0.94$ \\
+			NLD &                     $920$ &                     $190$ &    $\frac{25}{352}$ &      $\frac{22}{25}$ &    $\frac{3}{25}$ &           $0.05$ &               $ 0.75$ \\
+			POL &                     $163$ &                     $116$ &   $\frac{17}{333}$ &     $\frac{2}{17}$ &  $\frac{15}{17}$ &          $-0.04$ &                $0.99$ \\
+			\hline
+			\hline
+		\end{tabular}
+	\end{table}
+	Considering this group only, ACTIVE has a measureable impact on the IE for $5\%$ of the considered days, with a positive impact for $82\%$ of those days. Compared to the complete analysis, the percentage of days where ACTIVE has an impact is notably lower, however, this is within variations expected from averaging over different countries with different climate conditions. Hence, the results can be recapped as follows; ACTIVE -- for all $9$ countries considered -- has a measureable impact on the IE for $\sim 10\%$ of the considered days, with a positive impact for $\sim 80\%$ of those days.\newline
+	Correlations between positive/negative impact days and which boundary of $\rm IE^*$ dominate the value of $\kappa$ provide insight into general tendencies of ACTIVE. Figure \ref{fig:ten} shows the distribution of positive/negative impact for the different boundaries of $\rm IE^*$ for each day ACTIVE has an impact. From the figures it is clear that there is a tendency of ACTIVE to have a negative impact under winter conditions (low relative humidity and an intermediate $CO_2$ level).
+
+	\section{Summary and Discussion}
+	In this study an analysis of the impact of VELUX Active with Netatmo (ACTIVE) on the indoor environment (IE) has been conducted. For this study ACTIVE is taken to be comprised of three key functions 1) user initiated control, 2) scheduled control and 3) sensor based control (see section \ref{sec:intro}). Shutters and blinds have not been included in the analysis. The IE for a given country, room and day is quantified by the measure $\kappa$ (see section \ref{sec:method}) that capture the deviation from the ideal IE, defined by the litterature reviewed in section \ref{sec:rev}. A room is classified as "without ACTIVE" if i) no windows are registered to the room or ii) there are no events registered for any window at any day for the room. Otherwise the room is classified as "with ACTIVE". The analysis presented in section \ref{sec:analysis} consider the differences between the distributions of $\kappa$ for rooms with and without ACTIVE for each day. The main result of the analysis is captured by figures \ref{fig:a0} - \ref{fig:a9} (top left) in appendix \ref{app:figs} which show whether the distributions of $\kappa$ are statistically different for each day and country (see also table \ref{tab:results0} that sum up the figure content). ACTIVE has a measureable impact on the IE for $\sim 10\%$ of the considered days, with a positive impact for $\sim 80\%$ of those days (see section \ref{sec:analysis}). Negative impacts tend to happen under winter conditions (see figure \ref{fig:ten} in appendix \ref{app:figs}). 
+	\begin{figure}[h]
+		\center{
+			\includegraphics[width=0.8\textwidth]{figs/ACTIVE_algo_run_time}
+			\includegraphics[width=0.8\textwidth]{figs/ACTIVE_waiting_time}
+		}
+		\caption{\label{fig:g1} (top) the density of events as a function of the run time of the sensor based control of ACTIVE. (bottom) The density of events as a function of waiting time for the sensor based control of ACTIVE.}
+	\end{figure}
+	The amount of days ACTIVE has a measureable impact can be increased by increasing the freedom of the sensor based control. When the current sensor based control algorithm detects measurements outside the user specified levels, the window(s) in the particular rooms have a strong tendency to be kept open for either $10$ minutes or $15$ minutes as can be seen in figure \ref{fig:g1} (top). The control of the windows closing is governed by the trigger described in section 2.8.4 of Netatmos documentation of the sensor based control algorithm~\cite{active_doc}, and by having a minimum time of $10$ minutes between an algorithmic opening and having the window(s) closed as seen in section 4 of \cite{active_doc}. When windows are triggered to close after having been opened due to an algorithm, a ‘waiting time’ is started. This waiting time controls when the sensor based control may open the windows again due to the sensor measurements. The default value for waiting time is $2$ hours, with the options of having $1$ or $3$ hours. 
+	The consequence of this can be seen in the figure \ref{fig:g1} (bottom), where time between a windows closing event and a subsequent sensor based control algorithm event has been plotted. It is clearly seen that the waiting times gather around $1$ and $2$ hours, which means that the thresholds for when the measurements are outside the comfort levels have been reached earlier than the set waiting times of $1$, $2$ or $3$ hours. In layman's terms; the sensor based control algorithm would like to open the windows more frequently, but this is prohibited due to the waiting time. Hence, there is a potential to increase the impact of the sensor based control on the IE if the waiting time is removed. However, with increased freedom comes increased requirements on the sensibility of the control. This motivates working towards an intelligent (the current control is a set of if-sentences) sensor based control. 
+	\newpage
+	
+
+	\begin{appendices}
+		
+		\section{The Principle of Maximum Entropy}
+		\label{app:maxent}
+		The principle of maximum entropy considers the issue of assigning a probaility distribution to a variable. The principle propose that the probability distribution, $p$, which best represents the current state of knowledge about a system is the one with largest constrained entropy~\citep{Sivia2006}, defined by the Lagrangian
+		\begin{equation}
+			L = \int\bigg[\underbrace{-p\ln\bigg(\frac{p}{m}\bigg)-\lambda_0 p-\sum_{j=1}^{n}\lambda_jC_j}_{\equiv F}\bigg]dx  ,
+			\label{eq:Q}
+		\end{equation}
+		where $m$ -- called the Lebesgue measure -- ensures the entropy $-p\ln\big(\frac{p}{m}\big)$ is invariant under a change of variables and $C_j$ represent the constraints beoynd normalization. The constraints beyond normality depend on the background information related to the independent variable, $x$. In variational calculus the Lagrangian is optimized via solving the Euler-Lagrange equation
+		\begin{equation}
+			\frac{\partial F}{\partial p}-\frac{d}{dx}\frac{\partial F}{\partial p'}=0,
+		\end{equation}
+		where $\frac{\partial p}{\partial x} = p'$ for shorthand. Since $p'\notin F$, the Euler-Lagrange equation simplify to
+		\begin{equation}
+			\frac{\partial F}{\partial p}=0.
+		\end{equation}
+		
+		\subsection{Gamma Distribution}
+		\label{app:gamma}
+		Consider a generic positive definite ($x\in [0,\infty]$) variable, $x$, specified by the expectation value $b$. In this case $F$ can be written
+		\begin{equation}
+			F = -p\ln\bigg(\frac{p}{m}\bigg)-\lambda_0p-\lambda_1p\ln(x)-\lambda_2px
+		\end{equation}
+		with the derivative
+		\begin{equation}
+			\begin{split}
+				\frac{\partial F}{\partial p} &= -1-\ln\bigg(\frac{p}{m}\bigg)-\lambda_0-\lambda_1\ln(x)-\lambda_2x\\
+				&=0,
+			\end{split}
+		\end{equation}
+		meaning
+		\begin{equation}
+			p=me^{-1-\lambda_0-\lambda_1\ln(x)-\lambda_2x}.
+		\end{equation}
+		Taking a uniform measure ($m= const$) and imposing the normalization constraint
+		\begin{equation}
+			\begin{split}
+				\int p dx &= me^{-1-\lambda_0}\int x^{-\lambda_1}e^{-\lambda_2x}dx\\
+				&= me^{-1-\lambda_0}\lambda_2^{\lambda_1-1}\Gamma(1-\lambda_1)\\
+				&=1,
+			\end{split}
+		\end{equation}
+		yield
+		\begin{equation}
+			p=\frac{\lambda_2^{\frac{a}{2}}}{\Gamma\big(\frac{a}{2}\big)}x^{\frac{a}{2}-1}e^{-\lambda_2x},
+		\end{equation}
+		where $\frac{a}{2} \equiv 1-\lambda_1$. $\lambda_2$ can be determined by considering the expectation value
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}[p]&=\int_{0}^{\infty}p xdx\\
+				&=\int_{0}^{\infty}\frac{\lambda_2^{\frac{a}{2}}}{\Gamma\big(\frac{a}{2}\big)}x^{\frac{a}{2}-1}e^{-\lambda_2x} xdx\\
+				&=\frac{\lambda_2^{\frac{a}{2}-2}}{\lambda_2^{\frac{a}{2}-1}}\frac{\Gamma(1+\frac{a}{2})}{\Gamma(\frac{a}{2})}\\
+				&=\frac{a}{2\lambda_2}\\
+				&\equiv b,
+			\end{split}
+		\end{equation}
+		where $\Gamma(1+\frac{a}{2})=\frac{a}{2}\Gamma(\frac{a}{2})$ has been used. Collecting the results yield the Gamma distribution
+		\begin{equation}
+			p = \frac{(\frac{a}{2b})^{\frac{a}{2}}}{\Gamma\big(\frac{a}{2}\big)}x^{\frac{a}{2}-1}e^{-\frac{ax}{2b}}.
+		\end{equation}
+		
+		
+		\section{Nested Sampling}
+		\label{app:NS}
+		A major challenge in estimating the evidence via conventional Monte Carlo Methods is that generally the prior is a very broad and regular distribution whereas the likelihood is a very narrow and irregular distribution. This poses a challenge when the evidence is estimated conventionally, i.e. as the mean of the likelihood evaluated at points in parameter space corresponding to samples from the prior distribution. For a reasonable number of samples, the conventional procedure has a relatively high likelihood of relatively poor sampling in regions near the peaks in the likelihood distribution. This means a conventional estimate of the evidence via Monte Carlo Methods has a high variance. Nested Sampling~\citep{skilling2004} (NS) address this challenge by accounting for the likelihood distribution when sampling the prior distribution. Consider the integral
+		\begin{equation}
+			Z  = \int L(\theta)\pi(\theta)d\theta,
+		\end{equation}
+		with $L$ being the likelihood distribution and $\pi$ the prior distribution. Conventional Monte Carlo methods approximate this integral via importance sampling, meaning
+		\begin{equation}
+			\begin{split}
+				Z &= \mathbb{E}_\pi[L]\\
+				&\approx \frac{1}{N}\sum_{i\in \pi}L(\theta_i)
+			\end{split},
+		\end{equation}
+		where the second equality become exact for $N\rightarrow \infty$. NS project the integral down into one dimension viz\footnote{Attempting a higher accuracy via better numerical approximations of the integral is mute since the uncertainty in $\xi$ dominate the approximation~\citep{skilling2004}.}
+		\begin{equation}
+			\begin{split}
+				Z &= \int_0^1 L(\xi) d\xi\\
+				&\approx \sum_{i}L(\xi_i)\Delta \xi_i
+			\end{split},
+			\label{e12}
+		\end{equation}
+		where
+		\begin{equation}
+			\xi(\lambda) = \int_{L>\lambda} \pi(\theta)d\theta,
+		\end{equation}
+		is the proportion of the prior with likelihood greater than $\lambda$ and $\Delta \xi_i\equiv \xi_{i-1}-\xi_i$. Due to the constraint $L>\lambda$ on the integral bound of $\xi$, $L(\xi)$ is a decreasing function of $\xi$, meaning $L(\xi_1)>L(\xi_2)$ if $\xi_1<\xi_2$. The sum in equation \eqref{e12} can then be evaluated by generating a sequence
+		\begin{equation}
+			\{\{L(\xi_m),\xi_m\},\{L(\xi_{m-1}),\xi_{m-1}\},\dots\{L(\xi_1),\xi_1\}\},
+			\label{seq}
+		\end{equation}
+		with $\xi_1<\xi_2<\dots <\xi_m$. The sorting operation eliminate coordinate dependent complications of geometry, topology and dimensionality~\citep{skilling2006}. A sequence upholding equation \eqref{seq} can be generated as follows; consider $n$ random draws from $g$ with corresponding values of $L$ and $\xi$. Let $L(\xi^*)$ denote the minimum value of $L$ in the sample with $\xi^*$ the corresponding value of $\xi$ in the sample. $\{L(\xi^*), \xi^*\}$ is replaced by another set which is sampled from $g$ with the constraint that $\xi_{new}<\xi^*$ and stored in a list of discarded states. Continuing this sequence again and again will fill the list of discarded states that uphold equation \eqref{seq}. In practice $L(\xi)$ is not readily available, so instead $L$ can be generated from values of $\theta$. The value of $\xi_k$ can be determined by using that~\citep{skilling2004}
+		\begin{equation}
+			\xi_k=\xi_0\prod_{i=1}^{k}t_i,
+		\end{equation}
+		with $t_i=\frac{\xi_k}{\xi_{k-1}}$, called the shrinkage ratio. The shrinkage ratio follow a beta distribution
+		\begin{equation}
+			p(t)=nt^{n-1},
+		\end{equation}
+		with $n$ being the number of initialy samples from $g$ (the number of live points), such that 
+		\begin{equation}
+			\begin{split}
+				\langle\ln(t)\rangle&=\mathbb{E}[\ln(t)]\pm \sqrt{V[\ln(t)]}\\
+				&=\int_0^1 nt^{n-1}\ln(t)dt\pm I_2\\
+				&=\frac{1}{n}(-1\pm 1)
+			\end{split},
+		\end{equation}
+		with 
+		\begin{equation}
+			I_2 = \sqrt{\int_0^1nt^{n-1}\ln(t)^2dt-\bigg(\int_0^1nt^{n-1}\ln(t)dt\bigg)^2}.
+		\end{equation}
+		Using $\ln(\xi_k)=\sum_{i=1}^k\ln(t_i)$ and taking $t_i$ to be i.i.d. yield
+		\begin{equation}
+			\begin{split}
+				\langle\ln(\xi_k)\rangle&=k\mathbb{E}[\ln(t)]\pm \sqrt{kV[\ln(t)]}\\
+				&=\frac{1}{n}(-k\pm \sqrt{k})
+			\end{split}.
+			\label{eqln}
+		\end{equation}
+		Ignoring uncertainty $\xi_k$ can be approximated by the mean viz
+		\begin{equation}
+			\xi_k\approx e^{-\frac{k}{n}},
+		\end{equation}
+		meaning
+		\begin{equation}
+			\Delta \xi_i\approx e^{-\frac{i}{n}}\big(e^{\frac{1}{n}}-1\big).
+		\end{equation}
+		A heuristic measure for terminating the collection of samples is to require that the maximum likelihood collected make up only a small fraction, $B$, of the evidence, meaning
+		\begin{equation}
+			\max(\{L\})\xi_j < BZ,
+		\end{equation}
+		for iteration $j$. Another approach to terminating the collection of samples is to use that most of the area in the $L\xi$-plane is usually found in the region~\citep{skilling2004,skilling2006} $\xi \sim e^{-S}\sim e^{-\frac{i}{n}}$, meaning the collection of samples can be terminated when
+		\begin{equation}
+			i\gg n\mathcal{H},
+			\label{eq:stop2}
+		\end{equation}
+		with $S$ being the entropy~\citep{skilling2004}
+		\begin{equation}
+			\begin{split}
+				S &= \int \frac{L(\xi)}{Z}\ln\bigg(\frac{L(\xi)}{Z}\bigg)d\xi\\
+				& \approx \sum_i\frac{L(\xi_i)}{Z}\ln\bigg(\frac{L(\xi_i)}{Z}\bigg)\Delta \xi_i.
+			\end{split}
+		\end{equation}
+		Temrinating at $i\sim nS$ yield (equation \eqref{eqln}) an uncertainty $\delta (\langle\ln(\xi_i)\rangle)=\sqrt{\frac{S}{n}}$ meaning
+		\begin{equation}
+			\ln(Z)\approx \ln\bigg(\sum_{i}L(\xi_i)\Delta \xi_i\bigg)\pm \sqrt{\frac{S}{n}}.
+		\end{equation}
+		The NS algorithm with equation \eqref{eq:stop2} as termination criterion is shown in algorithm \ref{alg:NS}. $A$ and $B$ are parameters of the algorithm. The "Remainder" in the second to last line in algorithm \ref{alg:NS} fills in the missing band $0<\xi<e^{-\frac{k+1}{n}}$ with the average value of the remaining values of $L$. Due to the chosen stopping criterion, the "Remainder" will be construction be small.
+		
+		\vspace{5mm} %5mm vertical space
+		\begin{algorithm}[H]
+			\label{alg:NS}
+			{\bf Import:} $\Pi$='$n$ HMC samples $\theta_1,\theta_2,\dots \theta_n$ from the prior distribution' with $L$ being the corresponding likelihoods\;	
+			{\bf Initialize:} $k=0, a=0,B = 1, Z = \text{Empty list}$\;		
+			\While{$f> B$}{
+				Let $L^*\equiv \min(L)$ and $\Pi^*\widehat{=}L^*$ \; 
+				$\tilde{\Pi}=\Pi\setminus \Pi^*\wedge \tilde{L}=L\setminus L^*$ \;
+				Define $\Delta \xi_k = e^{\frac{k+1}{n}}(e^\frac{1}{n}-1)$\;
+				Store $L^*\Delta\xi_k$ in $Z$\; 
+				$\Pi_{new},L_{new}= \text{HMC\_proposer}(\text{random}(\tilde{\Pi}),L^*)$\;
+				$\Pi=\tilde{\Pi}\cup \Pi_{new}\wedge L = \tilde{L}\cup L_{new}$\;
+				$f = \frac{\max(L)e^{-\frac{k+1}{n}}}{\sum_{s=0}^k Z_s}$\;
+				\If{a == A}{
+					Display status, e.g. $f$, $nS-k$, $k$, $\sum_{s=0}^kZ_s$,...\;
+					$a = 0$\;
+				}
+				$k= k+1$\;
+				$a= a+1$\;
+			}
+			Remainder = $\frac{1}{n}\sum_iL_ie^{-\frac{k+1}{n}}$\;
+			$Z \approx \sum_{s=0}^kZ_s+$Remainder\;
+			\caption{Nested Sampling Algorithm in pseudo code}
+		\end{algorithm}
+		\vspace{5mm} %5mm vertical space
+		
+		
+		\section{Sanity Check}
+		\label{app:sanity}
+		In this appedix the Kolmogorov–Smirnov (KS) test is considered as an alternative to the BF. The KS test is considered as an alternative because it is a widely used and well known test from frequentist statistics. The test utilize the test statistic
+		\begin{equation}
+			D_{n,m} = \sup_x( | F_{1,n}(x)-F_{2,m}(x) | ), 
+		\end{equation}
+		where $F_{i,n}$ is the empirical distribution function for the $i$'th distribution and $n$ data points
+		\begin{equation}
+			F_{i,n}(x)=\frac{\text{number of elements in the sample } \leq x}{n}.
+		\end{equation}
+		For large samples ($n \gtrsim 50$) hypothesis A can be rejected with significance level $\alpha$ if
+		\begin{equation}
+			D_{n,m} > \sqrt{-\ln\bigg(\frac{\alpha}{2}\bigg)\frac{1+\frac{m}{n}}{2m}}.
+		\end{equation}
+		Note that the significance level is a frequentist quantity associated with the frequentist notion of a $p$-value and the frequentist definition of probability (which differs from the Bayesian definition of probability). Figures \ref{fig:a0} - \ref{fig:a9} (bottom left) show the $p-$value as a function of time for direct comparison with the BF in the same figures (top left) panel. The shading indicate the boundary corresponding to a $p-value$ of $0.01$. Table \ref{tab:results1} show the impact factors from the KS test alongside the ones from the BF for comparison. From the table it is clear that the two methods yield comparable results, albeit with significant differences.
+		
+		\begin{table}[H]
+			\centering
+			\caption{The table show the impact factors from both the BF and KS test for the considered set of countries.}
+			\label{tab:results1}
+			\begin{tabular}{l l l l l l l l l }
+				\hline
+				Country  & $I^{BF}$ & $I^{BF,+}$ & $I^{BF,-}$ & $\Delta I^{BF}$ & $I^{KS}$ & $I^{KS,+}$ & $I^{KS,-}$ & $\Delta I^{KS}$\\
+				\hline
+				DEU &   $\frac{24}{363}$ &     $\frac{8}{24}$ &  $\frac{16}{24}$ &          $-0.02$ &  $\frac{87}{363}$ &  $\frac{59}{87}$ &  $\frac{28}{87}$ &           $0.09$ \\
+				FRA &   $\frac{32}{363}$ &     $\frac{6}{32}$ &   $\frac{26}{32}$ &          $-0.06$ &  $\frac{52}{363}$ &  $\frac{43}{52}$ &  $\frac{9}{52}$ &           $0.09$ \\
+				DNK &    $\frac{5}{323}$ &      $\frac{0}{5}$ &    $\frac{5}{5}$ &          $-0.02$ &  $\frac{5}{323}$ &   $\frac{2}{5}$ &   $\frac{3}{5}$ &            $-0.00$ \\
+				BEL &   $\frac{13}{359}$ &    $\frac{12}{13}$ &   $\frac{1}{13}$ &           $0.03$ &   $\frac{3}{359}$ &    $\frac{3}{3}$ &    $\frac{0}{3}$ &            $0.01$ \\
+				GBR &  $\frac{188}{355}$ &  $\frac{188}{188}$ &  $\frac{0}{188}$ &            $0.53$ &  $\frac{17}{355}$ &  $\frac{15}{17}$ &   $\frac{2}{17}$ &           $0.04$ \\
+				AUT &   $\frac{25}{357}$ &    $\frac{22}{25}$ &   $\frac{3}{25}$ &           $0.05$ &  $\frac{48}{357}$ &   $\frac{10}{48}$ &  $\frac{38}{48}$ &          $-0.08$ \\
+				ITA &   $\frac{72}{346}$ &    $\frac{72}{72}$ &   $\frac{0}{72}$ &           $0.21$ &   $\frac{0}{346}$ &    $\frac{0}{0}$ &    $\frac{0}{0}$ &           $0.00$ \\
+				NLD &    $\frac{25}{352}$ &      $\frac{22}{25}$ &    $\frac{3}{25}$ &           $0.05$ &   $\frac{2}{352}$ &    $\frac{0}{2}$ &    $\frac{2}{2}$ &            $-0.01$ \\
+				POL &   $\frac{17}{333}$ &     $\frac{2}{17}$ &  $\frac{15}{17}$ &          $-0.04$ &   $\frac{3}{333}$ &    $\frac{2}{3}$ &    $\frac{1}{3}$ &           $0.00$ \\
+				\hline
+			\end{tabular}
+		\end{table}
+		
+		The advantage and disadvantage of the KS test is that it is non-parametric. This means it incorporates less information. On the positive side, this means less assumptions can be wrong, but on the negative side it also means the test is less powerful. The interpretation of the test and decision boundary is less clear as it is not related to Bayesian probability. Nor is it derived from probability theory. Another fact is the KS statistic has low sensitivity in the tails of the distribution. This is a crucial shortcomming since, as discussed in section \ref{sec:analysis}, the main difference between the distributions is expected to be in the tails. The significant decrease in the BF seen in figures \ref{fig:a5} (top left) and \ref{fig:a7} (top left) after $31/08/2021$ is caused by a significant difference between the tails of the distributions. From the figures it is clear that the KS test does not pick this difference up. This negligence of information in the tails of the distributions exaplain a large part of the difference between the results from the KS test and the BF. 
+		
+		\section{Definition of $\kappa$}
+		\label{app:discuss}
+		In this appendix the definition of a measure to quantify the IE will be discussed. The purpose of the measure is to i) accurately quantify the IE and ii) provide the possibility to discriminate between the IE of different rooms.  i) require the measure to have minimal bias whereas ii) require the measure to have maximum information. The amount of bias and information are competing effects, meaning a global minimum should be sought. The $\kappa$ used in the study contain the information relevant for discriminating but also contain a small bias related to the definition of the potential (equation \eqref{eq:pot}). Alternatively, the measure 
+		\begin{equation}
+			\epsilon_{n,j,s} \equiv 1-\frac{\sum_{i\notin \rm IE^*\wedge i\in n}\Delta t_{i,j,s}}{\sum_{i\in n}\Delta t_{i,j,s}},
+			\label{eq:g1}
+		\end{equation}
+		for the $n$'th day, for the $j$'th room and the $s$'th set, could be considered. This measure correspond to the percentage of time the IE is within the optimal range. The advantage of this measure is that it is both intuitive and has no bias. The disadvantage is that a lot of information is thrown into the support ($0,1$) of the distribution and therefore the information contain is significantly smaller relative to $\kappa$. Another point is that the support $(0,1)$ mean the maximum entropy distribution is a Beta distribution. A Beta distribution is flexible enought so that the sum of two beta distributions can approach another beta distribution. This can potentially reduce the power of subsequent analyses. There are also computational issues related to pushing the boundaries of a diverging disttribution. For these reasons, although $\epsilon$ has its clear advantages, $\kappa$ is chosen as a measure of the IE in this study. 
+		
+		\section{Figures}
+		\label{app:figs}
+		This appendix contain figures and tables that does not fit into the double column format. 
+		\onecolumngrid
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49 \textwidth]{figs/T18}
+				\includegraphics[width=0.49 \textwidth]{figs/T26}\\
+				\includegraphics[width=0.49 \textwidth]{figs/H40}
+				\includegraphics[width=0.49 \textwidth]{figs/H60}\\
+				\includegraphics[width=0.49 \textwidth]{figs/C900}
+			}
+			\caption{\label{fig:ten} The figure show the distributions (positive/negative impact) of the average countributions to $\kappa$ from the boundaries of $\rm IE^*$.}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_DEU}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_DEU}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_DEU}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_DEU}
+			}
+			\caption{\label{fig:a0} (top left) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Germany using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (top right) the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Germany. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Germany. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_FRA}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_FRA}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_FRA}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_FRA}
+			}
+			\caption{\label{fig:a1} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for France using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for France. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for France. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_DNK}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_DNK}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_DNK}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_DNK}
+			}
+			\caption{\label{fig:a2} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Denmark using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Denmark. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Denmark. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_BEL}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_BEL}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_BEL}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_BEL}
+			}
+			\caption{\label{fig:a3} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Belgium using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Belgium. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Belgium. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_GBR}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_GBR}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_GBR}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_GBR}
+			}
+			\caption{\label{fig:a5} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Great Britain using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Great Britain. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Great Britain. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_AUT}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_AUT}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_AUT}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_AUT}
+			}
+			\caption{\label{fig:a6} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Austria using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Austria. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Austria. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_ITA}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_ITA}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_ITA}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_ITA}
+			}
+			\caption{\label{fig:a7} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Italy using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Italia. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Italy. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_NLD}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_NLD}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_NLD}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_NLD}
+			}
+			\caption{\label{fig:a8} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for the Netherlands using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Netherlands. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for the Netherlands. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\center{
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_POL}
+				\includegraphics[width=0.49\textwidth]{figs/fig_BF_eps_POL}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_POL}
+				\includegraphics[width=0.49\textwidth]{figs/fig_KS_eps_POL}
+			}
+			\caption{\label{fig:a9} (top) The natural logarithm of the Bayes factor as a function of time in the period $01/02/2021$-$31/01/2022$ for Poland using $a_{max}=b_{max}=20$ and $a_{min}=b_{min}=0$. The black points denote the value of the $\ln(BF)$ with the black band denoting the uncertainty. The shaded regions explain how the value of $\ln(BF)$ should be interpreted. (bottom) show the arithmetic mean of $\epsilon$ (black), alongside the contributions from the different limits in $\rm IE^*$, for Poland. The green/red dots denote day where ACTIVE has a positive/negative impact on the IE. Note that the arithmetic mean is a poor representation of the distribution of $\kappa$, so the graphs presented in the figure should be considered as loose estimates that only represent tendencies. (bottom left) The natural log of the $p$-value associated to the KS test as a function of day of year in $2021$ for Poland. (bottom right) corresponds to (top right) but with dots stemming from (bottom left) rather than (top left).}
+		\end{figure}
+		
+
+		\clearpage
+		
+	\end{appendices}
+	
+	
+	\bibliographystyle{apsrev4-2}
+	\bibliography{ref}
+	% Don't change these lines
+	\label{lastpage}
+\end{document}

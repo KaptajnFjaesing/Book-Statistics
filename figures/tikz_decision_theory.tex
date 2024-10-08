@@ -1,0 +1,41 @@
+\documentclass[tikz,border=2mm]{standalone}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usetikzlibrary[arrows.meta]
+\usetikzlibrary{positioning, shapes, calc}
+
+\tikzset{set/.style={draw,circle,inner sep=0pt,align=center}}
+\tikzset{line/.style = {draw,thick, shorten >=-2pt, shorten <=-2pt}}
+\tikzset{tick/.style={draw, minimum width=0pt, minimum height=2pt, inner sep=0pt, label=below:$#1$},tick/.default={}}
+\begin{document}
+	\begin{tikzpicture}[
+		node distance=2cm,
+		set/.style={draw, circle, minimum size=2cm},
+		randomvar/.style={draw, rectangle, minimum size=1.5cm},
+		arrow/.style={->, >=stealth, shorten >=2pt, shorten <=2pt}
+		]
+		% Sample Space Omega
+		
+		\node[set, label={above:$\Omega$}] (omega) {$\omega$};
+		\node[set, right= 3cm of omega, label={above:$\mathbb{X}$}] (X) {$x$};
+		\node[set, below=of omega, label={left:$F$}] (F) {$\{ \emptyset, \{\omega_1,\omega_2\}, \{\omega_1\},\dots\}$};
+		\node[right = 3cm of X] (R) {$\mathbb{R}_{\geq 0}$};
+		\node[right = 2.75cm of F] (unit) {$[0,1]$};
+		\node[set, label={above:$\mathbb{Y}$}] (Y) {$y$};
+		\node[set, right= of Y, label={above:$\Lambda$}] (lambda) {$\lambda$};
+		
+		\draw[arrow] (Y) -- node[above] {$\delta : \mathbb{Y} \mapsto \Lambda$} (lambda);
+		
+		
+		\draw[arrow] (F) -- node[above] {$\mathbb{P}: F \mapsto [0,1]$} (unit);
+		\draw[arrow] (X) -- node[right] {$p: \mathbb{X} \mapsto [0,1]$} (unit);
+		\draw[arrow] (X) -- node[above] {$f: \mathbb{X} \mapsto [0,\infty]$} (R);
+		\draw[arrow] (omega) -- node[above] {} (F);
+		\draw[arrow] (omega) -- node[above] {$X: \Omega \mapsto \mathbb{X}$} (X);
+		
+		
+	\end{tikzpicture}
+	
+	
+\end{document}
+

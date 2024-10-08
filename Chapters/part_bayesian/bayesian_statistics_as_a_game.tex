@@ -1,0 +1,813 @@
+\chapter{Bayesian Statistics}
+\label{chp:bay}
+Bayesian statistics is based on definition \ref{def:bayesian_statistics}, where probability is viewed as a subjective degree of belief in the likelihood of an event occurring and parameters are modeled as random variables. The Bayesian framework originally come from the work of \citet{Bayes:63} and \citet{laplace_thorie_1812} with much of the modern discussions and formalism created later by \citet{Finetti1937LaP,Jeffreys1940} and \citet{Savage1954}. Although Bayesian statistics adopts a subjectivistic interpretation of probability, given established information the derived probabilities follow deductively from probability theory. In this book, the field of Bayesian statistics will be viewed as a game against Nature, as is conventionally done i decision theory. In this game there are two players or decision makers (DMs):
+	\begin{enumerate}
+		\item \textbf{Robot:} This is the name given to the primary DM.
+		
+		\item \textbf{Nature:} This DM is a mysterious entity that is unpredictable to the Robot. It has its own set of actions, and it can choose them in a way that interferes with the achievements of the Robot. Nature can be considered as a synthetic DM that is constructed for the purposes of modeling uncertainty in the decision-making or planning process.
+	\end{enumerate}
+	
+	Imagine that the Robot and Nature each make a decision by choosing an action from a set, $u \in \mathbb{U}$ and $s \in \mathbb{S}$, respectively. $\mathbb{U}$ is referred to as the action space, and $\mathbb{S}$ as the nature action space. The Robot receives a penalty depending on the two decisions made, and the objective of the game is to minimize this penalty. The game is described by the interaction between the Robot and Nature, characterized by the statistical model defined by the tuple $(\Omega, \mathcal{F}, \mathbb{P},\mathbb{W},\mathcal{P})$. Here, $(\Omega, \mathcal{F}, \mathbb{P})$ represents the probability space (refer to chapter \ref{chp:probaiblity_theory}), $\mathbb{W}$ is the parameter space, and $\mathcal{P}=\{p: w \in \mathbb{W}\}$ (unified notation, see section \ref{sec:notation}) is the set of distributions (see figure \ref{fig:statistics_theory_venn_diagram}). In this game, Nature's strategy is encapsulated by the parameters in $\mathbb{W}$. Random variables $X: \Omega \mapsto \mathbb{X}$ and $S: \Omega \mapsto \mathbb{S}$ are associated with the Robot's observations and Nature's actions, respectively. The random variable $X$ maps elements to the set $\mathbb{X}$, representing the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S$ maps elements to the set $\mathbb{S}$, characterizing the different possible actions of Nature. Given the observation $X=x$ as well as a set of past observations $D= \{(X=x_1,S=s_1),(X=x_2,S=s_2),\dots (X=x_n,S=s_n)\}$, the objective of the game becomes to formulate a decision rule that specifies the optimal action given the available observations $X=x, D$ without explicit knowledge of the true action of Nature $s$.
+	
+	\begin{definition}[Decision Rule]
+		\label{def:decision_rule}
+		A decision rule is a function $U$ from a measurable space $\mathbb{X}$ (the numerical representation of a random variable) to a set of possible actions $\mathbb{U}$, meaning
+		\begin{equation}
+			U: \mathbb{X} \mapsto \mathbb{U}.
+		\end{equation}
+	\end{definition}
+	
+	\begin{definition}[Cost Function]
+		\label{def:cost_function}
+		A cost function associates a numerical penalty depending on decision $u \in \mathbb{U}$ and $s \in \mathbb{S}$,
+		\begin{equation}
+			C: \mathbb{U} \times \mathbb{S} \mapsto \mathbb{R}.
+		\end{equation}
+	\end{definition}
+	
+	\begin{example}
+		\label{ex:rain}
+		Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
+		\begin{equation}
+			\mathbb{U} = \{"\text{bring umbrella}", "\text{don't bring umbrella}"\}.
+		\end{equation}
+		Nature have already picked whether or not it will rain later, i.e.
+		\begin{equation}
+			\mathbb{S} = \{"\text{rain}", "\text{no rain}"\},
+		\end{equation}
+		so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast})$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
+	\end{example}
+	\begin{example}
+		\label{ex:saturn_mass}
+		Suppose the Robot is tasked with estimating the mass of Saturn based on observations. The Robot's decision space, denoted as $\mathbb{U}$, is a continuous interval representing the possible estimates for Saturn's mass
+		\begin{equation}
+			\mathbb{U} = [u_{\text{min}}, u_{\text{max}}].
+		\end{equation}
+		Nature decides the true mass of Saturn through its action, denoted by the random variable $S:\Omega \mapsto \mathbb{S}$, where $\mathbb{S}$ is the set of all possible masses of Saturn
+		\begin{equation}
+			\mathbb{S} = [s_{\text{min}}, s_{\text{max}}],
+		\end{equation}
+		where in general $\mathbb{U}\neq\mathbb{S}$. The action of Nature is modeled as a random variable in order to capture the inherent unpredictability in Nature's decision. $S$ encapsulates the range of potential masses that Saturn might have, each with a certain likelihood. The available information or observation, denoted as $X$, is a random variable representing data collected from telescopes, gravitational measurements, or other relevant sources. The distribution of $X$ depends on the observational methods and instruments used. The Robot's decision rule, $U(X)$, maps the observed data $X$ to an estimate of Saturn's mass $u \in \mathbb{U}$. The objective is to make an accurate estimate based on the available information.  For instance, $U(\text{telescope data})$ will map to an estimate $u$ within the interval $[u_{\text{min}}, u_{\text{max}}]$, reflecting the Robot's best guess of Saturn's mass.
+	\end{example}
+	
+	The Robot's goal is to minimize the expected cost associated with its decisions. To achieve this goal, the Robot utilizes its observations $x,D$ and background information $I$ to inform its decision-making process. The conditional expected cost, given the observations, is given by
+	\begin{equation}
+		\mathbb{E}[C(U, S)|D,I] = \int dx ds C(U(x),s) p(X=x,S=s|D,I),
+		\label{eq:conditional_expected_cost}
+	\end{equation}
+	where the Robot aims to find the decision rule which minimizes equation \eqref{eq:conditional_expected_cost}, meaning
+	\begin{equation}
+		U^* = \arg\min_{U} \mathbb{E}[C(U, S)|D,I].
+		\label{eq:decision_rule}
+	\end{equation}	
+	From theorem \ref{theorem:total_expectation}
+	\begin{equation}
+		\mathbb{E}[C(U, S)|D,I] = \mathbb{E}_X[\mathbb{E}_{S|X}[C(U, S)|X=x,D,I]].
+		\label{eq:total2}
+	\end{equation}
+	Using equation \eqref{eq:total2} in equation \eqref{eq:decision_rule}
+	\begin{equation}
+		\begin{split}
+			U^* &= \arg\min_{U} \mathbb{E}_X[\mathbb{E}_{S|X}[C(U, S)|X=x,D,I]]\\
+			&= \arg\min_{U} \int dxp(X=x|D,I) \mathbb{E}_{S|X}[C(U, S)|X=x,D,I].
+		\end{split}
+		\label{eq:decision_rule2}
+	\end{equation}
+	Since $p(X=x|D,I)$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
+	\begin{equation}
+		\begin{split}
+			U^*(x) &= \arg\min_{U(x)} \mathbb{E}_{S|X}[C(U(x), S)|X=x,D,I]\\
+			& = \arg\min_{U(x)}\int  ds C(U(x),s) p(S=s|X=x,D,I).
+		\end{split}
+		\label{eq:decision_rule3}
+	\end{equation}
+	The probability $p(S=s|X=x,D,I)$ depend on the parameters $w_1,\dots w_n$ of the statistical model. Introducing the shorthand notation $W=w_1\dots W=w_n \rightarrow w$, $dw_1\dots dw_n \rightarrow dw$ and $X=x \rightarrow x$, then
+	\begin{equation}
+		\begin{split}
+			p(s|x,D,I) &= \int dw p(w,s|x,D,I)\\
+			& = \int dw p(s|w,x,D,I)p(w|x,D,I)
+		\end{split}
+		\label{eq:hest1}
+	\end{equation}
+	\begin{example}
+		Writing out the shorthand notation
+		\begin{equation}
+			 \begin{split}
+			 	p(W=w_1,\dots,W= w_n,S = s|X = x,D,I)&\rightarrow p(w,s|x,D,I),\\
+			 	dw_1\dots dw_n &\rightarrow dw.\\
+			 \end{split}
+		\end{equation}
+	\end{example}
+	
+	To evaluate $p(w|D,I)$ a combination of marginalization, Bayes' theorem, and the chain rule (see chapter \ref{chp:probaiblity_theory}) can be employed viz
+	\begin{equation}
+		\begin{split}
+			p(w|x,D,I) &= p(w|D,I)\\
+			&= \frac{p(D_s|w,D_x,I)p(w|I)}{p(D_s|D_x,I)},
+		\end{split}
+		\label{eq:pa2}
+	\end{equation}
+	where $D_s= \{S=s_1\dots S=s_n\}$, $D_x = \{X=x_1,\dots X=x_n\}$ and $p(D_s|D_x,I)$ can be expanded via marginalization and axiom \ref{ax:observation_relevance} has been used for the first and second equality.
+	
+	\begin{axiom}[Relevance of Observations]
+		\label{ax:observation_relevance}
+		The Robot's observations are relevant for estimating Nature's model only when they map to known actions of Nature.
+	\end{axiom}
+	
+	$p(w|I)$ is the Robot's prior belief about Nature's actions for $w$. $p(D_s|w,D_x,I)$ is the likelihood of the past observations of Nature's actions, and $p(w|D,I)$ called the posterior distribution represent the belief of the Robot after seeing data. The prior distribution depends on parameters that must be specified and cannot be learned from data since it reflects the Robot's belief before observing data. These parameters are included in the background information, $I$. From equation \eqref{eq:pa2}, it is evident that, given the relevant probability distributions are specified, the probability of a parameter taking a specific value follows deductively from probability theory. The subjectivity arises from the assignment and specification of probability distributions which depend on the background information.
+	
+	\begin{example}
+		In general the random variable $X$ represent the observations the Robot has available that are related to the decision Nature is going to make. However, this information may not be given, in which case $D_x=\emptyset$ and consequently $D = D_s$. In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From equation \eqref{eq:decision_rule} the optimal action for the Robot can be written
+		\begin{equation}
+			U^*=\arg\min_U\mathbb{E}[C(U, S)|D_s,I].
+			\label{eq:best_decision1}
+		\end{equation}
+	\end{example}
+
+	
+	\section{Assigning Probabilities}
+	The axioms and definitions of probability theory (axioms \ref{ax:non_neg}-\ref{ax:add} and definitions \ref{eq:cond} and \ref{eq:ind}) can be used to define and relate probabilities, however, they are not sufficient to conduct inference because, ultimately, the "numerical values" of the probabilities must be known. Thus the rules for manipulating probabilities must be supplemented by rules for assigning numerical values to probabilities. The historical lack of these supplementary rules is one of the major reasons why probability theory, as formulated by Laplace, was rejected in the late part of the 19th century. To assign any probability there is ultimately only one way, logical analysis, i.e., non-self-contradictory analysis of the available information. The difficulty is to incorporate only the information one actually possesses without making gratuitous assumptions about things one does not know. A number of procedures have been developed that accomplish this task: Logical analysis may be applied directly to the sum and product rules to yield probabilities~\citep{jaynes_11}. Logical analysis may be used to exploit the group invariances of a problem~\citep{jaynes_16}. Logical analysis may be used to ensure consistency when uninteresting or nuisance parameter are marginalized from probability distributions~\citep{jaynes_21}. And last, logical analysis may be applied in the form of the principle of maximum entropy to yield probabilities \cite{zellner_bayesian_inference, jaynes_16,jaynes_19, shore_17,shore_18}. Of these techniques the principle of maximum entropy is probably the most powerful.
+	
+	\subsection{The Principle of Maximum Entropy}
+	\label{sec:maxent}
+	The principle of maximum entropy\index{Maximum entropy}, first proposed by \citet{Jaynes1957}, considers the issue of assigning a probaility distribution to a random variable. Let $Z$ be a generic random variable that describes an abstract experiment. $Z$ follow a distribution $p(z|\lambda, I)$ with associated parameters $\lambda = \{\lambda_0,\dots ,\lambda_n\}$. The principle of maximum entropy propose that the probability distribution, $p(z|\lambda, I)$, which best represents the current state of knowledge about a system is the one with largest constrained entropy~\citep{Sivia2006}, defined by the Lagrangian
+	\begin{equation}
+		\mathcal{L} = \int F dz,
+		\label{eq:Q}
+	\end{equation}
+	with
+	\begin{equation}
+		F= -p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)}-\lambda_0 p(z|\lambda, I)-\sum_{j=1}^{n}\lambda_jC_j(z).
+	\end{equation}
+	$m$ -- called the Lebesgue measure -- ensures the entropy, given by $-\int p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)} dz$, is invariant under a change of variables and $C_j(z)$ represent the constraints beoynd normalization. The constraint beyond normality depend on the background information related to the random variable, $X$. In variational calculus the Lagrangian is optimized via solving the Euler-Lagrange equation
+	\begin{equation}
+		\frac{\partial F}{\partial p(z|\lambda, I)}-\frac{d}{dx}\frac{\partial F}{\partial p(z|\lambda, I)'}=0,
+	\end{equation}
+	where $\frac{\partial p(z|\lambda, I)}{\partial x} = p(z|\lambda, I)'$ for shorthand. Since $p(z|\lambda, I)'\notin F$, the Euler-Lagrange equation simplify to simply
+	\begin{equation}
+		\frac{\partial F}{\partial p(z|\lambda, I)}=0.
+		\label{eq:f}
+	\end{equation}
+	Combining equations \eqref{eq:Q} and \eqref{eq:f}
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda, I)}&= -\ln\bigg(\frac{p(z|\lambda, I)}{m(z)}\bigg)-1-\sum_{j}\lambda_{j}C_j(z)\\
+			&=0
+		\end{split}
+	\end{equation}
+	and so
+	\begin{equation}
+		\begin{split}
+			p(z|\lambda, I)&=m(z)e^{-1-\sum_{j}\lambda_{j}C_j(z)}\\
+			&=\tilde{m}(z)e^{-\sum_{j}\lambda_{j}C_j(z)},
+		\end{split}
+	\end{equation}
+	where $\tilde{m}(z)\equiv m(z)e^{-1}$. Using that $\int p(z|\lambda, I) dx =1$
+	\begin{equation}
+		p(z|\lambda, I)=\frac{\tilde{m}(z)e^{-\sum_{j}\lambda_{j}C_j(z)}}{\int \tilde{m}(z')e^{-\sum_{j}\lambda_{j}C_j(z')}dz'},
+	\end{equation}
+	where $m$ is a reference distribution that is invariant under parameter transformations. $\lambda_j$ are determined from the additional constraints, e.g. on the mean or variance.
+	
+	\begin{example}
+		\index{Example: Maximum entropy normal distribution}
+		Consider a random variable, $Z$, with unlimited support, $z\in [-\infty,\infty]$, assumed to be symmetric around a single peak defined by the mean $\mu$, standard deviation $\sigma$. In this case $\lambda = \{\lambda_0,\lambda_1,\lambda_2\}$, where it will be shown that $\lambda_1,\lambda_2$ are related to $\mu,\sigma$. In this case $F$ can be written\label{ex:gauss}
+		\begin{equation}
+			\begin{split}
+				F =& -p(z|\lambda,I)\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_0p(z|\lambda,I)\\
+				&-\lambda_1p(z|\lambda,I)z-\lambda_2p(z|\lambda,I)z^2
+			\end{split}
+		\end{equation}
+		with the derivative
+		\begin{equation}
+			\begin{split}
+				\frac{\partial F}{\partial p(z|\lambda,I)} &= -1-\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_1z-\lambda_2z^2\\
+				&=0,
+			\end{split}
+		\end{equation}
+		meaning
+		\begin{equation}
+			p(z|\lambda,I)=m(z)e^{-1-\lambda_0-\lambda_1z-\lambda_2z^2}.
+		\end{equation}
+		Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
+		\begin{equation}
+			\begin{split}
+				\int p(z|\lambda,I) dz &= me^{-1-\lambda_0}\int e^{-\lambda_1z-\lambda_2z^2}dz\\
+				&= me^{-1-\lambda_0}\sqrt{\frac{\pi}{\lambda_2}}e^{\frac{\lambda_1^2}{4\lambda_2}}\\
+				&=1.
+			\end{split}
+		\end{equation}
+		Defining $K^{-1} = me^{-1-\lambda_0}$ yields
+		\begin{equation}
+			\begin{split}
+				p(z|\lambda,I) &= \frac{e^{-\lambda_1x-\lambda_2x^2}}{K}\\
+				&= \sqrt{\frac{\lambda_2}{\pi}}e^{-\frac{\lambda_1^2}{4\lambda_2}-\lambda_1z-\lambda_2z^2}\\
+			\end{split}.
+		\end{equation}
+		Now, imposing the mean constraint
+		\begin{equation}
+			\begin{split}
+				\int zp(z|\lambda,I) dz &= \frac{\int ze^{-\lambda_1z-\lambda_2z^2}dz}{K}\\
+				&= -\frac{\lambda_1}{2\lambda_2}\\
+				&=\mu.
+			\end{split}
+		\end{equation}
+		Hereby
+		\begin{equation}
+			\begin{split}
+				p(z|\lambda,I) &= \sqrt{\frac{\lambda_2}{\pi}}e^{-\mu^2\lambda_2+2\mu \lambda_2z-\lambda_2z^2}\\
+				&= \frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2}\big(\frac{\mu-z}{\sigma}\big)^2},\\\\
+			\end{split}
+		\end{equation}
+		where $\sigma\equiv \frac{1}{2\lambda_2}$ has been defined. Hence, it is clear that the normal distribution\index{Normal distribution} can be derived from general constraints via the principle of maximum entropy\index{Maximum entropy}.
+	\end{example}
+	
+	\begin{example}
+		\index{Example: Maximum entropy beta distribution}
+		Consider a random variable, $Z$, with limited support, $z\in [0,1]$. In order to impose the limited support, require that $\ln(z)$ and $\ln(1-z)$ be well defined. In this case $F$ can be written\label{ex:beta}
+		\begin{equation}
+			\begin{split}
+				F =& -p(z|\lambda,I)\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_0p(z|\lambda,I)\\
+				&-\lambda_1p(z|\lambda,I)\ln(z)-\lambda_2p(z|\lambda,I)\ln(1-z)
+			\end{split}
+		\end{equation}
+		with the derivative
+		\begin{equation}
+			\begin{split}
+				\frac{\partial F}{\partial p(z|\lambda,I)} &= -1-\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_1\ln(z)-\lambda_2\ln(1-z)\\
+				&=0,
+			\end{split}
+		\end{equation}
+		meaning
+		\begin{equation}
+			p(z|\lambda,I)=m(z)e^{-1-\lambda_0-\lambda_1\ln(z)-\lambda_2\ln(1-z)}.
+		\end{equation}
+		Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
+		\begin{equation}
+			\begin{split}
+				\int p(z|\lambda,I) dz &= me^{-1-\lambda_0}\int z^{-\lambda_1}(1-z)^{-\lambda_2}dz\\
+				&= me^{-1-\lambda_0}\frac{\Gamma(1-\lambda_1)\Gamma(1-\lambda_2)}{\Gamma(2-\lambda_1-\lambda_2)}\\
+				&=1.
+			\end{split}
+		\end{equation}
+		Now define $\alpha \equiv 1-\lambda_1\wedge \beta \equiv 1-\lambda_2$. Hereby
+		\begin{equation}
+			p(z|\alpha,\beta,I) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1},
+		\end{equation}
+		which is the beta distribution\index{Maximum entropy}. 
+	\end{example}
+	
+	\section{Assigning a Cost Function}
+	\label{sec:assing_cost}
+	The cost function (see definition \ref{def:cost_function}) associates a numerical penalty to the Robot's action and thus the details of it determine the decisions made by the Robot. Under certain conditions, a cost function can be shown to exist~\citep{lavalle2006planning}, however, there is no systematic way of producing or deriving the cost function beyond applied logic. In general, the topic can be split into considering a continuous and discrete action space, $\mathbb{U}$. 	
+	
+	\subsection{Continuous Action Space}
+	In case of a continuous action space, the cost function is typically picked from a set of standard choices.	
+	\begin{definition}[Linear Cost Function]
+		\label{def:linear_cost_function}
+		The linear cost function is defined viz
+		\begin{equation}
+			C(U(x),s) \equiv |U(x)-s|.
+		\end{equation}
+		
+	\end{definition}
+	\begin{theorem}[Median Estimator]
+		The median estimator follows from assuming linear loss. Let $.\equiv x,D,I$ for shorthand, then
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(U(X), S)|.] &= \int_{-\infty}^{\infty} ds |U(x)-s| p(s|.)\\
+				&= \int_{-\infty}^{U(x)} (s-U(x))p(s|.)ds\\
+				&\quad+\int_{U(x)}^\infty (U(x)-s)p(s|.)ds\\
+			\end{split}
+		\end{equation}
+		\begin{equation}
+			\begin{split}
+				0 &=\frac{d \mathbb{E}_{S|X}[C(U(X), S)|.]}{dU(X)}\bigg|_{U(x)=U^*(x)}\\
+				&= (U^*(x)-U^*(x))p(U^*(x)|.)+\int_{-\infty}^{U^*(x)} p(s|.)ds\\
+				&\quad+(U^*(x)-U^*(x))p(U^*(x)|.)-\int_{U^*(x)}^\infty p(s|.)ds
+			\end{split}
+		\end{equation}
+		\begin{equation}
+			\begin{split}
+				\int_{-\infty}^{U^*(x)} p(s|.)ds &= \int_{U^*(x)}^\infty p(s|.)ds\\
+				&= 1- \int_{-\infty}^{U^*(x)} p(s|.)ds\\
+			\end{split}
+		\end{equation}
+		\begin{equation}
+			\int_{-\infty}^{U^*(x)} p(s|.)ds = \frac{1}{2}
+		\end{equation}
+		which is the definition of the median.
+	\end{theorem}
+	
+	\begin{definition}[Quadratic Cost Function]
+		\label{def:quadratic_cost}
+		The quadratic cost function is defined as
+		\begin{equation}
+			C(U(x),s) \equiv (U(x)-s)^2.
+		\end{equation}
+	\end{definition}
+	
+	\begin{theorem}[Expectation value]
+		\label{theorem:expectation_cost}
+		The expectation value follows from assuming quadratic loss. Let $.\equiv x,D,I$ for shorthand, then
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(U(X), S)|.] &= \int ds (U(x)-s)^2 p(s|.)\\
+				&\Downarrow\\
+				\frac{d \mathbb{E}_{S|X}[C(U(X), S)|.]}{dU(X)}\bigg|_{U(x)=U^*(x)} &= 2U^*(x)-2\int ds sp(s|.)\\
+				&=0\\
+				&\Downarrow\\
+				U^*(x)& = \int ds sp(s|.)\\
+				&= \mathbb{E}[S|.]
+			\end{split}
+		\end{equation}
+		which is the definition of the expectation value.
+	\end{theorem}
+	
+	\begin{definition}[0-1 Cost Function]
+		\label{def:0_1_cost_function}
+		The 0-1 cost function is defined viz
+		\begin{equation}
+			C(U(x),s) \equiv 1-\delta(U(x)-s).
+		\end{equation}
+	\end{definition}
+	
+	\begin{theorem}[MAP]
+		\label{theorem:MAP}
+		The maximum aposteriori (MAP) follows from assuming 0-1 loss. Let $.\equiv x,D,I$ for shorthand, then
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C((X), S)|.] &= 1-\int ds \delta(U(x)-s) p(s|.)\\
+				&\Downarrow\\
+				\frac{d \mathbb{E}_{S|X}[C(U(X), S)|.]}{dU(X)}\bigg|_{U(x)=U^*(x)} &= -\frac{dp(s|.)}{ds}\bigg|_{s=U^*(x)}\\
+				&=0\\
+			\end{split}
+		\end{equation}
+		which is the definition of the MAP.
+	\end{theorem}
+	
+	\subsubsection{Regression}
+	\label{sec:regression}
+	Regression involves the Robot building a model, $f: \mathbb{W}\times X\mapsto\mathbb{R}$, with associated parameters $\theta\in \mathbb{W}$, that estimates Nature's actions $S$ based on observed data $X$. Note that the output of $f$ is $\mathbb{R}$ implying that $S$ is assumed continuos. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function \ref{def:quadratic_cost} will be considered to review the subject. From theorem \ref{theorem:expectation_cost} the best action for the Robot can be written
+	\begin{equation}
+		U^*(x) = \int ds s p(s|x,D,I)
+		\label{eq:q1}
+	\end{equation}
+	Assuming the actions of Nature follow a normal distribution with the function $f$ as mean and an unknown variance, $\xi\in \mathbb{W}$
+	\begin{equation}
+		p(s|x,\theta,\xi,I)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(\theta,x)-s)^2}.
+		\label{f_dist}
+	\end{equation}
+	Using equation \eqref{f_dist} and marginalizing over $\xi,\theta$
+	\begin{equation}
+		\begin{split}
+			p(s|x,D,I) &= \int p(s,\theta,\xi|x,D,I) d\theta d\xi\\
+			& = \int p(s|x,\theta,\xi,D,I)  p(\theta,\xi|x,D,I)d\theta d\xi\\
+			& = \int p(s|x,\theta,\xi,I)  p(\theta,\xi|D,I)d\theta d\xi,\\
+		\end{split}
+		\label{eq:q2}
+	\end{equation}
+	where it has been used that $p(s|\theta,\xi,x,D,I) = p(s|\theta,\xi,x,I)$ since by definition $f$ produce a $1-1$ map of the input $x$ (equation \eqref{f_dist}) and $p(\theta,\xi|x,D,I) = p(\theta,\xi|D,I)$ from axiom \ref{ax:observation_relevance}. Using equation \eqref{eq:q2} in equation \eqref{eq:q1}\footnote{Note that a function of a random variable is itself a random variable, so $f$ is a random variable.}
+	\begin{equation}
+		\begin{split}
+			U^*(x) & = \int f(\theta,x)  p(\theta,\xi|D,I) d\theta d\xi,\\
+			& = \mathbb{E}[f|x,D,I]
+		\end{split}
+		\label{eq:q3}
+	\end{equation}	
+	where it has been used that
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[S|x,\theta,\xi,I] &= \int s p(s|x,\theta,\xi,I) dy\\
+			&= f(\theta,x)
+		\end{split}
+	\end{equation}
+	according to equation \eqref{f_dist}. Using Bayes theorem
+	\begin{equation}
+		p(\theta,\xi|D,I) = \frac{p(D_s|D_x,\theta,\xi,I)p(\theta,\xi|D_x,I)}{p(D_s|D_x,I)}
+		\label{eq:bayes2}
+	\end{equation}
+	where from marginalization
+	\begin{equation}
+		p(D_s|D_x,I) = \int p(D_s|D_x,\theta,\xi,I)p(\theta,\xi|D_x,I) d\theta d\xi.
+	\end{equation}
+	Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written (using equation \eqref{f_dist})
+	\begin{equation}
+		p(D_s|D_x,\theta,\xi,I) = \bigg(\frac{\xi}{2\pi}\bigg)^\frac{n}{2}\prod_{i=1}^n e^{-\frac{\xi}{2}(f(\theta,x_i)-s_i)^2}
+		\label{reg:likelihood}
+	\end{equation}
+	From the chain rule (see theorem \ref{theorem:chain_rule}) and axiom \ref{ax:observation_relevance}
+	\begin{equation}
+		\begin{split}
+			p(\theta,\xi|D_x,I) &= p(\theta|\xi,I)p(\xi|I).
+		\end{split}
+	\end{equation}
+	Assuming the distributions over $W_\theta$ are i) independent of $\xi$ and ii) normally distributed\footnote{The normally distributed prior is closely related to weight decay~\citep{Plaut1986}, a principle conventionally used in frequentist statistics to avoid the issue of overfitting.} with zero mean and a precision described by a hyperparameter, $\lambda$. 	 
+	\begin{equation}
+		\begin{split}
+			p(\theta|\xi,I) & = p(\theta|I)\\
+			& = \int p(\theta|\lambda,I)p(\lambda|I)d\lambda
+		\end{split}
+		\label{eq:prior1}
+	\end{equation}
+	The precision is constructed as a wide gamma distribution\index{Gamma distribution} so as to approximate an objective prior
+	\begin{equation}
+			p(\theta|\lambda,I)p(\lambda|I)
+			= \prod_{q=1}^{\tilde{n}} \frac{\lambda_q^\frac{n_q}{2}}{(2\pi)^\frac{n_q}{2}}e^{-\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2}\frac{\beta_q^{\alpha_q}}{\Gamma(\alpha_q)}\lambda_q^{\alpha_q-1}e^{-\beta_q \lambda_q}
+		\label{eq:prior}
+	\end{equation}
+	where $\alpha_q,\beta_q$ are prior parameters (a part of the background information) and $\tilde{n}$ is the number of hyper parameters. In the completely general case $\tilde{n}$ would equal the number of parameters $\theta$, such that each parameter has an independent precision. In practice, the Robot may consider assigning some parameters the same precision, e.g. for parameters in the same layer in a neural network. Since $p(\xi|I)$ is analogous to $p(\lambda|I)$ -- in that both are prior distributions for precision parameters -- $p(\xi|I)$ is assumed to be a wide gamma distribution, then
+	\begin{equation}
+		\begin{split}
+			p(\xi|I) & = \text{Ga}(\xi|\tilde{\alpha},\tilde{\beta})\\
+			& =\frac{\tilde{\beta}^{\tilde{\alpha}}}{\Gamma(\tilde{\alpha})}\xi^{\tilde{\alpha}-1}e^{-\tilde{\beta} \xi}.
+		\end{split}
+		\label{p7}
+	\end{equation}
+	At this point equation \eqref{eq:q1} is fully specified (the parameters $\alpha,\beta,\tilde{\alpha},\tilde{\beta}$ and the functional form of $f(\theta,x)$ are assumed specified as part of the background information) and can be approximated by obtaining samples from $p(\theta,\xi,\lambda|D,I)$ via HMC~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012} (see appendix \ref{app:HMC} for a review of HMC). The centerpiece in the HMC algorithm is the Hamiltonian defined viz~\citep{Neal:1996,Neal2012}
+	\begin{equation}
+		H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln[p(\theta,\xi,\lambda|D,I)]+const,
+		\label{eqh}
+	\end{equation}
+	where 
+	\begin{equation}
+		p(\theta,\xi|D,I) = \int d\lambda p(\theta,\xi,\lambda|D,I).
+		\label{eq:ss}
+	\end{equation}
+	Besides its function in the HMC algorithm, the Hamiltonian represent the details of the Bayesian model well and should be a familiar sight for people used to the more commonly applied frequentist formalism\index{Frequentist statistics} (since, in this case, it is in form similar to a cost function comprised of a sum of squared errors, weight decay on the coefficients and further penalty terms~\citep{hastie_09,murphy2013machine,Goodfellow2016}). Using equations \eqref{eq:bayes2}-\eqref{eq:ss} yields
+	\begin{equation}
+		\begin{split}
+			H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln(\xi)] +\frac{\xi}{2}\sum_{i=1}^{n}(f(\theta,x_i)-s_i)^2\\
+			&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
+			&\qquad\qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
+			&\quad+\ln(\Gamma(\tilde{\alpha}))-\tilde{\alpha}\ln(\tilde{\beta})+(1-\tilde{\alpha})\ln(\xi)+\tilde{\beta}\xi+const.
+		\end{split}
+		\label{eqh2}
+	\end{equation}
+	
+	\begin{example}
+		\index{Example: HMC Hamiltonian variable change}
+		Let $\xi \equiv e^\zeta$, such that $\zeta\in [-\infty,\infty]$ maps to $\xi\in[0,\infty]$ and $\xi$ is ensured to be positive definite regardless of the value of $\zeta$. Using the differential $d\xi =  \xi d\zeta$ in equation \eqref{eq:q3} means $p(\theta,\xi,\lambda|D,I)$ is multiplied with $\xi$. Hence, when taking $-\ln(p(\theta,\xi,\lambda|D,I))$ according to equation \eqref{eqh}, a $-\ln(\xi)$ is added to the Hamiltonian. In practice this means
+		\begin{equation}
+			(1-\tilde{\alpha})\ln(\xi)\in H\Rightarrow -\tilde{\alpha}\ln(\xi).
+		\end{equation} 	
+	\end{example}
+
+	\subsection{Discrete Action Space}
+	In case of a continuous action space, the conditional expected loss can be written
+	\begin{equation}
+		\mathbb{E}_{S|X}[C(U(X), S)|x,D,I] = \sum_{s\in \mathbb{S}}^nC(U(x),s)p(s|x,D,I),
+	\end{equation}
+	where the cost function is typically represented in matrix form viz
+	\begin{center}
+		\begin{tabular}{ c  c  c  c  c  }
+			&& $S$& & \\
+			&& $s_1$ & \dots & $s_{\text{dim}(\mathbb{S})}$ \\
+			\cline{3-5}
+			$U(x)$ & $u_1$& \multicolumn{1}{|l}{$C(u_1, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_1, s_{\text{dim}(\mathbb{S})})$} \\
+			& \vdots & \multicolumn{1}{|l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l|}{\vdots} \\
+			& $u_{\text{dim}(\mathbb{U})}$ & \multicolumn{1}{|l}{$C(u_{\text{dim}(\mathbb{U})}, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_{\text{dim}(\mathbb{U})}, s_{\text{dim}(\mathbb{S})})$} \\
+			\cline{3-5}
+		\end{tabular}
+	\end{center}
+
+	
+	\subsubsection{Classification}
+	\label{sec:baycl}
+	Classification is the discrete version of regression, meaning it involves the Robot building a model, $f: \mathbb{W}\times X\mapsto[0,1]$, with associated parameters $\theta\in \mathbb{W}$, that estimates Nature's actions $S$ based on observed data $X$. As opposed to regression, the random variable $S$ is now discrete and the function is identified with the probability of each action
+	\begin{equation}
+		p(S = s|x,\theta,I)= f_{S = s}(\theta,x),
+		\label{f_dist2}
+	\end{equation}
+	with
+	\begin{equation}
+		\sum_{s\in\mathbb{S}} p(S = s|x,\theta,I) = 1.
+	\end{equation}
+	In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\mathbb{U}=\mathbb{S}\cup \text{"Reject"}$. To reivew this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function, with the addition of a reject option at cost $\lambda$. This means
+	\begin{equation}
+		C(U(x),s) = 1- \delta_{U(x),s}+(\lambda-1)\delta_{U(x),\text{"Reject"}}.
+	\end{equation}
+	The optimal decision rule for the robot can the be written
+	\begin{equation}
+		\begin{split}
+			U^*(x) & = \arg\min_{U(x)}\mathbb{E}[C(U(X), S)|x,D,I]\\
+			 &= \arg\min_{U(x)}\bigg(\sum_{s}C(U(x),s)p(S = s|x,D,I)\\
+			 &\qquad\qquad\qquad+(\lambda-1)\delta_{U(x),\text{"Reject"}}\bigg)\\
+			& = \arg\min_{U(x)}\bigg(1- p(S=U(x)|x,D,I)\\
+			&\qquad\qquad\qquad+(\lambda-1)\delta_{U(x),\text{"Reject"}}\bigg).
+		\end{split}
+		\label{eq:expected_cost1}
+	\end{equation}
+	In absence of the reject option, the optimal decision rule is to pick the MAP, similar to theorem \ref{theorem:MAP}. Using equation \eqref{f_dist2} and marginalizing over $\theta$
+	\begin{equation}
+		\begin{split}
+			p(S= U(x)|x,D,I) &= \int p(S = U(x),\theta|x,D,I) d\theta \\
+			& = \int p(S = U(x)|x,\theta,D,I)  p(\theta|x,D,I)d\theta \\
+			& = \int p(S = U(x)|x,\theta,I)  p(\theta|D,I)d\theta \\
+			& = \int f_{S = U(x)}(\theta,x)  p(\theta|D,I)d\theta \\
+			& = \mathbb{E}[f_{S = U(x)}(\theta,x)|D,I],\\
+		\end{split}
+		\label{eq:q5}
+	\end{equation}
+	where for the second to last equality it has been assumed that $p(S = U(x)|\theta,x,D,I) = p(S = U(x)|\theta,x,I)$ since by definition $f$ (see equation \eqref{f_dist2}) produce a $1-1$ map of the input $x$ and $p(\theta|x,D,I) = p(\theta|D,I)$ from axiom \ref{ax:observation_relevance}. From Bayes theorem
+	\begin{equation}
+		p(\theta|D,I) =\frac{p(D_s|D_x,\theta,I)p(\theta|D_x,I)}{p(D_s|D_x,I)},
+	\end{equation}
+	where from axiom \ref{ax:observation_relevance} $p(\theta|D_x,I) = p(\theta|I)$. Assuming the distribution over $\theta$ is normally distributed with zero mean and a precision described by a hyperparameter, $\lambda$, 
+	\begin{equation}
+		p(\theta|I) = \int p(\theta|\lambda,I)p(\lambda|I)d\lambda.
+	\end{equation}
+	where $p(\theta|\lambda,I)p(\lambda|I)$ is given by equation \eqref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
+	\begin{equation}
+		\begin{split}
+			p(D_s|D_x,\theta,I) &=\prod_{i=1}^{n}p(S = s_i|X = x_i,\theta,I)\\
+			&=\prod_{i=1}^{n}f_{s_i}(\theta,x_i)\\
+		\end{split}.
+		\label{lik}
+	\end{equation}
+	At this point equation \eqref{eq:expected_cost1} is fully specified and can be approximated by HMC similarly to the regression case. In this case, the model can be represented by the Hamiltonian 
+	\begin{equation}
+		H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln(p(\theta,\lambda|D,I))+const
+		\label{ham3}
+	\end{equation}
+	where
+	\begin{equation}
+		p(\theta|D,I) = \int d\lambda p(\theta,\lambda|D,I).
+	\end{equation}
+	Using equations \eqref{eq:q5}-\eqref{lik} in equation \eqref{ham3} yields the Hamiltonian
+	\begin{equation}
+		\begin{split}
+			H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln(f_{s_i}(\theta,x_i))+\text{const}\\
+			&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
+			&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
+		\end{split}.
+		\label{ham2}
+	\end{equation}
+	Sampling equation \eqref{ham2} yields a set of coefficients which can be used to compute $\mathbb{E}[f_s(\theta,x)|D,I]$ which in turn (see euation \eqref{eq:q5}) can be used to compute $U^*(x)$.
+	
+	\begin{example}
+		\index{Example: Bayesian decision theory}
+		\emph{Consider a discrete action space with an observation $X=x$ and available data $D$. Picking a class corresponds to an action, so classification can be viewed as a game against nature, where nature has picked the true class and the robot has to pick a class as well. Suppose there are only two classes and the cost function is defined by the matrix}
+		\begin{center}
+			\begin{tabular}{ c  c  c  c }
+				&& $S$& \\
+				&& $s_1$ & $s_2$  \\
+				\cline{3-4}
+				$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{01}$}  \\
+				& $u_2$& \multicolumn{1}{|l}{$\lambda_{10}$} & \multicolumn{1}{l|}{0} \\
+				\cline{3-4}
+			\end{tabular}
+		\end{center}
+		\begin{enumerate}
+			\item \emph{Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $\theta$ and predicting $U(x)=u_1$ if $p(S=s_1|x,D,I) < \theta$ and $U(x)=u_2$ if $p(S=s_2|x,D,I)\geq \theta$. What is $\theta$ as a function of $\lambda_{01}$ and $\lambda_{10}$?}\newline
+			
+			The conditional expected cost
+			\begin{equation}
+				\begin{split}
+					\mathbb{E}_{S|X}[C(u, S)|x,D,I] & = \sum_sC(u,S=s)p(S=s|x,D,I)\\
+					& = C(u,S=s_1)p(S=s_1|x,D,I)\\
+					& \quad+C(u,S=s_2)p(S=s_2|x,D,I)\\
+				\end{split}
+			\end{equation}
+			For the different possible actions
+			\begin{equation}
+				\begin{split}
+					\mathbb{E}_{S|X}[C(u_1, S)|x,D,I] &= \lambda_{01}p(S=s_2|x,D,I),\\
+					\mathbb{E}_{S|X}[C(u_2, S)|x,D,I] &= \lambda_{10}p(S=s_1|x,D,I),\\
+				\end{split}
+			\end{equation}
+			$U(x)=u_1$ iff
+			\begin{equation}
+				\mathbb{E}_{S|X}[C(u_1,S)|x,D,I]<\mathbb{E}_{S|X}[C(u_1,S)|x,D,I])
+			\end{equation}
+			meaning
+			\begin{equation}
+				\begin{split}
+					\lambda_{01}p(S=s_2|x,D,I)&<\lambda_{10}p(S = s_1|x,D,I)\\
+					&=\lambda_{10}(1-p(S =s_2|x,D,I))
+				\end{split}
+			\end{equation}
+			meaning $U(x) = u_0$ iff
+			\begin{equation}
+				p(S=s_2|x,D,I)<\frac{\lambda_{10}}{\lambda_{01}+\lambda_{10}}=\theta
+			\end{equation}
+			
+			
+			\item \emph{Show a loss matrix where the threshold is $0.1$.}\newline
+			
+			$\theta = \frac{1}{10}=\frac{\lambda_{10}}{\lambda_{01}+\lambda_{10}} \Rightarrow \lambda_{01}=9\lambda_{10}$ yielding the loss matrix
+			
+			\begin{center}
+				\begin{tabular}{ c  c  c  c }
+					&& $S$& \\
+					&& $s_1$ & $s_2$  \\
+					\cline{3-4}
+					$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{10}$}  \\
+					& $u_2$& \multicolumn{1}{|l}{$\lambda_{10}$} & \multicolumn{1}{l|}{0} \\
+					\cline{3-4}
+				\end{tabular}
+			\end{center}
+			
+			You may set $\lambda_{10}=1$ since only the relative magnitude is important in relation to making a decision.
+			
+		\end{enumerate}
+		
+		
+	\end{example}
+	
+	
+	\begin{example}
+		\index{Example: Bayesian decision theory}
+		\emph{In many classification problems one has the option of assigning $x$ to class $k\in K$ or, if the robot is too uncertain, choosing a reject option. If the cost for rejection is less than the cost of falsely classifying the object, it may be the optimal action. Define the cost function as follows}
+		\begin{equation}
+			C(u,s)=\begin{cases}
+				0 & \text{if correct classification ($u=s$)}\\
+				\lambda_r & \text{if reject option $u=$ reject}\\
+				\lambda_s & \text{if wrong classification ($u\neq s$)}\\
+			\end{cases}.
+		\end{equation}
+		
+		\begin{enumerate}
+			\item \emph{Show that the minimum cost is obtained if the robot decides on class $u$ if $p(S=u|x,D,I)\geq p(S\neq u|x,D,I)$ and if $p(S=u|x,D,I)\geq 1-\frac{\lambda_r}{\lambda_s}$.}\newline
+			
+			The conditional expected cost if the robot does not pick the reject option, meaning $u\in \mathbb{U}\setminus\text{reject}$
+			\begin{equation}
+				\begin{split}
+					\mathbb{E}_{S|X}[C(u, S)|x,D,I] & = \sum_s C(u,S=s)p(S=s|x,D,I)\\
+					&= \sum_{s\neq u}\lambda_sp(S=s|x,D,I)\\
+					&= \lambda_s(1-p(S=u|x,D,I))
+				\end{split}
+				\label{eq:cost1}
+			\end{equation}
+			where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $S=u$ does not enter the sum. For the third equality it has been used that summing over all but $S=u$ is equal to $1-p(S=u|x,D,I)$. The larger $p(S=u|x,D,I)$, the smaller loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the robot picks the reject option
+			\begin{equation}
+				\begin{split}
+					\mathbb{E}_{S|X}[C(\text{reject}, S)|x,D,I]&= \lambda_r\sum_sp(S=s|x,D,I)\\
+					&=\lambda_r.
+				\end{split}
+				\label{eq:cost2}
+			\end{equation}
+			Equation \eqref{eq:cost1} show picking $\arg\max_{u\in \mathbb{U}\setminus \text{reject}} p(S=u|x,D,I)$ is the best option among classes $u\neq \text{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using equations \eqref{eq:cost1} and \eqref{eq:cost2} yields
+			\begin{equation}
+				(1-p(S=u|x,D,I))\lambda_s< \lambda_r
+			\end{equation}
+			meaning
+			\begin{equation}
+				p(S=u|x,D,I)\geq 1-\frac{\lambda_r}{\lambda_s}.
+			\end{equation}
+			
+			\item \emph{Describe qualitatively what happens as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$.}\newline
+			
+			$\frac{\lambda_r}{\lambda_s}=0$ means rejection is rated as a successful classification -- i.e. no cost associated -- and this become the best option (rejection that is) unless $p(y=j|x)=1$, corresponding to knowing the correct class with absolute certainty. In other words; in this limit rejection is best unless the robot is certain of the correct class. $\frac{\lambda_r}{\lambda_s}=1$ means rejection is rated a misclassification -- i.e. $\lambda_r=\lambda_s$ -- and thus and "automatic cost". Hence, in this case rejection is never chosen. In between the limits, an interpolation of interpretations apply.
+		\end{enumerate}
+	\end{example}
+	
+
+	\section{Making Inference About the Model of Nature}
+	In some instances, the robot is interested in inference related to the model of Nature. The observation $X=x$ by definition does not have an associated known action of Nature and thus by axiom \ref{ax:observation_relevance} is disregarded in this context. From equation \eqref{eq:decision_rule}
+	\begin{equation}
+		U^*=\arg\min_U\mathbb{E}[C(U, S)|D,I],
+		\label{eq:best_decision}
+	\end{equation}
+	where $S=s$ is interpreted as an action related to the model of Nature, e.g. Nature picking a given systematic that generates data.
+	
+	\subsection{Selecting the Robot's Model}
+	\label{sec:model_selection}
+	Suppose the Robot must choose between two competing models, aiming to select the one that best represents Nature's true model. The two competing models could e.g. be two different functions $f$ in regression or two different probability distribution assignments. In this case the Robot has actions $u_1$ and $u_2$ representing picking either model and Nature has two actions $s_1$ and $s_2$ which represent which model that in truth fit Nature's true model best. From equation \eqref{eq:decision_rule}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(u_1, S)|D,I] =&  \sum_{s = s_1,s_2}C(u_1,s)p(S=s|D,I),\\
+			\mathbb{E}[C(u_2, S)|D,I] =&  \sum_{s = s_1,s_2}C(u_2,s)p(S=s|D,I),
+		\end{split}
+	\end{equation}
+	where in this case $u_i=s_i\quad \forall (u_i,s_i)\in \mathbb{U}\times\mathbb{S}$ but the notational distinction is kept to avoid confusion. Since there is no input $X=x$ in this case, the decision rule $U$ is fixed (i.e. it does not depend on $x$). $U = u_1$ is picked iff $\mathbb{E}[C(U = u_1, S)|D,I]<\mathbb{E}[C(U = u_2, S)|D,I]$, meaning
+	\begin{equation}
+		\frac{p(s_1|D,I)}{p(s_2|D,I)}>\frac{C(u_1,s_2)-C(u_2,s_2)}{C(u_2,s_1)-C(u_1,s_1)}.
+	\end{equation}
+	The ratio $\frac{p(s_1|D,I)}{p(s_2|D,I)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written viz
+	\begin{equation}
+		\begin{split}
+			\text{posterior ratio} &= \frac{p(s_1|D,I)}{p(s_2|D,I)}\\
+			& = \frac{p(D_s|s_1,D_x,I)p(s_1|I)}{p(D_s|s_2,D_x,I)p(s_2|I)},
+		\end{split}
+	\end{equation}
+	where for the second equality it has been used that the normalization $p(D|I)$ cancels out between the denominator and nominator and axiom \ref{ax:observation_relevance} has been employed. Given there is no a priori bias towards any model, $p(s_1|I) = p(s_2|I)$
+	\begin{equation}
+		\text{posterior ratio} = \frac{p(D_s|s_1,D_x,I)}{p(D_s|s_2,D_x,I)}.
+		\label{eq:bayes_factor}
+	\end{equation}
+	$p(D_s|s_1,D_x,I)$ and $p(D_s|s_2,D_x,I)$ can then be expanded via marginalization, the chain rule and Bayes theorem until they can be evaluated either analytically or numerically. Equation \eqref{eq:bayes_factor} is referred to as Bayes factor\index{Bayes factor} and as a rule of thumb
+	
+	\begin{definition}[Bayes Factor Interpretation Rule of Thumb]
+		If the probability of either of two models being the model of Nature is more than 3 times likely than the other, the likelier model is accepted. Otherwise the result does not significantly favor either model.
+	\end{definition}
+
+	\begin{example}
+		\index{Example: Bayes factor}
+		\emph{Suppose the robot considers a coin is experiment\index{Coin experiment}. The Robot is told that a coin has been tossed $n=10$ times and $h=9$ heads have been observed. Let the null hypothesis be that the coin is fair, and the alternative hypothesis be that the coin can have any bias, so $p(\theta) = \text{Unif}(\theta|a=0,b=1)$.}\newline
+				
+		\begin{enumerate}
+			\item \emph{Derive Bayes factor}
+			\begin{equation}
+				\text{BF}\equiv \frac{p(D|M_\text{biased coin},I)}{p(D|M_\text{fair coin},I)}.
+			\end{equation}
+			
+			\begin{equation}
+				\begin{split}
+					p(D_s|M_\text{biased coin},I) &= p(D_s|\text{biased coin},I)\\
+					&=\int p(h|n,\theta,I)p(\theta|I)\\
+					&=\frac{1}{N+1},\\
+					p(D|M_\text{fair coin},I) &= p(D_s|\text{fair coin},I)\\
+					&=\int p(h|n,\theta,I)\delta(\theta-\frac{1}{2})\\
+					&=\begin{pmatrix}
+						n\\
+						h
+					\end{pmatrix}\theta^h(1-\theta)^{n-h}|_{\theta=\frac{1}{2}}\\
+					& = \begin{pmatrix}
+						n\\
+						h
+					\end{pmatrix}\frac{1}{2^n},
+				\end{split}
+			\end{equation}
+			where $\begin{pmatrix}
+				n\\
+				h
+			\end{pmatrix}$ is the binomial coefficient,	hereby
+			\begin{equation}
+				\begin{split}
+					\text{BF} &= \frac{2^n}{(n+1)\begin{pmatrix}
+							n\\
+							h
+					\end{pmatrix}}\\
+					&\simeq 9.3
+				\end{split}
+			\end{equation}
+			
+			\item \emph{What if $n=100$ and $h=90$?}
+			\begin{equation}
+				\begin{split}
+					\text{BF}	&\simeq 7.25\cdot 10^{14}
+				\end{split}
+			\end{equation}
+			The coin is unlikely to be fair in either case, but increasingly unlikely when there is more evidence in favor of this hypothesis.
+		\end{enumerate}
+	\end{example}
+	
+
+	
+	\subsection{Parameter Estimation}
+	Let $w_j\in \mathbb{W}$ represent the $j$'th parameter with the associated random variable $W_j$. In case of parameter estimation, the action of Nature is identified with the parameter of interest from the model of Nature's and the Robot's action with the act of estimating the parameters value, meaning
+	\begin{equation}
+		U^*=\arg\min_U\mathbb{E}[C(U, W_j)|D,I],
+	\end{equation}
+	with
+	\begin{equation}
+		\mathbb{E}[C(U, W_j)|D,I] = \int ds C(U,w_j)p(w_j|D,I).
+	\end{equation}
+	At this point, the Robot can select a cost function like in section \ref{sec:assing_cost} and proceed by expanding $p(w_j|D,I)$ similarly to equation \eqref{eq:pa2}. Picking the quadratic cost yields 
+	\begin{equation}
+		\begin{split}
+			U^* = \mathbb{E}[w_j|D,I]
+		\end{split}
+		\label{eq:hest2}
+	\end{equation}
+	$p(w_j|D,I)$ in \eqref{eq:hest2} can be expanded as shown in equation \eqref{eq:pa2}.
+	
+	
+	
+	\begin{example}
+		Consider the scenario where two sets of costumers are subjected to two different products, $A$ and $B$. After exposure to the product, the costumer will be asked whether or not they are satisfied and they will be able to answer "yes" or "no" to this. Denote the probability of a costumer liking product $A/B$ by $w_A/w_B$, respectively. In this context, the probabilities $w_A/w_B$ are parameters of Natures model (similar to how the probability is a parameters for a binomial distribution). What will be of interest is the integral of the joint probability distribution where $w_B>w_A$, meaning
+		\begin{equation}
+			p(w_B > w_A|D,I)= \int_0^1\int_{w_A}^1p(w_A,w_B|D,I)dw_Adw_B.
+			\label{e1}
+		\end{equation}
+		Assuming the costumer sets are independent
+		\begin{equation}
+			\begin{split}
+				p(w_A,w_B|D,I) &= pw_B|w_A,D,I)p(w_A|D,I)\\
+				& = p(w_B|D_A,I)p(w_A|D_A,I),
+			\end{split}
+		\end{equation}
+		with
+		\begin{equation}
+			p(w_i|D_i,I)=\frac{p(D_i|w_i,I)p(w_i|I)}{p(D_i|I)}.
+		\end{equation}
+		Assuming a beta prior and a binomial likelihood yields (since the binomial and beta distributions are conjugate)
+		\begin{equation}
+			p(p_i|D_i,I)=\frac{p_i^{\alpha_i-1}(1-p_i)^{\beta_i-1}}{B(\alpha_i,\beta_i)},
+		\end{equation}
+		where $\alpha_i\equiv \alpha+s_i$, $\beta_i\equiv \beta+f_i$ and $s_i/f_i$ denotes the successes/failure, respectively, registered in the two sets of costumers. Evaluating equation \eqref{e1} yields
+		\begin{equation}
+			p(w_B > w_A|D,I)= \sum_{j=0}^{\alpha_B-1}\frac{B(\alpha_A+j,\beta_A+\beta_B)}{(\beta_B+j)B(1+j,\beta_B)B(\alpha_A,\beta_A)}.
+		\end{equation}
+
+	\end{example}
+
+
+
+
+
+
+
+
+
+

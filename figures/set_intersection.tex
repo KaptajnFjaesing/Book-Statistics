@@ -1,0 +1,34 @@
+\documentclass[tikz,border=2mm]{standalone}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usetikzlibrary[arrows.meta]
+\usetikzlibrary{positioning, shapes, calc}
+
+\tikzset{set/.style={draw,circle,inner sep=0pt,align=center}}
+\tikzset{line/.style = {draw,thick, shorten >=-2pt, shorten <=-2pt}}
+\tikzset{tick/.style={draw, minimum width=0pt, minimum height=2pt, inner sep=0pt, label=below:$#1$},tick/.default={}}
+\begin{document}
+	% Definition of circles
+	\def\firstcircle{(0,0) circle (1.5cm)}
+	\def\secondcircle{(0:2cm) circle (1.5cm)}
+	
+	\colorlet{circle edge}{black!60}
+	\colorlet{circle area}{black!20}
+	
+	\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+		outline/.style={draw=circle edge, thick}}
+	
+	\setlength{\parskip}{5mm}
+	% Set A and B
+	\begin{tikzpicture}
+		\begin{scope}
+			\clip \firstcircle;
+			\fill[filled] \secondcircle;
+		\end{scope}
+		\draw[outline] \firstcircle node {};
+		\draw[outline] \secondcircle node {};
+		\node at (0,1.8) {$A$};
+		\node at (1,-1.8) {$A \cap B$};
+		\node at (2,1.8) {$B$};
+	\end{tikzpicture}
+\end{document}

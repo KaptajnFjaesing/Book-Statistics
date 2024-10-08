@@ -1,0 +1,78 @@
+\chapter{Bayesian Statistics Introduction}
+Bayesian statistics is based on definition \ref{def:bayesian_statistics}, where probability is viewed as a subjective degree of belief in the likelihood of an event occurring and parameters are modeled as random variables. The Bayesian framework originally come from the work of \citet{Bayes:63} and \citet{laplace_thorie_1812} with much of the modern discussions and formalism created later by \citet{Finetti1937LaP,Jeffreys1940} and \citet{Savage1954}. Although Bayesian statistics adopts a subjectivistic interpretation of probability, given established information the derived probabilities follow deductively from probability theory. \newline
+Following section \ref{sec:framing_statistics}, statistics is framed as a game between a Robot and Nature in which each make decisions and the Robot is penalized for deviations from Natures actions via a cost function. The goal of the Robot is to minimize the expected cost associated with its decisions. To achieve this goal, the Robot utilizes its observations $x,D$ and background information $I$ to inform its decision-making process. Treating Natures decision $s\in \Omega_S$ as a random variable, the conditional expected cost, given the observations $D =\{(X_i=x_i, S_i = s_i)|i:n \}$, can be written~\cite{murphy2023probabilistic}
+\begin{equation}
+	\begin{split}
+		\mathbb{E}[C(U, S)|I] &= \int dD dx ds  C(U(x,D),s) p(X=x,S=s,D|I)\\
+		& = \int d\tilde{D} ds  C(U(\tilde{D}),s) p(S=s,\tilde{D}|I)
+	\end{split}
+	\label{eq:conditional_expected_cost}
+\end{equation}
+where $\tilde{D} = \{D,X= x\}$ and the Robot aims to find the decision rule which minimizes equation \eqref{eq:conditional_expected_cost}, meaning
+\begin{equation}
+	U^* = \arg\min_{U} \mathbb{E}[C(U, S)|I].
+	\label{eq:decision_rule_x}
+\end{equation}	
+From theorem \ref{theorem:total_expectation}
+\begin{equation}
+	\mathbb{E}[C(U, S)|I] = \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]].
+	\label{eq:total2}
+\end{equation}
+Using equation \eqref{eq:total2} in equation \eqref{eq:decision_rule_x}
+\begin{equation}
+	\begin{split}
+		U^* &= \arg\min_{U} \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]]\\
+		&= \arg\min_{U} \int dxp(\tilde{D}|I) \mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I].
+	\end{split}
+	\label{eq:decision_rule2}
+\end{equation}
+Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
+\begin{equation}
+	\begin{split}
+		U^*(x) &= \arg\min_{U(x)} \mathbb{E}_{S|\tilde{D}}[C(U(x), S)|\tilde{D},I]\\
+		& = \arg\min_{U(x)}\int  ds C(U(x,D),s) p(S=s|X=x,D,I).
+	\end{split}
+	\label{eq:decision_rule3}
+\end{equation}
+The probability $p(S=s|X=x,D,I)$ depend on the parameters $w_1,\dots w_n$ of the statistical model. Introducing the shorthand notation $W=w_1\dots W=w_n \rightarrow w$, $dw_1\dots dw_n \rightarrow dw$ and $X=x \rightarrow x$, then
+\begin{equation}
+	\begin{split}
+		p(s|x,D,I) &= \int dw p(w,s|x,D,I)\\
+		& = \int dw p(s|w,x,D,I)p(w|x,D,I)
+	\end{split}
+	\label{eq:hest1}
+\end{equation}
+\begin{example}
+	Writing out the shorthand notation
+	\begin{equation}
+		\begin{split}
+			p(W=w_1,\dots,W= w_n,S = s|X = x,D,I)&\rightarrow p(w,s|x,D,I),\\
+			dw_1\dots dw_n &\rightarrow dw.\\
+		\end{split}
+	\end{equation}
+\end{example}
+
+To evaluate $p(w|D,I)$ a combination of marginalization, Bayes' theorem, and the chain rule (see chapter \ref{chp:probaiblity_theory}) can be employed viz
+\begin{equation}
+	\begin{split}
+		p(w|x,D,I) &= p(w|D,I)\\
+		&= \frac{p(D_s|w,D_x,I)p(w|I)}{p(D_s|D_x,I)},
+	\end{split}
+	\label{eq:pa2}
+\end{equation}
+where $D_s= \{S=s_1\dots S=s_n\}$, $D_x = \{X=x_1,\dots X=x_n\}$ and $p(D_s|D_x,I)$ can be expanded via marginalization and axiom \ref{ax:observation_relevance} has been used for the first and second equality.
+
+\begin{axiom}[Relevance of Observations]
+	\label{ax:observation_relevance}
+	The Robot's observations are relevant for estimating Nature's model only when they map to known actions of Nature.
+\end{axiom}
+
+$p(w|I)$ is the Robot's prior belief about Nature's actions for $w$. $p(D_s|w,D_x,I)$ is the likelihood of the past observations of Nature's actions, and $p(w|D,I)$ called the posterior distribution represent the belief of the Robot after seeing data. The prior distribution depends on parameters that must be specified and cannot be learned from data since it reflects the Robot's belief before observing data. These parameters are included in the background information, $I$. From equation \eqref{eq:pa2}, it is evident that, given the relevant probability distributions are specified, the probability of a parameter taking a specific value follows deductively from probability theory. The subjectivity arises from the assignment and specification of probability distributions which depend on the background information.
+
+\begin{example}
+	In general the random variable $X$ represent the observations the Robot has available that are related to the decision Nature is going to make. However, this information may not be given, in which case $D_x=\emptyset$ and consequently $D = D_s$. In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From equation \eqref{eq:decision_rule} the optimal action for the Robot can be written
+	\begin{equation}
+		U^*=\arg\min_U\mathbb{E}[C(U, S)|D_s,I].
+		\label{eq:best_decision1}
+	\end{equation}
+\end{example}

@@ -1,0 +1,249 @@
+\chapter{Bayesian Decision Theory}
+In Chapter~\ref{chp:probaiblity_theory}, it was shown that probability is a numerical representation of rational beliefs about the state of the world. The ultimate goal is to convert this belief into actions, and decision theory considers the optimal way to do this. Any statistical decision problem can be formulated as a game against nature. There are two players or decision makers (DMs) in the game:
+\begin{enumerate}
+	\item \textbf{Robot:} This is the name given to the primary DM.
+	
+	\item \textbf{Nature:} This DM is a mysterious force that is unpredictable to the robot. It has its own set of actions, and it can choose them in a way that interferes with the achievements of the robot. Nature can be considered as a synthetic DM that is constructed for the purposes of modeling uncertainty in the decision-making or planning process.
+\end{enumerate}
+
+Imagine that the robot and nature each make a decision by choosing an action from a set, $u \in \mathbb{U}$ and $s \in \mathbb{S}$, respectively. $\mathbb{U}$ is referred to as the action space, and $\mathbb{S}$ as the nature action space. The robot receives a penalty depending on the two decisions made, and the objective of the game is to minimize this penalty. Let $\Omega$ be the sample space representing all possible outcomes of the underlying probability space $(\Omega, \mathcal{F},\mathbb{P})$. Random variables $X: \Omega \mapsto \mathbb{X}$ and $S: \Omega \mapsto \mathbb{S}$ are associated with the robot's observations and nature's actions, respectively. The random variable $X$ maps elements to the set $\mathbb{X}$, representing the information available to the robot regarding the decision nature will make, while $S$ maps elements to the set $\mathbb{S}$, characterizing the different possible actions or states of nature. Given the observation $X=x$ as well as a set of past observations $D= \{(X=x_1,S=s_1),(X=x_2,S=s_2),\dots (X=x_n,S=s_n)\}$, the objective of the game becomes to formulate a decision rule that specifies the optimal action given the available observations $x$ without explicit knowledge of the true state of nature $s$.
+\begin{definition}[Decision Rule]
+	\label{def:decision_rule}
+	A decision rule is a function $U$ from a measurable space $\mathbb{X}$ (the numerical representation of a random variable) to a set of possible actions $\mathbb{U}$, meaning
+	\begin{equation}
+		U: \mathbb{X} \mapsto \mathbb{U}.
+	\end{equation}
+\end{definition}
+
+\begin{definition}[Cost Function]
+	\label{def:cost_function}
+	A cost function associates a numerical penalty depending on decision $u \in \mathbb{U}$ and $s \in \mathbb{S}$,
+	\begin{equation}
+		C: \mathbb{U} \times \mathbb{S} \mapsto \mathbb{R}.
+	\end{equation}
+\end{definition}
+
+The robot's goal is to minimize the expected cost associated with its decisions. To achieve this goal, the robot utilizes its observations $x,D$ and background information $I$ to inform its decision-making process. The conditional expected cost, given the observations, is given by
+\begin{equation}
+	\mathbb{E}[C(U, S)|D,I] = \int dx ds C(U(x),s) p(x,s|D,I).
+\end{equation}
+and the robot aims to find a decision rule $U(x)$ that minimizes this conditional expected cost, meaning
+\begin{equation}
+	U = \arg\min_{u \in \mathbb{U}} \mathbb{E}[C(u, S)|D,I].
+	\label{eq:decision_rule}
+\end{equation}	
+From theorem \ref{theorem:total_expectation}
+\begin{equation}
+	\mathbb{E}[C(U, S)|D,I] = \mathbb{E}_X[\mathbb{E}_{S|X}[C(U, S)|x,D,I]].
+	\label{eq:total2}
+\end{equation}
+Using equation \eqref{eq:total2} in equation \eqref{eq:decision_rule}
+\begin{equation}
+	\begin{split}
+		U &= \arg\min_{u \in \mathbb{U}} \mathbb{E}_X[\mathbb{E}_{S|X}[C(U, S)|x,D,I]]\\
+		&= \arg\min_{u \in \mathbb{U}} \int dxp(x|D,I) \mathbb{E}[C(U, S)|x,D,I].
+	\end{split}
+	\label{eq:decision_rule2}
+\end{equation}
+Since $p(x|D,I)$ is a non-negative function, the minimizer of the integral is the same as the mionimizer of the conditional expectation, meaning
+\begin{equation}
+	\begin{split}
+		U(x) &= \arg\min_{u \in \mathbb{U}} \mathbb{E}_{S|X}[C(U, S)|x,D,I]\\
+		& = \arg\min_{u \in \mathbb{U}}\int  ds C(U(x),s) p(s|x,D,I).
+	\end{split}
+	\label{eq:decision_rule3}
+\end{equation}
+
+\begin{example}
+	\index{Example: Bayesian decision theory}
+	\emph{Consider a classification case given an input $X=x$ and available data $D$. Picking a class corresponds to an action, so classification can be viewed as a game against nature, where nature has picked the true class and the robot has to pick a class as well. Suppose there are only two classes and the cost function is defined by the matrix}
+	\begin{center}
+		\begin{tabular}{ c  c  c  c }
+			&& $s$& \\
+			&& $0$ & $1$  \\
+			\cline{3-4}
+			$u$ & 0& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{01}$}  \\
+			& 1& \multicolumn{1}{|l}{$\lambda_{10}$} & \multicolumn{1}{l|}{0} \\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	\begin{enumerate}
+		\item \emph{Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $\theta$ and predicting $u=0$ if $p(s=0|x,D,I) < \theta$ and $u=1$ if $p(s=1|x,D,I)\geq \theta$. What is $\theta$ as a function of $\lambda_{01}$ and $\lambda_{10}$?}\newline
+		
+		The conditional expected cost
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(u, S)|x,D,I] & = \sum_kC(u,s=k)p(s=k|x,D,I)\\
+				& = C(u,s=0)p(s=0|x,D,I)\\
+				& \quad+C(u,s=1)p(s=1|x,D,I)\\
+			\end{split}
+		\end{equation}
+		For the different possible actions
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(u= 0, S)|x,D,I] &= \lambda_{01}p(s=1|x,D,I),\\
+				\mathbb{E}_{S|X}[C(u= 1, S)|x,D,I] &= \lambda_{10}p(s=0|x,D,I),\\
+			\end{split}
+		\end{equation}
+		$u=0$ if $\mathbb{E}_{S|X}[C(S,u= 0)|x,D,I]<\mathbb{E}_{S|X}[C(S,u= 1)|x,D,I])$ meaning $\lambda_{01}p(s=1|x,D,I)<\lambda_{10}p(s=0|x,D,I)=\lambda_{10}(1-p(s=1|x,D,I))\Rightarrow a=0 \iff p(s=1|x,D,I)<\frac{\lambda_{10}}{\lambda_{01}+\lambda_{10}}=\theta$.
+		
+		\item \emph{Show a loss matrix where the threshold is $0.1$.}\newline
+		
+		$\theta = \frac{1}{10}=\frac{\lambda_{10}}{\lambda_{01}+\lambda_{10}} \Rightarrow \lambda_{01}=9\lambda_{10}$ yielding the loss matrix
+		
+		\begin{center}
+			\begin{tabular}{ c  c  c  c }
+				&& $s$& \\
+				&& $0$ & $1$  \\
+				\cline{3-4}
+				$u$ & 0& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{10}$}  \\
+				& 1& \multicolumn{1}{|l}{$\lambda_{10}$} & \multicolumn{1}{l|}{0} \\
+				\cline{3-4}
+			\end{tabular}
+		\end{center}
+		
+		You may set $\lambda_{10}=1$ since only the relative magnitude is important in relation to making a decision.
+		
+	\end{enumerate}
+	
+	
+\end{example}
+
+
+\begin{example}
+	\index{Example: Bayesian decision theory}
+	\emph{In many classification problems one has the option of assigning $x$ to class $k\in K$ or, if the robot is too uncertain, choosing a reject option. If the cost for rejection is less than the cost of falsely classifying the object, it may be the optimal action. Define the cost function as follows}
+	\begin{equation}
+		C(u,s)=\begin{cases}
+			0 & \text{if correct classification ($u=s$)}\\
+			\lambda_r & \text{if reject option $u=$ reject}\\
+			\lambda_s & \text{if wrong classification ($u\neq s$)}\\
+		\end{cases}.
+	\end{equation}
+	
+	\begin{enumerate}
+		\item \emph{Show that the minimum cost is obtained if the robot decides on class $u$ if $p(s=u|x,D,I)\geq p(s\neq u|x,D,I)$ and if $p(s=u|x,D,I)\geq 1-\frac{\lambda_r}{\lambda_s}$.}\newline
+		
+		The conditional expected cost if the robot does not pick the reject option, meaning $u\in \mathbb{U}\setminus\text{reject}$
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(u, S)|x,D,I] & = \sum_k C(u,s=k)p(s=k|x,D,I)\\
+				&= \sum_{k\neq u}\lambda_sp(s=k|x,D,I)\\
+				&= \lambda_s(1-p(s=u|x,D,I))
+			\end{split}
+			\label{eq:cost1}
+		\end{equation}
+		where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $s=u$ does not enter the sum. For the third equality it has been used that summing over all but $s=u$ is equal to $1-p(s=u|x,D,I)$. The larger $p(s=u|x,D,I)$, the smaller loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the robot picks the reject option
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(u = \text{reject}, S)|x,D,I]&=\sum_kC(u = \text{reject}, s=k)p(s=k|x,D,I)\\
+				&= \lambda_r\sum_kp(s=k|x,D,I)\\
+				&=\lambda_r.
+			\end{split}
+			\label{eq:cost2}
+		\end{equation}
+		Equation \eqref{eq:cost1} show picking $\arg\max_{u\in \mathbb{U}\setminus \text{reject}} p(s=u|x,D,I)$ is the best option among classes $u\neq \text{reject}$. To be the best option overall, it also needs to have lower cost than the reject option, meaning
+		\begin{equation}
+			\mathbb{E}_{S|X}[C(u\neq \text{reject}, S)|x,D,I]\leq \mathbb{E}_{S|X}[C(u= \text{reject}, S)|x,D,I].
+			\label{eq:cost3}
+		\end{equation}
+		Using equations \eqref{eq:cost1} and \eqref{eq:cost2} in equation \eqref{eq:cost3} yields
+		\begin{equation}
+			(1-p(s=u|x,D,I))\lambda_s\leq \lambda_r \Rightarrow p(s=u|x,D,I)\geq 1-\frac{\lambda_r}{\lambda_s}.
+		\end{equation}
+		
+		\item \emph{Describe qualitatively what happens as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$.}\newline
+		
+		$\frac{\lambda_r}{\lambda_s}=0$ means rejection is rated as a successful classification -- i.e. no cost associated -- and this become the best option (rejection that is) unless $p(y=j|x)=1$, corresponding to knowing the correct class with absolute certainty. In other words; in this limit rejection is best unless the robot is certain of the correct class. $\frac{\lambda_r}{\lambda_s}=1$ means rejection is rated a misclassification -- i.e. $\lambda_r=\lambda_s$ -- and thus and "automatic cost". Hence, in this case rejection is never chosen. In between the limits, an interpolation of interpretations apply.
+	\end{enumerate}
+\end{example}
+
+\begin{example}
+	\index{Example: Bayesian decision theory}
+	\emph{In many applications the classifier is allowed to "reject" a test example rater than classifying it into one of the classes. Consider, for example, a case in which the cost of a misclassification is $10$ but the cost of having a robot make the decision is only $3$. In this case the cost function is defined by the matrix}
+	
+	\begin{center}
+		\begin{tabular}{ c  c  c  c }
+			&& $s$& \\
+			&& $0$ & $1$  \\
+			\cline{3-4}
+			$u$ & 0& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$10$}  \\
+			& 1& \multicolumn{1}{|l}{$10$} & \multicolumn{1}{l|}{0} \\
+			& reject& \multicolumn{1}{|l}{$3$} & \multicolumn{1}{l|}{$3$} \\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	
+	\begin{enumerate}
+		\item \emph{Suppose $p(s=1|x,D,I)=0.2$. Which decision minimize the expected loss?}
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(u, S)|x,D,I]&=\sum_kC(s=k,u)p(s=k|x,D,I)\\
+				&=C(s=1,u)0.2+C(s=0,u)0.8,\\
+				\mathbb{E}_{S|X}[C(u=0, S)|x,D,I] &= 0.2\cdot 10 \\
+				&= 2,\\
+				\mathbb{E}_{S|X}[C(u=1, S)|x,D,I] &= 0.8\cdot 10 \\
+				&= 8,\\
+				\mathbb{E}_{S|X}[C(u= \text{reject}, S)|x,D,I] &= 0.2\cdot 3+0.8\cdot3 \\
+				&= 3.\\
+			\end{split}
+		\end{equation}
+		Hence, the best option (lowest expected loss) is $u=0$.
+		
+		\item \emph{Suppose now $p(s=1|x,D,I)=0.4$. Now which decision minimize the expected loss?}
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|X}[C(u=0, S)|x,D,I] &= 0.4\cdot 10 \\
+				&= 4,\\
+				\mathbb{E}_{S|X}[C(u=1, S)|x,D,I] &= 0.6\cdot 10 \\
+				&= 6,\\
+				\mathbb{E}_{S|X}[C(u= \text{reject}, S)|x,D,I] &= 0.4\cdot 3+0.6\cdot3 \\
+				&= 3.\\
+			\end{split}
+		\end{equation}
+		The best option is class $u=\text{reject}$.
+		
+		\item \emph{Show that in general, for this loss matrix, but for any posterior distribution, there will be two thresholds $\theta_0$ and $\theta_1$ such that the optimal decision is to predict $0$ if $p(s=1|x,D,I)<\theta_0$, reject if $\theta_0\leq p(s=1|x,D,I)\leq \theta_1$ and predict $1$ if $p(s=1|x,D,I)>\theta_1$. What are these thresholds?}
+		
+		\begin{equation}
+			\begin{split}
+				&\mathbb{E}_{S|X}[C(u=0, S)|x,D,I] = 10 p(s=1|x,D,I),\\
+				&\mathbb{E}_{S|X}[C(u=1, S)|x,D,I] = 10(1-p(s=1|x,D,I)),\\
+				&\mathbb{E}_{S|X}[C(u= \text{reject}, S)|x,D,I] = 3.\\
+			\end{split}
+		\end{equation}
+		$u=0$ is the best option if
+		\begin{equation}
+			\mathbb{E}_{S|X}[C(u=0, S)|x,D,I] <\mathbb{E}_{S|X}[C(u=1, S)|x,D,I]
+		\end{equation}
+		corresponding to 
+		\begin{equation}
+			p(s=1|x,D,I)<\frac{1}{2}
+		\end{equation}
+		and 
+		\begin{equation}
+			\mathbb{E}_{S|X}[C(u=0, S)|x,D,I] <\mathbb{E}_{S|X}[C(u=\text{reject}, S)|x,D,I]
+		\end{equation}
+		corresponding to 
+		\begin{equation}
+			p(s=1|x,D,I)<\frac{3}{10}.
+		\end{equation}
+		The strictest condition apply, so $\theta_0=\frac{3}{10}$. Similarly, $u=1$ is the best decision if 
+		\begin{equation}
+			\mathbb{E}_{S|X}[C(u=1, S)|x,D,I] <\mathbb{E}_{S|X}[C(u=0, S)|x,D,I]
+		\end{equation}
+		corresponding to
+		\begin{equation}
+			p(s=1|x,D,I)>\frac{1}{2}
+		\end{equation}
+		and 
+		\begin{equation}
+			\mathbb{E}_{S|X}[C(u=1, S)|x,D,I] <\mathbb{E}_{S|X}[C(u=\text{reject}, S)|x,D,I]
+		\end{equation}
+		corresponding to 
+		\begin{equation}
+			p(s=1|x,D,I)> 1-\frac{3}{10}
+		\end{equation}
+		Hence, $\theta_1= \frac{7}{10}$.
+	\end{enumerate}
+\end{example}

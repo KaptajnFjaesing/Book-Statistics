@@ -1,0 +1,37 @@
+\documentclass[tikz,border=2mm]{standalone}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning, shapes, calc}
+
+\tikzset{set/.style={draw,circle,inner sep=0pt,align=center}}
+\tikzset{line/.style = {draw,thick, shorten >=-2pt, shorten <=-2pt}}
+\tikzset{tick/.style={draw, minimum width=0pt, minimum height=2pt, inner sep=0pt, label=below:$#1$},tick/.default={}}
+
+\begin{document}
+	\colorlet{circle edge}{black!60}
+	\colorlet{circle area}{black!20}
+	
+	\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+		outline/.style={draw=circle edge, thick}}
+	
+	\setlength{\parskip}{5mm}
+	
+	% Set A and B with A being a subset of B
+	\begin{tikzpicture}
+		% Define the larger circle B
+		\def\outercircle{(0,0) circle (2.5cm)}
+		% Define the smaller circle A inside B
+		\def\innercircle{(0,0) circle (1.5cm)}
+		
+		% Draw the outer circle B
+		\draw[outline] \outercircle node {};
+		% Draw the inner circle A
+		\draw[outline] \innercircle node {};
+		
+		% Label for the sets
+		\node at (0,1.8) {$A$};
+		\node at (0,2.8) {$B$};
+		%\node at (0,-3.5) {$A \subseteq B$};
+	\end{tikzpicture}
+\end{document}

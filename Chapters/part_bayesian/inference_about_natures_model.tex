@@ -1,0 +1,58 @@
+\chapter{Making Inference About the Model of Nature}
+In some instances, the robot is interested in inference related to the model of Nature. The observation $X=x$ by definition does not have an associated known action of Nature and thus by axiom \ref{ax:observation_relevance} is disregarded in this context. From equation \eqref{eq:decision_rule}
+\begin{equation}
+	U^*=\arg\min_U\mathbb{E}[C(U, S)|D,I],
+	\label{eq:best_decision}
+\end{equation}
+where $S=s$ is interpreted as an action related to the model of Nature, e.g. Nature picking a given systematic that generates data.
+
+\section{Selecting the Robot's Model}
+\label{sec:model_selection}
+Suppose the Robot must choose between two competing models, aiming to select the one that best represents Nature's true model. The two competing models could e.g. be two different functions $f$ in regression or two different probability distribution assignments. In this case the Robot has actions $u_1$ and $u_2$ representing picking either model and Nature has two actions $s_1$ and $s_2$ which represent which model that in truth fit Nature's true model best. From equation \eqref{eq:decision_rule}
+\begin{equation}
+	\begin{split}
+		\mathbb{E}[C(u_1, S)|D,I] =&  \sum_{s = s_1,s_2}C(u_1,s)p(S=s|D,I),\\
+		\mathbb{E}[C(u_2, S)|D,I] =&  \sum_{s = s_1,s_2}C(u_2,s)p(S=s|D,I),
+	\end{split}
+\end{equation}
+where in this case $u_i=s_i\quad \forall (u_i,s_i)\in \mathbb{U}\times\mathbb{S}$ but the notational distinction is kept to avoid confusion. Since there is no input $X=x$ in this case, the decision rule $U$ is fixed (i.e. it does not depend on $x$). $U = u_1$ is picked iff $\mathbb{E}[C(U = u_1, S)|D,I]<\mathbb{E}[C(U = u_2, S)|D,I]$, meaning
+\begin{equation}
+	\frac{p(s_1|D,I)}{p(s_2|D,I)}>\frac{C(u_1,s_2)-C(u_2,s_2)}{C(u_2,s_1)-C(u_1,s_1)}.
+\end{equation}
+The ratio $\frac{p(s_1|D,I)}{p(s_2|D,I)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written viz
+\begin{equation}
+	\begin{split}
+		\text{posterior ratio} &= \frac{p(s_1|D,I)}{p(s_2|D,I)}\\
+		& = \frac{p(D_s|s_1,D_x,I)p(s_1|I)}{p(D_s|s_2,D_x,I)p(s_2|I)},
+	\end{split}
+\end{equation}
+where for the second equality it has been used that the normalization $p(D|I)$ cancels out between the denominator and nominator and axiom \ref{ax:observation_relevance} has been employed. Given there is no a priori bias towards any model, $p(s_1|I) = p(s_2|I)$
+\begin{equation}
+	\text{posterior ratio} = \frac{p(D_s|s_1,D_x,I)}{p(D_s|s_2,D_x,I)}.
+	\label{eq:bayes_factor}
+\end{equation}
+$p(D_s|s_1,D_x,I)$ and $p(D_s|s_2,D_x,I)$ can then be expanded via marginalization, the chain rule and Bayes theorem until they can be evaluated either analytically or numerically. Equation \eqref{eq:bayes_factor} is referred to as Bayes factor\index{Bayes factor} and as a rule of thumb
+
+\begin{definition}[Bayes Factor Interpretation Rule of Thumb]
+	If the probability of either of two models being the model of Nature is more than 3 times likely than the other, the likelier model is accepted. Otherwise the result does not significantly favor either model.
+\end{definition}
+
+
+
+\section{Parameter Estimation}
+Let $w_j\in \mathbb{W}$ represent the $j$'th parameter with the associated random variable $W_j$. In case of parameter estimation, the action of Nature is identified with the parameter of interest from the model of Nature's and the Robot's action with the act of estimating the parameters value, meaning
+\begin{equation}
+	U^*=\arg\min_U\mathbb{E}[C(U, W_j)|D,I],
+\end{equation}
+with
+\begin{equation}
+	\mathbb{E}[C(U, W_j)|D,I] = \int ds C(U,w_j)p(w_j|D,I).
+\end{equation}
+At this point, the Robot can select a cost function like in section \ref{sec:assing_cost} and proceed by expanding $p(w_j|D,I)$ similarly to equation \eqref{eq:pa2}. Picking the quadratic cost yields 
+\begin{equation}
+	\begin{split}
+		U^* = \mathbb{E}[w_j|D,I]
+	\end{split}
+	\label{eq:hest2}
+\end{equation}
+$p(w_j|D,I)$ in \eqref{eq:hest2} can be expanded as shown in equation \eqref{eq:pa2}.

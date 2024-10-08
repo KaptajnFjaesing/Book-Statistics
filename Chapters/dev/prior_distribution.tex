@@ -1,0 +1,151 @@
+\chapter{The prior distribution}
+From equations \eqref{bt2} and \eqref{bt3} it is clear that, given established background information (and consequently prior) there is no subjectivity in the probability of an event. How to then establish prior information in a consistent and meaningful way has been heavily debated. \citet{Bernoulli1713} and \citet{laplace_thorie_1812} defined the principle of insufficient reason, which state that in the absence of relevant evidence, one should distribute probability of events equally among all possible events, that is
+\begin{equation}
+	p(\theta|I)=const,
+\end{equation}
+which is called a uniform prior\index{Uniform prior}. Although apparently objective, the uniform prior is in fact subjective in that it is not invariant under parameter transformations~\citep{Kass1996}. Another issue of the uniform prior is that -- if defined over all space -- it is improper\index{Improper prior}, meaning it does not integrate to unity\footnote{This is particularly important in modern Bayesian models where high dimensional integration is often carried out using Gibbs sampling or MCMC. Here it is not inherently clear if the sampled posterior is improper.}. To remedy this, one may constrain the uniform prior to a finite region of parameter space. However, in order to do so, the prior become more subjective as the defined region is inherently subjective. 
+
+
+
+\begin{example}
+	\index{Example: Variable change}
+	Let $p(\theta|I)=a$, with $a=const$, and take $\phi=e^\theta$. Then~\citep{Sivia2006} 
+	\begin{equation}
+		\begin{split}
+			p(\phi|I)&=p(\theta|I)\bigg|\frac{d\theta}{d\phi}\bigg|\\
+			&=\frac{a}{\phi},
+		\end{split}
+	\end{equation}
+	which is non-uniform. This means that the uniform prior is inconsistent in its representation of lack of knowledge, since if nothing is known about $\theta$, nothing should be known about any function of $\theta$. Hence, the uniform prior is subjective in its choice of parameter that should have a uniform prior.
+\end{example}
+To address the issue of invariance \citet{Jeffreys46} proposed his general rule for determining the prior\index{Jeffreys prior} as
+\begin{equation}
+	p(\theta|I)\propto \sqrt{|\tilde{I}(\theta)|},
+	\label{j1}
+\end{equation}
+with 
+\begin{equation}
+	\tilde{I}_{ij}(\Theta)=-\mathbb{E}\bigg[-\frac{\partial^2}{\partial \theta_i\partial \theta_j}\bigg(\ln(p(\mathcal{D}|\theta,I))\bigg)\bigg]
+	\label{f1}
+\end{equation}
+being the expected Fisher information matrix and $||$ denoting the determinant.
+\begin{example}
+	\index{Example: One dimensional Jeffreys prior}
+	Consider the one dimensional case with $\mathcal{D}=x$, $\phi=\phi(\theta)$ and $p(\theta|I)$ the Jeffreys prior for $\theta$. From a variable change
+	\begin{equation}
+		\begin{split}
+			p(\phi|I)&=p(\theta|I)\bigg|\frac{d\theta}{d\phi}\bigg|\\
+			&=\sqrt{\bigg|-\mathbb{E}\bigg[-\frac{\partial^2}{\partial \theta^2}\bigg(\ln(p(x|\theta,I))\bigg)\bigg]\bigg|}\bigg|\frac{d\theta}{d\phi}\bigg|.
+		\end{split}
+		\label{e3}
+	\end{equation}
+	Now
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}\bigg[-\frac{\partial^2}{\partial \theta^2}\bigg(\ln(p(x|\theta,I))\bigg)\bigg]&=\int \frac{\partial^2}{\partial\theta^2}\bigg(\ln(p(x|\theta,I))\bigg)p(x|\theta,I)dx\\
+			&=\int \bigg[\frac{1}{p(x|\theta,I)}\frac{\partial^2p(x|\theta,I)}{\partial\theta^2}-\bigg(\frac{1}{p(x|\theta,I)}\frac{\partial p(x|\theta,I)}{\partial\theta}\bigg)^2\bigg]p(x|\theta,I)dx\\
+			&=\int \frac{\partial^2p(x|\theta,I)}{\partial\theta^2}dx-\int\bigg(\frac{\partial\ln(p(x|\theta,I))}{\partial\theta}\bigg)^2p(x|\theta,I)dx\\
+			&=-\mathbb{E}\bigg[\bigg(\frac{\partial\ln(p(x|\theta,I))}{\partial\theta}\bigg)^2\bigg],
+		\end{split}
+		\label{e2}
+	\end{equation}
+	where it has been used that $\int \frac{\partial^2p(x|\theta,I)}{\partial\theta^2}dx=\frac{\partial^2}{\partial\theta^2}\int p(x|\theta,I)dx=0$ for the last equality. Using equation \eqref{e2} in equation \eqref{e3}
+	\begin{equation}
+		\begin{split}
+			p(\phi|I)&\propto \sqrt{\bigg|\mathbb{E}\bigg[\bigg(\frac{\partial\ln(p(x|\theta,I))}{\partial\theta}\bigg)^2\bigg]\bigg|}\bigg|\frac{d\theta}{d\phi}\bigg|.
+		\end{split}
+		\label{e4}
+	\end{equation}
+	By squaring both sides of equation \eqref{e4} $\big|\frac{\partial\theta}{\partial\phi}\big|$ can be used to change variables on the derivative and so
+	\begin{equation}
+		\begin{split}
+			p(\phi|I)&\propto \sqrt{\bigg|\mathbb{E}\bigg[\bigg(\frac{\partial\ln(p(x|\phi,I))}{\partial\phi}\bigg)^2\bigg]\bigg|}\\
+			&\propto \sqrt{|\tilde{I}(\phi)|},
+		\end{split}
+		\label{e5}
+	\end{equation}
+	which show that Jeffreys general rule transform regularly and as such the subjectivity of the uniform prior is not present in Jeffreys prior.
+\end{example}
+
+\begin{example}
+	\label{ex:gaus1}
+	\index{Example: One dimensional Jeffreys prior}
+	\index{Example: Uniform prior is subjective}
+	Consider the one dimensional case with $\mathcal{D}=x$ and let 
+	\begin{equation}
+		p(x|\mu,I)=\sqrt{\frac{\lambda}{2\pi}} e^{-\frac{\lambda}{2}(x-\mu)^2},
+	\end{equation}
+	with $\lambda$ known. Then Jeffreys prior,
+	\begin{equation}
+		\begin{split}
+			p(\mu|I)&\propto\sqrt{\bigg|-\mathbb{E}\bigg[-\frac{\partial^2}{\partial \mu^2}\bigg(\ln(p(x|\mu,I))\bigg)\bigg]\bigg|}\\
+			&=\lambda\\
+			&=const,
+		\end{split}
+	\end{equation}
+	is uniform.
+\end{example}
+
+\begin{example}
+	\index{Example: One dimensional Jeffreys prior}
+	Consider the one dimensional case with $\mathcal{D}=x$ and let 
+	\begin{equation}
+		p(x|\lambda,I)=\sqrt{\frac{\lambda}{2\pi}} e^{-\frac{\lambda}{2}(x-\mu)^2},
+	\end{equation}
+	with $\mu$ known. Then Jeffreys prior is given by
+	\begin{equation}
+		\begin{split}
+			p(\lambda|I)&\propto \sqrt{\bigg|-\mathbb{E}\bigg[-\frac{\partial^2}{\partial \lambda^2}\bigg(\ln(p(x|\lambda,I))\bigg)\bigg]\bigg|}\\
+			&=\lambda^{-1}.
+		\end{split}
+	\end{equation}
+	Taking $\lambda=\sigma^{-2}$, with $\sigma$ being the standard deviation, yield
+	\begin{equation}
+		\begin{split}
+			p(\sigma|I)&=p(\lambda|I)\bigg|\frac{d\lambda}{d\sigma}\bigg|\\
+			&\propto \sigma^{-1}.
+		\end{split}
+	\end{equation}	
+\end{example}
+\begin{example}
+	\index{Example: One dimensional Jeffreys prior}
+	Consider the one dimensional case with $\mathcal{D}=x$ and let 
+	\begin{equation}
+		p(x|\lambda,\mu,I)=\sqrt{\frac{\lambda}{2\pi}} e^{-\frac{\lambda}{2}(x-\mu)^2}.
+	\end{equation}
+	In the multi-variate case Jeffreys prior is given by
+	\begin{equation}
+		p(\lambda,\mu|I)\propto\sqrt{|\tilde{I}(\mu,\lambda)|},
+	\end{equation}
+	with 
+	\begin{equation}
+		\tilde{I}(\mu,\lambda)=\mathbb{E}[J]
+	\end{equation}
+	and
+	\begin{equation}
+		\begin{split}
+			J&=\begin{bmatrix}
+				\frac{\partial^2 \ln(p(x|\lambda,\mu,I))}{\partial \mu^2} & \frac{\partial^2 \ln(p(x|\lambda,\mu,I))}{\partial \mu \partial \lambda}\\
+				\frac{\partial^2 \ln(p(x|\lambda,\mu,I))}{\partial \lambda \partial \mu} & \frac{\partial^2 \ln(p(x|\lambda,\mu,I))}{ \partial \lambda^2}
+			\end{bmatrix}\\
+			&=-\begin{bmatrix}
+				\lambda & x-\mu\\
+				x-\mu & \frac{1}{2\lambda^2}
+			\end{bmatrix}.
+		\end{split}
+	\end{equation}
+	Since $\mathbb{E}[x-\mu]=0$,
+	\begin{equation}
+		p(\lambda,\mu|I)\propto\lambda^{-\frac{1}{2}}.
+	\end{equation}	
+\end{example}
+More variants of objective priors exist, examples include e.g. conjugate priors~\citep{Saw1961} or reference priors~\citep{Bernardo1979}). The former address the issue of improper priors, by ensuring that the posterior distribution will be in the same family of distributions as the prior distribution.
+\begin{example}
+	\index{Example: Neural network hyper parameters}
+	For neural networks in general, larger parameter values lead to more complex functions~\citep{Goodfellow2016}. Overly complex functions are often a sign of over fitting data and so, smaller parameter values are often favored when designing neural networks. This information can be encoded in the prior by taking a prior that is normally distributed with mean $0$ and a given standard deviation. In order to be more conservative, the standard deviation can be controlled by a hyper parameter with a wide distribution, such that
+	\begin{equation}
+		p(\theta|I)=\int p(\theta|\lambda,I)p(\lambda|I)d\lambda,
+	\end{equation}
+	with $p(\theta|\lambda,I)\sim e^{-\lambda\theta^2}$, $\lambda$ (the precision) being the hyper parameter and $p(\lambda|I)$ having a wide distribution -- like e.g. a gamma distribution\index{Gamma distribution} with appropriate parameters that ensure a wide distribution. By letting the precision be controlled by a hyper parameter with a wide distribution the preference for smaller parameter values is imposed in a very conservative way. This approach lands somewhere in between subjective and objective priors, as a very vague but subjective prior is used -- reflecting the vague background information of favoring smaller parameter values.
+\end{example}
+Common to all objective priors\index{Objective prior} is, however, that no information external to the data is used. Priors which use information external to the data are called subjective priors\index{Subjective prior}, because knowledge external to the sample is inherently subjective. Subjective priors (advocated for by e.g. Savage and de Finetti) can be used in wide range of problems with a proper procedure (see e.g. \citealt{Garthwaite2005}), but are especially useful when no data are available but i) data expected to be similar is available and/or ii) general properties can be inferred on the limits of parameters. A particular useful method for assigning probability distributions in general -- including prior distributions -- is the principle of maximum entropy.

@@ -1,0 +1,281 @@
+\chapter{Assigning a Cost Function}
+\label{sec:assing_cost}
+The cost function (see definition \ref{def:cost_function}) associates a numerical penalty to the Robot's action and thus the details of it determine the decisions made by the Robot. Under certain conditions, a cost function can be shown to exist~\citep{lavalle2006planning}, however, there is no systematic way of producing or deriving the cost function beyond applied logic. In general, the topic can be split into considering a continuous and discrete action space, $\mathbb{U}$. 	
+
+\section{Continuous Action Space}
+In case of a continuous action space, the cost function is typically picked from a set of standard choices.	
+\begin{definition}[Linear Cost Function]
+	\label{def:linear_cost_function}
+	The linear cost function is defined viz
+	\begin{equation}
+		C(U(x),s) \equiv |U(x)-s|.
+	\end{equation}
+	
+\end{definition}
+\begin{theorem}[Median Estimator]
+	The median estimator follows from assuming linear loss viz
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}_{S|X}[C(U(X), S)|x,D,I] &= \int_{-\infty}^{\infty} ds |U(x)-s| p(s|x,D,I)\\
+			&= \int_{-\infty}^{U(x)} (s-U(x))p(s|x,D,I)ds\\
+			&\quad+\int_{U(x)}^\infty (U(x)-s)p(s|x,D,I)ds\\
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			0 &=\frac{d \mathbb{E}_{S|X}[C(U(X), S)|x,D,I]}{dU(X)}\bigg|_{U(x)=U^*(x)}\\
+			&= (U^*(x)-U^*(x))p(U^*(x)|x,D,I)+\int_{-\infty}^{U^*(x)} p(s|x,D,I)ds\\
+			&\quad+(U^*(x)-U^*(x))p(U^*(x)|x,D,I)-\int_{U^*(x)}^\infty p(s|x,D,I)ds
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			\int_{-\infty}^{U^*(x)} p(s|x,D,I)ds &= \int_{U^*(x)}^\infty p(s|x,D,I)ds\\
+			&= 1- \int_{-\infty}^{U^*(x)} p(s|x,D,I)ds\\
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\int_{-\infty}^{U^*(x)} p(s|x,D,I)ds = \frac{1}{2}
+	\end{equation}
+	which is the definition of the median.
+\end{theorem}
+
+\begin{definition}[Quadratic Cost Function]
+	\label{def:quadratic_cost}
+	The quadratic cost function is defined as
+	\begin{equation}
+		C(U(x),s) \equiv (U(x)-s)^2.
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[Expectation value]
+	\label{theorem:expectation_cost}
+	The expectation value follows from assuming quadratic loss viz
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}_{S|X}[C(U(X), S)|x,D,I] &= \int ds (U(x)-s)^2 p(s|x,D,I)\\
+			&\Downarrow\\
+			\frac{d \mathbb{E}_{S|X}[C(U(X), S)|x,D,I]}{dU(X)}\bigg|_{U(x)=U^*(x)} &= 2U^*(x)-2\int ds sp(s|x,D,I)\\
+			&=0\\
+			&\Downarrow\\
+			U^*(x)& = \int ds sp(s|x,D,I)\\
+			&= \mathbb{E}[S|x,D,I]
+		\end{split}
+	\end{equation}
+	which is the definition of the expectation value.
+\end{theorem}
+
+\begin{definition}[0-1 Cost Function]
+	\label{def:0_1_cost_function}
+	The 0-1 cost function is defined viz
+	\begin{equation}
+		C(U(x),s) \equiv 1-\delta(U(x)-s).
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[MAP]
+	\label{theorem:MAP}
+	The maximum aposteriori (MAP) follows from assuming 0-1 loss viz
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}_{S|X}[C((X), S)|x,D,I] &= 1-\int ds \delta(U(x)-s) p(s|x,D,I)\\
+			&\Downarrow\\
+			\frac{d \mathbb{E}_{S|X}[C(U(X), S)|x,D,I]}{dU(X)}\bigg|_{U(x)=U^*(x)} &= -\frac{dp(s|x,D,I)}{ds}\bigg|_{s=U^*(x)}\\
+			&=0\\
+		\end{split}
+	\end{equation}
+	which is the definition of the MAP.
+\end{theorem}
+
+\subsection{Regression}
+\label{sec:regression}
+Regression involves the Robot building a model, $f: \mathbb{W}\times X\mapsto\mathbb{R}$, with associated parameters $\theta\in \mathbb{W}$, that estimates Nature's actions $S$ based on observed data $X$. Note that the output of $f$ is $\mathbb{R}$ implying that $S$ is assumed continuos. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function \ref{def:quadratic_cost} will be considered to review the subject. From theorem \ref{theorem:expectation_cost} the best action for the Robot can be written
+\begin{equation}
+	U^*(x) = \int ds s p(s|x,D,I)
+	\label{eq:q1}
+\end{equation}
+Assuming the actions of Nature follow a normal distribution with the function $f$ as mean and an unknown variance, $\xi\in \mathbb{W}$
+\begin{equation}
+	p(s|x,\theta,\xi,I)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(\theta,x)-s)^2}.
+	\label{f_dist}
+\end{equation}
+Using equation \eqref{f_dist} and marginalizing over $\xi,\theta$
+\begin{equation}
+	\begin{split}
+		p(s|x,D,I) &= \int p(s,\theta,\xi|x,D,I) d\theta d\xi\\
+		& = \int p(s|x,\theta,\xi,D,I)  p(\theta,\xi|x,D,I)d\theta d\xi\\
+		& = \int p(s|x,\theta,\xi,I)  p(\theta,\xi|D,I)d\theta d\xi,\\
+	\end{split}
+	\label{eq:q2}
+\end{equation}
+where it has been used that $p(s|\theta,\xi,x,D,I) = p(s|\theta,\xi,x,I)$ since by definition $f$ produce a $1-1$ map of the input $x$ (equation \eqref{f_dist}) and $p(\theta,\xi|x,D,I) = p(\theta,\xi|D,I)$ from axiom \ref{ax:observation_relevance}. Using equation \eqref{eq:q2} in equation \eqref{eq:q1}\footnote{Note that a function of a random variable is itself a random variable, so $f$ is a random variable.}
+\begin{equation}
+	\begin{split}
+		U^*(x) & = \int f(\theta,x)  p(\theta,\xi|D,I) d\theta d\xi,\\
+		& = \mathbb{E}[f|x,D,I]
+	\end{split}
+	\label{eq:q3}
+\end{equation}	
+where it has been used that
+\begin{equation}
+	\begin{split}
+		\mathbb{E}[S|x,\theta,\xi,I] &= \int s p(s|x,\theta,\xi,I) dy\\
+		&= f(\theta,x)
+	\end{split}
+\end{equation}
+according to equation \eqref{f_dist}. Using Bayes theorem
+\begin{equation}
+	p(\theta,\xi|D,I) = \frac{p(D_s|D_x,\theta,\xi,I)p(\theta,\xi|D_x,I)}{p(D_s|D_x,I)}
+	\label{eq:bayes2}
+\end{equation}
+where from marginalization
+\begin{equation}
+	p(D_s|D_x,I) = \int p(D_s|D_x,\theta,\xi,I)p(\theta,\xi|D_x,I) d\theta d\xi.
+\end{equation}
+Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written (using equation \eqref{f_dist})
+\begin{equation}
+	p(D_s|D_x,\theta,\xi,I) = \bigg(\frac{\xi}{2\pi}\bigg)^\frac{n}{2}\prod_{i=1}^n e^{-\frac{\xi}{2}(f(\theta,x_i)-s_i)^2}
+	\label{reg:likelihood}
+\end{equation}
+From the chain rule (see theorem \ref{theorem:chain_rule}) and axiom \ref{ax:observation_relevance}
+\begin{equation}
+	\begin{split}
+		p(\theta,\xi|D_x,I) &= p(\theta|\xi,I)p(\xi|I).
+	\end{split}
+\end{equation}
+Assuming the distributions over $W_\theta$ are i) independent of $\xi$ and ii) normally distributed\footnote{The normally distributed prior is closely related to weight decay~\citep{Plaut1986}, a principle conventionally used in frequentist statistics to avoid the issue of overfitting.} with zero mean and a precision described by a hyperparameter, $\lambda$. 	 
+\begin{equation}
+	\begin{split}
+		p(\theta|\xi,I) & = p(\theta|I)\\
+		& = \int p(\theta|\lambda,I)p(\lambda|I)d\lambda
+	\end{split}
+	\label{eq:prior1}
+\end{equation}
+The precision is constructed as a wide gamma distribution\index{Gamma distribution} so as to approximate an objective prior
+\begin{equation}
+	p(\theta|\lambda,I)p(\lambda|I)
+	= \prod_{q=1}^{\tilde{n}} \frac{\lambda_q^\frac{n_q}{2}}{(2\pi)^\frac{n_q}{2}}e^{-\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2}\frac{\beta_q^{\alpha_q}}{\Gamma(\alpha_q)}\lambda_q^{\alpha_q-1}e^{-\beta_q \lambda_q}
+	\label{eq:prior}
+\end{equation}
+where $\alpha_q,\beta_q$ are prior parameters (a part of the background information) and $\tilde{n}$ is the number of hyper parameters. In the completely general case $\tilde{n}$ would equal the number of parameters $\theta$, such that each parameter has an independent precision. In practice, the Robot may consider assigning some parameters the same precision, e.g. for parameters in the same layer in a neural network. Since $p(\xi|I)$ is analogous to $p(\lambda|I)$ -- in that both are prior distributions for precision parameters -- $p(\xi|I)$ is assumed to be a wide gamma distribution, then
+\begin{equation}
+	\begin{split}
+		p(\xi|I) & = \text{Ga}(\xi|\tilde{\alpha},\tilde{\beta})\\
+		& =\frac{\tilde{\beta}^{\tilde{\alpha}}}{\Gamma(\tilde{\alpha})}\xi^{\tilde{\alpha}-1}e^{-\tilde{\beta} \xi}.
+	\end{split}
+	\label{p7}
+\end{equation}
+At this point equation \eqref{eq:q1} is fully specified (the parameters $\alpha,\beta,\tilde{\alpha},\tilde{\beta}$ and the functional form of $f(\theta,x)$ are assumed specified as part of the background information) and can be approximated by obtaining samples from $p(\theta,\xi,\lambda|D,I)$ via HMC~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012} (see appendix \ref{app:HMC} for a review of HMC). The centerpiece in the HMC algorithm is the Hamiltonian defined viz~\citep{Neal:1996,Neal2012}
+\begin{equation}
+	H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln[p(\theta,\xi,\lambda|D,I)]+const,
+	\label{eqh}
+\end{equation}
+where 
+\begin{equation}
+	p(\theta,\xi|D,I) = \int d\lambda p(\theta,\xi,\lambda|D,I).
+	\label{eq:ss}
+\end{equation}
+Besides its function in the HMC algorithm, the Hamiltonian represent the details of the Bayesian model well and should be a familiar sight for people used to the more commonly applied frequentist formalism\index{Frequentist statistics} (since, in this case, it is in form similar to a cost function comprised of a sum of squared errors, weight decay on the coefficients and further penalty terms~\citep{hastie_09,murphy2013machine,Goodfellow2016}). Using equations \eqref{eq:bayes2}-\eqref{eq:ss} yields
+\begin{equation}
+	\begin{split}
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln(\xi)] +\frac{\xi}{2}\sum_{i=1}^{n}(f(\theta,x_i)-s_i)^2\\
+		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
+		&\qquad\qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
+		&\quad+\ln(\Gamma(\tilde{\alpha}))-\tilde{\alpha}\ln(\tilde{\beta})+(1-\tilde{\alpha})\ln(\xi)+\tilde{\beta}\xi+const.
+	\end{split}
+	\label{eqh2}
+\end{equation}
+
+
+
+\section{Discrete Action Space}
+In case of a continuous action space, the conditional expected loss can be written
+\begin{equation}
+	\mathbb{E}_{S|X}[C(U(X), S)|x,D,I] = \sum_{s\in \mathbb{S}}^nC(U(x),s)p(s|x,D,I),
+\end{equation}
+where the cost function is typically represented in matrix form viz
+\begin{center}
+	\begin{tabular}{ c  c  c  c  c  }
+		&& $S$& & \\
+		&& $s_1$ & \dots & $s_{\text{dim}(\mathbb{S})}$ \\
+		\cline{3-5}
+		$U(x)$ & $u_1$& \multicolumn{1}{|l}{$C(u_1, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_1, s_{\text{dim}(\mathbb{S})})$} \\
+		& \vdots & \multicolumn{1}{|l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l|}{\vdots} \\
+		& $u_{\text{dim}(\mathbb{U})}$ & \multicolumn{1}{|l}{$C(u_{\text{dim}(\mathbb{U})}, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_{\text{dim}(\mathbb{U})}, s_{\text{dim}(\mathbb{S})})$} \\
+		\cline{3-5}
+	\end{tabular}
+\end{center}
+
+
+\subsection{Classification}
+\label{sec:baycl}
+Classification is the discrete version of regression, meaning it involves the Robot building a model, $f: \mathbb{W}\times X\mapsto[0,1]$, with associated parameters $\theta\in \mathbb{W}$, that estimates Nature's actions $S$ based on observed data $X$. As opposed to regression, the random variable $S$ is now discrete and the function is identified with the probability of each action
+\begin{equation}
+	p(S = s|x,\theta,I)= f_{S = s}(\theta,x),
+	\label{f_dist2}
+\end{equation}
+with
+\begin{equation}
+	\sum_{s\in\mathbb{S}} p(S = s|x,\theta,I) = 1.
+\end{equation}
+In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\mathbb{U}=\mathbb{S}\cup \text{"Reject"}$. To reivew this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function, with the addition of a reject option at cost $\lambda$. This means
+\begin{equation}
+	C(U(x),s) = 1- \delta_{U(x),s}+(\lambda-1)\delta_{U(x),\text{"Reject"}}.
+\end{equation}
+The optimal decision rule for the robot can the be written
+\begin{equation}
+	\begin{split}
+		U^*(x) & = \arg\min_{U(x)}\mathbb{E}[C(U(X), S)|x,D,I]\\
+		&= \arg\min_{U(x)}\bigg(\sum_{s}C(U(x),s)p(S = s|x,D,I)\\
+		&\qquad\qquad\qquad+(\lambda-1)\delta_{U(x),\text{"Reject"}}\bigg)\\
+		& = \arg\min_{U(x)}\bigg(1- p(S=U(x)|x,D,I)\\
+		&\qquad\qquad\qquad+(\lambda-1)\delta_{U(x),\text{"Reject"}}\bigg).
+	\end{split}
+	\label{eq:expected_cost1}
+\end{equation}
+In absence of the reject option, the optimal decision rule is to pick the MAP, similar to theorem \ref{theorem:MAP}. Using equation \eqref{f_dist2} and marginalizing over $\theta$
+\begin{equation}
+	\begin{split}
+		p(S= U(x)|x,D,I) &= \int p(S = U(x),\theta|x,D,I) d\theta \\
+		& = \int p(S = U(x)|x,\theta,D,I)  p(\theta|x,D,I)d\theta \\
+		& = \int p(S = U(x)|x,\theta,I)  p(\theta|D,I)d\theta \\
+		& = \int f_{S = U(x)}(\theta,x)  p(\theta|D,I)d\theta \\
+		& = \mathbb{E}[f_{S = U(x)}(\theta,x)|D,I],\\
+	\end{split}
+	\label{eq:q5}
+\end{equation}
+where for the second to last equality it has been assumed that $p(S = U(x)|\theta,x,D,I) = p(S = U(x)|\theta,x,I)$ since by definition $f$ (see equation \eqref{f_dist2}) produce a $1-1$ map of the input $x$ and $p(\theta|x,D,I) = p(\theta|D,I)$ from axiom \ref{ax:observation_relevance}. From Bayes theorem
+\begin{equation}
+	p(\theta|D,I) =\frac{p(D_s|D_x,\theta,I)p(\theta|D_x,I)}{p(D_s|D_x,I)},
+\end{equation}
+where from axiom \ref{ax:observation_relevance} $p(\theta|D_x,I) = p(\theta|I)$. Assuming the distribution over $\theta$ is normally distributed with zero mean and a precision described by a hyperparameter, $\lambda$, 
+\begin{equation}
+	p(\theta|I) = \int p(\theta|\lambda,I)p(\lambda|I)d\lambda.
+\end{equation}
+where $p(\theta|\lambda,I)p(\lambda|I)$ is given by equation \eqref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
+\begin{equation}
+	\begin{split}
+		p(D_s|D_x,\theta,I) &=\prod_{i=1}^{n}p(S = s_i|X = x_i,\theta,I)\\
+		&=\prod_{i=1}^{n}f_{s_i}(\theta,x_i)\\
+	\end{split}.
+	\label{lik}
+\end{equation}
+At this point equation \eqref{eq:expected_cost1} is fully specified and can be approximated by HMC similarly to the regression case. In this case, the model can be represented by the Hamiltonian 
+\begin{equation}
+	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln(p(\theta,\lambda|D,I))+const
+	\label{ham3}
+\end{equation}
+where
+\begin{equation}
+	p(\theta|D,I) = \int d\lambda p(\theta,\lambda|D,I).
+\end{equation}
+Using equations \eqref{eq:q5}-\eqref{lik} in equation \eqref{ham3} yields the Hamiltonian
+\begin{equation}
+	\begin{split}
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln(f_{s_i}(\theta,x_i))+\text{const}\\
+		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
+		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
+	\end{split}.
+	\label{ham2}
+\end{equation}
+Sampling equation \eqref{ham2} yields a set of coefficients which can be used to compute $\mathbb{E}[f_s(\theta,x)|D,I]$ which in turn (see euation \eqref{eq:q5}) can be used to compute $U^*(x)$.

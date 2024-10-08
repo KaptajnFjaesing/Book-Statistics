@@ -1,0 +1,130 @@
+\chapter{Assigning Probability Functions}
+The axioms and definitions of probability theory (axioms \ref{ax:non_neg}-\ref{ax:add} and definitions \ref{eq:cond} and \ref{eq:ind}) can be used to define and relate probability measures, however, they are not sufficient to conduct inference because, ultimately, the probability measure or relevant probability functions (density or mass) needs to be specified. Thus, the rules for manipulating probability functions must be supplemented by rules for assigning probability functions. To assign any probability function, there is ultimately only one way, logical analysis, i.e., non-self-contradictory analysis of the available information. The difficulty is to incorporate only the information one actually possesses without making gratuitous assumptions about things one does not know. A number of procedures have been developed that accomplish this task: Logical analysis may be applied directly to the sum and product rules to yield probability functions~\citep{jaynes_11}. Logical analysis may be used to exploit the group invariances of a problem~\citep{jaynes_16}. Logical analysis may be used to ensure consistency when uninteresting or nuisance parameter are marginalized from probability functions~\citep{jaynes_21}. And last, logical analysis may be applied in the form of the principle of maximum entropy to yield probability functions \cite{zellner_bayesian_inference, jaynes_16,jaynes_19, shore_17,shore_18}. Of these techniques the principle of maximum entropy is probably the most powerful.
+
+\section{The Principle of Maximum Entropy}
+\label{sec:maxent}
+The principle of maximum entropy\index{Maximum entropy}, first proposed by \citet{Jaynes1957}, considers the issue of assigning a probaility distribution to a random variable. Let $Z$ be a generic random variable that describes an abstract experiment. $Z$ follow a distribution $p(z|\lambda, I)$ with associated parameters $\lambda = \{\lambda_0,\dots ,\lambda_n\}$. The principle of maximum entropy propose that the probability distribution, $p(z|\lambda, I)$, which best represents the current state of knowledge about a system is the one with largest constrained entropy~\citep{Sivia2006}, defined by the Lagrangian
+\begin{equation}
+	\mathcal{L} = \int F dz,
+	\label{eq:Q}
+\end{equation}
+with
+\begin{equation}
+	F= -p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)}-\lambda_0 p(z|\lambda, I)-\sum_{j=1}^{n}\lambda_jC_j(z).
+\end{equation}
+$m$ -- called the Lebesgue measure -- ensures the entropy, given by $-\int p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)} dz$, is invariant under a change of variables and $C_j(z)$ represent the constraints beoynd normalization. The constraint beyond normality depend on the background information related to the random variable, $X$. In variational calculus the Lagrangian is optimized via solving the Euler-Lagrange equation
+\begin{equation}
+	\frac{\partial F}{\partial p(z|\lambda, I)}-\frac{d}{dx}\frac{\partial F}{\partial p(z|\lambda, I)'}=0,
+\end{equation}
+where $\frac{\partial p(z|\lambda, I)}{\partial x} = p(z|\lambda, I)'$ for shorthand. Since $p(z|\lambda, I)'\notin F$, the Euler-Lagrange equation simplify to simply
+\begin{equation}
+	\frac{\partial F}{\partial p(z|\lambda, I)}=0.
+	\label{eq:f}
+\end{equation}
+Combining equations \eqref{eq:Q} and \eqref{eq:f}
+\begin{equation}
+	\begin{split}
+		\frac{\partial F}{\partial p(z|\lambda, I)}&= -\ln\bigg(\frac{p(z|\lambda, I)}{m(z)}\bigg)-1-\sum_{j}\lambda_{j}C_j(z)\\
+		&=0
+	\end{split}
+\end{equation}
+and so
+\begin{equation}
+	\begin{split}
+		p(z|\lambda, I)&=m(z)e^{-1-\sum_{j}\lambda_{j}C_j(z)}\\
+		&=\tilde{m}(z)e^{-\sum_{j}\lambda_{j}C_j(z)},
+	\end{split}
+\end{equation}
+where $\tilde{m}(z)\equiv m(z)e^{-1}$. Using that $\int p(z|\lambda, I) dx =1$
+\begin{equation}
+	p(z|\lambda, I)=\frac{\tilde{m}(z)e^{-\sum_{j}\lambda_{j}C_j(z)}}{\int \tilde{m}(z')e^{-\sum_{j}\lambda_{j}C_j(z')}dz'},
+\end{equation}
+where $m$ is a reference distribution that is invariant under parameter transformations. $\lambda_j$ are determined from the additional constraints, e.g. on the mean or variance.
+
+\begin{example}
+	\index{Example: Maximum entropy normal distribution}
+	Consider a random variable, $Z$, with unlimited support, $z\in [-\infty,\infty]$, assumed to be symmetric around a single peak defined by the mean $\mu$, standard deviation $\sigma$. In this case $\lambda = \{\lambda_0,\lambda_1,\lambda_2\}$, where it will be shown that $\lambda_1,\lambda_2$ are related to $\mu,\sigma$. In this case $F$ can be written\label{ex:gauss}
+	\begin{equation}
+		\begin{split}
+			F =& -p(z|\lambda,I)\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_0p(z|\lambda,I)\\
+			&-\lambda_1p(z|\lambda,I)z-\lambda_2p(z|\lambda,I)z^2
+		\end{split}
+	\end{equation}
+	with the derivative
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1-\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_1z-\lambda_2z^2\\
+			&=0,
+		\end{split}
+	\end{equation}
+	meaning
+	\begin{equation}
+		p(z|\lambda,I)=m(z)e^{-1-\lambda_0-\lambda_1z-\lambda_2z^2}.
+	\end{equation}
+	Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
+	\begin{equation}
+		\begin{split}
+			\int p(z|\lambda,I) dz &= me^{-1-\lambda_0}\int e^{-\lambda_1z-\lambda_2z^2}dz\\
+			&= me^{-1-\lambda_0}\sqrt{\frac{\pi}{\lambda_2}}e^{\frac{\lambda_1^2}{4\lambda_2}}\\
+			&=1.
+		\end{split}
+	\end{equation}
+	Defining $K^{-1} = me^{-1-\lambda_0}$ yields
+	\begin{equation}
+		\begin{split}
+			p(z|\lambda,I) &= \frac{e^{-\lambda_1x-\lambda_2x^2}}{K}\\
+			&= \sqrt{\frac{\lambda_2}{\pi}}e^{-\frac{\lambda_1^2}{4\lambda_2}-\lambda_1z-\lambda_2z^2}\\
+		\end{split}.
+	\end{equation}
+	Now, imposing the mean constraint
+	\begin{equation}
+		\begin{split}
+			\int zp(z|\lambda,I) dz &= \frac{\int ze^{-\lambda_1z-\lambda_2z^2}dz}{K}\\
+			&= -\frac{\lambda_1}{2\lambda_2}\\
+			&=\mu.
+		\end{split}
+	\end{equation}
+	Hereby
+	\begin{equation}
+		\begin{split}
+			p(z|\lambda,I) &= \sqrt{\frac{\lambda_2}{\pi}}e^{-\mu^2\lambda_2+2\mu \lambda_2z-\lambda_2z^2}\\
+			&= \frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2}\big(\frac{\mu-z}{\sigma}\big)^2},\\\\
+		\end{split}
+	\end{equation}
+	where $\sigma\equiv \frac{1}{2\lambda_2}$ has been defined. Hence, it is clear that the normal distribution\index{Normal distribution} can be derived from general constraints via the principle of maximum entropy\index{Maximum entropy}.
+\end{example}
+
+\begin{example}
+	\index{Example: Maximum entropy beta distribution}
+	Consider a random variable, $Z$, with limited support, $z\in [0,1]$. In order to impose the limited support, require that $\ln(z)$ and $\ln(1-z)$ be well defined. In this case $F$ can be written\label{ex:beta}
+	\begin{equation}
+		\begin{split}
+			F =& -p(z|\lambda,I)\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_0p(z|\lambda,I)\\
+			&-\lambda_1p(z|\lambda,I)\ln(z)-\lambda_2p(z|\lambda,I)\ln(1-z)
+		\end{split}
+	\end{equation}
+	with the derivative
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1-\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_1\ln(z)-\lambda_2\ln(1-z)\\
+			&=0,
+		\end{split}
+	\end{equation}
+	meaning
+	\begin{equation}
+		p(z|\lambda,I)=m(z)e^{-1-\lambda_0-\lambda_1\ln(z)-\lambda_2\ln(1-z)}.
+	\end{equation}
+	Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
+	\begin{equation}
+		\begin{split}
+			\int p(z|\lambda,I) dz &= me^{-1-\lambda_0}\int z^{-\lambda_1}(1-z)^{-\lambda_2}dz\\
+			&= me^{-1-\lambda_0}\frac{\Gamma(1-\lambda_1)\Gamma(1-\lambda_2)}{\Gamma(2-\lambda_1-\lambda_2)}\\
+			&=1.
+		\end{split}
+	\end{equation}
+	Now define $\alpha \equiv 1-\lambda_1\wedge \beta \equiv 1-\lambda_2$. Hereby
+	\begin{equation}
+		p(z|\alpha,\beta,I) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1},
+	\end{equation}
+	which is the beta distribution\index{Maximum entropy}. 
+\end{example}

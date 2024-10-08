@@ -1,0 +1,851 @@
+\chapter{Additional Examples}
+
+
+
+
+
+\begin{example}
+	\label{ex:313}
+	\index{Example: Posterior predictive}
+	\emph{The posterior predictive for a single multinomial trial with a Dirichlet prior is given by}
+	\begin{equation}
+		\begin{split}
+			p(j|D,I) &= \int d\theta p(j,\theta|D,I)\\
+			&= \int d\theta p(j|\theta,D,I)p(\theta|D,I)\\
+			&= \int d\theta_j p(j|\theta_j,I)\bigg(\int d\theta_{-j} p(\theta_{-j},\theta_j|D,I)\bigg)\\
+			&= \int d\theta_j p(j|\theta_j,I)p(\theta_j|D,I)\\
+			& = \mathbb{E}[\theta_j|D,I]\\
+			& = \frac{\alpha_{j}+N_j}{\sum_k(\alpha_k+N_k)}\\
+			& = \frac{\alpha_{j}+N_j}{\alpha_0+N_0}\\
+		\end{split}
+	\end{equation}
+	\emph{where $\theta_{-j}= \theta \backslash \theta_j$. Now consider predicting a batch of new data, $\tilde{D}=\{x_1,x_2,\dots x_m\}$, consisting of $m$ single multinomial trials (think of predicting the next $m$ words in a sentence, assuming they are drawn iid). Derive an expression for $p(\tilde{D}|D,\alpha,I)$. Your answer should be a function of $\alpha$, and the new counts (sufficient statistics) defined as}
+	\begin{equation}
+		\begin{split}
+			N_k^{\text{old}} & = \sum_{i\in D} \mathbb{I}(x_i=k),\\
+			N_k^{\text{new}} & = \sum_{i\in \tilde{D}} \mathbb{I}(x_i=k)\\
+		\end{split}
+	\end{equation}
+	
+	\begin{equation}
+		\begin{split}
+			p(\tilde{D}|D,\alpha,I) & = \int d\theta p(\tilde{D},\theta|D,\alpha,I) \\ 
+			& = \int d\theta p(\tilde{D}|\theta,\alpha,I)p(\theta|D,\alpha,I) \\
+			&=\int d\theta \text{Mu}(x_1,x_2,\dots |\theta)\text{Dir}(\theta|N_1^{\text{old}}+\alpha_1,N_2^{\text{old}}+\alpha_2,\dots)\\
+			&= \begin{pmatrix}
+				N^{\text{new}}!\\
+				\prod_k N_k^{\text{new}}!
+			\end{pmatrix}\frac{B(\alpha+N^{\text{old}}+N^{\text{new}})}{B(\alpha+N^{\text{old}})}
+		\end{split}
+	\end{equation}
+	where $\begin{pmatrix}
+		N^{\text{new}}!\\
+		\prod_k N_k^{\text{new}}!
+	\end{pmatrix}$ is the binomial coefficient.	In the case of a one hot encoding of classes, the multinomial coefficient equals unity. In the case of a $m=1$, then
+	\begin{equation}
+		\begin{split}
+			p(\tilde{D}=j|D,\alpha,I) &= \begin{pmatrix}
+				N^{\text{new}}!\\
+				N^{\text{new}}!
+			\end{pmatrix}\frac{B(\alpha+N^{\text{old}}+1)}{B(\alpha+N^{\text{old}})}\\
+			&=\frac{\Gamma(\alpha_j+N^{\text{old}}_j+1)}{\Gamma(\alpha+N^{\text{old}}+1)}\frac{\Gamma(\alpha_j+N^{\text{old}}_j)}{\Gamma(\alpha+N^{\text{old}})}\\
+			&=\frac{\alpha_j+N^{\text{old}}_j}{\alpha+N^{\text{old}}}\\
+		\end{split}
+	\end{equation}
+	which is the result given in the exercise.
+	
+\end{example}
+
+\begin{example}
+	
+	\begin{enumerate}
+		\index{Example: Posterior predictive}
+		\item \emph{Suppose we compute the empirical distribution over letters of the Roman alphabet plus the space character (a distribution over $27$ values) from $2000$ samples. Suppose we see the letter "e" $260$ times. What is $p(x_{201}=\text{e}|D)$? Assume $\theta\sim \text{Dir}(\alpha_1,\dots \alpha_{27})$, where $\alpha_k=10\forall k$.}\newline
+		
+		As shown in example \ref{ex:313}
+		\begin{equation}
+			\begin{split}
+				p(x_{2001}=\text{e}|D) & =\frac{\alpha_{5}+N_5}{\alpha_0+N_0}\\
+				&= \frac{10+260}{10\cdot 27+2000}\\
+				&\simeq 0.12
+			\end{split}
+		\end{equation}
+		
+		\item \emph{Suppose, in thge $2000$ samples, we saw "e" $260$ times, "a" $100$ times and "p" $87$ times. What is $p(x_{2001}=\text{p},x_{2002}=\text{a}|D)$ if we assume $\theta\sim \text{Dir}(\alpha_1,\dots \alpha_{27})$, where $\alpha_k=10\forall k$?}\newline
+		
+		\begin{equation}
+			\begin{split}
+				p(x_{2001}=\text{p},x_{2002}=\text{a}|D) & = p(x_{2001}=\text{p}|D,x_{2002}=\text{a})p(x_{2002}=\text{a}|D)\\
+				&=p(x_{2001}=\text{p}|D)p(x_{2002}=\text{a}|D)\\
+				&=\frac{10+87}{10\cdot 27+2000}\frac{10+100}{10\cdot 27+2001}\\
+				&\simeq 0.002
+			\end{split}
+		\end{equation}
+	\end{enumerate}
+	
+\end{example}
+
+
+\begin{example}
+	\index{Example: Posterior odds}
+	\index{Example: Posterior mean}
+	\emph{Let $x_{iw}=1$ if word "w" occurs in document "i" and $x_{iw}=0$ otherwise. Let $\theta_{cw}$ be the probability that word "w" occurs in document of class "c". Then the log-likelihood that document $x$ belong to class "c" is given by}
+	\begin{equation}
+		\begin{split}
+			\ln(p(x_i|c,\theta,I))&=\ln\bigg(\prod_{w=1}^{W}\theta_{cw}^{x_{iw}}(1-\theta_{cw})^{1-x_{iw}}\bigg)\\
+			&= \sum_{w=1}^{W}[x_{iw}\ln(\theta_{cw})+(1-x_{iw})\ln(1-\theta_{cw})]\\
+			&= \sum_{w=1}^{W}[x_{iw}\ln(\frac{\theta_{cw}}{1-\theta_{cw}})+\ln(1-\theta_{cw})]\\
+		\end{split}
+	\end{equation}
+	\emph{where W is the number of words in the vocabulary. We can write this more succinctly as}
+	\begin{equation}
+		\ln(p(x_i|c,\theta,I))=\phi(x_i)^T\beta_c,
+	\end{equation}
+	\emph{where $x_i = (x_{i1},\dots x_{iw})$ is a bit vector, $\phi(x_i)=(x_i, 1)$ and}
+	\begin{equation}
+		\beta_c = \begin{pmatrix}
+			\ln(\frac{\theta_{c1}}{1-\theta_{c1}}) & \dots & \ln(\frac{\theta_{cw}}{1-\theta_{cw}}) & \sum_{w=1}^{W} \ln(1-\theta_{cw})
+		\end{pmatrix}^T
+	\end{equation}
+	\emph{we see that this is a linear classifier, since the class conditional density is a linear function of the parameters $\beta_c$.}
+	\begin{enumerate}
+		\item \emph{Assuming $p(c=1)=p(c=2)=\frac{1}{2}$, write down an expression for the log posterior odds ratio $\log_2(\frac{p(c=1|x_i)}{p(c=2|x_i)})$ in terms  of the features $\phi(x_i)$ and the parameters, $\beta_1$ and $\beta_2$.}
+		\begin{equation}
+			p(c=j|x_i) = \frac{p(x_i|c_j)p(c=j)}{p(x_i)}\Rightarrow \log_2(\frac{p(c=1|x_i)}{p(c=2|x_i)}) = \log_2(\frac{p(x_i|c=1)}{p(x_i|c=2)}) = \phi(x_i)^T(\beta_1-\beta_2)
+		\end{equation}
+		
+		\item \emph{Intuitively,words that occur in both classes are not very "discriminative" and therefore should not affect our beliefs about the class label. Consider a particular word, $\tilde{w}$. State the conditions on $\theta_{1,\tilde{w}}$ and $\theta_{2,\tilde{w}}$ (or equivalently $\beta_{1,\tilde{w}}$ or $\beta_{2,\tilde{w}}$) under which the presence or absence of $\tilde{w}$ in a test document will have no effect on the class posterior (such a word will be ignored by the classifier)}\newline
+		
+		In order fo redundant words to not influence the classification, they should contribute equally to the likelihood of each class. In that case $\beta_{1,\tilde{w}}=\beta_{2,\tilde{w}}$.
+		
+		\item \emph{The posterior mean etimate of $\theta$, using $\theta \sim \text{Beta}(\theta|\alpha=1,\beta=1)$ as a prior, is given by}
+		\begin{equation}
+			\mathbb{E}[\theta_{cw}|D,I] = \frac{1+\sum_{i\in c} x_{iw}}{2+n_c},
+		\end{equation}
+		\emph{where the sum is over $n_c$ documents in class "c". Consider a particular word, $\tilde{w}$, and suppose it always occurs in every document (regardless of class). Let there be $n_1$ documents of class $1$ and $n_2$ documents of class $2$, where $n_1\neq n_2$ in general. If we use the above mean value for $\theta_{cw}$, will word $\tilde{w}$ be ignored by our classifier? Explain.}\newline
+		
+		Recall $x_{i\tilde{w}}$ is a bit vector which is $1$ if word $\tilde{w}$ occurs in document "i". It is assumed $\tilde{w}$ occurs in all documents, so
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}[\theta_{1\tilde{w}}|D,I] &= \frac{1+n_1}{2+n_1}, \\ 
+				\mathbb{E}[\theta_{1\tilde{w}}|D,I] &= \frac{1+n_2}{2+n_2}. \\ 
+			\end{split}
+		\end{equation}
+		$n_1\neq n_2 \Leftrightarrow \mathbb{E}[\theta_{1\tilde{w}}|D,I] \neq \mathbb{E}[\theta_{2\tilde{w}}|D,I]$ in general, meaning the probability varies among classes (which is what we do not want). However, intuitively, this must be the case since it cannot be known if a word will be present in all documents without having seen all documents. Hence, the more documents a word has been observed in, the more precisely the probability of observing the word ($\theta$) can be estimated -- As should be the case. Indeed for the number of documents a word has been observed in going to inifity ($n_1,n_2\rightarrow \infty$) the expectation values approach equality -- As desired. Hence, the dynamics are as they should be; there is no undesired behavoir. The Author of the exercise see an issue with the potential difference in expectation values for a small number of documents because the Author has a large bias towards towards the word existing in all documents. This kind of information should enter the calculations as a dominating prior. Doing this will add an artificial number of documents from the prior and taking this number to go to infinity, or whatever represents the bias, will fix the supposed issue even for a small number of observed documents.
+		
+		\item \emph{What other ways can you think of whih encourage "irrelevant" words to be ignored?}\newline
+		
+		I can see three ways to work around the supposed issue;
+		i) use a dominating prior (as described in the previous bullet), ii) enforce an equal amount of documents in each class for training data or iii) delete words that occur in all documents.
+	\end{enumerate}
+	
+\end{example}
+
+\begin{example}
+	\index{Example: Naive Bayes}
+	\emph{Consider a naive Bayes model (multivariate Bernoulli version) for spam classification with the vocabulary}
+	\begin{equation}
+		V = \{\text{secrete, offer, low, price, valued, customer, today, dollar, million, sports, is, for , play, healthy, pizza}\}
+	\end{equation}
+	\emph{and the following examples of messages}
+	
+	\begin{center}
+		\begin{tabular}{ |c | c | }
+			\hline
+			Message & Class  \\
+			\hline
+			million dollar offer & spam  \\
+			secret offer today & spam  \\
+			secret is secret & spam \\
+			low price for valued customer & ham \\
+			play secret sports today & ham \\
+			sports is healthy & ham \\
+			low price pizza & ham \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\emph{Give the MLE's for the following parameters: $\theta_{\text{spam}}, \theta_{\text{secret|spam}}, \theta_{\text{secret|ham}}, \theta_{\text{sports|ham}}, \theta_{\text{dollar|spam}}$.}\newline
+	
+	From \citep[p. 85]{murphy2013machine} the MLE estimator is given by the number of sentences with a given word divided by the total number of sentences, meaning
+	\begin{equation}
+		\begin{split}
+			\hat{\theta}_{\text{spam}} & = \frac{N_{\text{spam}}}{N} = \frac{3}{7}\\
+			\hat{\theta}_{\text{secret|spam}} & = \frac{N_{\text{secret|spam}}}{N_{\text{spam}}} = \frac{2}{3}\\
+			\hat{\theta}_{\text{secret|ham}} & = \frac{N_{\text{secret|ham}}}{N_{\text{ham}}} = \frac{1}{4}\\
+			\hat{\theta}_{\text{sports|ham}} & = \frac{N_{\text{sports|ham}}}{N_{\text{ham}}} = \frac{2}{4}\\
+			\hat{\theta}_{\text{dollar|spam}} & = \frac{N_{\text{dollar|spam}}}{N_{\text{spam}}} = \frac{1}{3}\\
+		\end{split}
+	\end{equation}
+\end{example}
+
+
+
+\begin{example}
+	\index{Example: Normal distribution}
+	\emph{Prove that $(2\pi)^\frac{d}{2}|\Sigma|^{\frac{1}{2}}=\int dx e^{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)}$ for a d-dimensional Gaussian.}
+	
+	\begin{equation}
+		\begin{split}
+			(x-\mu)^T\Sigma^{-1}(x-\mu) & = (x-\mu)^T(Q\Lambda Q^{-1})^{-1}(x-\mu)\\
+			&= (x-\mu)^TQ\Lambda^{-1}Q^{-1}(x-\mu)\\
+		\end{split}
+	\end{equation}
+	where $\Sigma= Q\Lambda Q^{-1}$ is an eigen decomposition of $\Sigma$ with $Q$ being an orthonormal matrix and $\Lambda$ a diagonal matrix with the eigenvalues, $\lambda_i$. Now, let $y\equiv Q(x-\mu)$ then
+	\begin{equation}
+		\int dx e^{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)} = \int dy \bigg|\frac{dx}{dy}\bigg|e^{-\frac{1}{2}y^T\Lambda^{-1}y}.
+	\end{equation}
+	$x=Q^{-1}y+\mu\Rightarrow \frac{dx}{dy}=Q^{-1}$. $|Q^{-1}|=\frac{1}{|Q|}=1$ since $Q$ is orthonormal, meaning
+	\begin{equation}
+		\begin{split}
+			\int dx e^{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)} &= \int dy e^{-\frac{1}{2}y^T\Lambda^{-1}y}\\
+			&= \int dy e^{-\frac{1}{2}\sum_i\frac{y_i^2}{\lambda_i}}\\
+			&= \prod_i\int dy e^{-\frac{1}{2}\frac{y_i^2}{\lambda_i}}\\
+			& = \prod_i \sqrt{2\pi \lambda_i}\\
+			& = (2\pi)^\frac{d}{2}(\prod_i\lambda_i)^\frac{1}{2}\\
+			& = (2\pi)^\frac{d}{2}|\Sigma|^{\frac{1}{2}}
+		\end{split}
+	\end{equation}
+	where for the last equality it has been used that $\prod_i\lambda_i=|\Sigma|$.
+\end{example}
+\begin{example}
+	\label{eq:qwe}
+	\index{Example: Normal distribution}
+	\emph{Let $x\sim N(x|\mu,\Sigma)$ with $x\in \mathbb{R}^2$ meaning $x=\begin{pmatrix}
+			x_1 & x_2
+		\end{pmatrix}^T$ and $\mu=\begin{pmatrix}
+			\mu_1 & \mu_2
+		\end{pmatrix}^T$ and }
+	\begin{equation}
+		\Sigma=\begin{pmatrix}
+			\sigma_1^2 &  \rho\sigma_1\sigma_2 \\
+			\rho\sigma_1\sigma_2 & \sigma_2^2\\
+		\end{pmatrix}
+	\end{equation}
+	\emph{where $\rho$ is the correlation coefficient. Write down $p(x_1,x_2)$.}
+	
+	\begin{equation}
+		p(x_1,x_2)=\frac{1}{\sqrt{(2\pi)^d|\Sigma|}}e^{-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)}
+	\end{equation}
+	with $d=2$ and the given $\Sigma$
+	\begin{equation}
+		\begin{split}
+			\sqrt{(2\pi)^d|\Sigma|}&= \sqrt{(2\pi)^2(\sigma_1^2\sigma_2^2-\rho^2\sigma_1^2\sigma_2^2)}\\
+			&= 2\pi \sigma_1\sigma_2\sqrt{1-\rho^2}.
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\Sigma^{-1}=\frac{1}{\rho^2-1}\begin{pmatrix}
+			-\frac{1}{\sigma_1^2} & \frac{\rho}{\sigma_1\sigma_2}\\
+			\frac{\rho}{\sigma_1\sigma_2} & -\frac{1}{\sigma_2^2}
+		\end{pmatrix}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			(x-\mu)^T\Sigma^{-1}(x-\mu) & = \begin{pmatrix}
+				x_1-\mu_1 & x_2-\mu_2
+			\end{pmatrix}\frac{1}{\rho^2-1}\begin{pmatrix}
+				-\frac{1}{\sigma_1^2} & \frac{\rho}{\sigma_1\sigma_2}\\
+				\frac{\rho}{\sigma_1\sigma_2} & -\frac{1}{\sigma_2^2}
+			\end{pmatrix}\begin{pmatrix}
+				x_1-\mu_1 \\ x_2-\mu_2
+			\end{pmatrix}\\
+			&= \frac{1}{\rho^2-1}\bigg[\bigg(\frac{x_1-\mu_1}{\sigma_1}\bigg)^2+\bigg(\frac{x_2-\mu_2}{\sigma_2}\bigg)^2-2\rho\frac{(x_1-\mu_1)(x_2-\mu_2)}{\sigma_1\sigma_2}\bigg]
+		\end{split}
+	\end{equation}
+\end{example}
+
+\begin{example}
+	\index{Example: Normal distribution}
+	\emph{Suppose we have two sensors with unknown variances $\nu_1$ and $\nu_2$ ($\nu_1\neq \nu_2$), but unknown (and the same) mean, $\mu$. Suppose we observe $n_1$ observation from $y_i^{(1)}\sim N(y_i^{(1)}|\mu,\nu_1)$ from the first sensor and $y_i^{(2)}\sim N(y_i^{(2)}|\mu,\nu_2)$ from the second sensor. Let $D$ represent all the data from both sensors. What is the posterior $p(\mu|D,\nu_1,\nu_2,I)$, assuming a non-informative prior for $\mu$?}
+	
+	\begin{equation}
+		p(\mu|D,\nu_1,\nu_2,I) =\frac{p(D|\mu,\nu_1,\nu_2,I)p(\mu|\nu_1,\nu_2,I)}{p(D|\nu_1,\nu_2,I)}
+	\end{equation}
+	with $p(\mu|\nu_1,\nu_2,I)=\text{Unif}(a,b)$ since it is supposed to be an uninformative prior. The likelihood 
+	\begin{equation}
+		\begin{split}
+			p(D|\mu,\nu_1,\nu_2,I) &= \prod_{i=1}^{N^{(1)}}\frac{1}{\sqrt{2\pi \nu_1}}e^{-\frac{1}{2\nu_1}(y_i^{(1)}-\mu)^2}\prod_{j=1}^{N^{(2)}}\frac{1}{\sqrt{2\pi \nu_2}}e^{-\frac{1}{2\nu_2}(y_j^{(2)}-\mu)^2}\\
+			& = (2\pi \nu_1)^{-\frac{N^{(1)}}{2}}(2\pi \nu_2)^{-\frac{N^{(2)}}{2}}e^{-\frac{1}{2\nu_1}\sum_{i=1}^{N^{(1)}}(y_i^{(1)}-\mu)^2-\frac{1}{2\nu_2}\sum_{j=1}^{N^{(2)}}(y_j^{(2)}-\mu)^2}\\
+			&\propto e^{-\frac{1}{2\tilde{\nu}}(\mu-\tilde{\mu})^2},
+		\end{split}
+	\end{equation}
+	where $\tilde{\nu}$ can be found by considering the part of the exponent for $-\frac{\mu^2}{2\tilde{\nu}}$ and then identifying $\tilde{\nu}$, yielding
+	\begin{equation}
+		\tilde{\nu}= \frac{1}{\frac{N^{(1)}}{\nu_1}+\frac{N^{(2)}}{\nu_2}}.
+	\end{equation}
+	Similarly by considering the part of the exponent for the double product
+	\begin{equation}
+		\tilde{\mu} = \tilde{\nu}\bigg(\frac{N^{(1)}\bar{y}^{(1)}}{\nu_1}+\frac{N^{(2)}\bar{y}^{(2)}}{\nu_2}\bigg).
+	\end{equation}
+\end{example}
+
+\begin{example}
+	\index{Example: Bayes naive classifier}
+	\emph{Consider a $3$-class naive Bayes classifier\footnote{The naive Bayes classifier assume the class conditional density can be written as a product of one-dimensional densities~\citep[p.84]{murphy2013machine}} with one binary feature and one Gaussian feature $y\sim \text{Mu}(y|\pi,1)$, $x_1|y=c\sim \text{Ber}(x_1|\theta_c)$, $x_2|y=c\sim N(x_2|\mu_c,\sigma_c^2)$ with}
+	\begin{equation}
+		\begin{split}
+			\pi = \begin{pmatrix}
+				0.5 \\
+				0.25 \\
+				0.25
+			\end{pmatrix}, 
+			\theta = \begin{pmatrix}
+				0.5 \\
+				0.5 \\
+				0.5
+			\end{pmatrix}, 
+			\mu = \begin{pmatrix}
+				-1 \\
+				0 \\
+				1
+			\end{pmatrix},
+			\sigma^2 = \begin{pmatrix}
+				1 \\
+				1 \\
+				1
+			\end{pmatrix}
+		\end{split}
+	\end{equation}
+	
+	\begin{enumerate}
+		\item \emph{Compute $p(y|x_1=0,x_2=0)$.}
+		
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_1=0,x_2=0,I) & = \frac{p(x_1=0,x_2=0|y=c,I)p(y=c|I)}{p(x_1=0,x_2=0|I)}\\
+				&= \frac{p(x_1=0|x_2=0,y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{p(x_1=0,x_2=0|I)}\\
+				&= \frac{p(x_1=0|y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{p(x_1=0,x_2=0|I)}\\
+				&= \frac{p(x_1=0|y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'} p(x_1=0|y=c',I)p(x_2=0|y=c',I)p(y=c'|I)}\\
+			\end{split}
+		\end{equation}
+		with
+		\begin{equation}
+			\begin{split}
+				p(x_1=0|y,I) &= \text{Ber}(x_1=0|\theta)\\
+				&= \begin{pmatrix}
+					0.5 \\ 0.5\\ 0.5
+				\end{pmatrix}\\
+				p(x_2=0|y,I) &= N(x_2=0|\mu,\sigma^2)\\
+				&= \frac{1}{\sqrt{2\pi \sigma^2}}e^{-\frac{1}{2}(\frac{x_2-\mu}{\sigma})^2}\\
+				&\simeq  \begin{pmatrix}
+					0.24 \\ 0.4\\ 0.24
+				\end{pmatrix}\\
+				p(y|\pi) &= \pi\\
+			\end{split}
+		\end{equation}
+		\begin{equation}
+			p(y=c|x_1=0,x_2=0,I) = \begin{pmatrix}
+				0.43 \\ 0.35\\ 0.22
+			\end{pmatrix}
+		\end{equation}
+		
+		\item \emph{Compute $p(y|x_1=0,I)$.}
+		
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_1=0,I) & = \frac{p(x_1=0|y=c,I)p(y=c|I)}{p(x_1=0|I)}\\
+				&= \frac{p(x_1=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_1=0|y=c',I)p(y=c'|I)}\\
+				&= \pi\\
+				& = \begin{pmatrix}
+					0.5 \\ 0.25\\ 0.25
+				\end{pmatrix}
+			\end{split}
+		\end{equation}
+		
+		\item \emph{Compute $p(y|x_2=0,I)$.}
+		
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_2=0,I) & = \frac{p(x_2=0|y=c,I)p(y=c|I)}{p(x_2=0|I)}\\
+				&= \frac{p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_2=0|y=c',I)p(y=c'|I)}\\
+				& = \begin{pmatrix}
+					0.43 \\ 0.35\\ 0.22
+				\end{pmatrix}
+			\end{split}
+		\end{equation}
+		
+		\item \emph{Explain any interesting patterns you see in your results.} \newline
+		
+		Since $\theta_c=\theta_j\forall c,j\in \{c\}$ the prior information is propagated through in calculating $p(y|x_1=0,I)$ and $x_1$ does not impact $p(y|x_1=0,x_2=0,I)$, as can be seen by comparing $p(y|x_1=0,x_2=0,I)$ and $p(y|x_2=0,I)$. This can be seen by considering
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_1=0,x_2=0,I) & = \frac{p(x_1=0|y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_1=0|y=c',I)p(x_2=0|y=c',I)p(y=c'|I)}\\
+				& = \frac{p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_2=0|y=c',I)p(y=c'|I)}\\
+				& = p(y=c|x_2=0,I)
+			\end{split}
+		\end{equation}
+		where it has been used that $p(x_1=0|y=c,I) = p(x_1=0|y=c',I)\forall c,c'\in \{c\}$ for the second equality.
+	\end{enumerate} 
+\end{example}
+
+\begin{example}
+	\index{Example: Posteroir median}
+	\emph{Prove that the posterior median is the optimal estimate under L1 loss.}
+	\begin{equation}
+		\begin{split}
+			\rho(\theta|D) &= \int_{-\infty}^\infty |x-\theta|p(x|D)dx\\
+			&= \int_{-\infty}^{\theta} (x-\theta)p(x|D)dx+\int_{\theta}^\infty (\theta-x)p(x|D)dx\\
+			& \Downarrow\\
+			\frac{d \rho(\theta|D)}{d\theta}\bigg|_{\theta=\hat{\theta}} &= (\hat{\theta}-\hat{\theta})p(\hat{\theta}|D)+\int_{-\infty}^{\hat{\theta}} p(x|D)dx+(\hat{\theta}-\hat{\theta})p(\hat{\theta}|D)-\int_{\hat{\theta}}^\infty p(x|D)dx\\
+			&=0\\
+			& \Downarrow\\
+			\int_{-\infty}^{\hat{\theta}} p(x|D)dx &= \int_{\hat{\theta}}^\infty p(x|D)dx\\
+			&= 1- \int_{-\infty}^{\hat{\theta}} p(x|D)dx\\
+			&\Downarrow \\
+			& \int_{-\infty}^{\hat{\theta}} p(x|D)dx = \frac{1}{2}
+		\end{split}
+	\end{equation}
+	which is the definition of the median.
+
+\end{example}
+
+\begin{example}
+	\index{Example: Bayes factor}
+	Consider the case where $x \in [0,1]$ and the distirbution of $\tilde{x}_j$ follow a truncated (since the uncerainty $\delta x$ is symmetric about $x_j$) normal distribution\index{Normal distribution} with mean $x_j$ and uncertainty $\delta x_j$\label{ex:BF1}
+	\begin{equation}
+		p(x_j|A,\delta x_j, \tilde{x}_j, I) = \begin{cases}
+			\frac{1}{\sqrt{2\pi}\delta x_j}e^{-\frac{1}{2}\big(\frac{x_j-\tilde{x}_j}{\delta x_j}\big)^2} & \text{for  } x_j\in [0,1]\\
+			0 & \text{Otherwise} 
+		\end{cases}.
+	\end{equation} 
+	Hereby
+	\begin{equation}
+		I = \prod_{j=1}^n\int p(x_j|A,\delta x_j, \tilde{x}_j, I)p(\tilde{x}_j|A,\theta,\delta x, I)p(\theta|A,\delta x^{(1:n)},I) d\tilde{x}_j d\theta,
+	\end{equation}
+	where
+	\begin{equation}
+		\begin{split}
+			p(\theta|A,\delta x^{(1:n)},I)
+			& =  p(\theta|A,I)
+		\end{split}.
+	\end{equation}
+	A prerequisite for evaluating the integral is assigning probabilities $p(\theta|A,I)$ and $p(\tilde{x}_j|A,\theta,\delta x, I)$. $p(\theta|A,I)$ represents the prior belief about the parameters $\theta$ whereas $p(\tilde{x}_j|A,\theta,\delta x, I)$ has to capture the nature of the data given the hypothesis, parameters, uncertainty of $x$ and background information. 
+	
+	\paragraph{Gaussian Approximation:} As a first approximation to the scenario in example \ref{ex:BF1} the Gaussian approximation can be considered. In this approximation the limited support of $x$ is neglected and the distribution of $\kappa$ is assumed to be symmetric around a single peak defined by the mean $\mu$, standard deviation $\sigma$. Example \ref{ex:gauss} show how the Gaussian distribution can be derived from these assumptions using the principle of maximum entropy\index{Maximum entropy}, meaning\label{ex:gauss2}
+	\begin{equation}
+		p(\tilde{x}_j|A,\theta,\delta x, I) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2}\big(\frac{\tilde{x}_j-\mu}{\sigma}\big)^2}
+	\end{equation}
+	where $\theta = \{\sigma,\mu\}$. Since the Gaussian distribution is the conjugate prior distribution of the Gaussian distribution
+	\begin{equation}
+		\begin{split}
+			p(x^{(1:n)}|A,\theta,\delta x^{(1:n)}, I) &\equiv \prod_{j=1}^{n}\int p(\tilde{x}_j|A,\theta,\delta x, I)p(x_j|A,\delta x_j, \tilde{x}_j, I)d \tilde{x}_j\\
+			&= \prod_{j=1}^n\frac{1}{(\sigma+\delta x_j)\sqrt{2\pi}}e^{-\big(\frac{x_j-\mu}{\sqrt{2}(\sigma+\delta x_j)}\big)^2}
+		\end{split}
+		\label{likelihood1}
+	\end{equation}
+	in this case. Assuming a uniform prior on both the mean and standard deviation
+	\begin{equation}
+		p(\theta|A,I) = \frac{1}{(\mu_{max}-\mu_{min})(\sigma_{max}-\sigma_{min})}.
+		\label{prior1}
+	\end{equation}
+	Using equations \eqref{prior1} and \eqref{likelihood1} the integral, $I$ can be written
+	\begin{equation}
+		I = \frac{\int \prod_{j\in x^{(1:n)}}\frac{1}{(\sigma+\delta x_j)\sqrt{2\pi}}e^{-\big(\frac{x_{j}-\mu}{\sqrt{2}(\sigma+\delta x_j)}\big)^2} d\mu d\sigma}{(\mu_{max}-\mu_{min})(\sigma_{max}-\sigma_{min})}.
+	\end{equation}
+	The likelihood can be evaluated numerically via importance sampling. Alternatively an analytical solution can be obtained by i) assuming $\delta x_j\ll \sigma$ and ii) Taylor expanding the logarithm of the likelihood around a maximum defined by $\mu_0,\sigma_0$~\citep{Sivia2006}
+	\begin{equation}
+		L = L(\mu_0,\sigma_0)-\frac{1}{2}\begin{bmatrix}
+			\Delta\mu & \Delta\sigma
+		\end{bmatrix}
+		\begin{bmatrix}
+			\alpha & \gamma\\
+			\gamma & \beta \\
+		\end{bmatrix}\begin{bmatrix}
+			\Delta\mu\\ \Delta\sigma
+		\end{bmatrix}
+		+\mathcal{O}(\Delta\mu^2),
+		\label{eq:li}
+	\end{equation}
+	where $\Delta \mu = \mu-\mu_0$ and $\Delta\sigma = \sigma-\sigma_0$. $\mu_0$ and $\sigma_0$ are determined from requiring $\frac{\partial L}{\partial \mu}=\frac{\partial L}{\partial \sigma}=0$
+	\begin{equation}
+		\begin{split}
+			\mu_0 &= \frac{1}{\tilde{N}}\sum_{j}x_j,\\
+			\sigma_0 &= \frac{1}{\tilde{N}}\sum_j(x_j-\mu_0)^2.
+		\end{split}
+		\label{eq:s}	
+	\end{equation}
+	$\alpha,\beta$ and $\gamma$ can be determined by evaluating the second order partial derivatives at the maximum
+	\begin{equation}
+		\begin{split}
+			\alpha & = \frac{\tilde{N}}{\sigma_0^2}\\
+			\beta & = 2\alpha\\
+			\gamma & = 0.
+		\end{split}
+		\label{eq:a}
+	\end{equation} 
+	The results of equations \eqref{eq:li},\eqref{eq:s} and \eqref{eq:a} are understood to apply for all distributions.
+	Hereby
+	\begin{equation}
+		\begin{split}
+			I &\approx \frac{e^{L(\mu_0,\sigma_0)}\tilde{I}}{(\mu_{max}-\mu_{min})(\sigma_{max}-\sigma_{min})} \\
+			&\approx \frac{e^{L(\mu_0,\sigma_0)}}{(\mu_{max}-\mu_{min})(\sigma_{max}-\sigma_{min})}\frac{2\pi}{\sqrt{\alpha\beta}}\\
+			&=\frac{(\sigma_0 \sqrt{2\pi})^{2-\tilde{N}}e^{-\frac{\tilde{N}}{2}}}{\tilde{N}\sqrt{2}(\mu_{max}-\mu_{min})(\sigma_{max}-\sigma_{min})}
+		\end{split}
+	\end{equation}
+	where
+	\begin{equation}
+		\tilde{I} = \int_{\mu_{min}}^{\mu_{max}}d\mu\int_{\sigma_{min}}^{\sigma_{max}}d\sigma e^{-\frac{1}{2}(\alpha\Delta\mu^2+\beta\Delta\sigma^2)}.
+	\end{equation}
+	The integrals related to hypothesis B are computed analogously yielding the Bayes factor
+	\begin{equation}
+		\begin{split}
+			\rm BF &\sim  \frac{(\mu_{max}-\mu_{min})(\sigma_{max}-\sigma_{min})}{\pi \sqrt{2}}\frac{\tilde{N}_1\tilde{N}_2}{\tilde{N}}\frac{\sigma_0^{2-\tilde{N}}}{\sigma_{0,1}^{2-\tilde{N}_1}\sigma_{0,2}^{2-\tilde{N}_2}},
+		\end{split}
+	\end{equation}
+	where the second index in $\sigma_{0,s}$ denotes the value of $s$.
+	
+	\paragraph{Beta Approximation:} The advantage of the Gaussian approximation in example \ref{ex:gauss2} is that it yields an analytical soltuion. The disadvantage is that it does not properly account for the support and possible morphology of the distribution of $x$. An improved approximation is to take the limited support of $x$ into account and allow for asymmetry in the distribution. Example \ref{ex:beta} show how the beta distribution can be derived from these assumptions using the principle of maximum entropy\index{Maximum entropy}, meaning\label{sec:beta}
+	\begin{equation}
+		p(\tilde{x}_j|A,\theta, I) = \frac{1}{B(\alpha,\beta)} \tilde{x}_j^{\alpha-1}(1-\tilde{x}_j)^{\beta-1}
+		\label{eq:p2}
+	\end{equation}
+	where $\theta =\{\alpha,\beta\}$ and $B(\alpha,\beta)$ denotes the beta function. Assuming again a uniform prior on the parameters of the beta distribution ($\alpha,\beta$)
+	\begin{equation}
+		p(\theta|A,I) = \frac{1}{(\alpha_{max}-\alpha_{min})(\beta_{max}-\beta_{min})}.
+		\label{prior2}
+	\end{equation}
+	Given equations \eqref{prior2} and \eqref{eq:p2} the integral, $I$, can be evaluated numerically via importance sampling. The dimensionality of the integral in $I$ is $n+2$, meaning the complexity is dominated by (and scale with) the dimensionality of data. For this reason, it is worth considering approximating $p(x^{(1:n)}|A,\theta,\delta x^{(1:n)}, I)$. In the case of the beta distribution 
+	\begin{equation}
+		p(x^{(1:n)}|A,\theta,\delta x^{(1:n)}, I) =\frac{1}{B(\alpha,\beta)^n}\prod_{j=1}^{n}\frac{I_1}{\sqrt{2\pi \delta} x_j}
+		\label{likelihood2}
+	\end{equation}
+	with
+	\begin{equation}
+		I_1 = \int_0^1e^{-\frac{1}{2}\big(\frac{x_j-\tilde{x}_j}{\delta x_j}\big)^2+\ln(B(\alpha,\beta) p(\tilde{x}_j|A,\theta, I))}d\tilde{x}_j.
+	\end{equation}
+	The exponent\footnote{The reason why the exponent is expanded rather than the integrand itself is that the latter will allow for a negative value of the integral.} can be Taylor expanded
+	\begin{equation}
+		\begin{split}
+			-\frac{1}{2}\big(\frac{x_j-\tilde{x}_j}{\delta x_j}\big)^2+\ln(B(\alpha,\beta) p(\tilde{x}_j|A,\theta, I)) = \sum_{i=0}^{1} a_i\Delta x_j^i+\mathcal{O}(\Delta x_j^2)
+		\end{split}
+	\end{equation}
+	with $\Delta x_j \equiv \tilde{x}_j-x_j$ and
+	\begin{equation}
+		\begin{split}
+			a_0 & = (\alpha-1)\ln(x_j)+(\beta-1)\ln(1-x_j),\\
+			a_1 & = \frac{\alpha-1}{x_j}+\frac{\beta-1}{x_j-1}.\\
+		\end{split}
+	\end{equation}
+	Hereby
+	\begin{equation}
+		\begin{split}
+			I_1 &\approx e^{a_0-a_1x_j}\int_0^1e^{a_1\tilde{x}_j}d\tilde{x}_j\\
+			&= \frac{e^{a_0-x_j a_1}(e^{a_1}-1)}{a_1}
+		\end{split}
+	\end{equation}
+	and
+	\begin{equation}
+		p(x^{(1:n)}|A,\theta,\delta x^{(1:n)}, I) \approx\frac{1}{B(\alpha,\beta)^n}\prod_{j=1}^{n}\frac{1}{\sqrt{2\pi \delta} x_j}\frac{e^{a_0-x_j a_1}(e^{a_1}-1)}{a_1}.
+		\label{likelihood3}
+	\end{equation}
+\end{example}
+
+\begin{example}
+		\index{Example: Bayesian decision theory}
+		\emph{Consider the following classic problem in decision theory/economics. Suppose you are trying to decide how much quantity, Q, of some product to buy to maximize your profits. The optimal amount will dependon how much demand, A, you think there is for the product, as well as its cost, C, and selling price, W. Suppose A is unknown but has a pdf f(A) and cdf F(A). We can evaluate the expected profit by ocnsidering two cases: If A>Q, then we seel all Q items, and make profit $\pi=(W-C)Q$; but if A<Q, we only sell A items, at profit $\pi=(W-C)A$, but have wasted $C(Q-A)$ on the unsold items. So the expected profit if we buy quantity, Q, is}
+		\begin{equation}
+			\mathbb{E}[\pi(Q)]=\int_{Q}^\infty dA (W-C)Qf(A)+\int_{0}^Q dA (W-C)Af(A)-\int_{0}^Q dA (Q-A)Cf(A).
+		\end{equation}
+		\emph{Simplify this equation, and then take derivatives with respect to $Q$ to show that the optimal quantity, $Q^*$, satisfies}
+		\begin{equation}
+			F(Q^*)=\frac{W-C}{W}.
+		\end{equation}
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}[\pi(Q)] &= (W-C)Q(\cancelto{1}{F(\infty)}-F(Q))+(W-C)\int_{0}^Q dAAf(A)-CQ[F(Q)-\cancelto{0}{F(0)}]+C\int_{0}^Q dA Af(A)\\
+				&= Q(W-C)-WQF(Q)+W\int_{0}^Q dA Af(A)
+			\end{split}
+		\end{equation}
+		\begin{equation}
+			\begin{split}
+				\frac{d\mathbb{E}[\pi(Q)]}{dQ} = W-C-WF(Q)
+			\end{split}
+		\end{equation}
+		Hence, $\frac{d\mathbb{E}[\pi(Q)]}{dQ}|_{q=Q^*}=0\rightarrow F(Q^*)=\frac{W-C}{W}$.
+	\end{example}
+	
+
+
+\begin{example}
+	\index{Example: Future event counts}
+	\label{ex:events}
+	Let $x=x_1+x_2+\dots x_M$ be the sum of future event counts and $y=\{y_1,y_2,y_3,\dots y_N\}$ be observed event counts. With this notation the expected\index{Expectation value} number of future events, $x$, and the associated uncertainty\index{Variance} can be written
+	\begin{equation}
+		\mathbb{E}[x|y,I]\pm \sqrt{\text{Var}[x|y,I]},
+		\label{eq:mean_var}
+	\end{equation}
+	where
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x|y,I] &= \sum_i ip(x =i|y,I),\\
+			\text{Var}[x|y,I] &=  \sum_i i^2p(x =i|y,I)-\mathbb{E}[x|y,I]^2.
+		\end{split}
+		\label{h1}
+	\end{equation}
+	The distribution over counts $p(x =i|y,I)$ can be expanded by marginalizing over a set of unknown parameters from underlying distributions. The details depend on the statistical assumptions imposed. In this example, different assumptions and their consequences will be investigated.
+	
+	\paragraph{Simple Poisson Assumption:} The most common assumption is to assume data follow a Poisson distribution\index{Poisson distribution} with an unknown rate parameter which will then be marginalized\index{Marginalized} over. An abvious choice of prior would be the conjugate gamma distribution\index{Gamma distribution} (which is also the distribution with maximum entropy\index{Maximum entropy}) with parameters $\alpha, \beta$, meaning
+	\begin{equation}
+		\begin{split}
+			p(x =i|y,\alpha, \beta,I) &= \int d\lambda p(x =i,\lambda|y,\alpha, \beta,I)\\
+			&=\int d\lambda p(x =i|\lambda,\alpha, \beta,y,I)p(\lambda|\alpha, \beta,y,I)\\
+			&= \int d\lambda p(x =i|\lambda,\alpha, \beta,y,I)\frac{p(y|\lambda,\alpha, \beta,I)p(\lambda|\alpha, \beta,I)}{p(y|\alpha, \beta,I)}.
+		\end{split}
+		\label{h4}
+	\end{equation}
+	with
+	\begin{equation}
+		\begin{split}
+			p(y|\alpha, \beta,I) & = \int d \lambda p(y|\alpha, \beta,\lambda,I)p(\lambda|\alpha, \beta,I),\\
+			p(y|\alpha, \beta,\lambda,I) &= \prod_{j=1}^N\text{Poi}(y_j|\lambda)\\
+			&= \lambda^{N\bar{y}}e^{-N\lambda}\prod_{j=1}^N \frac{1}{y_j!},\\
+			p(\lambda|\alpha,\beta,I) &= \text{Ga}(\lambda|\alpha,\beta)\\ &=\frac{\beta ^\alpha}{\Gamma(\alpha)}\lambda^{\alpha-1}e^{-\beta \lambda}.
+		\end{split}
+	\end{equation}
+	Meaning
+	\begin{equation}
+		p(y|\lambda,\alpha, \beta,I)p(\lambda|\alpha, \beta,I) = \frac{\beta^\alpha}{\Gamma(\alpha)}\lambda^{\alpha+N\bar{y}-1}e^{-(\beta+N)\lambda}\prod_{j=1}^N \frac{1}{y_j!}
+	\end{equation}
+	and consequently
+	\begin{equation}
+		\begin{split}
+			\frac{p(y|\lambda,\alpha, \beta,I)p(\lambda|\alpha, \beta,I)}{p(y|\alpha, \beta,I)} &= \frac{\lambda^{\alpha+N\bar{y}-1}e^{-(\beta+N)\lambda}}{\int d\lambda \lambda^{\alpha+N\bar{y}-1}e^{-(\beta+N)\lambda}}\\
+			&= \text{Ga}(\lambda|\alpha+N\bar{y},\beta+N)\\
+		\end{split}
+	\end{equation}
+	Using that $p(x =i|\lambda,\alpha,\beta,y,I) = \text{Poi}(x =i|M\lambda)$ yields
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x|y,\alpha,\beta,I] &= \sum_ii\int d\lambda \text{Poi}(x = i|M\lambda)\text{Ga}(\lambda| \alpha+N\bar{y},\beta +N)\\
+			&= M\int d\lambda\lambda\text{Ga}(\lambda | \alpha+N\bar{y},\beta +N)\\
+			&= M \frac{\alpha+N\bar{y}}{\beta +N},
+		\end{split}
+	\end{equation}
+	where for the second equality it has been used that $\sum_ii \text{Poi}(x = i|M\lambda)=M\lambda$ and for the second equality it has been realized that the second line denoted the expectation of a Gamma distribution with modified parameters. Similarly for the variance
+	\begin{equation}
+		\begin{split}
+			\sum_i i^2p(x = i|y,\alpha,\beta,I) &=  \sum_ii^2\int d\lambda \text{Poi}(x =i|M\lambda)\text{Ga}(\lambda | \alpha+N\bar{y},\beta +N)\\
+			&=M\int d\lambda (\lambda +M\lambda^2)\text{Ga}(\lambda|\alpha+N\bar{y},\beta +N)\\
+			&=\mathbb{E}[x|y,\alpha,\beta,I]+M^2\int d\lambda \lambda^2\text{Ga}(\lambda|\alpha+N\bar{y},\beta +N)\\
+			&=\mathbb{E}[x|y,\alpha,\beta,I]+M^2\frac{\alpha+N\bar{y}}{(\beta +N)^2}+\mathbb{E}[x|y,\alpha,\beta,I]^2\\
+		\end{split}
+		\label{h2}
+	\end{equation}
+	where for the second equality it has been used that $\sum_ii^2\text{Poi}(x = i|M\lambda)=\text{Var}[i|M\lambda]+\mathbb{E}[x|M\lambda]^2=M\lambda +M^2\lambda^2$ and similarly for the fourth equality. Combining equations \eqref{h1} and \eqref{h2}, the variance can be written
+	\begin{equation}
+		\begin{split}
+			\text{Var}[x|y,\alpha,\beta,I] & = \mathbb{E}[x|y,\alpha,\beta,I]+M^2\frac{\alpha+N\bar{y}}{(\beta +N)^2}\\
+			& = M\bigg(1+\frac{M}{\beta+N}\bigg)\frac{\alpha+N\bar{y}}{\beta +N}.\\
+		\end{split}
+	\end{equation}
+	In the limit of $\beta,\alpha\rightarrow 0$ equation \eqref{eq:mean_var} become
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x|y,I]\pm \sqrt{\text{Var}[x|y,I]} & = \lim\limits_{\alpha,\beta\rightarrow 0}\big(\mathbb{E}[x|y,\alpha,\beta,I]\pm \sqrt{\text{Var}[x|y,\alpha,\beta,I]}\big)\\
+			& = M\bar{y}\pm \sqrt{M\big(1+\frac{M}{N}\big)\bar{y}}.\\ 
+		\end{split}
+		\label{h3}
+	\end{equation}
+	Equation \eqref{h3} informs that the expected number of future events is equal to the mean number of observed events per day multiplied with the number of days -- That makes sense. The variance of equation \eqref{h3} is proportional to the square root of the observed mean event count, which is to be expected from a Poisson distribution. It means $\mathbb{E}[x|y,I]\gg \sqrt{\text{Var}[x|y,I]}$ for $\bar{y}\gg 1$ and hence that the uncertainty approaches a negligible quantity. This is a strong implicit statement which easily can be broken. This can for example happen if the number of events is expected to vary due to a rate parameter that changes every day due to underlying dynamics, e.g. weather conditions. 
+	
+	
+	\paragraph{Advanced Poisson Assumption:} In the case where the rate parameter of the Poisson distribution\index{Poisson distribution} is expected to have significant time variance while retaining unimodality, it is more accurate to assume that each rate parameter is unique, but drawn from the same gamma distribution\index{Gamma distribution}, meaning
+	\begin{equation}
+		\begin{split}
+			p(x = i|y,\xi,\zeta,I) &= \int d\{\lambda_x\}d\{\lambda_y\} d\alpha d\beta p(x = i,\{\lambda_x\},\{\lambda_y\} ,\alpha, \beta|y,\xi,\zeta,I)\\
+			&=\int d\{\lambda_x\}d\{\lambda_y\}d\alpha d\beta p(x=i,\{\lambda_x\}|\alpha, \beta,y,\xi,\zeta,I)p(\{\lambda_y\},\alpha,\beta|y,\xi,\zeta,I),
+		\end{split}
+		\label{r1}
+	\end{equation}
+	where $\xi,\zeta$ are the parameters of the prior distributions, $d\{\lambda_x\} = d\lambda_{x_1}d\lambda_{x_2}\dots d\lambda_{x_M}$ and $d\{\lambda_y\}=d\lambda_{y_1}d\lambda_{y_2}\dots d\lambda_{y_N}$ and
+	\begin{equation}
+		\begin{split}
+			p(x=i,\{\lambda_x\}|\alpha, \beta,y,\xi,\zeta,I) &= p(x=i|\{\lambda_x\},\alpha, \beta,y,I)p(\{\lambda_x\}|\alpha, \beta,I),\\
+			p(\{\lambda_y\},\alpha,\beta|y,\xi,\zeta,I) & = \frac{p(y|\{\lambda_y\},\alpha, \beta,I)p(\{\lambda_y\}|\alpha, \beta,I)p(\alpha|\xi,I)p(\beta|\zeta,I)}{p(y|\xi,\zeta,I)}
+		\end{split}
+	\end{equation}
+	with
+	\begin{equation}
+		\begin{split}
+			p(y|\xi,\zeta,I) & = \int d\{\lambda_y\} d\alpha d\beta p(y|\{\lambda_y\},\alpha, \beta,I)p(\{\lambda_y\}|\alpha, \beta,I)p(\alpha|\xi,I)p(\beta|\zeta,I),\\
+			p(y|\{\lambda_y\},\alpha, \beta,I)p(\{\lambda_y\}|\alpha, \beta,I) &= \prod_{j=1}^N\text{Poi}(y_j|\lambda_{y_j})\text{Ga}(\lambda_{y_j}|\alpha,\beta).\\
+		\end{split}
+	\end{equation}
+	The integrals over gamma can be evaluated individually viz
+	\begin{equation}
+		\begin{split}
+			p(y_i|\alpha,\beta,I) &= \int d \lambda_{y_i} \text{Poi}(y_j|\lambda_{y_j})\text{Ga}(\lambda_{y_j}|\alpha,\beta)\\
+			& = \begin{pmatrix}
+				y_j+\alpha-1\\
+				y_j
+			\end{pmatrix}
+			\bigg(\frac{\beta}{\beta+1}\bigg)^{y_j}\bigg(\frac{1}{\beta +1}\bigg)^\alpha\\
+			&= \text{NB}\bigg(y_j|\alpha,\frac{\beta}{\beta +1}\bigg),
+		\end{split}
+	\end{equation}
+	where NB abbreviates the negative binomial distribution\index{Negative binomial distribution}. The sum of negative binomial random variables is another negative binomial random variable, such that
+	\begin{equation}
+		\int d\{\lambda_x\} p(x=i,\{\lambda_x\}|\alpha, \beta,y,I) = \text{NB}\bigg(x=i|M\alpha,\frac{\beta}{\beta +1}\bigg),
+	\end{equation}
+	meaning equation \eqref{r1} can be written
+	\begin{equation}
+		\begin{split}
+			p(x = i|y,\xi,\zeta,I) &= \frac{1}{p(y|\xi,\zeta,I)}\int d\alpha d\beta \text{NB}\bigg(x=i|M\alpha,\frac{\beta}{\beta +1}\bigg)\prod_{j=1}^N\text{NB}\bigg(y_j|\alpha,\frac{\beta}{\beta +1}\bigg)p(\alpha|\xi,I)p(\beta|\zeta,I).
+		\end{split}
+		\label{r2}
+	\end{equation}
+	Using the principle of maximum\index{Maximum entropy}, entropy, the distributions for $\alpha$ and $\beta$ can be assigned gamma distributions
+	\begin{equation}
+		\begin{split}
+			p(\alpha|\xi,I) & = p(\alpha|a,b,I)\\
+			&= \text{Ga}(\alpha| a, b),\\
+			p(\beta|\zeta,I) & = p(\beta|c,d,I)\\
+			&= \text{Ga}(\alpha| c, d),\\
+		\end{split}
+	\end{equation}
+	with $\xi = \{a,b\}$ and $\zeta = \{c,d\}$. With this setup, $\mathbb{E}[x|y,\xi,\zeta,I]\pm \sqrt{\text{Var}[x|y,\xi,\zeta,I]}$ can be evaluated numerically using numerical methods like e.g. Hamiltonian Monte Carlo (see appendix \ref{app:HMC}). In this example, the pymc python packge~\citep{pymc} will be used (which utilize Hamiltonian Monte Carlo) with parameters $a=b=c=d =1$, corresponding to wide (low bias) gamma distributions. 
+	
+	\paragraph{Normal Assumption:} In case the distribution of $x$ is fairly symmetric around its peak and the summary statistics of equation \eqref{eq:mean_var} are the quantities of primary interest, a crude normal approximation can be made. For a continuous variable, equation \eqref{h1} become		
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x|y,I] &= \int xp(x|y,I),\\
+			\text{Var}[x|y,I] &=  \int x^2p(x|y,I)-\mathbb{E}[x|y,I]^2.
+		\end{split}
+		\label{h1con}
+	\end{equation}
+	Assume $x$ is normally distributed\index{Normal distribution} with mean and precision $\mu\sim N(\mu|\text{mean}=\mu_0,\text{variance}=\frac{1}{c\tau})$ and $\tau\sim \text{Ga}(\tau|\alpha,\beta)$ following a normal and gamma distribution\index{Gamma distribution}, respectively. In this case
+	\begin{equation}
+		p(x|y,\mu_0,c,\alpha,\beta,I) = \int d\mu  d\tau p(x|\mu,\tau,y,I)\frac{p(y|\mu,\tau,I)p(\mu|\tau,\mu_0,c,I)p(\tau|\alpha,\beta,I)}{p(y|\mu_0,c,\alpha,\beta,I)}.
+		\label{h6}
+	\end{equation}
+	With these assumptions, the likelihood is given by
+	\begin{equation}
+		\begin{split}
+			p(y|\mu,\tau,I) &= \bigg(\frac{\tau}{2\pi}\bigg)^{\frac{N}{2}}\prod_{j=1}^{N}e^{-\frac{\tau}{2}(\mu-y_j)^2}\\
+			&=\bigg(\frac{\tau}{2\pi}\bigg)^{\frac{N}{2}}e^{-\frac{\tau}{2}\sum_{j=1}^{N}(\mu-y_j)^2}\\
+		\end{split}
+	\end{equation}
+	and the expectation can be written
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x|y,\mu_0,c,\alpha,\beta,I] &=\frac{M\beta^{\alpha}}{p(y|I)\Gamma(\alpha)}\int d\mu d\tau \mu \bigg(\frac{\tau}{2\pi}\bigg)^{\frac{N}{2}}e^{-\frac{\tau}{2}\sum_{j=1}^{N}(\mu-y_j)^2}\sqrt{\frac{c\tau}{2\pi}}e^{-\frac{c\tau}{2}(\mu-\mu_0)^2}\tau^{\alpha-1}e^{-\tau \beta}\\
+			&=M\frac{Z_1}{Z_0},\\
+		\end{split}
+		\label{h11}
+	\end{equation}
+	with
+	\begin{equation}
+		\begin{split}
+			Z_1&\equiv \int d\tau \tau^{\alpha-\frac{1}{2}+\frac{N}{2}}e^{-\tau \beta} \int d\mu \mu e^{-\frac{\tau}{2}\sum_{j=1}^{N}(\mu-y_j)^2-\frac{c\tau}{2}(\mu-\mu_0)^2},\\
+			Z_0 &\equiv\int d\tau \tau^{\alpha-\frac{1}{2}+\frac{N}{2}}e^{-\tau \beta} \int d\mu e^{-\frac{\tau}{2}\sum_{j=1}^{N}(\mu-y_j)^2-\frac{c\tau}{2}(\mu-\mu_0)^2}.
+		\end{split}
+		\label{h9}
+	\end{equation}
+	For the identification of $Z_1$ and $Z_0$ it has been used that all constants cancel out due to $p(y|I)$. The exponents involving $\mu$ can be rewritten 
+	\begin{equation}
+		\begin{split}
+			-\frac{\tau}{2}\sum_{j=1}^{N}(\mu-y_j)^2-\frac{c\tau}{2}(\mu-\mu_0)^2 &= -\frac{\tau}{2}\sum_{j=1}^{N}(\mu-\bar{y}+\bar{y}-y_j)^2-\frac{c\tau}{2}(\mu-\mu_0)^2\\
+			&=-\frac{\tau}{2}\sum_{j=1}^{N}(\bar{y}-y_j)^2-\frac{N\tau(\mu-\bar{y})^2}{2}-\tau(\mu-\bar{y})\sum_{j=1}^{N}(\bar{y}-y_j)-\frac{c\tau}{2}(\mu-\mu_0)^2\\
+			&=-\frac{\tau}{2}\sum_{j=1}^{N}(\bar{y}-y_j)^2-\frac{N\tau(\mu-\bar{y})^2}{2}-\frac{c\tau}{2}(\mu-\mu_0)^2\\
+			&=-\frac{\tau}{2}\sum_{j=1}^{N}(\bar{y}-y_j)^2-\frac{\tau}{2}(N+c)\bigg[\bigg(\mu-\frac{c\mu_0+N\bar{y}}{N+c}\bigg)^2 +\frac{cN\tau(\bar{y}-\mu_0)^2}{(c+N)^2}\bigg].\\
+		\end{split}
+		\label{h7}
+	\end{equation}
+	Only the second term in equation \eqref{h7} depend on $\mu$, so
+	\begin{equation}
+		e^{-\beta\tau}e^{-\frac{\tau}{2}\sum_{j=1}^{N}(\mu-y_j)^2-\frac{c\tau}{2}(\mu-\mu_0)^2} = e^{-\beta_0\tau}e^{-\frac{\tau}{2}(N+c)(\mu-\frac{c\mu_0+N\bar{y}}{N+c})^2},
+		\label{h8}
+	\end{equation}	
+	with 
+	\begin{equation}
+		\beta_0\equiv \beta+\frac{1}{2}\sum_{j=1}^{N}(\bar{y}-y_j)^2+\frac{cN(\bar{y}-\mu_0)^2}{2(c+N)}.
+	\end{equation}
+	Using equation \eqref{h8} equation \eqref{h9} can be written
+	\begin{equation}
+		\begin{split}
+			Z_1 &= \int d\tau \tau^{\alpha_0-\frac{1}{2}}e^{-\tau\beta_0} \int d\mu \mu e^{-\frac{\tau}{2}(N+c)(\mu-\frac{c\mu_0+N\bar{y}}{N+c})^2}\\
+			&=\sqrt{\frac{2\pi}{N+c}}\frac{c\mu_0+N\bar{y}}{N+c}\beta_0^{-\alpha_0}\Gamma(\alpha_0), \\ 
+			Z_0 &= \int d\tau \tau^{\alpha_0-\frac{1}{2}}e^{-\tau\beta_0} \int d\mu e^{-\frac{\tau}{2}(N+c)(\mu-\frac{c\mu_0+N\bar{y}}{N+c})^2}\\
+			&=\sqrt{\frac{2\pi}{N+c}}\beta_0^{-\alpha_0}\Gamma(\alpha_0)
+		\end{split}
+		\label{h10}
+	\end{equation} 
+	where $\alpha_0\equiv \alpha+\frac{N}{2}$. Combining equation \eqref{h11} with \eqref{h10} yields
+	\begin{equation}
+		\mathbb{E}[x|y,\mu_0,c,\alpha,\beta,I]= M\frac{c\mu_0+N\bar{y}}{c+N}
+	\end{equation}
+	For the variance
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x^2|y,\mu_0,c,\alpha,\beta,I] &= \int d\mu d\tau dx x^2p(x|\mu,\tau,y,I)\frac{p(y|\mu,\tau,I)p(\mu|\tau,\mu_0,c,I)p(\tau|\alpha,\beta,I)}{p(y|\mu_0,c,\alpha,\beta,I)}\\
+			&=\frac{M}{p(y|\mu_0,c,\alpha,\beta,I)}\int d\mu d\tau (M\mu^2+\tau^{-1}) p(y|\mu,\tau,I)p(\mu|\tau,\mu_0,c,I)p(\tau|\alpha,\beta,I)\\
+			&=M\frac{MZ_2+Z_3}{Z_0}
+		\end{split}
+		\label{h12}
+	\end{equation}
+	where
+	\begin{equation}
+		\begin{split}
+			Z_2 &= \int d\tau \tau^{\alpha_0-\frac{1}{2}}e^{-\tau\beta_0} \int d\mu \mu^2 e^{-\frac{\tau}{2}(N+c)(\mu-\frac{c\mu_0+N\bar{y}}{N+c})^2}\\
+			& = \sqrt{\frac{2\pi}{(N+c)}}\bigg[\frac{1}{N+c}\beta_0^{1-\alpha_0}\Gamma(\alpha_0-1)+\bigg(\frac{c\mu_0+N\bar{y}}{N+c}\bigg)^2\beta_0^{-\alpha_0}\Gamma(\alpha_0) \bigg],\\
+			Z_3 &= \int d\tau \tau^{\alpha_0-\frac{3}{2}}e^{-\tau\beta_0} \int d\mu  e^{-\frac{\tau}{2}(N+c)(\mu-\frac{c\mu_0+N\bar{y}}{N+c})^2}\\
+			&=\sqrt{\frac{2\pi}{(N+c)}}\beta_0^{1-\alpha_0}\Gamma(\alpha_0-1)
+		\end{split}
+		\label{h13}
+	\end{equation}
+	Combining equations \eqref{h1}, \eqref{h12} and \eqref{h13}
+	\begin{equation}
+		\text{Var}[x|y,\mu_0,c,\alpha,\beta,I]=M\bigg(\frac{M}{N+c}+1\bigg)\frac{\beta_0}{\alpha_0-1}
+	\end{equation}
+	In the limit of $\mu_0,c,\alpha,\beta\rightarrow 0$ then
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[x|y,I]\pm \sqrt{\text{Var}[x|y,I]} &= \lim\limits_{\mu_0,c,\alpha,\beta\rightarrow 0}\big(\mathbb{E}[x|y,\mu_0,c,\alpha,\beta,I]\pm \sqrt{\text{Var}[x|y,\mu_0,c,\alpha,\beta,I]}\big)\\ 
+			&= M\bar{y}\pm \sqrt{M\frac{N+M}{N}\frac{N-1}{N-2}}\delta y\\ 
+		\end{split}
+		\label{h14}
+	\end{equation}
+	where 
+	\begin{equation}
+		\delta y \equiv \sqrt{\frac{\sum_{j=1}^{N}(\bar{y}-y_j)^2}{N-1}}
+	\end{equation}
+	is the sample standard deviation. From equation \eqref{h14}, it is clear that the result is close to the sample mean with uncertainty close to the sample standard deviation.
+	
+	\paragraph{Numerical example and comparison of approximations: } In order to illustrate the difference between the approximations considered in this example, consider a numerical example where data is drawn from a Poisson distribution with a rate parameter that is drawn from a gamma distribution with parameters $\alpha = 10$ and $\beta =  0.01$. $300$ counts are drawn, yielding the data shown in figure \ref{fig:q1}. Given the data shown in figure \ref{fig:q1}, the three approximations return the posterior predicitve distributions ($M=1$) shown in figure \ref{fig:q2} with expectations and standard deviations shown in table \ref{tab:1}. From figure \ref{fig:q2} it is clear that the approximations yield significantly different distributions. From table \ref{tab:1} it is clear that the expectation values are highly similar, whereas the standard deviations differ significantly. The distributions underlying each approximation (Poisson, negative binomial and normal) are unimodal, and as such it is expected that they will estimate the expectation value of unimodal data accurately. The Poisson distribution has a standard deviation that is determined by the expectation value (see equation \eqref{h3}) and as such it cannot accurately describe the variance in data where the expectation and variance is decoupled. In the advanced Poisson approximation, the mean and variance are decoupled and hence an accurate description of data is seen. Relative to the advanced Poisson approximation, the normal approximation suffer from three shortcommings i) it assumes the discrete events are continuous, ii) it assumes the distribution is symmetric and iii) it allows the counts to be negative (see the left tail of figure \ref{fig:q2} (bottom)). In relation to the expectation and standard deviation neither of the shortcommings are highly significant, however, they may be if different questions are asked of the posterior predictive.	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width = 1\textwidth]{figures/count_hist.pdf}
+		\caption{A probability density histogram for the sample of $300$ data points considered in the numerical example. The data are event counts drawn from ($300$) Poisson distributions with ($300$) rate parameters drawn from a gamma distribution with $\alpha = 10$ and $\beta =  0.01$.}
+		\label{fig:q1}
+	\end{figure}
+	
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+			\multicolumn{1}{|c|}{Approximation} & \multicolumn{1}{c|}{$\mathbb{E}[x|y,I]$} & \multicolumn{1}{c|}{$\sqrt{\text{Var}[x|y,I]}$} \\
+			\hline\hline
+			Simple Poisson theoretical & $1008.9$ & $31.8$ \\
+			Simple Poisson pymc & $1008.5$ & $31.8$ \\
+			\hline
+			Advanced Poisson pymc & $1008.7$ & $324.1$ \\
+			\hline
+			Normal theoretical & $1008.9$ & $321.3$\\
+			Normal pymc & $1007.5$ & $322.2$\\
+			\hline
+		\end{tabular}
+		\caption{Equation \eqref{eq:mean_var} computed by each of the three approximations considered here.}
+		\label{tab:1}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width = 0.8\textwidth]{figures/pymc_poisson.pdf}
+		\includegraphics[width = 0.8\textwidth]{figures/pymc_negbin.pdf}
+		\includegraphics[width = 0.8\textwidth]{figures/pymc_normal.pdf}
+		\caption{The posterior predictive distributions for the numerical example for each approximation. (top) is the simple Poisson approximation, (middle) is the advanced Poisson approximation and (bottom) is the normal approximation.}
+		\label{fig:q2}
+	\end{figure}
+	
+\end{example}

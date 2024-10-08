@@ -1,0 +1,89 @@
+\begin{example}
+	Consider the scenario where two sets of costumers are subjected to two different products, $A$ and $B$. After exposure to the product, the costumer will be asked whether or not they are satisfied and they will be able to answer "yes" or "no" to this. Denote the probability of a costumer liking product $A/B$ by $w_A/w_B$, respectively. In this context, the probabilities $w_A/w_B$ are parameters of Natures model (similar to how the probability is a parameters for a binomial distribution). What will be of interest is the integral of the joint probability distribution where $w_B>w_A$, meaning
+	\begin{equation}
+		p(w_B > w_A|D,I)= \int_0^1\int_{w_A}^1p(w_A,w_B|D,I)dw_Adw_B.
+		\label{e1}
+	\end{equation}
+	Assuming the costumer sets are independent
+	\begin{equation}
+		\begin{split}
+			p(w_A,w_B|D,I) &= p(w_B|w_A,D,I)p(w_A|D,I)\\
+			& = p(w_B|D_A,I)p(w_A|D_A,I),
+		\end{split}
+	\end{equation}
+	with
+	\begin{equation}
+		p(w_i|D_i,I)=\frac{p(D_i|w_i,I)p(w_i|I)}{p(D_i|I)}.
+	\end{equation}
+	Assuming a beta prior and a binomial likelihood yields (since the binomial and beta distributions are conjugate)
+	\begin{equation}
+		p(w_i|D_i,I)=\frac{w_i^{\alpha_i-1}(1-w_i)^{\beta_i-1}}{B(\alpha_i,\beta_i)},
+	\end{equation}
+	where $\alpha_i\equiv \alpha+s_i$, $\beta_i\equiv \beta+f_i$ and $s_i/f_i$ denotes the successes/failure, respectively, registered in the two sets of costumers. Evaluating equation \eqref{e1} yields
+	\begin{equation}
+		p(w_B > w_A|D,I)= \sum_{j=0}^{\alpha_B-1}\frac{B(\alpha_A+j,\beta_A+\beta_B)}{(\beta_B+j)B(1+j,\beta_B)B(\alpha_A,\beta_A)}.
+	\end{equation}
+	
+\end{example}
+
+
+
+
+\begin{example}
+	\index{Example: Maximum likelihood}
+	\emph{Consider a uniform distribution\index{Uniform distribution} centered on $0$ with width $2a$. The density distribution is given by $p(x|a)=\frac{\mathbb{I}(x\in[-a,a])}{2a}$.}
+	
+	\begin{enumerate}
+		\item \emph{Given a dataset $x_1,x_2,\dots x_n$ what is the MLE estimate of $a$?}
+		
+		\begin{equation}
+			\begin{split}
+				p(D|a,I)&=\prod_{j=1}^n(\frac{\mathbb{I}(x_j\in[-a,a])}{2a})\\
+				&=\frac{1}{(2a)^n} \text{ for $x_j\in [-a,a]$}
+			\end{split}
+		\end{equation}
+		The likelihood cannot be optimized using the derivative approach since $\frac{d\ln(p(D|a,I))}{da}\big|_{a=\hat{a}_{\text{MLE}}}=0$ does not yield a useable result. Instead note that $(2a)^{-n}$ is a monotonic decreasing function of $a$, meaning the likelihood will be largest for the smallest value of $a$ whilst obeying $x_j\leq a$. This means $\hat{a}_{\text{MLE}}=\max(|x_1|,|x_2|,\dots |x_n|)$, since this will yield the smallest value of $a$ that is still larger or equal to all the data values.
+		
+		\item \emph{What probability would the model assign to a new datapoint $x_{n+1}$ using $\hat{a}_{\text{MLE}}$?}
+		
+		\begin{equation}
+			p(x_{n+1}|D,I)|_{\text{MLE}} =\frac{1}{2\max(|x_1|,|x_2|,\dots |x_n|)}
+		\end{equation}
+		for $-\max(|x_1|,|x_2|,\dots |x_n|) \leq x_{n+1}\leq \max(|x_1|,|x_2|,\dots |x_n|)$.
+		
+		\item \emph{Do you see any problems with the above approach? Briefly suggest a better approach.}\newline
+		
+		The model place zero probability mass outside the training data. You need to use prior information.
+	\end{enumerate}
+\end{example}
+
+
+
+
+
+\begin{example}
+	\index{Example: Normal distribution}
+	\emph{Suppose we have two sensors with unknown variances $\nu_1$ and $\nu_2$ ($\nu_1\neq \nu_2$), but unknown (and the same) mean, $\mu$. Suppose we observe $n_1$ observation from $y_i^{(1)}\sim N(y_i^{(1)}|\mu,\nu_1)$ from the first sensor and $y_i^{(2)}\sim N(y_i^{(2)}|\mu,\nu_2)$ from the second sensor. Let $D$ represent all the data from both sensors. What is the posterior $p(\mu|D,\nu_1,\nu_2,I)$, assuming a non-informative prior for $\mu$?}
+	
+	\begin{equation}
+		p(\mu|D,\nu_1,\nu_2,I) =\frac{p(D|\mu,\nu_1,\nu_2,I)p(\mu|\nu_1,\nu_2,I)}{p(D|\nu_1,\nu_2,I)}
+	\end{equation}
+	with $p(\mu|\nu_1,\nu_2,I)=\text{Unif}(a,b)$ since it is supposed to be an uninformative prior. The likelihood 
+	\begin{equation}
+		\begin{split}
+			p(D|\mu,\nu_1,\nu_2,I) &= \prod_{i=1}^{N^{(1)}}\frac{1}{\sqrt{2\pi \nu_1}}e^{-\frac{1}{2\nu_1}(y_i^{(1)}-\mu)^2}\prod_{j=1}^{N^{(2)}}\frac{1}{\sqrt{2\pi \nu_2}}e^{-\frac{1}{2\nu_2}(y_j^{(2)}-\mu)^2}\\
+			& = (2\pi \nu_1)^{-\frac{N^{(1)}}{2}}(2\pi \nu_2)^{-\frac{N^{(2)}}{2}}e^{-\frac{1}{2\nu_1}\sum_{i=1}^{N^{(1)}}(y_i^{(1)}-\mu)^2-\frac{1}{2\nu_2}\sum_{j=1}^{N^{(2)}}(y_j^{(2)}-\mu)^2}\\
+			&\propto e^{-\frac{1}{2\tilde{\nu}}(\mu-\tilde{\mu})^2},
+		\end{split}
+	\end{equation}
+	where $\tilde{\nu}$ can be found by considering the part of the exponent for $-\frac{\mu^2}{2\tilde{\nu}}$ and then identifying $\tilde{\nu}$, yielding
+	\begin{equation}
+		\tilde{\nu}= \frac{1}{\frac{N^{(1)}}{\nu_1}+\frac{N^{(2)}}{\nu_2}}.
+	\end{equation}
+	Similarly by considering the part of the exponent for the double product
+	\begin{equation}
+		\tilde{\mu} = \tilde{\nu}\bigg(\frac{N^{(1)}\bar{y}^{(1)}}{\nu_1}+\frac{N^{(2)}\bar{y}^{(2)}}{\nu_2}\bigg).
+	\end{equation}
+\end{example}
+
+
