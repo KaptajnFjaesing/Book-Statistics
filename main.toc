@@ -19,46 +19,39 @@
 \contentsline {part}{\numberline {ii}\spacedlowsmallcaps {Frequentist Statistics}}{57}{part.2}%
 \contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {Frequentist Statistics Introduction}}{59}{chapter.7}%
 \contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Parameter Estimation}}{61}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Continuous Action Space}{61}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Confidence Interval}{75}{section.8.2}%
-\contentsline {section}{\numberline {8.3}Methods for Parameter Estimation}{76}{section.8.3}%
-\contentsline {subsection}{\numberline {8.3.1}Maximum Likelihood Estimation}{76}{subsection.8.3.1}%
-\contentsline {subsection}{\numberline {8.3.2}The Method of Least Squares}{81}{subsection.8.3.2}%
-\contentsline {subsection}{\numberline {8.3.3}Independent $y_i$ and $x_i$}{82}{subsection.8.3.3}%
-\contentsline {subsection}{\numberline {8.3.4}Least Squares vs. Maximum Likelihood}{85}{subsection.8.3.4}%
-\contentsline {part}{\numberline {iii}\spacedlowsmallcaps {Bayesian Statistics}}{87}{part.3}%
-\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Bayesian Statistics Introduction}}{89}{chapter.9}%
-\contentsline {chapter}{\numberline {10}\spacedlowsmallcaps {Assigning a Cost Function}}{93}{chapter.10}%
-\contentsline {section}{\numberline {10.1}Continuous Action Space}{93}{section.10.1}%
-\contentsline {subsection}{\numberline {10.1.1}Regression}{96}{subsection.10.1.1}%
-\contentsline {section}{\numberline {10.2}Discrete Action Space}{99}{section.10.2}%
-\contentsline {subsection}{\numberline {10.2.1}Classification}{100}{subsection.10.2.1}%
-\contentsline {section}{\numberline {10.3}Data}{109}{section.10.3}%
-\contentsline {section}{\numberline {10.4}Considerations regarding approach}{109}{section.10.4}%
-\contentsline {section}{\numberline {10.5}Method}{112}{section.10.5}%
-\contentsline {section}{\numberline {10.6}Analysis}{113}{section.10.6}%
-\contentsline {subsection}{\numberline {10.6.1}The Probability}{126}{subsection.10.6.1}%
-\contentsline {subsection}{\numberline {10.6.2}Simple Model}{128}{subsection.10.6.2}%
-\contentsline {subsection}{\numberline {10.6.3}Manual HMC Algorithm}{128}{subsection.10.6.3}%
-\contentsline {subsection}{\numberline {10.6.4}Data}{131}{subsection.10.6.4}%
-\contentsline {subsection}{\numberline {10.6.5}Training}{131}{subsection.10.6.5}%
-\contentsline {subsection}{\numberline {10.6.6}PyMC HMC Algorithm}{132}{subsection.10.6.6}%
-\contentsline {subsection}{\numberline {10.6.7}Results}{136}{subsection.10.6.7}%
-\contentsline {subsubsection}{Manual HMC Algorithm}{136}{subsection.10.6.7}%
-\contentsline {subsubsection}{PyMC HMC Algorithm}{136}{equation.10.6.375}%
-\contentsline {section}{\numberline {10.7}Summary and Discussion}{137}{section.10.7}%
-\contentsline {paragraph}{Simple Poisson Assumption:}{138}{equation.10.7.378}%
-\contentsline {paragraph}{Advanced Poisson Assumption:}{141}{equation.10.7.386}%
-\contentsline {paragraph}{Normal Assumption:}{143}{equation.10.7.393}%
-\contentsline {paragraph}{Numerical example and comparison of approximations: }{146}{equation.10.7.408}%
-\contentsline {chapter}{\numberline {11}\spacedlowsmallcaps {Making Inference About the Model of Nature}}{149}{chapter.11}%
-\contentsline {section}{\numberline {11.1}Selecting the Robot's Model}{149}{section.11.1}%
-\contentsline {section}{\numberline {11.2}Parameter Estimation}{151}{section.11.2}%
-\contentsline {part}{\numberline {iv}\spacedlowsmallcaps {Reflection}}{155}{part.4}%
-\contentsline {chapter}{\numberline {12}\spacedlowsmallcaps {Reflections on Statistical Paradigm}}{157}{chapter.12}%
-\contentsline {part}{\numberline {v}\spacedlowsmallcaps {Appendix}}{159}{part.5}%
-\contentsline {chapter}{\numberline {A}\spacedlowsmallcaps {Hamiltonian Monte Carlo}}{161}{appendix.A}%
-\contentsline {chapter}{\numberline {B}\spacedlowsmallcaps {Nested Sampling}}{169}{appendix.B}%
+\contentsline {part}{\numberline {iii}\spacedlowsmallcaps {Bayesian Statistics}}{69}{part.3}%
+\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Bayesian Statistics Introduction}}{71}{chapter.9}%
+\contentsline {chapter}{\numberline {10}\spacedlowsmallcaps {Assigning a Cost Function}}{75}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Continuous Action Space}{75}{section.10.1}%
+\contentsline {subsection}{\numberline {10.1.1}Regression}{78}{subsection.10.1.1}%
+\contentsline {section}{\numberline {10.2}Discrete Action Space}{81}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Classification}{82}{subsection.10.2.1}%
+\contentsline {section}{\numberline {10.3}Data}{91}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Considerations regarding approach}{91}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Method}{94}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Analysis}{95}{section.10.6}%
+\contentsline {subsection}{\numberline {10.6.1}The Probability}{108}{subsection.10.6.1}%
+\contentsline {subsection}{\numberline {10.6.2}Simple Model}{110}{subsection.10.6.2}%
+\contentsline {subsection}{\numberline {10.6.3}Manual HMC Algorithm}{110}{subsection.10.6.3}%
+\contentsline {subsection}{\numberline {10.6.4}Data}{113}{subsection.10.6.4}%
+\contentsline {subsection}{\numberline {10.6.5}Training}{113}{subsection.10.6.5}%
+\contentsline {subsection}{\numberline {10.6.6}PyMC HMC Algorithm}{114}{subsection.10.6.6}%
+\contentsline {subsection}{\numberline {10.6.7}Results}{118}{subsection.10.6.7}%
+\contentsline {subsubsection}{Manual HMC Algorithm}{118}{subsection.10.6.7}%
+\contentsline {subsubsection}{PyMC HMC Algorithm}{118}{equation.10.6.307}%
+\contentsline {section}{\numberline {10.7}Summary and Discussion}{119}{section.10.7}%
+\contentsline {paragraph}{Simple Poisson Assumption:}{120}{equation.10.7.310}%
+\contentsline {paragraph}{Advanced Poisson Assumption:}{123}{equation.10.7.318}%
+\contentsline {paragraph}{Normal Assumption:}{125}{equation.10.7.325}%
+\contentsline {paragraph}{Numerical example and comparison of approximations: }{128}{equation.10.7.340}%
+\contentsline {chapter}{\numberline {11}\spacedlowsmallcaps {Making Inference About the Model of Nature}}{131}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Selecting the Robot's Model}{131}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Parameter Estimation}{133}{section.11.2}%
+\contentsline {part}{\numberline {iv}\spacedlowsmallcaps {Reflection}}{137}{part.4}%
+\contentsline {chapter}{\numberline {12}\spacedlowsmallcaps {Reflections on Statistical Paradigm}}{139}{chapter.12}%
+\contentsline {part}{\numberline {v}\spacedlowsmallcaps {Appendix}}{141}{part.5}%
+\contentsline {chapter}{\numberline {A}\spacedlowsmallcaps {Hamiltonian Monte Carlo}}{143}{appendix.A}%
+\contentsline {chapter}{\numberline {B}\spacedlowsmallcaps {Nested Sampling}}{151}{appendix.B}%
 \vspace {\beforebibskip }
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{175}{dummy.1}%
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{157}{dummy.1}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

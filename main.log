@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.1)  8 OCT 2024 19:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.1)  4 DEC 2024 13:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1671,17 +1671,8 @@ File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
 (Chapters/part_introduction/assigning_probabilities.aux)
 (Chapters/part_introduction/framing_statistics.aux)
 (Chapters/part_frequentist/frequentist_statistics_introduction.aux)
-(Chapters/part_frequentist/frequentist_parameter_estimation.aux
-
-LaTeX Warning: Label `def:quadratic_cost' multiply defined.
-
-
-LaTeX Warning: Label `thm:unbiased_mle' multiply defined.
-
-
-LaTeX Warning: Label `cor:mle_minimax' multiply defined.
-
-) (Chapters/part_bayesian/baeysian_statistics_introduction.aux
+(Chapters/part_frequentist/frequentist_parameter_estimation.aux)
+(Chapters/part_bayesian/baeysian_statistics_introduction.aux
 
 LaTeX Warning: Label `eq:conditional_expected_cost' multiply defined.
 
@@ -1709,9 +1700,6 @@ LaTeX Warning: Label `def:linear_cost_function' multiply defined.
 
 
 LaTeX Warning: Label `def:quadratic_cost' multiply defined.
-
-
-LaTeX Warning: Label `theorem:expectation_cost' multiply defined.
 
 
 LaTeX Warning: Label `def:0_1_cost_function' multiply defined.
@@ -2101,7 +2089,7 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 
 
 ]
-Overfull \hbox (1.18996pt too wide) in paragraph at lines 54--54
+Overfull \hbox (1.18996pt too wide) in paragraph at lines 47--47
  [][] []\T1/pplj/m/sc/10.95/80ls making in-fer-ence about the model of na- 
  []
 
@@ -2172,7 +2160,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-<figures/generic_set.pdf, id=165, 68.68661pt x 82.38579pt>
+<figures/generic_set.pdf, id=150, 68.68661pt x 82.38579pt>
 File: figures/generic_set.pdf Graphic file (type pdf)
 <use figures/generic_set.pdf>
 Package pdftex.def Info: figures/generic_set.pdf  used on input line 19.
@@ -2182,22 +2170,22 @@ Package pdftex.def Info: figures/generic_set.pdf  used on input line 19.
 
 
 ]
-<figures/set_subset.pdf, id=180, 154.445pt x 169.33061pt>
+<figures/set_subset.pdf, id=166, 154.445pt x 169.33061pt>
 File: figures/set_subset.pdf Graphic file (type pdf)
 <use figures/set_subset.pdf>
 Package pdftex.def Info: figures/set_subset.pdf  used on input line 29.
 (pdftex.def)             Requested size: 144.54001pt x 158.47575pt.
-<all-twemojis.pdf, id=181, page=391, 27.10126pt x 27.10126pt>
+<all-twemojis.pdf, id=167, page=391, 27.10126pt x 27.10126pt>
 File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 391>
 Package pdftex.def Info: all-twemojis.pdf , page391 used on input line 40.
 (pdftex.def)             Requested size: 7.58829pt x 7.58833pt.
-<all-twemojis.pdf, id=182, page=393, 27.10126pt x 27.10126pt>
+<all-twemojis.pdf, id=168, page=393, 27.10126pt x 27.10126pt>
 File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 393>
 Package pdftex.def Info: all-twemojis.pdf , page393 used on input line 40.
 (pdftex.def)             Requested size: 7.58829pt x 7.58833pt.
-<all-twemojis.pdf, id=183, page=385, 27.10126pt x 27.10126pt>
+<all-twemojis.pdf, id=169, page=385, 27.10126pt x 27.10126pt>
 File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 385>
 Package pdftex.def Info: all-twemojis.pdf , page385 used on input line 40.
@@ -2230,7 +2218,7 @@ File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 391>
 Package pdftex.def Info: all-twemojis.pdf , page391 used on input line 40.
 (pdftex.def)             Requested size: 7.58829pt x 7.58833pt.
-<all-twemojis.pdf, id=184, page=2631, 27.10126pt x 27.10126pt>
+<all-twemojis.pdf, id=170, page=2631, 27.10126pt x 27.10126pt>
 File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 2631>
 Package pdftex.def Info: all-twemojis.pdf , page2631 used on input line 40.
@@ -2287,7 +2275,7 @@ File: all-twemojis.pdf Graphic file (type pdf)
 <use all-twemojis.pdf, page 385>
 Package pdftex.def Info: all-twemojis.pdf , page385 used on input line 43.
 (pdftex.def)             Requested size: 7.58829pt x 7.58833pt.
-<figures/set_union.pdf, id=207, 154.445pt x 127.31062pt>
+<figures/set_union.pdf, id=193, 154.445pt x 127.31062pt>
 File: figures/set_union.pdf Graphic file (type pdf)
 <use figures/set_union.pdf>
 Package pdftex.def Info: figures/set_union.pdf  used on input line 62.
@@ -2296,30 +2284,30 @@ Package pdftex.def Info: figures/set_union.pdf  used on input line 62.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figures/set_intersection.pdf, id=209, 154.445pt x 127.31062pt>
+<figures/set_intersection.pdf, id=195, 154.445pt x 127.31062pt>
 File: figures/set_intersection.pdf Graphic file (type pdf)
 <use figures/set_intersection.pdf>
 Package pdftex.def Info: figures/set_intersection.pdf  used on input line 72.
 (pdftex.def)             Requested size: 173.44977pt x 142.98125pt.
 [7 <C:/Users/roman/AppData/Local/Programs/MiKTeX/tex/latex/twemojis/all-twemoji
 s.pdf>]
-<figures/set_disjoint.pdf, id=224, 211.3506pt x 127.92192pt>
+<figures/set_disjoint.pdf, id=210, 211.3506pt x 127.92192pt>
 File: figures/set_disjoint.pdf Graphic file (type pdf)
 <use figures/set_disjoint.pdf>
 Package pdftex.def Info: figures/set_disjoint.pdf  used on input line 82.
 (pdftex.def)             Requested size: 231.2649pt x 139.97865pt.
  [8 <./figures/set_union.pdf> <./figures/set_intersection.pdf>]
-<figures/set_complementary.pdf, id=252, 154.445pt x 128.89355pt>
+<figures/set_complementary.pdf, id=238, 154.445pt x 128.89355pt>
 File: figures/set_complementary.pdf Graphic file (type pdf)
 <use figures/set_complementary.pdf>
 Package pdftex.def Info: figures/set_complementary.pdf  used on input line 93.
 (pdftex.def)             Requested size: 173.44977pt x 144.75903pt.
-<figures/set_minus.pdf, id=254, 154.445pt x 128.89355pt>
+<figures/set_minus.pdf, id=240, 154.445pt x 128.89355pt>
 File: figures/set_minus.pdf Graphic file (type pdf)
 <use figures/set_minus.pdf>
 Package pdftex.def Info: figures/set_minus.pdf  used on input line 103.
 (pdftex.def)             Requested size: 173.44977pt x 144.75903pt.
-<figures/set_minus2.pdf, id=255, 154.445pt x 128.89355pt>
+<figures/set_minus2.pdf, id=241, 154.445pt x 128.89355pt>
 File: figures/set_minus2.pdf Graphic file (type pdf)
 <use figures/set_minus2.pdf>
 Package pdftex.def Info: figures/set_minus2.pdf  used on input line 104.
@@ -2332,7 +2320,7 @@ pplj/m/it/10.95 is equal to the set $\OML/zplm/m/it/10.95 A$\T1/pplj/m/it/10.95
  , i.e., $[][] \OML/zplm/m/it/10.95 A[] \OT1/zplm/m/n/10.95 =
  []
 
-<figures/set_partition.pdf, id=324, 194.63214pt x 215.20901pt>
+<figures/set_partition.pdf, id=310, 194.63214pt x 215.20901pt>
 File: figures/set_partition.pdf Graphic file (type pdf)
 <use figures/set_partition.pdf>
 Package pdftex.def Info: figures/set_partition.pdf  used on input line 142.
@@ -2357,7 +2345,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-<dice.pdf, id=357, 258.9675pt x 86.3225pt>
+<dice.pdf, id=343, 258.9675pt x 86.3225pt>
 File: dice.pdf Graphic file (type pdf)
 <use dice.pdf>
 Package pdftex.def Info: dice.pdf  used on input line 14.
@@ -2821,37 +2809,36 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              that will remove this deprecated code.
 
 
-Overfull \hbox (4.05333pt too wide) in paragraph at lines 3--5
+Overfull \hbox (4.05333pt too wide) in paragraph at lines 3--4
 \T1/pplj/m/n/10.95 Fisher [[]22[]], who laid the ground-work for much of its me
 thod-
  []
 
 
-Overfull \hbox (0.42247pt too wide) in paragraph at lines 3--5
+Overfull \hbox (0.42247pt too wide) in paragraph at lines 3--4
 \T1/pplj/m/n/10.95 ol-ogy. Sub-se-quent de-vel-op-ments by Wald [[]23[]], Ney-m
 an [[]24[]],
  []
 
 
-Overfull \hbox (5.26654pt too wide) in paragraph at lines 3--5
+Overfull \hbox (5.26654pt too wide) in paragraph at lines 3--4
 \T1/pplj/m/n/10.95 and Lehmann [[]25[]] fur-ther re-fined its the-o-ries and te
 ch-niques. 
  []
 
-) [59
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--4
+
+ []
+
+[59
 
 
 
-]
+]) [60]
 \openout2 = `Chapters/part_frequentist/frequentist_parameter_estimation.aux'.
 
- (Chapters/part_frequentist/frequentist_parameter_estimation.tex [60
-
-
-
-
-
-]
+ (Chapters/part_frequentist/frequentist_parameter_estimation.tex
 chapter 8.
 
 Class scrbook Warning: Redefinition of \@makechapterhead detected.
@@ -2864,236 +2851,61 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-[61]
-Overfull \hbox (43.2238pt too wide) in paragraph at lines 44--46
-\T1/pplj/m/n/10.95 and has asymp-tot-i-cally min-i-mal vari-ance, the bias term
- $[]\OT1/zplm/m/n/10.95 ([]) =
- []
 
-[62]
-Underfull \hbox (badness 10000) in paragraph at lines 72--74
-
- []
-
-LaTeX Font Info:    Trying to load font information for TS1+pplj on input line 
-76.
-(C:\Users\roman\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1pplj.fd
-File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
-)
-[63]
-<figures/P1.pdf, id=1005, 523.9575pt x 517.935pt>
-File: figures/P1.pdf Graphic file (type pdf)
-<use figures/P1.pdf>
-Package pdftex.def Info: figures/P1.pdf  used on input line 95.
-(pdftex.def)             Requested size: 115.63023pt x 114.30168pt.
-
-Overfull \hbox (42.72725pt too wide) in paragraph at lines 107--108
-[]\T1/pplj/m/n/10.95 make ex-am-ple us-ing de-ci-sion rule k*x, from lec-ture_1
-_handout. 
- []
-
-[64 <./figures/P1.pdf>]
-
-LaTeX Warning: Reference `sec:framing_statistics' on page 65 undefined on input
- line 115.
-
-
-Overfull \hbox (2.70418pt too wide) in paragraph at lines 115--116
-\T1/pplj/m/n/10.95 and back-ground in-for-ma-tion $\OML/zplm/m/it/10.95 I$ \T1/
-pplj/m/n/10.95 to in-form its decision-making
- []
-
-
-Overfull \hbox (0.4885pt too wide) in paragraph at lines 121--123
-\T1/pplj/m/n/10.95 where $\OML/zplm/m/it/10.95 D[] \OT1/zplm/m/n/10.95 = \OMS/z
-plm/m/n/10.95 f\OML/zplm/m/it/10.95 s[]\OT1/pplx/m/n/10.95 , \OML/zplm/m/it/10.
-95 s[]\OT1/pplx/m/n/10.95 , [] \OML/zplm/m/it/10.95 s[]\OMS/zplm/m/n/10.95 g$\T
-1/pplj/m/n/10.95 , $\OML/zplm/m/it/10.95 D[] \OT1/zplm/m/n/10.95 = \OMS/zplm/m/
-n/10.95 f\OML/zplm/m/it/10.95 X[] \OT1/zplm/m/n/10.95 = \OML/zplm/m/it/10.95 x[
-]\OT1/pplx/m/n/10.95 , \OML/zplm/m/it/10.95 X[] \OT1/zplm/m/n/10.95 = \OML/zplm
-/m/it/10.95 x[]\OT1/pplx/m/n/10.95 , [] \OML/zplm/m/it/10.95 X[] \OT1/zplm/m/n/
-10.95 =
- []
-
-[65] [66] [67]
-Overfull \hbox (3.55759pt too wide) in paragraph at lines 241--242
-\T1/pplj/m/n/10.95 the generic ran-dom vari-able $\OML/zplm/m/it/10.95 X \OT1/z
-plm/m/n/10.95 : 
- \OMS/zplm/m/n/10.95 7! \OT1/zplm/m/n/10.95 
-[]$\T1/pplj/m/n/10.95 . The log-likelihood
- []
-
-
-Overfull \hbox (3.1819pt too wide) detected at line 254
- $[][]$  
- []
-
-[68] [69]
-Overfull \hbox (111.7663pt too wide) detected at line 337
- $[]\OML/zplm/m/it/10.95 ^^R[] [] [] \OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 
-w\OT1/pplx/m/n/10.95 .\OML/zplm/m/it/10.95 r\OT1/pplx/m/n/10.95 .\OML/zplm/m/it
-/10.95 t\OT1/pplx/m/n/10.95 . \U/fplmbb/m/n/10.95 P[]\OT1/zplm/m/n/10.95 )  \OM
-S/zplm/m/n/10.95 ^  []\OT1/zplm/m/n/10.95 ([]\OML/zplm/m/it/10.95 ^^R[] \OMS/zp
-lm/m/n/10.95 ^^@ []\OT1/zplm/m/n/10.95 ) [] \OMS/zplm/m/n/10.95 N\OT1/zplm/m/n/
-10.95 (\OT1/pplx/m/n/10.95 0, \OML/zplm/m/it/10.95 I\OT1/zplm/m/n/10.95 ([])[])
- (\OML/zplm/m/it/10.95 w\OT1/pplx/m/n/10.95 .\OML/zplm/m/it/10.95 r\OT1/pplx/m/
-n/10.95 .\OML/zplm/m/it/10.95 t\OT1/pplx/m/n/10.95 . \U/fplmbb/m/n/10.95 P[]\OT
-1/zplm/m/n/10.95 )\OT1/pplx/m/n/10.95 .$  
- []
-
-[70]
-Overfull \hbox (8.01126pt too wide) in paragraph at lines 370--371
-[][]\T1/pplj/b/n/10.95 Theorem 21 \T1/pplj/m/n/10.95 (Fisher in-for-ma-tion for
+Overfull \hbox (8.01126pt too wide) in paragraph at lines 33--34
+[][]\T1/pplj/b/n/10.95 Theorem 17 \T1/pplj/m/n/10.95 (Fisher in-for-ma-tion for
  sam-ple)\T1/pplj/b/n/10.95 . []\T1/pplj/m/it/10.95 Let $\OML/zplm/m/it/10.95 X
 []\OT1/pplx/m/n/10.95 , \OML/zplm/m/it/10.95 X[]\OT1/pplx/m/n/10.95 , [] \OML/z
 plm/m/it/10.95 X[]$
  []
 
+[61
 
-Overfull \hbox (29.43773pt too wide) in paragraph at lines 385--387
-[]\T1/pplj/m/n/10.95 =================== Given an ob-served sam-ple $\OML/zplm/
-m/it/10.95 X[]\OT1/pplx/m/n/10.95 , [] , \OML/zplm/m/it/10.95 X[]$
+
+
+
+
+] [62]
+Overfull \hbox (7.79346pt too wide) in paragraph at lines 92--94
+\T1/pplj/m/n/10.95 ish, mean-ing $[]\OT1/zplm/m/n/10.95 [[]] = \OT1/pplx/m/n/10
+.95 0$ \T1/pplj/m/n/10.95 and the vari-ance term $[]\OT1/zplm/m/n/10.95 [[]]$
  []
 
-
-Overfull \hbox (46.39932pt too wide) detected at line 403
- $[][]$  
- []
-
-[71] [72]
-Overfull \hbox (4.67522pt too wide) in paragraph at lines 413--415
-\T1/pplj/m/n/10.95 Determine the (quadratic) risk of the arith-metic sam-ple me
-an
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 413--415
+[63]
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
 
  []
 
-[73]
-Overfull \hbox (20.25957pt too wide) in paragraph at lines 467--468
-\T1/pplj/m/it/10.95 mean is equal to the arith-metic mean. How-ever, when $\OML
-/zplm/m/it/10.95 Var\OT1/zplm/m/n/10.95 [\OML/zplm/m/it/10.95 X[]\OT1/zplm/m/n/
-10.95 ] \OMS/zplm/m/n/10.95 6\OT1/zplm/m/n/10.95 =
- []
-
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 473.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 473.
-[74]
-Overfull \hbox (40.59906pt too wide) detected at line 484
- $[][]$  
- []
-
-[75]
-Overfull \hbox (0.71046pt too wide) in paragraph at lines 506--508
-\T1/pplj/m/n/10.95 The \T1/pplj/m/it/10.95 to-tal vari-a-tion dis-tance \T1/ppl
-j/m/n/10.95 (TV) be-tween two prob-a-bil-ity mea-
- []
-
-
-Overfull \hbox (31.13109pt too wide) detected at line 519
- $[][]$  
- []
-
-[76]
-Overfull \hbox (63.6293pt too wide) detected at line 533
- $[][]$  
- []
-
-
-Overfull \hbox (10.62344pt too wide) detected at line 540
- $\OML/zplm/m/it/10.95 KL\OT1/zplm/m/n/10.95 (\U/fplmbb/m/n/10.95 P[]\OT1/pplx/
-m/n/10.95 , \U/fplmbb/m/n/10.95 P[]\OT1/zplm/m/n/10.95 ) = [] \OT1/pplx/m/n/10.
-95 ,$  
- []
-
-[77]
-Overfull \hbox (5.40297pt too wide) in paragraph at lines 570--572
-\T1/pplj/m/n/10.95 tion, max-i-miz-ing $\OML/zplm/m/it/10.95 log\OT1/zplm/m/n/1
-0.95 (\OML/zplm/m/it/10.95 f\OT1/zplm/m/n/10.95 )$ \T1/pplj/m/n/10.95 is equiv-
-a-lent to max-i-miz-ing $\OML/zplm/m/it/10.95 f$\T1/pplj/m/n/10.95 . There-
- []
-
-[78] [79]
-Overfull \hbox (111.7663pt too wide) detected at line 608
- $[]\OML/zplm/m/it/10.95 ^^R[] [] [] \OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 
-w\OT1/pplx/m/n/10.95 .\OML/zplm/m/it/10.95 r\OT1/pplx/m/n/10.95 .\OML/zplm/m/it
-/10.95 t\OT1/pplx/m/n/10.95 . \U/fplmbb/m/n/10.95 P[]\OT1/zplm/m/n/10.95 )  \OM
-S/zplm/m/n/10.95 ^  []\OT1/zplm/m/n/10.95 ([]\OML/zplm/m/it/10.95 ^^R[] \OMS/zp
-lm/m/n/10.95 ^^@ []\OT1/zplm/m/n/10.95 ) [] \OMS/zplm/m/n/10.95 N\OT1/zplm/m/n/
-10.95 (\OT1/pplx/m/n/10.95 0, \OML/zplm/m/it/10.95 I\OT1/zplm/m/n/10.95 ([])[])
- (\OML/zplm/m/it/10.95 w\OT1/pplx/m/n/10.95 .\OML/zplm/m/it/10.95 r\OT1/pplx/m/
-n/10.95 .\OML/zplm/m/it/10.95 t\OT1/pplx/m/n/10.95 . \U/fplmbb/m/n/10.95 P[]\OT
-1/zplm/m/n/10.95 )\OT1/pplx/m/n/10.95 .$  
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 610--612
+LaTeX Font Info:    Trying to load font information for TS1+pplj on input line 
+120.
+(C:\Users\roman\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1pplj.fd
+File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
+)
+[64]
+<figures/ber_example.pdf, id=1015, 462.52798pt x 346.89601pt>
+File: figures/ber_example.pdf Graphic file (type pdf)
+<use figures/ber_example.pdf>
+Package pdftex.def Info: figures/ber_example.pdf  used on input line 167.
+(pdftex.def)             Requested size: 289.08002pt x 216.82005pt.
+ [65]
+Underfull \hbox (badness 10000) in paragraph at lines 174--176
 
  []
 
-
-Overfull \hbox (104.90184pt too wide) detected at line 625
- $[][]$  
- []
-
-[80]
-Underfull \hbox (badness 10000) in paragraph at lines 635--637
+[66 <./figures/ber_example.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 200--202
 
  []
 
-[81]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 665.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 665.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 665.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 665.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 665.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 665.
-
-[82]
-Overfull \hbox (55.57336pt too wide) detected at line 692
- $[][]$  
- []
-
-[83]
-Underfull \hbox (badness 10000) in paragraph at lines 724--725
-
- []
-
-
-Overfull \hbox (2.71513pt too wide) in paragraph at lines 741--742
-\T1/pplj/m/n/10.95 max-i-mum like-li-hood es-ti-ma-tion pro-ce-dure in the case
- where
- []
-
-[84] [85]) [86] [87
+) [67] [68
 
 
 
 
+] [69
 
 
-] [88]
+] [70]
 \openout2 = `Chapters/part_bayesian/baeysian_statistics_introduction.aux'.
 
 
@@ -3111,7 +2923,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              that will remove this deprecated code.
 
 
-LaTeX Warning: Reference `sec:framing_statistics' on page 89 undefined on input
+LaTeX Warning: Reference `sec:framing_statistics' on page 71 undefined on input
  line 3.
 
 
@@ -3121,7 +2933,7 @@ t/10.95 x\OT1/pplx/m/n/10.95 , \OML/zplm/m/it/10.95 D$ \T1/pplj/m/n/10.95 and b
 ack-ground
  []
 
-[89
+[71
 
 
 
@@ -3130,7 +2942,7 @@ Overfull \hbox (1.75139pt too wide) detected at line 52
  $[][]$  
  []
 
-[90] [91]) [92]
+[72] [73]) [74]
 \openout2 = `Chapters/part_bayesian/assigning_cost_function.aux'.
 
  (Chapters/part_bayesian/assigning_cost_function.tex
@@ -3151,7 +2963,7 @@ Overfull \hbox (5.96786pt too wide) detected at line 30
  $[][]$  
  []
 
-[93
+[75
 
 
 
@@ -3162,22 +2974,27 @@ Overfull \hbox (36.51369pt too wide) detected at line 64
  $[][]$  
  []
 
-[94]
+[76]
 Overfull \hbox (52.43109pt too wide) detected at line 86
  $[][]$  
  []
 
-[95] [96] [97] [98] [99]
+[77]
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 111.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 111.
+ [78] [79] [80] [81]
 Overfull \hbox (1.92482pt too wide) detected at line 246
  $[][]$  
  []
 
-[100] [101]
+[82] [83]
 Overfull \hbox (9.89836pt too wide) in paragraph at lines 271--273
 \T1/pplj/m/n/10.95 Using equa-tions []-[] in equa-tion [] yields the Hamil-
  []
 
-) [102]
+) [84]
 \openout2 = `Chapters/part_bayesian/regression_examples.aux'.
 
  (Chapters/part_bayesian/regression_examples.tex
@@ -3205,17 +3022,17 @@ Overfull \hbox (41.59836pt too wide) detected at line 31
  $[][]$  
  []
 
-[103
+[85
 
 
 
 ]
-<figures/graph.pdf, id=1469, 322.24991pt x 152.58203pt>
+<figures/graph.pdf, id=1301, 322.24991pt x 152.58203pt>
 File: figures/graph.pdf Graphic file (type pdf)
 <use figures/graph.pdf>
 Package pdftex.def Info: figures/graph.pdf  used on input line 57.
 (pdftex.def)             Requested size: 144.54001pt x 68.4401pt.
- [104]
+ [86]
 Overfull \hbox (34.01508pt too wide) detected at line 64
  $\U/fplmbb/m/n/10.95 E[]\OT1/zplm/m/n/10.95 [\OML/zplm/m/it/10.95 C\OT1/zplm/m
 /n/10.95 (\OML/zplm/m/it/10.95 U\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 X\OT1
@@ -3236,12 +3053,12 @@ Overfull \hbox (25.54846pt too wide) detected at line 95
  $[][]$  
  []
 
-[105 <./figures/graph.pdf>]
+[87 <./figures/graph.pdf>]
 Overfull \hbox (83.47441pt too wide) detected at line 106
  $[][]$  
  []
 
-[106] [107]
+[88] [89]
 Underfull \hbox (badness 10000) in paragraph at lines 200--201
 
  []
@@ -3265,10 +3082,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 204--205
 
 Overfull \hbox (2.38638pt too wide) in paragraph at lines 206--208
 \T1/pplj/m/it/10.95 scal-ing the con-tri-bu-tions of bary-onic mat-ter in ro-ta
--tion curves [[]42[]^^U
+-tion curves [[]43[]^^U
  []
 
-[108]
+[90]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 209.
@@ -3278,8 +3095,8 @@ LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 209.
 
 
-LaTeX Warning: Citation 'Petersen:2020renzo' on page 109 undefined on input lin
-e 210.
+LaTeX Warning: Citation 'Petersen:2020renzo' on page 91 undefined on input line
+ 210.
 
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
@@ -3289,28 +3106,28 @@ LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 212.
 
-[109]
+[91]
 Underfull \hbox (badness 10000) in paragraph at lines 232--234
 
  []
 
-[110]
+[92]
 
-LaTeX Warning: Reference `fig:data' on page 111 undefined on input line 265.
+LaTeX Warning: Reference `fig:data' on page 93 undefined on input line 265.
 
 
-LaTeX Warning: Reference `app:figs' on page 111 undefined on input line 265.
+LaTeX Warning: Reference `app:figs' on page 93 undefined on input line 265.
 
-[111]
-
-LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
-(Font)              using `T1/pplj/m/sc' instead on input line 267.
-
+[93]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 267.
 
-[112]
+
+LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
+(Font)              using `T1/pplj/m/sc' instead on input line 267.
+
+[94]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 275.
@@ -3320,48 +3137,48 @@ LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 275.
 
 
-LaTeX Warning: Reference `fig:energy' on page 113 undefined on input line 276.
+LaTeX Warning: Reference `fig:energy' on page 95 undefined on input line 276.
 
 
-LaTeX Warning: Reference `app:figs' on page 113 undefined on input line 276.
+LaTeX Warning: Reference `app:figs' on page 95 undefined on input line 276.
 
 
-LaTeX Warning: Reference `fig:energy' on page 113 undefined on input line 276.
+LaTeX Warning: Reference `fig:energy' on page 95 undefined on input line 276.
 
 
-LaTeX Warning: Reference `fig:R' on page 113 undefined on input line 281.
+LaTeX Warning: Reference `fig:R' on page 95 undefined on input line 281.
 
 
-LaTeX Warning: Reference `app:figs' on page 113 undefined on input line 281.
+LaTeX Warning: Reference `app:figs' on page 95 undefined on input line 281.
 
-[113] [114]
-<figures/res.pdf, id=1622, 722.7pt x 722.7pt>
+[95] [96]
+<figures/res.pdf, id=1454, 722.7pt x 722.7pt>
 File: figures/res.pdf Graphic file (type pdf)
 <use figures/res.pdf>
 Package pdftex.def Info: figures/res.pdf  used on input line 341.
 (pdftex.def)             Requested size: 289.08002pt x 289.07487pt.
 
 
-LaTeX Warning: Citation 'Petersen:2020renzo' on page 115 undefined on input lin
-e 342.
+LaTeX Warning: Citation 'Petersen:2020renzo' on page 97 undefined on input line
+ 342.
 
 
-LaTeX Warning: Citation 'Petersen:2020renzo' on page 115 undefined on input lin
-e 342.
+LaTeX Warning: Citation 'Petersen:2020renzo' on page 97 undefined on input line
+ 342.
 
 
-LaTeX Warning: Reference `ch:disc' on page 115 undefined on input line 345.
+LaTeX Warning: Reference `ch:disc' on page 97 undefined on input line 345.
 
 
-LaTeX Warning: Reference `fig:rot' on page 115 undefined on input line 345.
+LaTeX Warning: Reference `fig:rot' on page 97 undefined on input line 345.
 
 
-LaTeX Warning: Reference `fig:rot4' on page 115 undefined on input line 345.
+LaTeX Warning: Reference `fig:rot4' on page 97 undefined on input line 345.
 
 
-LaTeX Warning: Reference `app:figs' on page 115 undefined on input line 345.
+LaTeX Warning: Reference `app:figs' on page 97 undefined on input line 345.
 
-[115] [116 <./figures/res.pdf>]) [117]
+[97] [98 <./figures/res.pdf>]) [99]
 \openout2 = `Chapters/part_bayesian/classification_examples.aux'.
 
 
@@ -3370,7 +3187,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--16
 
  []
 
-[118
+[100
 
 
 
@@ -3397,7 +3214,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 84--85
 
  []
 
-[119]
+[101]
 Overfull \hbox (21.8094pt too wide) in paragraph at lines 102--104
 \T1/pplj/m/it/10.95 Equation [] show pick-ing $[] [][] \OML/zplm/m/it/10.95 p\O
 T1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 S \OT1/zplm/m/n/10.95 = \OML/zplm/m/it/
@@ -3411,12 +3228,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 112--113
 
  []
 
-[120]
+[102]
 Overfull \hbox (106.26382pt too wide) detected at line 156
   $[][]$  
  []
 
-[121] [122]
+[103] [104]
 Underfull \hbox (badness 10000) in paragraph at lines 203--204
 
  []
@@ -3426,7 +3243,7 @@ Overfull \hbox (96.37842pt too wide) detected at line 212
   $[][]$  
  []
 
-[123] [124]
+[105] [106]
 Overfull \hbox (30.8744pt too wide) detected at line 243
  $\U/fplmbb/m/n/10.95 E[]\OT1/zplm/m/n/10.95 [\OML/zplm/m/it/10.95 C\OT1/zplm/m
 /n/10.95 (\OML/zplm/m/it/10.95 U\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 x\OT1
@@ -3462,22 +3279,22 @@ plm/m/it/10.95 s[]\OMS/zplm/m/n/10.95 j\OML/zplm/m/it/10.95 x\OT1/pplx/m/n/10.9
 /m/n/10.95 )$
  []
 
-[125] [126]
+[107] [108]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 335.
 
-[127]
+[109]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 343.
 
-[128]
+[110]
 Overfull \hbox (20.80304pt too wide) detected at line 383
  $[][]$  
  []
 
-[129] [130]
+[111] [112]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 446.
@@ -3492,26 +3309,26 @@ Overfull \hbox (4.50395pt too wide) in paragraph at lines 454--455
 put, the al-go-rithms the al-go-rithms are trained
  []
 
-[131]
+[113]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 466.
 
-<figures/gamma_dist.pdf, id=1814, 578.16pt x 361.35pt>
+<figures/gamma_dist.pdf, id=1646, 578.16pt x 361.35pt>
 File: figures/gamma_dist.pdf Graphic file (type pdf)
 <use figures/gamma_dist.pdf>
 Package pdftex.def Info: figures/gamma_dist.pdf  used on input line 470.
 (pdftex.def)             Requested size: 289.08002pt x 180.67456pt.
-[132]
+[114]
 
 Package caption Warning: \label without proper reference on input line 477.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `algo:pymc_model' on page 133 undefined on input line 
+LaTeX Warning: Reference `algo:pymc_model' on page 115 undefined on input line 
 474.
 
-[133 <./figures/gamma_dist.pdf>]
+[115 <./figures/gamma_dist.pdf>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 478.
 
@@ -3536,7 +3353,7 @@ LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
 (Font)              scaled to size 7.65005pt on input line 480.
 LaTeX Font Info:    Font shape `T1/fvm/m/sl' will be
 (Font)              scaled to size 7.65005pt on input line 484.
- [134]
+ [116]
 Overfull \hbox (19.74207pt too wide) in paragraph at lines 515--516
 \T1/pplj/m/it/10.95 rior pre-dic-tive dis-tri-bu-tion us-ing the pm.sample_post
 erior_predictive()
@@ -3552,13 +3369,13 @@ Overfull \hbox (9.60315pt too wide) in paragraph at lines 533--534
 e step lengths
  []
 
-[135]
+[117]
 Overfull \hbox (9.10773pt too wide) detected at line 548
  $\OML/zplm/m/it/10.95 x[] \OT1/zplm/m/n/10.95 = [] \OT1/pplx/m/n/10.95 ,  \OML
 /zplm/m/it/10.95 x[] \OT1/zplm/m/n/10.95 = [] \OT1/pplx/m/n/10.95 .$  
  []
 
-[136]
+[118]
 
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 562.
@@ -3567,7 +3384,7 @@ LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 LaTeX Font Warning: Font shape `T1/pplj/m/scit' undefined
 (Font)              using `T1/pplj/m/sc' instead on input line 562.
 
-) [137]
+) [119]
 \openout2 = `Chapters/part_bayesian/future_event_count_example.aux'.
 
  (Chapters/part_bayesian/future_event_count_example.tex
@@ -3581,7 +3398,7 @@ Overfull \hbox (44.30626pt too wide) detected at line 27
  $[][]$  
  []
 
-[138
+[120
 
 
 
@@ -3595,12 +3412,12 @@ Overfull \hbox (58.04654pt too wide) detected at line 65
  $[][]$  
  []
 
-[139]
+[121]
 Overfull \hbox (30.09206pt too wide) detected at line 80
  $[][]$  
  []
 
-[140]
+[122]
 Overfull \hbox (132.79747pt too wide) detected at line 91
  $[][]$  
  []
@@ -3615,7 +3432,7 @@ Overfull \hbox (173.30553pt too wide) detected at line 105
  $[][]$  
  []
 
-[141]
+[123]
 Overfull \hbox (199.6639pt too wide) detected at line 128
  $[][]$  
  []
@@ -3627,7 +3444,7 @@ se the dis-tri-bu-tion of $\OML/zplm/m/it/10.95 x$ \T1/pplj/m/it/10.95 is fairl
 y
  []
 
-[142]
+[124]
 Overfull \hbox (87.91733pt too wide) detected at line 152
  $\OML/zplm/m/it/10.95 p\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 x\OMS/zplm/m/
 n/10.95 j\OML/zplm/m/it/10.95 y\OT1/pplx/m/n/10.95 , \OML/zplm/m/it/10.95 ^^V[]
@@ -3650,12 +3467,12 @@ Overfull \hbox (199.88196pt too wide) detected at line 185
  $[][]$  
  []
 
-[143]
+[125]
 Overfull \hbox (167.45871pt too wide) detected at line 217
  $[][]$  
  []
 
-[144]
+[126]
 Overfull \hbox (33.8474pt too wide) detected at line 227
  $[][]$  
  []
@@ -3665,29 +3482,29 @@ Overfull \hbox (95.93723pt too wide) detected at line 239
  $[][]$  
  []
 
-[145]
-<figures/count_hist.pdf, id=2013, 1445.4pt x 722.7pt>
+[127]
+<figures/count_hist.pdf, id=1845, 1445.4pt x 722.7pt>
 File: figures/count_hist.pdf Graphic file (type pdf)
 <use figures/count_hist.pdf>
 Package pdftex.def Info: figures/count_hist.pdf  used on input line 249.
 (pdftex.def)             Requested size: 289.08002pt x 144.53743pt.
- [146]
-<figures/pymc_poisson.pdf, id=2024, 1445.4pt x 722.7pt>
+ [128]
+<figures/pymc_poisson.pdf, id=1856, 1445.4pt x 722.7pt>
 File: figures/pymc_poisson.pdf Graphic file (type pdf)
 <use figures/pymc_poisson.pdf>
 Package pdftex.def Info: figures/pymc_poisson.pdf  used on input line 275.
 (pdftex.def)             Requested size: 231.2649pt x 115.62332pt.
-<figures/pymc_negbin.pdf, id=2025, 1445.4pt x 722.7pt>
+<figures/pymc_negbin.pdf, id=1857, 1445.4pt x 722.7pt>
 File: figures/pymc_negbin.pdf Graphic file (type pdf)
 <use figures/pymc_negbin.pdf>
 Package pdftex.def Info: figures/pymc_negbin.pdf  used on input line 276.
 (pdftex.def)             Requested size: 231.2649pt x 115.62332pt.
-<figures/pymc_normal.pdf, id=2026, 1445.4pt x 722.7pt>
+<figures/pymc_normal.pdf, id=1858, 1445.4pt x 722.7pt>
 File: figures/pymc_normal.pdf Graphic file (type pdf)
 <use figures/pymc_normal.pdf>
 Package pdftex.def Info: figures/pymc_normal.pdf  used on input line 277.
 (pdftex.def)             Requested size: 231.2649pt x 115.62332pt.
- [147 <./figures/count_hist.pdf>]) [148 <./figures/pymc_poisson.pdf> <./figures
+ [129 <./figures/count_hist.pdf>]) [130 <./figures/pymc_poisson.pdf> <./figures
 /pymc_negbin.pdf> <./figures/pymc_normal.pdf>]
 \openout2 = `Chapters/part_bayesian/inference_about_natures_model.aux'.
 
@@ -3705,7 +3522,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-[149
+[131
 
 
 
@@ -3717,10 +3534,10 @@ Overfull \hbox (0.5478pt too wide) in paragraph at lines 33--35
  they
  []
 
-[150]) [151]
+[132]) [133]
 \openout2 = `Chapters/part_bayesian/parameter_estimation_examples.aux'.
 
- (Chapters/part_bayesian/parameter_estimation_examples.tex [152
+ (Chapters/part_bayesian/parameter_estimation_examples.tex [134
 
 
 
@@ -3743,15 +3560,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
  []
 
-[153]
+[135]
 Overfull \hbox (66.55165pt too wide) detected at line 78
  $[][]$  
  []
 
-) [154]
+) [136]
 \openout2 = `Chapters/dev/renzos_rule.aux'.
 
- (Chapters/dev/renzos_rule.tex) [155
+ (Chapters/dev/renzos_rule.tex) [137
 
 
 
@@ -3759,7 +3576,7 @@ Overfull \hbox (66.55165pt too wide) detected at line 78
 
 
 
-] [156]
+] [138]
 \openout2 = `Chapters/part_outro/reflections.aux'.
 
 
@@ -3776,19 +3593,19 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [157
+) [139
 
 
 
-] [158
+] [140
 
 
 
 
-] [159
+] [141
 
 
-] [160]
+] [142]
 \openout2 = `Chapters/appendices/app_HMC_algorithm.aux'.
 
  (Chapters/appendices/app_HMC_algorithm.tex
@@ -3806,24 +3623,24 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 
 
 Overfull \hbox (0.45381pt too wide) in paragraph at lines 18--23
-\T1/pplj/m/n/10.95 Hastings (MH) al-go-rithm  [[]53[], []54[]]. The MH al-go-ri
+\T1/pplj/m/n/10.95 Hastings (MH) al-go-rithm  [[]54[], []55[]]. The MH al-go-ri
 thm works
  []
 
-[161
+[143
 
 
 
-] [162] [163] [164] [165]
+] [144] [145] [146] [147]
 Underfull \hbox (badness 2165) in paragraph at lines 99--99
 []\T1/pplj/b/n/10.95 Algorithm 4 \T1/pplj/m/n/10.95 Hamil-to-nian Monte Carlo A
 l-go-rithm in
  []
 
-) [166] [167]
+) [148] [149]
 \openout2 = `Chapters/appendices/app_Nested_sampling.aux'.
 
- (Chapters/appendices/app_Nested_sampling.tex [168
+ (Chapters/appendices/app_Nested_sampling.tex [150
 
 
 
@@ -3842,7 +3659,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-[169] [170] [171]) [172] [173] [174
+[151] [152] [153]) [154] [155] [156
 
 
 
@@ -3886,7 +3703,7 @@ Overfull \hbox (11.69856pt too wide) in paragraph at lines 131--131
  in Para-met-ric Bayesian
  []
 
-[175
+[157
 
 
 
@@ -3897,7 +3714,7 @@ ian Sta-tis-ti-cal Meth-
  []
 
 
-LaTeX Warning: Citation 'jaynes_maximum_entropy_formalism' on page 176 undefine
+LaTeX Warning: Citation 'jaynes_maximum_entropy_formalism' on page 158 undefine
 d on input line 13.
 
 
@@ -3927,7 +3744,7 @@ Overfull \hbox (4.52167pt too wide) in paragraph at lines 131--131
 \T1/pplj/m/n/10.95 RIA FOR PUR-POSES OF STA-TIS-TI-CAL IN-FER-ENCE.^^Q
  []
 
-[176]
+[158]
 Overfull \hbox (15.9503pt too wide) in paragraph at lines 131--131
 \T1/pplj/m/n/10.95 In: \T1/pplj/m/it/10.95 The An-nals of Math-e-mat-i-cal Stat
 is-tics \T1/pplj/m/n/10.95 16.2 (1945), pp. 117
@@ -3945,7 +3762,7 @@ Overfull \hbox (16.49051pt too wide) in paragraph at lines 131--131
 oks . google . dk / books ? id = jexQAAAAMAAJ$[]\T1/pplj/m/n/10.95 . 
  []
 
-[177]
+[159]
 Overfull \hbox (7.30531pt too wide) in paragraph at lines 131--131
 []\T1/pplj/m/n/10.95 S. Du-ane, A.D. Kennedy, B.J. Pendle-ton, and D. Roweth.
  []
@@ -3975,7 +3792,7 @@ Overfull \hbox (2.65912pt too wide) in paragraph at lines 131--131
 -[]
  []
 
-[178]
+[160]
 Overfull \hbox (2.88766pt too wide) in paragraph at lines 131--131
 \T1/pplj/m/n/10.95 pling.^^Q In: \T1/pplj/m/it/10.95 Sym-po-sium - In-ter-na-ti
 onal As-tro-nom-i-cal Union
@@ -4033,7 +3850,7 @@ Overfull \hbox (7.31407pt too wide) in paragraph at lines 131--131
 /n/10.95 496.2 (June 2020),
  []
 
-[179]
+[161]
 Overfull \hbox (3.23749pt too wide) in paragraph at lines 131--131
 []\T1/pplj/m/n/10.95 Federico Lelli, Stacy S. Mc-Gaugh, James M. Schombert,
  []
@@ -4061,13 +3878,13 @@ Overfull \hbox (8.0999pt too wide) in paragraph at lines 131--131
 -cal Physics \T1/pplj/m/n/10.95 21.6 (1953),
  []
 
-
+[162]
 Overfull \hbox (11.13313pt too wide) in paragraph at lines 131--131
 \T1/pplj/m/n/10.95 ing Markov chains and their ap-pli-ca-tions.^^Q In: \T1/pplj
 /m/it/10.95 Biometrika
  []
 
-[180]
+
 Overfull \hbox (9.79497pt too wide) in paragraph at lines 131--131
 []\T1/pplj/m/n/10.95 M. Be-tan-court and Mark Giro-lami. ^^P  Hamil-to-nian Mon
 te
@@ -4085,7 +3902,7 @@ Overfull \hbox (2.36829pt too wide) in paragraph at lines 131--131
 pplj/m/sc/10.95 doi\T1/pplj/m/n/10.95 :
  []
 
-[181] [182
+[163] [164
 
 
 
@@ -4185,14 +4002,14 @@ Overfull \hbox (2.37938pt too wide) in paragraph at lines 59--60
 []\T1/pplj/m/n/10.95 Poisson dis-tri-bu-tion, []64[], []66[] 
  []
 
-[183
+[165
 
 
 
 
 
 
-] [184
+] [166
 
 ])) (main.aux (FrontBackMatter/Titlepage.aux)
 (FrontBackMatter/Titleback.aux) (Chapters/part_introduction/preface.aux)
@@ -4237,11 +4054,11 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 55551 strings out of 474370
- 1169432 string characters out of 5740536
- 2431097 words of memory out of 5000000
- 75911 multiletter control sequences out of 15000+600000
- 686042 words of font info for 261 fonts, out of 8000000 for 9000
+ 55385 strings out of 474370
+ 1167557 string characters out of 5740536
+ 2430806 words of memory out of 5000000
+ 75874 multiletter control sequences out of 15000+600000
+ 685485 words of font info for 259 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  108i,23n,136p,10903b,2469s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
@@ -4263,15 +4080,14 @@ an/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmro8a.pfb><C:/Users/roman/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/latxfont/line10.pfb><C
 :/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/marvosym/marvosy
 m.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
-/symbols/msam10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/symbols/msbm10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX
-/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/roman/AppData/Local/Programs/MiK
-TeX/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Users/roman/AppData/Local/Programs
-/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/roman/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (188 pages, 1494613 bytes).
+/symbols/msam10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/u
+rw/palatino/uplb8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type
+1/urw/palatino/uplbi8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/
+type1/urw/palatino/uplr8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fon
+ts/type1/urw/palatino/uplri8a.pfb>
+Output written on main.pdf (170 pages, 1399375 bytes).
 PDF statistics:
- 3001 PDF objects out of 3580 (max. 8388607)
- 1018 named destinations out of 1200 (max. 500000)
- 43253 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 2782 PDF objects out of 2984 (max. 8388607)
+ 891 named destinations out of 1000 (max. 500000)
+ 43197 words of extra memory for PDF output out of 51595 (max. 10000000)
 

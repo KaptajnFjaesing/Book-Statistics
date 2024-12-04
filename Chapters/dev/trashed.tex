@@ -1,4 +1,43 @@
 
+\begin{proof}
+	Given the data $\tilde{D}_x = D_x,X=x$ and past Nature decisions $D_s$, the MLE decision rule can be written
+	\begin{equation}
+		\begin{split}
+			\hat{w}_{\text{MLE}} &\equiv \arg \max_{w} p(D_s|\tilde{D}_x,w,I)\\
+			&\equiv \arg \max_{w} \ln p(D_s|\tilde{D}_x,w,I)
+		\end{split},
+	\end{equation}
+	where $p(D_s|\tilde{D}_x,w,I)$ is the likelihood and it has been used that $\ln$ is a monotonically increasing function for the second equality. For simplicity define the notation
+	\begin{equation}
+		l(w) \equiv \ln p(D_s|\tilde{D}_x,w,I).
+	\end{equation}	
+	Assuming $\hat{w}_{\text{MLE}}\sim w$, $\frac{d}{dw}l(w)|_{w=\hat{w}_{\text{MLE}}}$ can be expanded around $\hat{w}_{\text{MLE}}$ viz
+	\begin{equation}
+		0=\frac{d}{dw}l(w)\bigg|_{w=\hat{w}_{\text{MLE}}}\approx \frac{d}{dw}l(w)+(w-\hat{w}_{\text{MLE}})\frac{d^2}{dw^2}l(w).
+	\end{equation}
+	meaning
+	\begin{equation}
+		\frac{\frac{d}{dw}l(w)}{\frac{d^2}{dw^2}l(w)}\approx(\hat{w}_{\text{MLE}}-w)
+	\end{equation}
+	Under regularity conditions
+	\begin{equation}
+		\mathbb{E}[\frac{d}{dw}l(w)] = 0.
+	\end{equation}
+	Now, taking the expectation
+	\begin{equation}
+		\mathbb{E}[\hat{\theta}_{\text{MLE}} - \theta_0] \approx - \mathbb{E}\left[\frac{\ell'(\theta_0)}{\ell''(\theta_0)}\right]
+	\end{equation}
+	Given that \(\mathbb{E}[\ell'(\theta_0)] = 0\), we get:
+	\begin{equation}
+		\mathbb{E}[\hat{\theta}_{\text{MLE}} - \theta_0] = 0,
+	\end{equation}
+	which implies:
+	\begin{equation}
+		\mathbb{E}[\hat{\theta}_{\text{MLE}}] = \theta_0.
+	\end{equation}
+\end{proof}
+
+=========================================
 
 \begin{equation}
 	\begin{split}

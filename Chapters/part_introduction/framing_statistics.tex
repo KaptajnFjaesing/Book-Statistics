@@ -102,8 +102,8 @@ In case of a continuous action space, the cost function is typically picked from
 	\end{equation}
 	
 \end{definition}
-\begin{theorem}[Median Estimator]
-	The median estimator follows from assuming linear loss viz
+\begin{theorem}[Median Decision Rule]
+	Assuming the cost function of definition \ref{def:linear_cost_function}
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int_{-\infty}^{\infty} ds |U(\tilde{D})-s| p(s|\tilde{D},I)\\
@@ -138,9 +138,9 @@ In case of a continuous action space, the cost function is typically picked from
 	\end{equation}
 \end{definition}
 
-\begin{theorem}[Expectation value]
-	\label{theorem:expectation_cost}
-	The expectation value follows from assuming quadratic loss viz
+\begin{theorem}[Expectation Decision Rule]
+	\label{theorem:expectation_decision_rule}
+	Assuming the cost function of definition \ref{def:quadratic_cost}
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int ds (U(\tilde{D})-s)^2 p(s|\tilde{D},I)\\
@@ -163,7 +163,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\end{equation}
 \end{definition}
 
-\begin{theorem}[MAP]
+\begin{theorem}[MAP Decision Rule]
 	\label{theorem:MAP}
 	The maximum aposteriori (MAP) follows from assuming 0-1 loss viz
 	\begin{equation}
@@ -197,5 +197,5 @@ where the cost function is typically represented in matrix form viz
 \end{center}
 
 \section{Statistical Paradigms}
-So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (definition \ref{def:bayesian_statistics}) and Frequentist (definition \ref{def:frequentist_statistics}) paramdigms. The difference between the two comes to light when considering the parameters of Natures model.  
+So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (definition \ref{def:bayesian_statistics}) and Frequentist (definition \ref{def:frequentist_statistics}) paradigms. The difference between the two comes to light when considering the parameters of Natures model.  
 

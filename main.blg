@@ -23,8 +23,6 @@ Reallocating 'name_of_file' (item size: 1) to 50 items.
 A level-1 auxiliary file: Chapters/part_introduction/framing_statistics.aux
 Reallocating 'name_of_file' (item size: 1) to 66 items.
 A level-1 auxiliary file: Chapters/part_frequentist/frequentist_statistics_introduction.aux
-Reallocating 'name_of_file' (item size: 1) to 68 items.
-A level-1 auxiliary file: Chapters/part_frequentist/frequentist_assigning_a_cost_function.aux
 Reallocating 'name_of_file' (item size: 1) to 63 items.
 A level-1 auxiliary file: Chapters/part_frequentist/frequentist_parameter_estimation.aux
 Reallocating 'name_of_file' (item size: 1) to 60 items.
@@ -43,6 +41,8 @@ Reallocating 'name_of_file' (item size: 1) to 57 items.
 A level-1 auxiliary file: Chapters/part_bayesian/parameter_estimation_examples.aux
 Reallocating 'name_of_file' (item size: 1) to 29 items.
 A level-1 auxiliary file: Chapters/dev/renzos_rule.aux
+Reallocating 'name_of_file' (item size: 1) to 36 items.
+A level-1 auxiliary file: Chapters/part_outro/reflections.aux
 Reallocating 'name_of_file' (item size: 1) to 42 items.
 A level-1 auxiliary file: Chapters/appendices/app_HMC_algorithm.aux
 Reallocating 'name_of_file' (item size: 1) to 44 items.
@@ -66,132 +66,132 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'field_info' (item size: 4) to 13540 items.
+Reallocating 'field_info' (item size: 4) to 13680 items.
 Database file #1: main-blx.bib
 Database file #2: refs.bib
-You're missing a field name---line 783 of file refs.bib
+You're missing a field name---line 807 of file refs.bib
  :  year      = {1663}, 
  :                      % Original publication year
 I'm skipping whatever remains of this entry
-You're missing a field name---line 813 of file refs.bib
+You're missing a field name---line 837 of file refs.bib
  :  year      = {1557}, 
  :                      % Adjust the year based on the specific edition you are referring to
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 939 of file refs.bib
+I was expecting a `,' or a `}'---line 963 of file refs.bib
  :  
  :  school = PhD Thesis, University of Southern Denmark,
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-Repeated entry---line 1803 of file refs.bib
+Repeated entry---line 1827 of file refs.bib
  : @article{Bengio1995
  :                    ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 1833 of file refs.bib
+Repeated entry---line 1857 of file refs.bib
  : @book{Goodfellow2016
  :                     ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 1907 of file refs.bib
+Repeated entry---line 1931 of file refs.bib
  : @article{Bengio1994
  :                    ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2015 of file refs.bib
+Repeated entry---line 2039 of file refs.bib
  : @article{hastings70
  :                    ,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 2085 of file refs.bib
+I was expecting a `,' or a `}'---line 2109 of file refs.bib
  :  
  :  pages = {318-362},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-Repeated entry---line 2547 of file refs.bib
+Repeated entry---line 2571 of file refs.bib
  : @book{MacKay2002
  :                 ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2573 of file refs.bib
+Repeated entry---line 2597 of file refs.bib
  : @article{Metropolis1953
  :                        ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2705 of file refs.bib
+Repeated entry---line 2729 of file refs.bib
  : @article{Swaters2010
  :                     ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2729 of file refs.bib
+Repeated entry---line 2753 of file refs.bib
  : @article{Famaey2012
  :                    ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2767 of file refs.bib
+Repeated entry---line 2791 of file refs.bib
  : @article{Swaters2012
  :                     ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 2791 of file refs.bib
+Repeated entry---line 2815 of file refs.bib
  : @article{Renzosrule
  :                    ,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3011 of file refs.bib
+I was expecting a `,' or a `}'---line 3035 of file refs.bib
  :  journal = The 
  :                Astronomical Journal,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3055 of file refs.bib
+I was expecting a `,' or a `}'---line 3079 of file refs.bib
  :  journal = Monthly 
  :                    Notices of the Royal Astronomical Society: Letters,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3137 of file refs.bib
+I was expecting a `,' or a `}'---line 3161 of file refs.bib
  :  eprint = 1103
  :               .3944,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3205 of file refs.bib
+I was expecting a `,' or a `}'---line 3229 of file refs.bib
  :  journal = Nature 
  :                   Astronomy,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3463 of file refs.bib
+I was expecting a `,' or a `}'---line 3487 of file refs.bib
  :  DOI     = 10
  :              .4249/scholarpedia.31410,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3485 of file refs.bib
+I was expecting a `,' or a `}'---line 3509 of file refs.bib
  :  doi = 10
  :          .1086/182804,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3623 of file refs.bib
+I was expecting a `,' or a `}'---line 3647 of file refs.bib
  :  journal = The 
  :                Astronomical Journal,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3665 of file refs.bib
+I was expecting a `,' or a `}'---line 3689 of file refs.bib
  :  pages = 668
  :             -683,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3705 of file refs.bib
+I was expecting a `,' or a `}'---line 3729 of file refs.bib
  :  pages = 1
  :           -28,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3739 of file refs.bib
+I was expecting a `,' or a `}'---line 3763 of file refs.bib
  :  keywords = NEUTRAL 
  :                     HYDROGEN, GAS DISTRIBUTION, SPIRAL GALAXIES,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3759 of file refs.bib
+I was expecting a `,' or a `}'---line 3783 of file refs.bib
  :  pages = 305
  :             -313,
 I'm skipping whatever remains of this entry
-Repeated entry---line 3821 of file refs.bib
+Repeated entry---line 3845 of file refs.bib
  : @article{Lelli:2017vgz
  :                       ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 3851 of file refs.bib
+Repeated entry---line 3875 of file refs.bib
  : @article{McGaugh:2016leg
  :                         ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 3925 of file refs.bib
+Repeated entry---line 3949 of file refs.bib
  : @article{Petersen:2017klw
  :                          ,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 4261 of file refs.bib
+I was expecting a `,' or a `}'---line 4285 of file refs.bib
  :  pages = 325
  :             -331,
 I'm skipping whatever remains of this entry
-You're missing a field name---line 4855 of file refs.bib
+You're missing a field name---line 4879 of file refs.bib
  :  author         = "Dai, De-Chang and Lu, Chunyu",
  :                                                  ,
 I'm skipping whatever remains of this entry
-I was expecting an "="---line 5569 of file refs.bib
+I was expecting an "="---line 5593 of file refs.bib
  : author = Madau, Piero 
  :                       and Shen, Sijing and Governato, F,
 I'm skipping whatever remains of this entry
@@ -200,45 +200,45 @@ Warning--I didn't find a database entry for "jaynes_maximum_entropy_formalism"
 Biblatex version: 3.20
 Reallocating 'wiz_functions' (item size: 4) to 9000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-You've used 59 entries,
+You've used 60 entries,
             6402 wiz_defined-function locations,
-            1664 strings with 22492 characters,
-and the built_in function-call counts, 415783 in all, are:
-= -- 33427
-> -- 6187
-< -- 1780
-+ -- 11119
-- -- 2056
-* -- 28222
-:= -- 44882
+            1672 strings with 22659 characters,
+and the built_in function-call counts, 421854 in all, are:
+= -- 33906
+> -- 6284
+< -- 1820
++ -- 11235
+- -- 2077
+* -- 28616
+:= -- 45422
 add.period$ -- 0
-call.type$ -- 59
+call.type$ -- 60
 change.case$ -- 0
 chr.to.int$ -- 111
-cite$ -- 116
-duplicate$ -- 42939
-empty$ -- 37276
-format.name$ -- 3520
-if$ -- 85507
+cite$ -- 118
+duplicate$ -- 43510
+empty$ -- 37863
+format.name$ -- 3566
+if$ -- 86831
 int.to.chr$ -- 0
-int.to.str$ -- 178
+int.to.str$ -- 182
 missing$ -- 0
-newline$ -- 1796
-num.names$ -- 3041
-pop$ -- 20429
+newline$ -- 1822
+num.names$ -- 3109
+pop$ -- 20757
 preamble$ -- 1
-purify$ -- 1406
+purify$ -- 1442
 quote$ -- 0
-skip$ -- 12424
+skip$ -- 12679
 stack$ -- 0
-substring$ -- 60810
-swap$ -- 8214
-text.length$ -- 1239
+substring$ -- 61675
+swap$ -- 8357
+text.length$ -- 1256
 text.prefix$ -- 1
 top$ -- 1
-type$ -- 1987
+type$ -- 2021
 warning$ -- 0
-while$ -- 5317
+while$ -- 5369
 width$ -- 0
-write$ -- 1738
+write$ -- 1763
 (There were 31 error messages)

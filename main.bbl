@@ -705,6 +705,33 @@
     \field{year}{2001}
   \endentry
 
+  \entry{Rao1973Linear}{book}{}{}
+    \name{author}{1}{}{%
+      {{hash=RCR}{%
+         family={Rao},
+         familyi={R\bibinitperiod},
+         given={C.\bibnamedelima Radhakrishna},
+         giveni={C\bibinitperiod\bibinitdelim R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {John Wiley \& Sons}%
+    }
+    \strng{namehash}{RCR1}
+    \strng{fullhash}{RCR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{edition}{2nd}
+    \field{isbn}{978-0-471-34969-5}
+    \field{note}{See Chapter 3 for the Cramér-Rao inequality and its
+  applications.}
+    \field{title}{Linear Statistical Inference and Its Applications}
+    \list{location}{1}{%
+      {New York}%
+    }
+    \field{year}{1973}
+  \endentry
+
   \entry{Bayes:63}{article}{}{}
     \name{author}{1}{}{%
       {{hash=BT}{%
