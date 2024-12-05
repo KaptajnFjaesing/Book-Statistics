@@ -32,7 +32,7 @@ Given the observation $X=x$ as well as a set of past observations and matching a
 	\begin{equation}
 		\Omega_S = \{"\text{rain}", "\text{no rain}"\},
 	\end{equation}
-	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast})$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
+	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$ weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast})$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
 \end{example}
 
 The random variable $X: \Omega \mapsto \Omega_X$ represent the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S: \Omega \mapsto \Omega_S$ represent the different possible decisions of Nature. $\Omega_X$ and $\Omega_S$ have associated $\sigma$-algebras and probability measures, however, such details are assumed \emph{to be understood} in the practical application of statistics. Given the observation $X=x$ as well as a set of past observations
@@ -47,17 +47,17 @@ the objective of the Robot is to minimize the expected cost associated with its 
 	\end{split}
 	\label{eq:conditional_expected_cost}
 \end{equation}
-where $\tilde{D} = \{D,X= x\}$ and the Robot aims to find the decision rule which minimizes equation \eqref{eq:conditional_expected_cost}, meaning
+where $\tilde{D} = \{D,X= x\}$ and the Robot aims to find the decision rule which minimizes \EQref{eq:conditional_expected_cost}, meaning
 \begin{equation}
 	U^* = \arg\min_{U} \mathbb{E}[C(U, S)|I].
 	\label{eq:decision_rule_x}
 \end{equation}	
-From theorem \ref{theorem:total_expectation}
+From \thref{theorem:total_expectation}
 \begin{equation}
 	\mathbb{E}[C(U, S)|I] = \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]].
 	\label{eq:total2}
 \end{equation}
-Using equation \eqref{eq:total2} in equation \eqref{eq:decision_rule_x}
+Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
 \begin{equation}
 	\begin{split}
 		U^* &= \arg\min_{U} \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]]\\
@@ -81,7 +81,7 @@ Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral
 			&\equiv D_s.
 		\end{split}
 	\end{equation}
-	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From equation \eqref{eq:decision_rule} the optimal action for the Robot can be written
+	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From \EQref{eq:decision_rule} the optimal action for the Robot can be written
 	\begin{equation}
 		U^*(D_s) = \arg\min_{U(D_s)} \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]
 		\label{eq:best_decision1}
@@ -103,7 +103,7 @@ In case of a continuous action space, the cost function is typically picked from
 	
 \end{definition}
 \begin{theorem}[Median Decision Rule]
-	Assuming the cost function of definition \ref{def:linear_cost_function}
+	Assuming the cost function of \dfref{def:linear_cost_function}
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int_{-\infty}^{\infty} ds |U(\tilde{D})-s| p(s|\tilde{D},I)\\
@@ -140,7 +140,7 @@ In case of a continuous action space, the cost function is typically picked from
 
 \begin{theorem}[Expectation Decision Rule]
 	\label{theorem:expectation_decision_rule}
-	Assuming the cost function of definition \ref{def:quadratic_cost}
+	Assuming the cost function of \dfref{def:quadratic_cost}
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int ds (U(\tilde{D})-s)^2 p(s|\tilde{D},I)\\
@@ -167,9 +167,11 @@ In case of a continuous action space, the cost function is typically picked from
 	\label{theorem:MAP}
 	The maximum aposteriori (MAP) follows from assuming 0-1 loss viz
 	\begin{equation}
+		\mathbb{E}_{S|\tilde{D}}[C((\tilde{D}), S)|\tilde{D},I] = 1-\int ds \delta(U(\tilde{D})-s) p(s|\tilde{D},I)
+	\end{equation}
+	meaning
+	\begin{equation}
 		\begin{split}
-			\mathbb{E}_{S|\tilde{D}}[C((\tilde{D}), S)|\tilde{D},I] &= 1-\int ds \delta(U(\tilde{D})-s) p(s|\tilde{D},I)\\
-			&\Downarrow\\
 			\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{dp(s|\tilde{D},I)}{ds}\bigg|_{s=U^*(\tilde{D})}\\
 			&=0\\
 		\end{split}
@@ -177,6 +179,49 @@ In case of a continuous action space, the cost function is typically picked from
 	which is the definition of the MAP.
 \end{theorem}
 
+
+\begin{example}
+	Take
+	\begin{equation}
+		C(U(x), s) = \alpha\cdot \text{swish}(U(x)-s,\beta)+(1-\alpha)\cdot\text{swish}(s-U(x),\beta)
+	\end{equation}
+	where
+	\begin{equation}
+		\text{swish}(z,\beta) = \frac{z}{1+e^{-z\beta}}.
+	\end{equation}
+	and $z\equiv U(x)-s$. Taking $\alpha \ll 1$, then $z<0$ will be penalized relatively more than $z>0$. $z<0$ corresponds to underestimation, so this is penalized greater relative to overestimation. Now
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C|\dots ] =\int ds p(s|\dots) \bigg(&\alpha\cdot \text{swish}(U(x)-s,\beta)\\
+			&+(1-\alpha)\cdot\text{swish}(s-U(x),\beta)\bigg)
+		\end{split}
+	\end{equation}
+	Let $z\equiv U(x)-s$, then
+	\begin{equation}
+		\begin{split}
+			\frac{dC}{dU(x)} & = \frac{dC}{dz}\frac{dz}{dU(x)}\\
+			& = \bigg(\frac{\alpha}{1+e^{-\beta z}}-\frac{1-\alpha}{1+e^{\beta z}}\\
+			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU(x)}\\
+			&= \frac{\beta z e^{\beta z}-e^{\beta z}-1}{(1+e^{\beta z})^2}+\alpha+\mathcal{O}(\alpha^2)\\
+			&\approx  \alpha -\frac{1}{(1+e^{\beta z})^2}
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			\frac{d\mathbb{E}[C|\dots ]}{dU(x)} &\approx \int ds p(s|\dots) \bigg(\alpha -\frac{1}{(1+e^{\beta z})^2}\bigg)\\
+			& = \alpha -\int ds p(s|\dots)\frac{1}{(1+e^{\beta z})^2}\\
+			& = 0
+		\end{split}
+	\end{equation}
+	$\frac{1}{(1+e^{\beta z})^2}$ approximate a unit step which is $1$ for $z<0$ and $0$ otherwise. $z<0 \Rightarrow s>U(x)$. This means
+	\begin{equation}
+		\int_{-\infty}^{\infty} ds p(s|\dots)\frac{1}{(1+e^{\beta z})^2} \approx \int_{U(x)}^{\infty} ds p(s|\dots)
+	\end{equation}
+	This means
+	\begin{equation}
+		\alpha \approx \int_{U(x)}^{\infty} ds p(s|\dots).
+	\end{equation}
+\end{example}
 
 \subsection{Discrete Action Space}
 In case of a continuous action space, the conditional expected loss can be written
@@ -197,5 +242,5 @@ where the cost function is typically represented in matrix form viz
 \end{center}
 
 \section{Statistical Paradigms}
-So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (definition \ref{def:bayesian_statistics}) and Frequentist (definition \ref{def:frequentist_statistics}) paradigms. The difference between the two comes to light when considering the parameters of Natures model.  
+So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (\dfref{def:bayesian_statistics}) and Frequentist (\dfref{def:frequentist_statistics}) paradigms. The difference between the two comes to light when considering the parameters of Natures model.  
 

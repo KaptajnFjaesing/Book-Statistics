@@ -12,7 +12,7 @@ with $f$ being a generic function and $N$ denoting the number of samples from th
 	g(\theta')=\int p(\theta'|\theta)g(\theta)d\theta.
 	\label{ee1}
 \end{equation}
-Equation \eqref{ee1} is implied by the stronger condition of detailed balance, defined viz
+\EQref{ee1} is implied by the stronger condition of detailed balance, defined viz
 \begin{equation}
 	p(\theta'|\theta)g(\theta)=p(\theta|\theta')g(\theta').
 \end{equation}
@@ -92,7 +92,7 @@ which means that in the case of $\Sigma^{-1}=diag(m_i^{-1})$;
 	\epsilon_i<2\sqrt{\frac{m_i}{\frac{\partial^2H}{\partial q^2_i}}}.
 	\label{heu}
 \end{equation}
-Setting $\epsilon$ according to equation \eqref{laa} can however introduce issues for hierarchical models (models including hyper parameters) since the reversibility property of Hamiltonian dynamics is broken if $\epsilon$ depend on any parameters. This issue can be alleviated by using the MH algorithm on a subgroup of parameters~\citep{Neal:1996,Neal2012} (which are then allowed in the expression for $\epsilon$) that is to be included in $\epsilon$. However, unless the MH algorithm is used for all parameters, some degree of approximation is required. 
+Setting $\epsilon$ according to \EQref{laa} can however introduce issues for hierarchical models (models including hyper parameters) since the reversibility property of Hamiltonian dynamics is broken if $\epsilon$ depend on any parameters. This issue can be alleviated by using the MH algorithm on a subgroup of parameters~\citep{Neal:1996,Neal2012} (which are then allowed in the expression for $\epsilon$) that is to be included in $\epsilon$. However, unless the MH algorithm is used for all parameters, some degree of approximation is required. 
 \vspace{5mm} %5mm vertical space
 
 \begin{algorithm}

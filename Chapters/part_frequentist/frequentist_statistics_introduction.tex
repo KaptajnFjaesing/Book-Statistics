@@ -1,12 +1,12 @@
 \chapter{Frequentist Statistics Introduction}
 \label{chp:freq}
-Frequentist statistics is based on definition \ref{def:frequentist_statistics}, which follows the definition of objective probability (definition \ref{def:objective_probability}) and the principle of fixed, unknown parameters (axiom \ref{ax:parameter_fixed}). The foundations of Frequentist statistics trace back to seminal works such as those of Neyman and Pearson \citep{Neyman1928OnSR} and Fisher \citep{fisher1925statistical}, who laid the groundwork for much of its methodology. Subsequent developments by Wald \citep{Wald1945Sequential}, Neyman \citep{Neyman1948Consistent}, and Lehmann \citep{lehmann1986testing} further refined its theories and techniques.\newline
+Frequentist statistics is based on \dfref{def:frequentist_statistics}, which follows the definition of objective probability (\dfref{def:objective_probability}) and the principle of fixed, unknown parameters (\axref{ax:parameter_fixed}). The foundations of Frequentist statistics trace back to seminal works such as those of Neyman and Pearson \citep{Neyman1928OnSR} and Fisher \citep{fisher1925statistical}, who laid the groundwork for much of its methodology. Subsequent developments by Wald \citep{Wald1945Sequential}, Neyman \citep{Neyman1948Consistent}, and Lehmann \citep{lehmann1986testing} further refined its theories and techniques.\newline
 
-In the Frequentist paradigm, it is assumed that Natures decisions can be captured by a model with unknown, fixed parameters $w$. This means everything in chapter \ref{chp:framing_statistics} becomes conditioned on $w$, and the focus becomes estimating $w$ via an estimator $\hat{w}(\tilde{D})$ and subsequently deciding the optimal decision rule
+In the Frequentist paradigm, it is assumed that Natures decisions can be captured by a model with unknown, fixed parameters $w$. This means everything in \chref{chp:framing_statistics} becomes conditioned on $w$, and the focus becomes estimating $w$ via an estimator $\hat{w}(\tilde{D})$ and subsequently deciding the optimal decision rule
 \begin{equation}
 	U^*(X=x, \hat{w}(\tilde{D}))
 \end{equation}
-according to a cost function, as specified in chapter \ref{chp:framing_statistics}.
+according to a cost function, as specified in \chref{chp:framing_statistics}.
 
 
 \begin{example}
@@ -14,7 +14,7 @@ according to a cost function, as specified in chapter \ref{chp:framing_statistic
 	\begin{equation}
 		S = f(X,w)+\epsilon
 	\end{equation}
-	where $\epsilon$ is a random variable representing noise, with $\mathbb{E}[\epsilon]=0$ and $f$ is some model with parameters $w$. Using the quadratic cost function of definition \ref{def:quadratic_cost} theorem \eqref{theorem:expectation_cost} yields
+	where $\epsilon$ is a random variable representing noise, with $\mathbb{E}[\epsilon]=0$ and $f$ is some model with parameters $w$. Using the quadratic cost function of \dfref{def:quadratic_cost}, \thref{theorem:expectation_cost} yields
 	\begin{equation}
 		\label{eq:o1}
 		\begin{split}
@@ -22,7 +22,7 @@ according to a cost function, as specified in chapter \ref{chp:framing_statistic
 			&= f(x,w),
 		\end{split}
 	\end{equation}
-	where it has been used that $f$ does not depend on past data. Hence, if $w$ was known, the Robot could map any observation $X=x$ using the optimal decision rule \ref{eq:o1}. In reality $w$ is not known and must be estimated.
+	where it has been used that $f$ does not depend on past data. Hence, if $w$ was known, the Robot could map any observation $X=x$ using the optimal decision rule \EQref{eq:o1}. In reality $w$ is not known and must be estimated.
 \end{example}
 
 

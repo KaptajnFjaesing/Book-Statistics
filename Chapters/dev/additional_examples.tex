@@ -1,8 +1,160 @@
 \chapter{Additional Examples}
 
+\begin{example}
+	\index{Example: Maximum likelihood}
+	\emph{Consider a uniform distribution\index{Uniform distribution} centered on $0$ with width $2a$. The density distribution is given by $p(x|a)=\frac{\mathbb{I}(x\in[-a,a])}{2a}$.}
+	
+	\begin{enumerate}
+		\item \emph{Given a dataset $x_1,x_2,\dots x_n$ what is the MLE estimate of $a$?}
+		
+		\begin{equation}
+			\begin{split}
+				p(D|a,I)&=\prod_{j=1}^n(\frac{\mathbb{I}(x_j\in[-a,a])}{2a})\\
+				&=\frac{1}{(2a)^n} \text{ for $x_j\in [-a,a]$}
+			\end{split}
+		\end{equation}
+		The likelihood cannot be optimized using the derivative approach since $\frac{d\ln(p(D|a,I))}{da}\big|_{a=\hat{a}_{\text{MLE}}}=0$ does not yield a useable result. Instead note that $(2a)^{-n}$ is a monotonic decreasing function of $a$, meaning the likelihood will be largest for the smallest value of $a$ whilst obeying $x_j\leq a$. This means $\hat{a}_{\text{MLE}}=\max(|x_1|,|x_2|,\dots |x_n|)$, since this will yield the smallest value of $a$ that is still larger or equal to all the data values.
+		
+		\item \emph{What probability would the model assign to a new datapoint $x_{n+1}$ using $\hat{a}_{\text{MLE}}$?}
+		
+		\begin{equation}
+			p(x_{n+1}|D,I)|_{\text{MLE}} =\frac{1}{2\max(|x_1|,|x_2|,\dots |x_n|)}
+		\end{equation}
+		for $-\max(|x_1|,|x_2|,\dots |x_n|) \leq x_{n+1}\leq \max(|x_1|,|x_2|,\dots |x_n|)$.
+		
+		\item \emph{Do you see any problems with the above approach? Briefly suggest a better approach.}\newline
+		
+		The model place zero probability mass outside the training data. You need to use prior information.
+	\end{enumerate}
+\end{example}
 
 
 
+
+
+\begin{example}
+	\index{Example: Normal distribution}
+	\emph{Suppose we have two sensors with unknown variances $\nu_1$ and $\nu_2$ ($\nu_1\neq \nu_2$), but unknown (and the same) mean, $\mu$. Suppose we observe $n_1$ observation from $y_i^{(1)}\sim N(y_i^{(1)}|\mu,\nu_1)$ from the first sensor and $y_i^{(2)}\sim N(y_i^{(2)}|\mu,\nu_2)$ from the second sensor. Let $D$ represent all the data from both sensors. What is the posterior $p(\mu|D,\nu_1,\nu_2,I)$, assuming a non-informative prior for $\mu$?}
+	
+	\begin{equation}
+		p(\mu|D,\nu_1,\nu_2,I) =\frac{p(D|\mu,\nu_1,\nu_2,I)p(\mu|\nu_1,\nu_2,I)}{p(D|\nu_1,\nu_2,I)}
+	\end{equation}
+	with $p(\mu|\nu_1,\nu_2,I)=\text{Unif}(a,b)$ since it is supposed to be an uninformative prior. The likelihood 
+	\begin{equation}
+		\begin{split}
+			p(D|\mu,\nu_1,\nu_2,I) &= \prod_{i=1}^{N^{(1)}}\frac{1}{\sqrt{2\pi \nu_1}}e^{-\frac{1}{2\nu_1}(y_i^{(1)}-\mu)^2}\prod_{j=1}^{N^{(2)}}\frac{1}{\sqrt{2\pi \nu_2}}e^{-\frac{1}{2\nu_2}(y_j^{(2)}-\mu)^2}\\
+			& = (2\pi \nu_1)^{-\frac{N^{(1)}}{2}}(2\pi \nu_2)^{-\frac{N^{(2)}}{2}}e^{-\frac{1}{2\nu_1}\sum_{i=1}^{N^{(1)}}(y_i^{(1)}-\mu)^2-\frac{1}{2\nu_2}\sum_{j=1}^{N^{(2)}}(y_j^{(2)}-\mu)^2}\\
+			&\propto e^{-\frac{1}{2\tilde{\nu}}(\mu-\tilde{\mu})^2},
+		\end{split}
+	\end{equation}
+	where $\tilde{\nu}$ can be found by considering the part of the exponent for $-\frac{\mu^2}{2\tilde{\nu}}$ and then identifying $\tilde{\nu}$, yielding
+	\begin{equation}
+		\tilde{\nu}= \frac{1}{\frac{N^{(1)}}{\nu_1}+\frac{N^{(2)}}{\nu_2}}.
+	\end{equation}
+	Similarly by considering the part of the exponent for the double product
+	\begin{equation}
+		\tilde{\mu} = \tilde{\nu}\bigg(\frac{N^{(1)}\bar{y}^{(1)}}{\nu_1}+\frac{N^{(2)}\bar{y}^{(2)}}{\nu_2}\bigg).
+	\end{equation}
+\end{example}
+
+\begin{example}
+	\index{Example: Bayes naive classifier}
+	\emph{Consider a $3$-class naive Bayes classifier\footnote{The naive Bayes classifier assume the class conditional density can be written as a product of one-dimensional densities~\citep[p.84]{murphy2013machine}} with one binary feature and one Gaussian feature $y\sim \text{Mu}(y|\pi,1)$, $x_1|y=c\sim \text{Ber}(x_1|\theta_c)$, $x_2|y=c\sim N(x_2|\mu_c,\sigma_c^2)$ with}
+	\begin{equation}
+		\begin{split}
+			\pi = \begin{pmatrix}
+				0.5 \\
+				0.25 \\
+				0.25
+			\end{pmatrix}, 
+			\theta = \begin{pmatrix}
+				0.5 \\
+				0.5 \\
+				0.5
+			\end{pmatrix}, 
+			\mu = \begin{pmatrix}
+				-1 \\
+				0 \\
+				1
+			\end{pmatrix},
+			\sigma^2 = \begin{pmatrix}
+				1 \\
+				1 \\
+				1
+			\end{pmatrix}
+		\end{split}
+	\end{equation}
+	
+	\begin{enumerate}
+		\item \emph{Compute $p(y|x_1=0,x_2=0)$.}
+		
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_1=0,x_2=0,I) & = \frac{p(x_1=0,x_2=0|y=c,I)p(y=c|I)}{p(x_1=0,x_2=0|I)}\\
+				&= \frac{p(x_1=0|x_2=0,y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{p(x_1=0,x_2=0|I)}\\
+				&= \frac{p(x_1=0|y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{p(x_1=0,x_2=0|I)}\\
+				&= \frac{p(x_1=0|y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'} p(x_1=0|y=c',I)p(x_2=0|y=c',I)p(y=c'|I)}\\
+			\end{split}
+		\end{equation}
+		with
+		\begin{equation}
+			\begin{split}
+				p(x_1=0|y,I) &= \text{Ber}(x_1=0|\theta)\\
+				&= \begin{pmatrix}
+					0.5 \\ 0.5\\ 0.5
+				\end{pmatrix}\\
+				p(x_2=0|y,I) &= N(x_2=0|\mu,\sigma^2)\\
+				&= \frac{1}{\sqrt{2\pi \sigma^2}}e^{-\frac{1}{2}(\frac{x_2-\mu}{\sigma})^2}\\
+				&\simeq  \begin{pmatrix}
+					0.24 \\ 0.4\\ 0.24
+				\end{pmatrix}\\
+				p(y|\pi) &= \pi\\
+			\end{split}
+		\end{equation}
+		\begin{equation}
+			p(y=c|x_1=0,x_2=0,I) = \begin{pmatrix}
+				0.43 \\ 0.35\\ 0.22
+			\end{pmatrix}
+		\end{equation}
+		
+		\item \emph{Compute $p(y|x_1=0,I)$.}
+		
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_1=0,I) & = \frac{p(x_1=0|y=c,I)p(y=c|I)}{p(x_1=0|I)}\\
+				&= \frac{p(x_1=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_1=0|y=c',I)p(y=c'|I)}\\
+				&= \pi\\
+				& = \begin{pmatrix}
+					0.5 \\ 0.25\\ 0.25
+				\end{pmatrix}
+			\end{split}
+		\end{equation}
+		
+		\item \emph{Compute $p(y|x_2=0,I)$.}
+		
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_2=0,I) & = \frac{p(x_2=0|y=c,I)p(y=c|I)}{p(x_2=0|I)}\\
+				&= \frac{p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_2=0|y=c',I)p(y=c'|I)}\\
+				& = \begin{pmatrix}
+					0.43 \\ 0.35\\ 0.22
+				\end{pmatrix}
+			\end{split}
+		\end{equation}
+		
+		\item \emph{Explain any interesting patterns you see in your results.} \newline
+		
+		Since $\theta_c=\theta_j\forall c,j\in \{c\}$ the prior information is propagated through in calculating $p(y|x_1=0,I)$ and $x_1$ does not impact $p(y|x_1=0,x_2=0,I)$, as can be seen by comparing $p(y|x_1=0,x_2=0,I)$ and $p(y|x_2=0,I)$. This can be seen by considering
+		\begin{equation}
+			\begin{split}
+				p(y=c|x_1=0,x_2=0,I) & = \frac{p(x_1=0|y=c,I)p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_1=0|y=c',I)p(x_2=0|y=c',I)p(y=c'|I)}\\
+				& = \frac{p(x_2=0|y=c,I)p(y=c|I)}{\sum_{c'}p(x_2=0|y=c',I)p(y=c'|I)}\\
+				& = p(y=c|x_2=0,I)
+			\end{split}
+		\end{equation}
+		where it has been used that $p(x_1=0|y=c,I) = p(x_1=0|y=c',I)\forall c,c'\in \{c\}$ for the second equality.
+	\end{enumerate} 
+\end{example}
 
 \begin{example}
 	\label{ex:313}

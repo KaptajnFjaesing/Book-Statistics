@@ -1,14 +1,14 @@
 \chapter{Parameter Estimation}
-Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated. This is unique to frequentist statistics as the parameters $w$ are considered realizations of random variables in Bayesian statistics. $w$ is estimated by re-applying decision theory. To distinguish this scenario from previous ones, denote the decision rule in this case $\hat{w}$, then
+Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated. This is unique to frequentist statistics as the parameters $w$ are considered realizations of random variables in Bayesian statistics. $w$ is estimated by re-applying decision theory. To distinguish this scenario from previous ones, denote the decision rule in this case $\hat{w}$.
 
 
 \begin{definition}[Fisher Information]
 	\label{def:fisher_information}
-	The Fisher information is a way of measuring the amount of information about an unknown parameter a random variable contains. Let $w$ be an unknown parameter, $p(X|w)$ a probability distribution for the generic random variable $X:\Omega\mapsto \Omega_X$ and define $l(X|w)= \frac{\partial}{\partial w} \ln p(X|w)$. The Fisher information can then be written
+	The Fisher information is a way of measuring the amount of information about an unknown parameter a random variable contains. Let $w$ be an unknown parameter, $p(X|w)$ a probability distribution for the generic random variable $X:\Omega\mapsto \Omega_X$ and define $l(X|w,I)= \frac{\partial}{\partial w} \ln p(X|w,I)$. The Fisher information can then be written
 	\begin{equation}
 		\begin{split}
-			I(w) &\equiv \mathbb{E} [l(X|w)^2|w]\\
-			&= \text{Var}[l(X|w)|w].
+			\mathcal{I}(w) &\equiv \mathbb{E} [l(X|w)^2|w,I]\\
+			&= \text{Var}[l(X|w)|w,I].
 		\end{split}
 	\end{equation}
 \end{definition}
@@ -16,13 +16,13 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 \begin{proof}
 	In general 
 	\begin{equation}
-		\mathbb{E} [l(X|w)^2|w] = \text{Var}[l(X|w)|w]+\mathbb{E}[l(X|w)|w]^2
+		\mathbb{E} [l(X|w)^2|w,I] = \text{Var}[l(X|w)|w,I]+\mathbb{E}[l(X|w)|w,I]^2
 	\end{equation}
 	however
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[l(X|w)|w] &= \int  \frac{\partial}{\partial w} \ln p(X=x|w) p(X=x|w) dx\\
-			&= \frac{\partial}{\partial w}\int  p(X=x|w) dx\\
+			\mathbb{E}[l(X|w,I)|w] &= \int  \frac{\partial}{\partial w} \ln p(X=x|w,I) p(X=x|w,I) dx\\
+			&= \frac{\partial}{\partial w}\int  p(X=x|w,I) dx\\
 			&= 0.\\
 		\end{split}
 	\end{equation}
@@ -32,9 +32,9 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 \begin{theorem}[Fisher information for sample]
 	Let $X_1,X_2,\dots X_n$ be a set of independent and identically distributed random variables from the measurable space $(\Omega,\mathcal{F})$. The Fisher information in a sample is 
 	\begin{equation}
-		I(w) = nI_1(w),
+		\mathcal{I}(w) = n\mathcal{I}_1(w),
 	\end{equation}
-	where $I_1(w)$ is the Fisher information of any one of the random variables.
+	where $\mathcal{I}_1(w)$ is the Fisher information of any one of the random variables.
 \end{theorem}
 
 
@@ -42,7 +42,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\label{def:MLE}
 	The Maximum Likelihood Estimator (MLE) decision rule $\hat{w}_{\text{MLE}}$ is defined as the decision rule that maximizes the likelihood $p(D_s|D_x,w)$ given the data $D_x$ and past Nature decisions $D_s$
 	\begin{equation}
-		\hat{w}_{\text{MLE}}(\tilde{D}) \equiv \arg \max_{w} p(D_s|D_x,w).
+		\hat{w}_{\text{MLE}}(\tilde{D}) \equiv \arg \max_{w} p(D_s|D_x,w,I).
 	\end{equation}
 \end{definition}
 
@@ -59,16 +59,16 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\label{def:minimax}
 	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum expected cost, meaning
 	\begin{equation}
-		\hat{w}' \equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w,D].
+		\hat{w}' \equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w,D,I].
 	\end{equation}
 \end{definition}
 
 \begin{theorem}[Mean Squared Error (MSE)]
 	\label{theorem:MSE}
-	The expectation of the quadratic cost function (definition \eqref{def:quadratic_cost}) can be written
+	The expectation of the quadratic cost function (\dfref{def:quadratic_cost}) can be written
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(\hat{w}, w)|w,D] &= \mathbb{E}[(\hat{w}-w)^2|w,D]\\ 
+			\mathbb{E}[C(\hat{w}, w)|w,D,I] &= \mathbb{E}[(\hat{w}-w)^2|w,D,I]\\ 
 			&= \mathbb{E}[(\hat{w}-\mathbb{E}[\hat{w}])^2]+(w-\mathbb{E}[\hat{w}])^2\\
 			&=\text{Var}[\hat{w}]+\text{Bias}[\hat{w}]^2\\
 		\end{split}
@@ -76,17 +76,17 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\end{equation}
 	where conditions have been suppressed in the second line (to fit to the page) and the bias of the estimator of $\hat{w}$ is defined viz
 	\begin{equation}
-		\text{Bias}[\hat{w}]\equiv w-\mathbb{E}[\hat{w}|w,D].
+		\text{Bias}[\hat{w}]\equiv w-\mathbb{E}[\hat{w}|w,D,I].
 	\end{equation}
-	If $\mathbb{E}[C(\hat{w}, w)|w,D]\xrightarrow[]{\text{data}\rightarrow\infty} 0$ then $C(\hat{w}, w)$ is a weakly consistent estimate of $w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, there is bias-variance which means that both cannot be minimized at the same time. 
+	If $\mathbb{E}[C(\hat{w}, w)|w,D,I]\xrightarrow[]{\text{data}\rightarrow\infty} 0$ then $C(\hat{w}, w)$ is a weakly consistent estimate of $w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, there is bias-variance which means that both cannot be minimized at the same time. 
 \end{theorem}
 
 \begin{corollary}[MLE is Approximately Minimax for quadratic Loss]
 	\label{cor:MLE_minimax}
-	Under certain regularity conditions, the Maximum Likelihood decision rule (MLE) $\hat{w}_{\text{MLE}}$ is approximately minimax for the quadratic cost function (definition \ref{def:quadratic_cost}), meaning it approximately minimizes the maximum expected cost.
+	Under certain regularity conditions, the Maximum Likelihood decision rule (MLE) $\hat{w}_{\text{MLE}}$ is approximately minimax for the quadratic cost function (\dfref{def:quadratic_cost}), meaning it approximately minimizes the maximum expected cost.
 	
 	\begin{proof}
-		From theorem \ref{theorem:MSE}
+		From theorem \thref{theorem:MSE}
 		\begin{equation}
 			\mathbb{E}[(\hat{w}-w)^2] = \text{Var}[\hat{w}]+\text{Bias}[\hat{w}]^2.
 		\end{equation}
@@ -97,7 +97,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 				&\approx \frac{\text{tr}[I(w)^{-1}]}{n},
 			\end{split}
 		\end{equation}
-		where theorem \ref{thm:unbiased_mle} was used for the second line. The Cramer-Rao lower bound~\citep{Rao1973Linear} for variance states that 
+		where \thref{thm:unbiased_mle} was used for the second line. The Cramer-Rao lower bound~\citep{Rao1973Linear} for variance states that 
 		\begin{equation}
 			\text{Var}[\hat{w}]\geq \frac{\text{tr}[I(w)^{-1}]}{n},
 		\end{equation}
@@ -110,7 +110,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 \end{corollary}
 
 \begin{example}
-	The bias-variance decomposition (theorem \ref{theorem:MSE}) is only relevant for frequentist statistics and Bayesian statistics does not struggle with this tradeoff. It relates to overfitting and underfitting. Bayesians do not fit in the same way as frequentists do. They do not determine a single set of parameters, rather they use a set of parameters due to integration. In that sense, they are protected against overfitting and underfitting and they do not struggle with hyperparameter finetuning as well.
+	The bias-variance decomposition (\thref{theorem:MSE}) is only relevant for frequentist statistics and Bayesian statistics does not struggle with this tradeoff. It relates to overfitting and underfitting. Bayesians do not fit in the same way as frequentists do. They do not determine a single set of parameters, rather they use a set of parameters due to integration. In that sense, they are protected against overfitting and underfitting and they do not struggle with hyperparameter finetuning as well.
 \end{example}
 
 \begin{example}
@@ -177,13 +177,13 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\noindent In this case
 	\begin{equation}
 		\begin{split}
-			p(D_s|D_x,w)=\prod_{i=1}^nw^{x_i}(1-w)^{1-x_i}.
+			p(D_s|D_x,w,I)=\prod_{i=1}^nw^{x_i}(1-w)^{1-x_i}.
 		\end{split}
 	\end{equation}
-	Let $l(w)\equiv ln p(D_s|D_x,w)$, then
+	Let $l(w)\equiv ln p(D_s|D_x,w,I)$, then
 	\begin{equation}
 		\begin{split}
-			\argmax_wl(w) & = \argmax_wp(D_s|D_x,w)\\
+			\argmax_wl(w) & = \argmax_wp(D_s|D_x,w,I)\\
 			&= \argmax_w\ln \bigg(\prod_{i=1}^nw^{x_i}(1-w)^{1-x_i}\bigg)\\
 			&=\argmax_w \bigg[\ln w\sum_{i=1}^nx_i + \ln(1-w)\sum_{i=1}^n(1-x_i)\bigg]
 		\end{split}
@@ -203,10 +203,10 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\noindent In this case
 	\begin{equation}
 		\begin{split}
-			p(D_s|D_x,w)=\prod_{i=1}^nw e^{-w x_i}.
+			p(D_s|D_x,w,I)=\prod_{i=1}^nw e^{-w x_i}.
 		\end{split}
 	\end{equation}
-	Let $l(w)\equiv ln p(D_s|D_x,w)$, then
+	Let $l(w)\equiv ln p(D_s|D_x,w,I)$, then
 	\begin{equation}
 		\frac{d}{dw}l(w)=\frac{n}{w}-\sum_{i=1}^nx_i
 	\end{equation}

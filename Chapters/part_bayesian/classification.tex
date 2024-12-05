@@ -1,0 +1,72 @@
+\chapter{Classification}
+\label{chp:baycl}
+Classification is the discrete version of regression, meaning it involves the Robot building a model, $f: \Omega_W\times \Omega_X\mapsto[0,1]$, with associated parameters $w\in \Omega_W$, that estimates Nature's actions $S$ based on observed data $X$. As opposed to regression, the random variable $S$ is now discrete and the function is identified with the probability of each action
+\begin{equation}
+	p(S = s|x,w,I)= f_{S = s}(w,x),
+	\label{f_dist2}
+\end{equation}
+with
+\begin{equation}
+	\sum_{s\in\mathbb{S}} p(S = s|x,w,I) = 1.
+\end{equation}
+In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\Omega_U=\Omega_S\cup \text{"Reject"}$. To reivew this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function, with the addition of a reject option at cost $\lambda$. This means
+\begin{equation}
+	C(U(x),s) = 1- \delta_{U(x),s}+(\lambda-1)\delta_{U(x),\text{"Reject"}}.
+\end{equation}
+The optimal decision rule for the robot can the be written
+\begin{equation}
+	\begin{split}
+		U^*(x) & = \arg\min_{U(x)}\mathbb{E}[C(U(X), S)|x,D,I]\\
+		&= \arg\min_{U(x)}\bigg(\sum_{s}C(U(x),s)p(S = s|x,D,I)\\
+		&\qquad\qquad\qquad+(\lambda-1)\delta_{U(x),\text{"Reject"}}\bigg)\\
+		& = \arg\min_{U(x)}\bigg(1- p(S=U(x)|x,D,I)\\
+		&\qquad\qquad\qquad+(\lambda-1)\delta_{U(x),\text{"Reject"}}\bigg).
+	\end{split}
+	\label{eq:expected_cost1}
+\end{equation}
+In absence of the reject option, the optimal decision rule is to pick the MAP, similar to \thref{theorem:MAP}. Using \EQref{f_dist2} and marginalizing over $w$
+\begin{equation}
+	\begin{split}
+		p(S= U(x)|x,D,I) &= \int p(S = U(x),w|x,D,I) dw \\
+		& = \int p(S = U(x)|x,w,D,I)  p(w|x,D,I)dw \\
+		& = \int p(S = U(x)|x,w,I)  p(w|D,I)dw \\
+		& = \int f_{S = U(x)}(w,x)  p(w|D,I)dw \\
+		& = \mathbb{E}[f_{S = U(x)}(w,x)|D,I],\\
+	\end{split}
+	\label{eq:q5}
+\end{equation}
+where for the second to last equality it has been assumed that $p(S = U(x)|w,x,D,I) = p(S = U(x)|w,x,I)$ since by definition $f$ (see \EQref{f_dist2}) produce a $1-1$ map of the input $x$ and $p(w|x,D,I) = p(w|D,I)$ from \axref{ax:observation_relevance}. From Bayes theorem
+\begin{equation}
+	p(w|D,I) =\frac{p(D_s|D_x,w,I)p(w|D_x,I)}{p(D_s|D_x,I)},
+\end{equation}
+where from \axref{ax:observation_relevance} $p(w|D_x,I) = p(w|I)$. Assuming the distribution over $w$ is normally distributed with zero mean and a precision described by a hyperparameter, $\lambda$, 
+\begin{equation}
+	p(w|I) = \int p(w|\lambda,I)p(\lambda|I)d\lambda.
+\end{equation}
+where $p(w|\lambda,I)p(\lambda|I)$ is given by \EQref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
+\begin{equation}
+	\begin{split}
+		p(D_s|D_x,w,I) &=\prod_{i=1}^{n}p(S = s_i|X = x_i,w,I)\\
+		&=\prod_{i=1}^{n}f_{s_i}(w,x_i)\\
+	\end{split}.
+	\label{lik}
+\end{equation}
+At this point \EQref{eq:expected_cost1} is fully specified and can be approximated by HMC similarly to the regression case. In this case, the model can be represented by the Hamiltonian 
+\begin{equation}
+	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln(p(w,\lambda|D,I))+const
+	\label{ham3}
+\end{equation}
+where
+\begin{equation}
+	p(w|D,I) = \int d\lambda p(w,\lambda|D,I).
+\end{equation}
+Using \EQref{eq:q5}-\EQref{lik} in equation \eqref{ham3} yields the Hamiltonian
+\begin{equation}
+	\begin{split}
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln(f_{s_i}(w,x_i))+\text{const}\\
+		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
+		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}w_l^2\bigg)\\
+	\end{split}.
+	\label{ham2}
+\end{equation}
+Sampling \EQref{ham2} yields a set of coefficients which can be used to compute $\mathbb{E}[f_s(w,x)|D,I]$ which in turn (see \EQref{eq:q5}) can be used to compute $U^*(x)$.

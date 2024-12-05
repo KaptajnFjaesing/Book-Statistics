@@ -24,12 +24,12 @@ where
 \begin{equation}
 	\xi(\lambda) = \int_{L>\lambda} \pi(\theta)d\theta,
 \end{equation}
-is the proportion of the prior with likelihood greater than $\lambda$ and $\Delta \xi_i\equiv \xi_{i-1}-\xi_i$. Due to the constraint $L>\lambda$ on the integral bound of $\xi$, $L(\xi)$ is a decreasing function of $\xi$, meaning $L(\xi_1)>L(\xi_2)$ if $\xi_1<\xi_2$. The sum in equation \eqref{e12} can then be evaluated by generating a sequence
+is the proportion of the prior with likelihood greater than $\lambda$ and $\Delta \xi_i\equiv \xi_{i-1}-\xi_i$. Due to the constraint $L>\lambda$ on the integral bound of $\xi$, $L(\xi)$ is a decreasing function of $\xi$, meaning $L(\xi_1)>L(\xi_2)$ if $\xi_1<\xi_2$. The sum in \EQref{e12} can then be evaluated by generating a sequence
 \begin{equation}
 	\{\{L(\xi_m),\xi_m\},\{L(\xi_{m-1}),\xi_{m-1}\},\dots\{L(\xi_1),\xi_1\}\},
 	\label{seq}
 \end{equation}
-with $\xi_1<\xi_2<\dots <\xi_m$. The sorting operation eliminate coordinate dependent complications of geometry, topology and dimensionality~\citep{skilling2006}. A sequence upholding equation \eqref{seq} can be generated as follows; consider $n$ random draws from $g$ with corresponding values of $L$ and $\xi$. Let $L(\xi^*)$ denote the minimum value of $L$ in the sample with $\xi^*$ the corresponding value of $\xi$ in the sample. $\{L(\xi^*), \xi^*\}$ is replaced by another set which is sampled from $g$ with the constraint that $\xi_{new}<\xi^*$ and stored in a list of discarded states. Continuing this sequence again and again will fill the list of discarded states that uphold equation \eqref{seq}. In practice $L(\xi)$ is not readily available, so instead $L$ can be generated from values of $\theta$. The value of $\xi_k$ can be determined by using that~\citep{skilling2004}
+with $\xi_1<\xi_2<\dots <\xi_m$. The sorting operation eliminate coordinate dependent complications of geometry, topology and dimensionality~\citep{skilling2006}. A sequence upholding \EQref{seq} can be generated as follows; consider $n$ random draws from $g$ with corresponding values of $L$ and $\xi$. Let $L(\xi^*)$ denote the minimum value of $L$ in the sample with $\xi^*$ the corresponding value of $\xi$ in the sample. $\{L(\xi^*), \xi^*\}$ is replaced by another set which is sampled from $g$ with the constraint that $\xi_{new}<\xi^*$ and stored in a list of discarded states. Continuing this sequence again and again will fill the list of discarded states that uphold \EQref{seq}. In practice $L(\xi)$ is not readily available, so instead $L$ can be generated from values of $\theta$. The value of $\xi_k$ can be determined by using that~\citep{skilling2004}
 \begin{equation}
 	\xi_k=\xi_0\prod_{i=1}^{k}t_i,
 \end{equation}
@@ -37,7 +37,7 @@ with $t_i=\frac{\xi_k}{\xi_{k-1}}$, called the shrinkage ratio. The shrinkage ra
 \begin{equation}
 	p(t)=nt^{n-1},
 \end{equation}
-with $n$ being the number of initialy samples from $g$ (the number of live points), such that 
+with $n$ being the number of initially samples from $g$ (the number of live points), such that 
 \begin{equation}
 	\begin{split}
 		\langle\ln(t)\rangle&=\mathbb{E}[\ln(t)]\pm \sqrt{V[\ln(t)]}\\
@@ -81,11 +81,11 @@ with $\mathcal{H}$ being the information~\citep{skilling2004}
 		& \approx \sum_i\frac{L(\xi_i)}{Z}\ln\bigg(\frac{L(\xi_i)}{Z}\bigg)\Delta \xi_i.
 	\end{split}
 \end{equation}
-Temrinating at $i\sim n\mathcal{H}$ yield (equation \eqref{eqln}) an uncertainty $\delta (\langle\ln(\xi_i)\rangle)=\sqrt{\frac{\mathcal{H}}{n}}$ meaning
+Temrinating at $i\sim n\mathcal{H}$ yield (\EQref{eqln}) an uncertainty $\delta (\langle\ln(\xi_i)\rangle)=\sqrt{\frac{\mathcal{H}}{n}}$ meaning
 \begin{equation}
 	\ln(Z)\approx \ln\bigg(\sum_{i}L(\xi_i)\Delta \xi_i\bigg)\pm \sqrt{\frac{\mathcal{H}}{n}}.
 \end{equation}
-The NS algorithm with equation \eqref{eq:stop2} as termination criterion is shown in algorithm \ref{alg:NS}. $A$ and $B$ are parameters of the algorithm. The "Remainder" in the second to last line in algorithm \ref{alg:NS} fills in the missing band $0<\xi<e^{-\frac{k+1}{n}}$ with the average value of the remaining values of $L$. Due to the chosen stopping criterion, the "Remainder" will be construction be small.
+The NS algorithm with \EQref{eq:stop2} as termination criterion is shown in \algref{alg:NS}. $A$ and $B$ are parameters of the algorithm. The "Remainder" in the second to last line in \algref{alg:NS} fills in the missing band $0<\xi<e^{-\frac{k+1}{n}}$ with the average value of the remaining values of $L$. Due to the chosen stopping criterion, the "Remainder" will be construction be small.
 
 \begin{algorithm}
 	\caption{Nested Sampling Algorithm in pseudo code}

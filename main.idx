@@ -9,15 +9,15 @@
 \indexentry{Law of Total Probability|hyperpage}{17}
 \indexentry{Example: Variable transformation|hyperpage}{24}
 \indexentry{Example: Father with Amnesia|hyperpage}{26}
-\indexentry{Coin experiment|hyperpage}{27}
-\indexentry{Example: Crime|hyperpage}{28}
-\indexentry{Example: Variance of a sum|hyperpage}{29}
+\indexentry{Coin experiment|hyperpage}{26}
+\indexentry{Example: Crime|hyperpage}{27}
+\indexentry{Example: Variance of a sum|hyperpage}{28}
 \indexentry{Example: Bad news from the doctor|hyperpage}{29}
-\indexentry{Example: Gameshow|hyperpage}{30}
+\indexentry{Example: Gameshow|hyperpage}{29}
+\indexentry{Example: Correlation coefficient|hyperpage}{31}
 \indexentry{Example: Correlation coefficient|hyperpage}{32}
 \indexentry{Example: Correlation coefficient|hyperpage}{33}
 \indexentry{Example: Correlation coefficient|hyperpage}{34}
-\indexentry{Example: Correlation coefficient|hyperpage}{35}
 \indexentry{Parameter space|hyperpage}{38}
 \indexentry{Probability measure interpretation|hyperpage}{39}
 \indexentry{Maximum entropy|hyperpage}{44}
@@ -27,27 +27,11 @@
 \indexentry{Example: Maximum entropy beta distribution|hyperpage}{47}
 \indexentry{Maximum entropy|hyperpage}{47}
 \indexentry{Statistics as a game against Nature|hyperpage}{49}
-\indexentry{Gamma distribution|hyperpage}{80}
-\indexentry{Frequentist statistics|hyperpage}{81}
-\indexentry{Example: HMC Hamiltonian variable change|hyperpage}{85}
-\indexentry{Example: Bayesian decision theory|hyperpage}{100}
-\indexentry{Example: Bayesian decision theory|hyperpage}{101}
-\indexentry{Example: Bayes naive classifier|hyperpage}{103}
-\indexentry{Example: Future event counts|hyperpage}{120}
-\indexentry{Expectation value|hyperpage}{120}
-\indexentry{Variance|hyperpage}{120}
-\indexentry{Poisson distribution|hyperpage}{120}
-\indexentry{Marginalized|hyperpage}{120}
-\indexentry{Gamma distribution|hyperpage}{120}
-\indexentry{Maximum entropy|hyperpage}{120}
-\indexentry{Poisson distribution|hyperpage}{123}
-\indexentry{Gamma distribution|hyperpage}{123}
-\indexentry{Negative binomial distribution|hyperpage}{124}
-\indexentry{Maximum entropy|hyperpage}{124}
-\indexentry{Normal distribution|hyperpage}{125}
-\indexentry{Gamma distribution|hyperpage}{125}
-\indexentry{Posterior ratio|hyperpage}{132}
-\indexentry{Bayes factor|hyperpage}{132}
-\indexentry{Example: Maximum likelihood|hyperpage}{135}
-\indexentry{Uniform distribution|hyperpage}{135}
-\indexentry{Example: Normal distribution|hyperpage}{136}
+\indexentry{Gamma distribution|hyperpage}{75}
+\indexentry{Frequentist statistics|hyperpage}{76}
+\indexentry{Example: HMC Hamiltonian variable change|hyperpage}{77}
+\indexentry{Example: Bayesian decision theory|hyperpage}{85}
+\indexentry{Example: Bayesian decision theory|hyperpage}{86}
+\indexentry{Bayes theorem|hyperpage}{91}
+\indexentry{Posterior ratio|hyperpage}{104}
+\indexentry{Bayes factor|hyperpage}{104}

@@ -203,6 +203,8 @@ natbib=true % natbib compatibility mode (\citep and \citet still work)
 \usepackage{algpseudocode}
 \usepackage{pythonhighlight}
 
+
+
 %----------------------------------------------------------------------------------------
 %	HYPERREFERENCES
 %----------------------------------------------------------------------------------------
@@ -292,13 +294,16 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 %\setlength{\marginparwidth}{7em}%
 %\setlength{\marginparsep}{2em}%
 \usepackage[
-			paperwidth=6in,
-			paperheight=9in,
-			inner=1in,
-			outer=1in,
-			top=1in,
-			bottom=1in
-			]{geometry}
+	paperwidth=6in,  % Book width
+	paperheight=9in, % Book height
+	inner=0.75in,    % Inner margin for binding
+	outer=1in,       % Outer margin
+	top=1in,         % Top margin
+	bottom=1in,      % Bottom margin
+	headheight=0.5in, % Header height
+	headsep=0.25in,  % Header separation
+	footskip=0.5in   % Footer skip
+	]{geometry}
 
 %----------------------------------------------------------------------------------------
 %	USING DIFFERENT FONTS

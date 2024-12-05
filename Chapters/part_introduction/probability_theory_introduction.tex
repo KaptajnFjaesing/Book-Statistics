@@ -27,7 +27,7 @@ Probability theory aims to provide a mathematical framework for analyzing random
 
 \begin{example}
 	\label{ex:die2}
-	For the roll with the fair die considered in example \ref{ex:die1}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$ and the event space (the set of all possible events) is given by
+	For the roll with the fair die considered in \exref{ex:die1}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$ and the event space (the set of all possible events) is given by
 	\begin{equation}
 		\begin{split}
 			\mathcal{F}&=\{\emptyset, \{\epsdice{1}\},\{\epsdice{1},\epsdice{3}\},\{\epsdice{3}\},\{\epsdice{1},\epsdice{2},\epsdice{3},\epsdice{4}\},\{\epsdice{5}\},\dots\}\\
@@ -45,11 +45,11 @@ Probability can loosely be defined~\cite{chan2021introduction} as a measure of t
 
 \begin{definition}[Probability Measure]
 	\label{def:probability}
-	A Probability measure\index{Probability Measure}, $\mathbb{P}$, is a set function \index{Set function} defined on a measurable space (definition \ref{def:measurable_space}) $(\Omega, \mathcal{F})$
+	A Probability measure\index{Probability Measure}, $\mathbb{P}$, is a set function \index{Set function} defined on a measurable space (\dfref{def:measurable_space}) $(\Omega, \mathcal{F})$
 	\begin{equation}
 		\mathbb{P}: \mathcal{F} \mapsto [0,1]
 	\end{equation}
-	that obey~\cite{kolmogorov1950foundations} axioms \ref{ax:non_neg}-\ref{ax:add}\index{Axioms of probability theory}.
+	that obey~\cite{kolmogorov1950foundations} \axref{ax:non_neg}-\axref{ax:add}\index{Axioms of probability theory}.
 \end{definition}
 
 \begin{axiom}[Non-negativity]
@@ -96,7 +96,7 @@ Together, the probability measure, the sample space and the algebra form the tup
 \end{definition}
 
 
-From axioms \ref{ax:non_neg}-\ref{ax:add} and definitions \ref{eq:cond} and \ref{eq:ind}, the chain rule, the concept of marginalization, conditional independence and the law of total probability can be derived. 
+From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the chain rule, the concept of marginalization, conditional independence and the law of total probability can be derived. 
 \begin{theorem}[Chain Rule]
 	\label{theorem:chain_rule}
 	Given $\{E_1, E_2, \ldots, E_n\}\subseteq \mathcal{F}$ denotes a set of events in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, the chain rule\index{Chain rule} for this set of events can be written
@@ -108,7 +108,7 @@ From axioms \ref{ax:non_neg}-\ref{ax:add} and definitions \ref{eq:cond} and \ref
 	\end{equation}
 \end{theorem}
 \begin{proof}
-	From the definition of conditional probability in equation \eqref{eq:cond}
+	From the definition of conditional probability in \EQref{eq:cond}
 	\begin{equation}
 		\mathbb{P}(E_1, E_2, \ldots, E_n) = \mathbb{P}(E_1|E_2, \dots, E_n)\mathbb{P}(E_2, \dots, E_n).
 		\label{eq:p1}
@@ -117,9 +117,9 @@ From axioms \ref{ax:non_neg}-\ref{ax:add} and definitions \ref{eq:cond} and \ref
 	\begin{equation}
 		\mathbb{P}(E_2, \ldots, E_n) = \mathbb{P}(E_2| \ldots, E_n)\mathbb{P}(\dots, E_n).
 	\end{equation}
-	Continuing in this way, equation \eqref{eq:prod} follows.
+	Continuing in this way, \EQref{eq:prod} follows.
 \end{proof}
-Equation \eqref{eq:prod} illustrates how to decompose the joint probability of multiple events into a product of conditional probabilities. The idea is to calculate the probability of each event in the sequence conditioned on the occurrence of the previous events in the chain. The chain rule is particularly powerful when dealing with complex systems where events may be interdependent. It allows breaking down joint probabilities into more manageable conditional probabilities, making it easier to analyze and model intricate relationships between events. Whether in the context of statistical modeling or machine learning, the chain rule plays a key role in calculating the joint probability of multiple events and provides a foundation for more advanced probabilistic reasoning.
+\EQref{eq:prod} illustrates how to decompose the joint probability of multiple events into a product of conditional probabilities. The idea is to calculate the probability of each event in the sequence conditioned on the occurrence of the previous events in the chain. The chain rule is particularly powerful when dealing with complex systems where events may be interdependent. It allows breaking down joint probabilities into more manageable conditional probabilities, making it easier to analyze and model intricate relationships between events. Whether in the context of statistical modeling or machine learning, the chain rule plays a key role in calculating the joint probability of multiple events and provides a foundation for more advanced probabilistic reasoning.
 
 \begin{theorem}[Bayes theorem]
 	\label{theorem:bayes_theorem}
@@ -172,7 +172,7 @@ Equation \eqref{eq:prod} illustrates how to decompose the joint probability of m
 		\end{split}
 	\label{eq:qq2}
 	\end{equation}
-	Combining equations \eqref{eq:qq1}-\eqref{eq:qq2} then yields
+	Combining \EQref{eq:qq1}-\EQref{eq:qq2} then yields
 	\begin{equation}
 		\mathbb{P}(A) = \sum_{i} \mathbb{P}(A, E_i).
 	\end{equation}
@@ -180,7 +180,7 @@ Equation \eqref{eq:prod} illustrates how to decompose the joint probability of m
 \end{proof}
 
 \begin{example}
-	Consider the roll of a fair six-sided die. The sample space for this experiment is given by $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from equation \eqref{eq:cond}
+	Consider the roll of a fair six-sided die. The sample space for this experiment is given by $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from \EQref{eq:cond}
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(E_1|E_2) &= \frac{\mathbb{P}(E_1, E_2)}{\mathbb{P}(E_2)}\\
@@ -259,7 +259,7 @@ Equation \eqref{eq:prod} illustrates how to decompose the joint probability of m
 		\end{split}
 		\label{eq:disc}
 	\end{equation}
-	According to axioms \ref{ax:non_neg}-\ref{ax:add} $\sum_{\text{all }x} p(X=x) = 1$ and $p(X=x) \geq 0 \quad \forall x\in \Omega_X$. 
+	According to \axref{ax:non_neg}-\axref{ax:add} $\sum_{\text{all }x} p(X=x) = 1$ and $p(X=x) \geq 0 \quad \forall x\in \Omega_X$. 
 \end{definition}
 
 \begin{theorem}[Expected value of discrete random variable]
@@ -340,7 +340,7 @@ Equation \eqref{eq:prod} illustrates how to decompose the joint probability of m
 	For independent random variables $X\in \Omega_X$ and $Y\in \Omega_Y$ the covariance is given by $\text{Cov}[X,Y]=0$.
 \end{theorem}
 \begin{proof}
-	Using $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$ (theorem \ref{theorem:expectation_independent}) in definition \ref{def:covariance} yield $\text{Cov}[X,Y]=0$.
+	Using $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$ (\thref{theorem:expectation_independent}) in \dfref{def:covariance} yield $\text{Cov}[X,Y]=0$.
 \end{proof}
 
 
@@ -370,7 +370,7 @@ Correlation and covariance are both measures of the relationship between two ran
 	\begin{equation}
 		g^{-1}(y) = \frac{y - b}{a}
 	\end{equation}
-	Using definition \ref{def:change_of_variables}
+	Using \dfref{def:change_of_variables}
 	\begin{equation}
 		\begin{split}
 			f(Y=y) &= f\left( X = g^{-1}(y) \right) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y} \\
@@ -391,7 +391,7 @@ Correlation and covariance are both measures of the relationship between two ran
 	\begin{equation}
 		g^{-1}(y) = \ln\bigg(\frac{y}{1-y}\bigg).
 	\end{equation}
-	Using definition \ref{def:change_of_variables}
+	Using \dfref{def:change_of_variables}
 	\begin{equation}
 		\begin{split}
 			f(Y=y) &= f\left( X = g^{-1}(y) \right) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y}\\
@@ -404,7 +404,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{definition}[Error-Propagation]
 	\label{def:error_propagation}
-	Let $X_1 \ldots, X_n$ be continuous random variables with means $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\text{Var}[X_1] \ldots, \text{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables, $g(X_1, \ldots, X_n)$. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the $X_i$, can be written
+	Let $X_1 \ldots, X_n$ be continuous random variables with means $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\text{Var}[X_1] \ldots, \text{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the $X_i$, can be written
 	\begin{equation}
 		\begin{split}
 			\text{Var}[g(X_1 \ldots, X_n)] &\equiv \mathbb{E}\big[(g(X_1 \ldots, X_n) - \mathbb{E}[g(X_1 \ldots, X_n)])^2\big] \\
@@ -427,14 +427,14 @@ Correlation and covariance are both measures of the relationship between two ran
 			&\quad + \mathcal{O}(\partial^2 g).
 		\end{split}
 	\end{equation}
-	where it has been used that $\mathbb{E}[g]=g(\text{point})+\mathcal{O}(\partial^2g)$ and it is understood all derivatives are evaluated at the means of the random variables. When the random variables are independent, $\text{Cov}[X_i, X_j] = 0$ for all $i \neq j$ (see theorem \ref{theorem:covariance_of_independent_variables}), and the formula simplifies to
+	where it has been used that $\mathbb{E}[g]=g(\text{point})+\mathcal{O}(\partial^2g)$ and it is understood all derivatives are evaluated at the means of the random variables. When the random variables are independent, $\text{Cov}[X_i, X_j] = 0$ for all $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and the formula simplifies to
 	\begin{equation}
 		\text{Var}[g] \approx \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{\text{point}}^2\text{Var}[X_i].
 	\end{equation}
 \end{definition}
 
 \begin{example}
-	A company produce square plates. Take the dimensions of the plate to be characterized by two independent random variables $X\sim \mathcal{N}(2m,(0.01m)^2)$ and $Y\sim \mathcal{N}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From definition \ref{def:error_propagation}, the exact variance is
+	A company produce square plates. Let the plate dimensions be characterized by two independent random variables $X\sim \mathcal{N}(2m,(0.01m)^2)$ and $Y\sim \mathcal{N}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From \dfref{def:error_propagation}, the exact variance is
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
@@ -451,7 +451,7 @@ Correlation and covariance are both measures of the relationship between two ran
 			&=\mathbb{E}[Y]^2\text{Var}[X]+\mathbb{E}[X]^2\text{Var}[Y]
 		\end{split}
 	\end{equation}
-	Comparing equation \eqref{eq:var1} and \eqref{eq:var2} the relative difference can be written
+	Comparing \EQref{eq:var1} and \EQref{eq:var2} the relative difference can be written
 	\begin{equation}
 		\begin{split}
 			\frac{\text{Var}[XY]-\text{Var}[XY]|_{\text{linear approximation}}}{\text{Var}[XY]} &= \frac{\text{Var}[X]\text{Var}[Y]}{\text{Var}[XY]}\\
@@ -477,7 +477,7 @@ Correlation and covariance are both measures of the relationship between two ran
 			&= \{(\text{\Gentsroom,\Gentsroom}),(\text{\Gentsroom,\Ladiesroom}),(\text{\Ladiesroom,\Gentsroom}),(\text{\Ladiesroom,\Ladiesroom})\}.
 		\end{split}
 	\end{equation}
-	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \mapsto \{0,1,2\}$ and $G: \Omega \mapsto \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$. The probability mass function associated to $B$ and $G$ is given by equation \eqref{eq:disc}, such that e.g.
+	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \mapsto \{0,1,2\}$ and $G: \Omega \mapsto \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$. The probability mass function associated to $B$ and $G$ is given by \EQref{eq:disc}, such that e.g.
 	\begin{equation}
 		p(B = 1, G = 1)= \mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\}).
 	\end{equation}
@@ -621,7 +621,7 @@ Correlation and covariance are both measures of the relationship between two ran
 	In this case for the nonimator
 	\begin{equation}
 		\begin{split}
-			\text{Cov}[X,Y] &= \int dx x^3 p(X = x)-\int dx' x'p(X = x')\int dx'' x''^2p(X = x'')\\
+			\text{Cov}[X,Y] &= \int dx x^3 p(x)-\int dx' x'p(x')\int dx'' x''^2p(x'')\\
 			&= \frac{1}{b-a}\int_{a}^{b}x^3dx-\frac{1}{(b-a)^2}\int_{a}^{b}dx' x'\int_{a}^{b}dx'' x''^2\\
 			&= \frac{1}{12}(a-b)^2(a+b)\\
 			&=0
