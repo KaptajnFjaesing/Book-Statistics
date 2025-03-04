@@ -26,13 +26,13 @@
 \contentsline {paragraph}{Setup:}{88}{exinn.11.3}%
 \contentsline {paragraph}{Optimal decision rule:}{89}{equation.11.0.229}%
 \contentsline {paragraph}{The Probability:}{90}{equation.11.0.234}%
-\contentsline {paragraph}{Simple model:}{92}{equation.11.0.245}%
-\contentsline {paragraph}{Manual HMC:}{92}{equation.11.0.246}%
-\contentsline {paragraph}{Data:}{95}{equation.11.0.262}%
-\contentsline {paragraph}{Training:}{95}{equation.11.0.263}%
-\contentsline {paragraph}{PyMC HMC Algorithm:}{96}{equation.11.0.265}%
+\contentsline {paragraph}{Simple model:}{92}{equation.11.0.243}%
+\contentsline {paragraph}{Manual HMC:}{92}{equation.11.0.244}%
+\contentsline {paragraph}{Data:}{95}{equation.11.0.260}%
+\contentsline {paragraph}{Training:}{95}{equation.11.0.261}%
+\contentsline {paragraph}{PyMC HMC Algorithm:}{96}{equation.11.0.263}%
 \contentsline {paragraph}{Results: }{99}{lstnumber.-3.5}%
-\contentsline {paragraph}{Summary and Discussion:}{100}{equation.11.0.268}%
+\contentsline {paragraph}{Summary and Discussion:}{100}{equation.11.0.266}%
 \contentsline {chapter}{\numberline {12}\spacedlowsmallcaps {Making Inference About the Model of Nature}}{103}{chapter.12}%
 \contentsline {section}{\numberline {12.1}Selecting the Robot's Model}{103}{section.12.1}%
 \contentsline {section}{\numberline {12.2}Parameter Estimation}{104}{section.12.2}%
