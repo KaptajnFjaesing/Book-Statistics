@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.1)  4 MAR 2025 21:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.6.1)  5 MAR 2025 19:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -3012,9 +3012,9 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              that will remove this deprecated code.
 
 [103]
-Overfull \hbox (1.97511pt too wide) in paragraph at lines 33--35
+Overfull \hbox (1.42761pt too wide) in paragraph at lines 33--35
 \T1/pplj/m/n/10.95 can be eval-u-ated ei-ther an-a-lyt-i-cally or nu-mer-i-call
-y. []Equa-tion []273[][]
+y. []Equa-tion []271[][]
  []
 
 [104]) [105]
@@ -3431,52 +3431,40 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 55124 strings out of 474370
- 1162882 string characters out of 5740536
- 2428829 words of memory out of 5000000
- 75763 multiletter control sequences out of 15000+600000
+ 55120 strings out of 474370
+ 1162820 string characters out of 5740536
+ 2428779 words of memory out of 5000000
+ 75762 multiletter control sequences out of 15000+600000
  680761 words of font info for 253 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  108i,23n,132p,10903b,2449s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{equation.12.1.273} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{equation.12.0.269} has been referenced but does not
- exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{equation.11.0.267} has been referenced but does not
- exist, replaced by a fixed one
-
-<C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
-ex10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmmi10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/pub
-lic/amsfonts/cm/cmmi7.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmr10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/roman/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/roman/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/roman/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/roman/AppDa
-ta/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmr.pfb><C:/Users/roman/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmri.pfb><C:/Users/
-roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/User
-s/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrij8a.pfb><C:/U
-sers/roman/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmb8a.pfb><C:/Users/
-roman/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/roman
-/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmro8a.pfb><C:/Users/roman/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/latxfont/line10.pfb><C:/
-Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/marvosym/marvosym.
-pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/s
-ymbols/msam10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/urw
-/palatino/uplb8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/
-urw/palatino/uplbi8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/urw/palatino/uplr8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts
-/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (140 pages, 887533 bytes).
+<C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
+cmex10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmmi10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/roman/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/roman/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/roman/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/roman/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/roman/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmr.pfb><C:/Users/roma
+n/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmri.pfb><C:/User
+s/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Us
+ers/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrij8a.pfb><C:
+/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmb8a.pfb><C:/User
+s/roman/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/rom
+an/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmro8a.pfb><C:/Users/roman/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/latxfont/line10.pfb><C
+:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/marvosym/marvosy
+m.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
+/symbols/msam10.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type1/u
+rw/palatino/uplb8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/type
+1/urw/palatino/uplbi8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fonts/
+type1/urw/palatino/uplr8a.pfb><C:/Users/roman/AppData/Local/Programs/MiKTeX/fon
+ts/type1/urw/palatino/uplri8a.pfb>
+Output written on main.pdf (140 pages, 887303 bytes).
 PDF statistics:
- 2405 PDF objects out of 2487 (max. 8388607)
- 743 named destinations out of 1000 (max. 500000)
+ 2402 PDF objects out of 2487 (max. 8388607)
+ 740 named destinations out of 1000 (max. 500000)
  42028 words of extra memory for PDF output out of 42996 (max. 10000000)
 

@@ -6,13 +6,13 @@
 			&& $S$& \\
 			&& $s_1$ & $s_2$  \\
 			\cline{3-4}
-			$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{01}$}  \\
-			& $u_2$& \multicolumn{1}{|l}{$\lambda_{10}$} & \multicolumn{1}{l|}{0} \\
+			$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{12}$}  \\
+			& $u_2$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{0} \\
 			\cline{3-4}
 		\end{tabular}
 	\end{center}
 	\begin{enumerate}
-		\item \emph{Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $w$ and predicting $U(x)=u_1$ if $p(S=s_1|x,D,I) < w$ and $U(x)=u_2$ if $p(S=s_2|x,D,I)\geq w$. What is $w$ as a function of $\lambda_{01}$ and $\lambda_{10}$?}\newline
+		\item \emph{Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $k$ and predicting $U(x)=u_1$ if $p(S=s_2|x,D,I) < k$ and $U(x)=u_2$ if $p(S=s_2|x,D,I)\geq k$. What is $k$ as a function of $\lambda_{12}$ and $\lambda_{21}$?}\newline
 		
 		The conditional expected cost
 		\begin{equation}
@@ -25,8 +25,8 @@
 		For the different possible actions
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}_{S|X}[C(u_1, S)|x,D,I] &= \lambda_{01}p(S=s_2|x,D,I),\\
-				\mathbb{E}_{S|X}[C(u_2, S)|x,D,I] &= \lambda_{10}p(S=s_1|x,D,I),\\
+				\mathbb{E}_{S|X}[C(u_1, S)|x,D,I] &= \lambda_{12}p(S=s_2|x,D,I),\\
+				\mathbb{E}_{S|X}[C(u_2, S)|x,D,I] &= \lambda_{21}p(S=s_1|x,D,I),\\
 			\end{split}
 		\end{equation}
 		$U(x)=u_1$ iff
@@ -36,32 +36,32 @@
 		meaning
 		\begin{equation}
 			\begin{split}
-				\lambda_{01}p(S=s_2|x,D,I)&<\lambda_{10}p(S = s_1|x,D,I)\\
-				&=\lambda_{10}(1-p(S =s_2|x,D,I))
+				\lambda_{12}p(S=s_2|x,D,I)&<\lambda_{21}p(S = s_1|x,D,I)\\
+				&=\lambda_{21}(1-p(S =s_2|x,D,I))
 			\end{split}
 		\end{equation}
-		meaning $U(x) = u_0$ iff
+		meaning $U(x) = u_1$ iff
 		\begin{equation}
-			p(S=s_2|x,D,I)<\frac{\lambda_{10}}{\lambda_{01}+\lambda_{10}}=w
+			p(S=s_2|x,D,I)<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k
 		\end{equation}
 		
 		
 		\item \emph{Show a loss matrix where the threshold is $0.1$.}\newline
 		
-		$w = \frac{1}{10}=\frac{\lambda_{10}}{\lambda_{01}+\lambda_{10}} \Rightarrow \lambda_{01}=9\lambda_{10}$ yielding the loss matrix
+		$k = \frac{1}{21}=\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}} \Rightarrow \lambda_{12}=9\lambda_{21}$ yielding the loss matrix
 		
 		\begin{center}
 			\begin{tabular}{ c  c  c  c }
 				&& $S$& \\
 				&& $s_1$ & $s_2$  \\
 				\cline{3-4}
-				$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{10}$}  \\
-				& $u_2$& \multicolumn{1}{|l}{$\lambda_{10}$} & \multicolumn{1}{l|}{0} \\
+				$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{21}$}  \\
+				& $u_2$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{0} \\
 				\cline{3-4}
 			\end{tabular}
 		\end{center}
 		
-		You may set $\lambda_{10}=1$ since only the relative magnitude is important in relation to making a decision.
+		You may set $\lambda_{21}=1$ since only the relative magnitude is important in relation to making a decision.
 		
 	\end{enumerate}
 	
@@ -202,8 +202,8 @@
 	\begin{equation}
 		\begin{split}
 			p(D_s|D_x,w,I) &=\prod_{i=1}^{n}p(S = s_i|X = x_i,w,I)\\
-			&=\prod_{i=1}^{n}f_{s_i}(w,x_i)\\
-		\end{split}.
+			&=\prod_{i=1}^{n}f_{s_i}(w,x_i).\\
+		\end{split}
 		\label{lik}
 	\end{equation}
 	Aside from the specification of the model $f$, $p(S= s|x,D,I)$ is at this point fully specified and can be approximated by HMC similarly to the regression case. In this case, the model can be represented by the Hamiltonian 
