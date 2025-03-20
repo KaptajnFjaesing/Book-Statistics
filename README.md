@@ -18,7 +18,7 @@ If you would like to reference this book, you can use the following BibTeX entry
 
 ```bibtex
 @book{petersen2025,
-  author    = {First Last},
+  author    = {Jonas Petersen},
   title     = {Introduction to Statistics},
   publisher = {GitHub},
   year      = {2025},
