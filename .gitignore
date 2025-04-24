@@ -23,3 +23,7 @@ src/development/
 *.nav
 *.snm
 *.vrb
+main.ilg
+main.ind
+main.idx
+main.run.xml
