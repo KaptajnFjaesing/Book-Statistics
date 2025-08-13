@@ -1,0 +1,105 @@
+\chapter{Multivariate $\rm h_{\rm opt}$ derivation}
+\label{app:B}
+For the adaptive case (equation \eqref{ho1})
+\begin{equation}
+	h_{opt}= \bigg[\frac{d}{[1-(3-d)\alpha]^2n|A|}\frac{\int f^{\alpha+1}d\vec{x}  \int_{\mathcal{R}^d} K^2d\vec{w}}{\tilde{k}_2^2\int \big(\frac{fTr[A^T\tau A]-(3-d)\alpha Tr[A^T\Lambda A]}{f^{2\alpha+1}}\big)^2d\vec{x}}\bigg]^{\frac{1}{d+4}}.
+\end{equation}
+For the Gaussian kernel
+\begin{equation}
+	\int_{\mathcal{R}^d}K(\vec{w})^2d\vec{w}=(2\sqrt{\pi})^{-d}\quad \wedge \quad \tilde{k}_2=1.
+\end{equation}
+For the other integral, take
+\begin{equation}
+	f(\vec{x})=\sqrt{\frac{|B|}{(2\pi)^d}}e^{-\frac{1}{2}(\vec{x}-\vec{\mu})^TB(\vec{x}-\vec{\mu})}
+\end{equation}
+\section{Regular case ($\alpha=0$)}
+Taking $\alpha=0$ yields
+\begin{equation}
+	h_{opt}= \bigg[\frac{d}{n|A|}\frac{\int_{\mathcal{R}^d}K(\vec{w})^2d\vec{w}}{\tilde{k}_2^2\int_{\mathcal{R}^d}Tr\big[A^T\vec{\nabla}^2f(\vec{x})A\big]^2d\vec{x}}\bigg]^{\frac{1}{d+4}}.
+	\label{hh1}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		I&\equiv\int_{\mathcal{R}^d}Tr\big[A^T\vec{\nabla}^2f(\vec{x})A\big]^2d\vec{x}\\
+		&=\int_{\mathcal{R}^d}\bigg(\sum_{i,k,n}A_{ki}\frac{\partial^2 f}{\partial x_k\partial x_n}A_{ni}\bigg)^2dx_1dx_2\dots dx_d\\
+		&=\int_{\mathcal{R}^d}\bigg[\sum_{i,k,n}A_{ki}\bigg(\sum_mD_{mk}y_m\sum_lD_{ln}y_l-\sum_m D_{mk}D_{mn}\bigg)\sqrt{\frac{|B|}{(2\pi)^d}}e^{-\frac{1}{2}\sum_ay_a^2}A_{ni}\bigg]^2\frac{1}{|D|}dy_1dy_2\dots dy_d\\
+		&=\int_{\mathcal{R}^d}Tr[A^T(D^T\vec{y}\vec{y}^TD-D^TD)A]^2\frac{|D|}{(2\pi)^d}e^{-\sum_ay_a^2}dy_1dy_2\dots dy_d,\\
+	\end{split}
+\end{equation}
+where $B=D^TD$ and $y_j=D_{ji}(x_i-\mu_i)$. Taking $A=D^{-1}$ reduces this drastically
+\begin{equation}
+	\begin{split}
+		I&=\frac{|D|}{(2\pi)^d}\int_{\mathcal{R}^d}\bigg(\sum_iy_i^2-d\bigg)^2e^{-\sum_ay_a^2}dy_1dy_2\dots dy_d\\
+		&=\frac{d(d+2)|D|}{2^{d+2}\pi^{\frac{d}{2}}}.
+		\label{si}
+	\end{split}
+\end{equation}
+Hereby
+\begin{equation}
+	\hat{h}_{opt}= \bigg(\frac{4}{n(d+2)}\bigg)^\frac{1}{d+4}.
+\end{equation}
+\section{Adaptive case $d=2,\alpha=1/3$}
+Taking $\alpha=\frac{1}{3}$
+\begin{equation}
+	\begin{split}
+		\int_{\mathcal{R}^2}f(\vec{x})^{\frac{4}{3}}d\vec{x}&=\bigg(\frac{|B|}{(2\pi)^2}\bigg)^\frac{2}{3}\frac{1}{|D|}\int_{\mathcal{R}^2}e^{-\frac{2}{3}\sum_iy_i^2}dy_1dy_2\\
+		&=\frac{3}{4}\bigg(\frac{|D|}{2\pi}\bigg)^\frac{1}{3},
+	\end{split}
+\end{equation}
+where $B=D^TD$ and $y_j=D_{ji}(x_i-\mu_i)$. For the other integral
+\begin{equation}
+	\begin{split}
+		I_2&=\int_{\mathcal{R}^2} \big(f^{-\frac{2}{3}}Tr[A^T\tau A]-\frac{1}{3}f^{-\frac{5}{3}}Tr[A^T\Lambda A]\big)^2d\vec{x}\\
+		&=\int_{\mathcal{R}^2}\bigg[f^{-\frac{2}{3}}\sum_{i,k,n}A_{ki}\frac{\partial^2 f}{\partial x_k\partial x_n}A_{ni}-\frac{1}{3}f^{-\frac{5}{3}}\sum_{i',k',n'}A_{k'i'}\frac{\partial f}{\partial x_{k'}}\frac{\partial f}{\partial x_{n'}}A_{n'i'}\bigg]^2dx_1dx_2\\
+		&=\int_{\mathcal{R}^2}\bigg[\sum_{i,k,n}A_{ki}\bigg(\sum_mD_{mk}y_m\sum_lD_{ln}y_l-\sum_{m}D_{mk}D_{ln}\bigg)A_{ni}\\
+		&\qquad \qquad-\frac{1}{3}\sum_{i',k',n'}A_{k'i'}\sum_{m'}D_{m'k'}y_{m'}\sum_{l'}D_{l'n'}y_{l'}A_{n'i'}\bigg]^2e^{-\frac{1}{3}\sum_a y_a^2}\bigg(\frac{|D|}{2\pi}\bigg)^\frac{2}{3}\frac{1}{|D|}dy_1dy_2\\
+	\end{split}
+\end{equation}
+where again $B=D^TD$ and $y_j=D_{ji}(x_i-\mu_i)$. Taking $A=D^{-1}$ 
+\begin{equation}
+	\begin{split}
+		I_2&=\bigg(\frac{|D|}{2\pi}\bigg)^\frac{2}{3}\frac{1}{|D|}\int_{\mathcal{R}^2} \bigg(\frac{2}{3}\sum_ay_a^2-2\bigg)^2e^{-\frac{1}{3}\sum_a y_a^2}dy_1dy_2\\
+		&=6\bigg(\frac{2\pi}{|D|}\bigg)^\frac{1}{3}.
+	\end{split}
+\end{equation}
+Collecting the results
+\begin{equation}
+	h_{opt}= 0.74n^{-\frac{1}{6}}|\Sigma|^{-\frac{5}{36}}\tilde{B}(K).
+\end{equation}
+In order to estimate $h_{opt}$, the covariance can be estimated via the sample covariance
+\begin{equation}
+	S=\frac{1}{n-1}\sum_{i=1}^n\bigg[(\vec{x}_i-\frac{1}{n}\sum_{j=1}^n\vec{x}_j)(\vec{x}_i-\frac{1}{n}\sum_{k=1}^n\vec{x}_k)^T\bigg].
+	\label{cov}
+\end{equation}
+Hereby
+\begin{equation}
+	\hat{h}_{opt}= 0.74n^{-\frac{1}{6}}|S|^{-\frac{5}{36}}\tilde{B}(K).
+\end{equation}
+
+\section{Adaptive case $d=3,\alpha=1/4$}
+Taking $\alpha=\frac{1}{4}$
+\begin{equation}
+	\begin{split}
+		\int_{\mathcal{R}^3}f(\vec{x})^{\frac{5}{4}}d\vec{x}&=\bigg(\frac{|B|}{(2\pi)^3}\bigg)^\frac{5}{8}\frac{1}{|D|}\int_{\mathcal{R}^3}e^{-\frac{5}{8}\sum_iy_i^2}dy_1dy_2dy_3\\
+		&\simeq 0.36|D|^\frac{1}{4},
+	\end{split}
+\end{equation}
+where $B=D^TD$ and $y_j=D_{ji}(x_i-\mu_i)$. For the other integral
+\begin{equation}
+	\begin{split}
+		I_2&=\int_{\mathcal{R}^3} \big(f^{-\frac{1}{2}}Tr[A^T\tau A]\big)^2d\vec{x}\\
+		&=\int_{\mathcal{R}^3}\bigg[f^{-\frac{1}{2}}\sum_{i,k,n}A_{ki}\frac{\partial^2 f}{\partial x_k\partial x_n}A_{ni}\bigg]^2dx_1dx_2dx_3\\
+		&=\int_{\mathcal{R}^3}\bigg[\sum_{i,k,n}A_{ki}\bigg(\sum_mD_{mk}y_m\sum_lD_{ln}y_l-\sum_{m}D_{mk}D_{ln}\bigg)A_{ni}\bigg]^2e^{-\frac{1}{2}\sum_a y_a^2}\frac{1}{(2\pi)^\frac{3}{2}}dy_1dy_2dy_3\\
+	\end{split}
+\end{equation}
+where again $B=D^TD$ and $y_j=D_{ji}(x_i-\mu_i)$. Taking $A=D^{-1}$ 
+\begin{equation}
+	\begin{split}
+		I_2&=\frac{1}{(2\pi)^\frac{3}{2}}\int_{\mathcal{R}^3} \bigg(\sum_ay_a^2-3\bigg)^2e^{-\frac{1}{2}\sum_a y_a^2}dy_1dy_2dy_3\\
+		&=6.
+	\end{split}
+\end{equation}
+Collecting the results and estimating the variance with $S$ yields
+\begin{equation}
+	\hat{h}_{opt}= 0.78n^{-\frac{1}{7}}|S|^{-\frac{5}{56}}\tilde{B}(K).
+\end{equation}

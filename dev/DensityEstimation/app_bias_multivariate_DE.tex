@@ -1,0 +1,86 @@
+\chapter{Bias of the multivariate adaptive estimate}
+\label{app:exp}
+Consider
+\begin{equation}
+	\begin{split}
+		\mathbb{E}[\hat{f}]&=\int_{\mathcal{R}^d}|H|^{-1}K(H^{-1}(\vec{x}-\vec{y})f(\vec{y})^\alpha)f(\vec{y})^{d\alpha+1}d\vec{y}\\
+		&=\int_{\mathcal{R}^d}K(\vec{w}f(\vec{x}-H\vec{w})^\alpha)f(\vec{x}-H\vec{w})^{d\alpha+1}d\vec{w}\\
+	\end{split}
+\end{equation}
+The integrand
+\begin{equation}
+	\begin{split}
+		I&\equiv K(w_if(x_c-H_{cd}w_d)^\alpha)f(x_a-H_{ab}w_b)^{d\alpha+1}\\
+		&=K(w_if(x_c)^\alpha)f(x_a)^{d\alpha+1}+\frac{\partial I}{\partial y_j}\bigg|_{y_j=x_j}(y_j-x_j)+\frac{1}{2}\frac{\partial^2I}{\partial y_k\partial y_j}\bigg|_{y_j=x_j}(y_j-x_j)(y_k-x_k)+\mathcal{O}(H^3)\\
+	\end{split}
+\end{equation}
+Now
+\begin{equation}
+	\begin{split}
+		\frac{\partial I}{\partial y_j}=(d\alpha+1)f^{d\alpha}\frac{\partial f}{\partial y_j}K+\alpha f^{\alpha(d+1)} \frac{\partial K}{\partial n_m}w_m\frac{\partial f}{\partial y_j}
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\frac{\partial^2 I}{\partial y_k\partial y_j}=&d\alpha(d\alpha+1)f^{d\alpha-1}\frac{\partial f}{\partial y_j}\frac{\partial f}{\partial y_k}K+(d\alpha+1)f^{d\alpha}\frac{\partial^2 f}{\partial y_k\partial y_j}K\\
+		&+2\alpha(d\alpha+1)f^{\alpha(d+1)-1}\frac{\partial f}{\partial y_j}\frac{\partial f}{\partial y_k}\frac{\partial K}{\partial n_m}w_m+\alpha^2 f^{\alpha(d+2)-1} \frac{\partial^2 K}{\partial n_l\partial n_m}w_m \frac{\partial f}{\partial y_j}w_l \frac{\partial f}{\partial y_k}\\
+		&+\alpha(\alpha-1)f^{\alpha(d+1)-1} \frac{\partial K}{\partial n_m}w_m \frac{\partial f}{\partial y_j}\frac{\partial f}{\partial y_k}+\alpha f^{\alpha(d+1)} \frac{\partial K}{\partial n_m}w_m \frac{\partial^2 f}{\partial y_k\partial y_j}.
+	\end{split}
+\end{equation}
+So
+\begin{equation}
+	\begin{split}
+		I=&f^{d\alpha+1}K-(d\alpha+1)f^{d\alpha}K \vec{w}^T H\vec{\nabla}f-\alpha f^{\alpha(d+1)}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH\vec{\nabla}f)\\
+		&+\frac{1}{2}d\alpha(d\alpha+1)f^{d\alpha -1}K(\vec{w}^TH^T\Lambda H\vec{w})+\frac{1}{2}(d\alpha+1)f^{d\alpha}K(\vec{w}^TH^T\tau H\vec{w})\\
+		&+\alpha(d\alpha+1)f^{\alpha(d+1)-1}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH^T\Lambda H\vec{w})+\frac{\alpha^2}{2}f^{\alpha(d+2)-1}(\vec{w}^T\vec{\nabla}^2K\vec{w})((\vec{w}^TH^T\Lambda H\vec{w}))\\
+		&+\frac{1}{2}\alpha(\alpha-1)f^{\alpha(d+1)-1}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH^T\Lambda H\vec{w})+\frac{1}{2}\alpha f^{\alpha(d+1)}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH^T\tau H\vec{w})+\mathcal{O}(H^3),
+	\end{split}
+\end{equation}
+where $\Lambda_{jk}=\frac{\partial f}{\partial y_j}\frac{\partial f}{\partial y_k}$ and $\tau_{kj}=\frac{\partial^2 f}{\partial y_k\partial y_j}$. The first derivative terms vanish and so
+\begin{equation}
+	\begin{split}
+		f(\vec{x})^{d\alpha+1}\int_{\mathcal{R}^d}K(\vec{w}f(\vec{x})^{\alpha})d\vec{w}&=f(\vec{x})\int_{\mathcal{R}^d}K(\vec{a})d\vec{a}\\
+		&=f(\vec{x})
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\frac{1}{2}d\alpha(d\alpha+1)f^{\alpha d-1}\int_{\mathcal{R}^d}K(\vec{w}^TH^T\Lambda H\vec{w})d\vec{w}&=\frac{d\alpha(d\alpha+1)}{2f^{2\alpha+1}}\int_{\mathcal{R}^d}K(\vec{a})(\vec{a}^TH^T\Lambda H\vec{a})d\vec{a}\\
+		&=\frac{d\alpha(d\alpha+1)}{2f^{2\alpha+1}}\tilde{k}_2Tr[H^T\Lambda H]\\
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\frac{1}{2}(d\alpha+1)f^{d\alpha}\int_{\mathcal{R}^d}K(\vec{w}^TH^T\tau H\vec{w})d\vec{w}&=\frac{1}{2}(d\alpha+1)f^{d\alpha}\int_{\mathcal{R}^d}K(\vec{w}^TH^T\tau H\vec{w})d\vec{w}\\
+		&=\frac{1}{2f^{2\alpha}}(d\alpha+1)\tilde{k}_2Tr[H^T\tau H]\\
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\alpha(d\alpha+1)f^{\alpha(d+1)-1}\int_{\mathcal{R}^d}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH^T\Lambda H\vec{w})d\vec{w}=-\frac{3\alpha(d\alpha+1)}{f^{2\alpha+1}}\tilde{k}_2Tr[H^T\Lambda H]
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\frac{\alpha^2}{2}f^{\alpha(d+2)-1}\int_{\mathcal{R}^d}(\vec{w}^T\vec{\nabla}^2K\vec{w})((\vec{w}^TH^T\Lambda H\vec{w}))d\vec{w}=\frac{12\alpha^2}{2f^{2\alpha+1}}\tilde{k}_2Tr[H^T\Lambda H]
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\frac{1}{2}\alpha(\alpha-1)f^{\alpha(d+1)-1}\int_{\mathcal{R}^d}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH^T\Lambda H\vec{w})d\vec{w}=-\frac{3}{2f^{2\alpha+1}}\alpha(\alpha-1)\tilde{k}_2Tr[H^T\Lambda H]
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\frac{1}{2}\alpha f^{\alpha(d+1)}\int_{\mathcal{R}^d}(\vec{w}^T\vec{\nabla}K)(\vec{w}^TH^T\tau H\vec{w})d\vec{w}=-\frac{3\alpha}{2f^{2\alpha}} \tilde{k}_2Tr[H^T\tau H]
+	\end{split}
+\end{equation}
+So
+\begin{equation}
+	\mathbb{E}[\hat{f}]-f=\frac{[1-(3-d)\alpha]\tilde{k}_2}{2}\bigg[\frac{fTr[H^T\tau H]-(3-d)\alpha Tr[H^T\Lambda H]}{f^{2\alpha+1}}\bigg]+\mathcal{O}(H^3).
+	\label{bil1}
+\end{equation}
+As is evident from equation \eqref{bil1}, setting $\alpha=\frac{1}{3-d}$ eliminates the leading order term. Continuing the expansion to higher orders it is found the $i$'th order term in the bias for $d$ dimensional data will be eliminated by taking 
+\begin{equation}
+	\alpha=\frac{1}{2i+1-d}.
+\end{equation}
