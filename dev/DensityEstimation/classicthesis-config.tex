@@ -1,0 +1,315 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Classicthesis Typographic Thesis
+% Configuration File
+%
+% This file has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% André Miede (http://www.miede.de) with extensive commenting changes by:
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% GNU General Public License (v2)
+%
+% Important note:
+% The main lines to change in this file are in the DOCUMENT VARIABLES
+% section, the rest of the file is for advanced configuration.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	CHARACTER ENCODING
+%----------------------------------------------------------------------------------------
+
+\PassOptionsToPackage{utf8}{inputenc} % Set the encoding of your files. UTF-8 is the only sensible encoding nowadays. If you can't read äöüßáéçèê∂åëæƒÏ€ then change the encoding setting in your editor, not the line below. If your editor does not support utf8 use another editor!
+\usepackage{inputenc}
+\usepackage{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT VARIABLES
+%	Fill in the lines below to enter your information into the thesis template
+%	Each of the commands can be cited anywhere in the thesis
+%----------------------------------------------------------------------------------------
+
+% Remove drafting to get rid of the '[ Date - classicthesis version 4.0 ]' text at the bottom of every page
+\PassOptionsToPackage{listings, pdfspacing, subfig,beramono,parts}{classicthesis}
+% Available options: drafting parts nochapters linedheaders eulerchapternumbers beramono eulermath pdfspacing minionprospacing tocaligned dottedtoc manychapters listings floatperchapter subfig
+
+\newcommand{\myTitle}{A Classic Thesis Style\xspace}
+\newcommand{\mySubtitle}{An Homage to The Elements of Typographic Style\xspace}
+\newcommand{\myDegree}{Doktor-Ingenieur (Dr.-Ing.)\xspace}
+\newcommand{\myName}{André Miede\xspace}
+\newcommand{\myProf}{Put name here\xspace}
+\newcommand{\myOtherProf}{Put name here\xspace}
+\newcommand{\myFaculty}{Put data here\xspace}
+\newcommand{\myDepartment}{Put data here\xspace}
+\newcommand{\myUni}{Put data here\xspace}
+\newcommand{\myLocation}{Saarbrücken\xspace}
+\newcommand{\myTime}{September 2015\xspace}
+\newcommand{\myVersion}{version 4.2\xspace}
+
+%----------------------------------------------------------------------------------------
+%	USEFUL COMMANDS
+%----------------------------------------------------------------------------------------
+
+\newcommand{\ie}{i.\,e.}
+\newcommand{\Ie}{I.\,e.}
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.} 
+
+\newcounter{dummy} % Necessary for correct hyperlinks (to index, bib, etc.)
+\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+\newlength{\abcd} % for ab..z string length calculation
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+
+%\PassOptionsToPackage{ngerman,american}{babel}  % Change this to your language(s)
+% Spanish languages need extra options in order to work with this template
+%\PassOptionsToPackage{spanish,es-lcroman}{babel}
+\usepackage{babel}
+
+\usepackage{lmodern} % text font
+%------------------------------------------------			
+\usepackage{makeidx}
+\makeindex
+%------------------------------------------------	
+\usepackage{csquotes}
+\PassOptionsToPackage{%
+%backend=biber, % Instead of bibtex
+backend=bibtex8,bibencoding=ascii,%
+language=auto,%
+style=numeric-comp,%
+%style=authoryear-comp, % Author 1999, 2010
+%bibstyle=authoryear,dashed=false, % dashed: substitute rep. author with ---
+sorting=none, % name, year, title
+maxbibnames=10, % default: 3, et al.
+%backref=true,%
+natbib=true % natbib compatibility mode (\citep and \citet still work)
+}{biblatex}
+\usepackage{biblatex}
+ 
+ %------------------------------------------------
+
+\PassOptionsToPackage{fleqn}{amsmath} % Math environments and more by the AMS 
+ \usepackage{amsmath}
+
+\DeclareMathOperator*{\argmax}{argmax}   % Jan Hlavacek
+\DeclareMathOperator*{\argmin}{argmin}   % Jan Hlavacek
+ 
+ %------------------------------------------------
+
+\usepackage{amssymb} % The extended math symbols, e.g. lesssim and gtrsim
+\usepackage{braket} % the braket
+%------------------------------------------------
+
+\PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
+\usepackage{fontenc}
+
+%------------------------------------------------
+
+\usepackage{textcomp} % Fix warning with missing font shapes
+
+%------------------------------------------------
+\usepackage{epsdice} % dice symbols
+\usepackage{marvosym} % boy, girl symbols
+\usepackage{twemojis} % fruit symbols
+%------------------------------------------------
+
+\usepackage{scrhack} % Fix warnings when using KOMA with listings package  
+
+%------------------------------------------------
+
+\usepackage{xspace} % To get the spacing after macros right
+
+%------------------------------------------------
+
+\usepackage{mparhack} % To get marginpar right
+
+%------------------------------------------------
+
+\usepackage{fixltx2e} % Fixes some LaTeX stuff 
+
+%------------------------------------------------
+\usepackage{cancel} % for cancels to
+
+%------------------------------------------------
+\usepackage{amsthm} % For proofs among other things
+\usepackage{float}
+
+%------------------------------------------------
+\PassOptionsToPackage{smaller}{acronym} % Include printonlyused in the first bracket to only show acronyms used in the text
+\usepackage{acronym} % Nice macros for handling all acronyms in the thesis
+
+%\renewcommand*{\acsfont}[1]{\textssc{#1}} % For MinionPro
+\renewcommand*{\aclabelfont}[1]{\acsfont{#1}}
+
+
+%------------------------------------------------
+
+\PassOptionsToPackage{pdftex}{graphicx}
+\usepackage{graphicx} 
+
+%----------------------------------------------------------------------------------------
+%	ENVIRONMENTS
+%----------------------------------------------------------------------------------------
+
+\newtheorem{axiom}{Axiom}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{exinn}{Example}[chapter]
+\newenvironment{example}
+{\clubpenalty=10000
+	\begin{exinn}%
+		\mbox{}%
+		{\color{black}\leaders\hrule height .8ex depth \dimexpr-.8ex+0.8pt\relax\hfill}%
+		\mbox{}\linebreak\ignorespaces}
+	{\par\kern2ex\hrule\end{exinn}}
+
+%----------------------------------------------------------------------------------------
+%	FLOATS: TABLES, FIGURES AND CAPTIONS SETUP
+%----------------------------------------------------------------------------------------
+
+\usepackage{tabularx} % Better tables
+\setlength{\extrarowheight}{3pt} % Increase table row height
+\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+\newcommand{\myfloatalign}{\centering} % To be used with each float for alignment
+\usepackage{caption}
+\captionsetup{font=small}
+\usepackage{subfig}  
+
+%----------------------------------------------------------------------------------------
+%	CODE LISTINGS SETUP
+%----------------------------------------------------------------------------------------
+
+
+\usepackage{xcolor} % Colors for Python environment
+
+% Define colors for Python code syntax highlighting
+\definecolor{RoyalBlue}{rgb}{0.25, 0.41, 0.88}
+\definecolor{webgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{webbrown}{rgb}{0.65, 0.16, 0.16}
+\definecolor{keywordcolor}{rgb}{0.5, 0, 0.5}
+\definecolor{stringcolor}{rgb}{0.5, 0.5, 0}
+\definecolor{commentcolor}{rgb}{0.25, 0.5, 0.35}
+\definecolor{backgroundcolor}{rgb}{0.95, 0.95, 0.92}
+\definecolor{Maroon}{rgb}{0.5, 0.0, 0.0}
+\definecolor{Black}{rgb}{0.0, 0.0, 0.0}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pythonhighlight}
+
+
+
+%----------------------------------------------------------------------------------------
+%	HYPERREFERENCES
+%----------------------------------------------------------------------------------------
+
+\PassOptionsToPackage{pdftex,hyperfootnotes=false,pdfpagelabels}{hyperref}
+\usepackage{hyperref}  % backref linktocpage pagebackref
+\pdfcompresslevel=9
+\pdfadjustspacing=1
+
+\hypersetup{
+% Uncomment the line below to remove all links (to references, figures, tables, etc), useful for b/w printouts
+%draft, 
+colorlinks=False,
+linktocpage=true,
+pdfstartpage=3,
+pdfstartview=FitV,
+% Uncomment the line below if you want to have black links (e.g. for printing black and white)
+%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV, 
+breaklinks=true,
+pdfpagemode=UseNone,
+pageanchor=true,
+pdfpagemode=UseOutlines,%
+plainpages=false,
+bookmarksnumbered,
+bookmarksopen=true,
+bookmarksopenlevel=1,%
+hypertexnames=true,
+pdfhighlight=/O,%nesting=true,%frenchlinks,%
+urlcolor=webbrown,
+linkcolor=RoyalBlue,
+citecolor=webgreen,
+%pagecolor=RoyalBlue,%
+%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+%------------------------------------------------
+% PDF file meta-information
+pdftitle={\myTitle},
+pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
+pdfsubject={},
+pdfkeywords={},
+pdfcreator={pdfLaTeX},
+pdfproducer={LaTeX with hyperref and classicthesis}
+%------------------------------------------------
+}
+
+%----------------------------------------------------------------------------------------
+%	AUTOREFERENCES SETUP
+%	Redefines how references in text are prefaced for different 
+%	languages (e.g. "Section 1.2" or "section 1.2")
+%----------------------------------------------------------------------------------------
+
+\makeatletter
+\@ifpackageloaded{babel}
+{
+\addto\extrasamerican{
+\renewcommand*{\figureautorefname}{Figure}
+\renewcommand*{\tableautorefname}{Table}
+\renewcommand*{\partautorefname}{Part}
+\renewcommand*{\chapterautorefname}{Chapter}
+\renewcommand*{\sectionautorefname}{Section}
+\renewcommand*{\subsectionautorefname}{Section}
+\renewcommand*{\subsubsectionautorefname}{Section}
+}
+\addto\extrasngerman{
+\renewcommand*{\paragraphautorefname}{Absatz}
+\renewcommand*{\subparagraphautorefname}{Unterabsatz}
+\renewcommand*{\footnoteautorefname}{Fu\"snote}
+\renewcommand*{\FancyVerbLineautorefname}{Zeile}
+\renewcommand*{\theoremautorefname}{Theorem}
+\renewcommand*{\appendixautorefname}{Anhang}
+\renewcommand*{\equationautorefname}{Gleichung}
+\renewcommand*{\itemautorefname}{Punkt}
+}
+\providecommand{\subfigureautorefname}{\figureautorefname} % Fix to getting autorefs for subfigures right
+}{\relax}
+\makeatother
+
+%----------------------------------------------------------------------------------------
+
+\usepackage{classicthesis} 
+
+%----------------------------------------------------------------------------------------
+%	CHANGING TEXT AREA 
+%----------------------------------------------------------------------------------------
+
+%\linespread{1.05} % a bit more for Palatino
+%\areaset[current]{280pt}{600pt} % 686 (factor 2.2) + 33 head + 42 head \the\footskip
+%\setlength{\marginparwidth}{7em}%
+%\setlength{\marginparsep}{2em}%
+\usepackage[a4paper,margin=1in]{geometry}
+
+%----------------------------------------------------------------------------------------
+%	USING DIFFERENT FONTS
+%----------------------------------------------------------------------------------------
+
+%\usepackage[oldstylenums]{kpfonts} % oldstyle notextcomp
+%\usepackage[osf]{libertine}
+%\usepackage[light,condensed,math]{iwona}
+%\renewcommand{\sfdefault}{iwona}
+%\usepackage{lmodern} % <-- no osf support :-(
+%\usepackage{cfr-lm} % 
+%\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
+%\usepackage[default,osfigures]{opensans} % scale=0.95 
+%\usepackage[sfdefault]{FiraSans}
+
+%----------------------------------------------------------------------------------------
+%	Including pdf's
+%----------------------------------------------------------------------------------------
+\usepackage{pdfpages}
