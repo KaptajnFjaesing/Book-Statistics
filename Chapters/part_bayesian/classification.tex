@@ -35,7 +35,11 @@ In absence of the reject option, the optimal decision rule is to pick the MAP, s
 	\end{split}
 	\label{eq:q5}
 \end{equation}
-where for the second to last equality it has been assumed that $p(S = U(x)|w,x,D,I) = p(S = U(x)|w,x,I)$ since by definition $f$ (see \EQref{f_dist2}) produce a $1-1$ map of the input $x$ and $p(w|x,D,I) = p(w|D,I)$ from \axref{ax:observation_relevance}. From Bayes theorem
+where for the second to last equality it has been assumed that
+\begin{equation}
+	p(S = U(x)|w,x,D,I) = p(S = U(x)|w,x,I)
+\end{equation}
+since by definition $f$ (see \EQref{f_dist2}) produce a $1-1$ map of the input $x$ and $p(w|x,D,I) = p(w|D,I)$ from \axref{ax:observation_relevance}. From Bayes theorem
 \begin{equation}
 	p(w|D,I) =\frac{p(D_s|D_x,w,I)p(w|D_x,I)}{p(D_s|D_x,I)},
 \end{equation}

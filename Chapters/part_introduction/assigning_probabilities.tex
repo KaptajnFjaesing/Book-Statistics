@@ -12,7 +12,11 @@ with
 \begin{equation}
 	F= -p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)}-\lambda_0 p(z|\lambda, I)-\sum_{j=1}^{n}\lambda_jC_j(z).
 \end{equation}
-$m$ -- called the Lebesgue measure -- ensures the entropy, given by $-\int p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)} dz$, is invariant under a change of variables and $C_j(z)$ represent the constraints beoynd normalization. The constraint beyond normality depend on the background information related to the random variable, $X$. In variational calculus the Lagrangian is optimized via solving the Euler-Lagrange equation
+$m$ -- called the Lebesgue measure -- ensures the entropy, given by 
+\begin{equation}
+	-\int p(z|\lambda, I)\ln\frac{p(z|\lambda, I)}{m(z)} dz,
+\end{equation}
+is invariant under a change of variables and $C_j(z)$ represent the constraints beoynd normalization. The constraint beyond normality depend on the background information related to the random variable, $X$. In variational calculus the Lagrangian is optimized via solving the Euler-Lagrange equation
 \begin{equation}
 	\frac{\partial F}{\partial p(z|\lambda, I)}-\frac{d}{dx}\frac{\partial F}{\partial p(z|\lambda, I)'}=0,
 \end{equation}
