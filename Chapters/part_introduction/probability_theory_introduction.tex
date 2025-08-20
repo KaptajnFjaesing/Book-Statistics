@@ -747,3 +747,30 @@ Correlation and covariance are both measures of the relationship between two ran
 	\end{equation}
 	Hence, the sign of "$a$" determine if $\text{Corr}[X,Y]=\pm 1$ for the particular $Y$ of this example.
 \end{example}
+
+\begin{example}
+	Let $n \in \mathbb{N}$ denote the total number of candidates, presented sequentially in uniformly random order. After observing the $k$-th candidate, an irrevocable decision must be made: either to accept or reject the candidate. The objective is to maximize the probability of selecting the candidate with the highest rank among all $n$ candidates.\newline
+	
+	Let $r \in \{0,1,\dots,n-1\}$ denote the number of candidates to be automatically rejected. Define the strategy $\sigma_r$ as follows: reject the first $r$ candidates, then select the first subsequent candidate whose observed rank exceeds all ranks observed among the first $r$ candidates. Let $\mathbb{P}_n(r)$ denote the probability that strategy $\sigma_r$ selects the best candidate. For $k \in \{r+1,\dots,n\}$, the probability that the $k$-th candidate is the best and is selected by $\sigma_r$ is
+	\begin{equation}
+		\mathbb{P}(\text{best at position } k \text{ and selected}) = \frac{1}{n} \cdot \frac{r}{k-1}.
+	\end{equation}
+	Summation over all admissible positions yields
+	\begin{equation}
+		\mathbb{P}_n(r) = \sum_{k=r+1}^{n} \frac{r}{n(k-1)} = \frac{r}{n} \sum_{k=r}^{n-1} \frac{1}{k}.
+	\end{equation}  
+	For large $n$, the sum may be approximated by an integral:
+	\begin{equation}
+		\mathbb{P}_n(r) \approx \frac{r}{n} \int_{r}^{n} \frac{dx}{x} = \frac{r}{n} \ln\frac{n}{r}.
+	\end{equation}
+	Setting $r = \alpha n$, $\alpha \in (0,1)$, gives
+	\begin{equation}
+		\mathbb{P}_n(\alpha n) \approx \alpha \ln \frac{1}{\alpha}.
+	\end{equation}
+	The maximum occurs at
+	\begin{equation}
+		\frac{d}{d\alpha} \big(\alpha \ln \tfrac{1}{\alpha}\big) = \ln \frac{1}{\alpha} - 1 = 0 \implies \alpha = \frac{1}{e}.
+	\end{equation}
+	The optimal stopping strategy consists of rejecting the first $\frac{n}{e}$ candidates, then selecting the first candidate superior to all previously observed. The maximum probability of success converges to $\mathbb{P}_n \to \frac{1}{e} \approx 0.368$ as $n \to \infty$. This strategy extends naturally to situations where candidates arrive sequentially over time. In the continuous-time setting, the first $1/e$ fraction of the time interval is used purely for observation, and thereafter the first candidate exceeding all previous observations is selected.
+	
+\end{example}
