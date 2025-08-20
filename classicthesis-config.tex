@@ -1,23 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Classicthesis Typographic Thesis
-% Configuration File
-%
-% This file has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% André Miede (http://www.miede.de) with extensive commenting changes by:
-% Vel (vel@LaTeXTemplates.com)
-%
-% License:
-% GNU General Public License (v2)
-%
-% Important note:
-% The main lines to change in this file are in the DOCUMENT VARIABLES
-% section, the rest of the file is for advanced configuration.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %----------------------------------------------------------------------------------------
 %	CHARACTER ENCODING
 %----------------------------------------------------------------------------------------
@@ -50,25 +30,9 @@
 \newcommand{\myVersion}{version 4.2\xspace}
 
 %----------------------------------------------------------------------------------------
-%	USEFUL COMMANDS
-%----------------------------------------------------------------------------------------
-
-\newcommand{\ie}{i.\,e.}
-\newcommand{\Ie}{I.\,e.}
-\newcommand{\eg}{e.\,g.}
-\newcommand{\Eg}{E.\,g.} 
-
-\newcounter{dummy} % Necessary for correct hyperlinks (to index, bib, etc.)
-\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
-\newlength{\abcd} % for ab..z string length calculation
-
-%----------------------------------------------------------------------------------------
 %	PACKAGES
 %----------------------------------------------------------------------------------------
 
-%\PassOptionsToPackage{ngerman,american}{babel}  % Change this to your language(s)
-% Spanish languages need extra options in order to work with this template
-%\PassOptionsToPackage{spanish,es-lcroman}{babel}
 \usepackage{babel}
 
 \usepackage{lmodern} % text font
@@ -78,28 +42,28 @@
 %------------------------------------------------	
 \usepackage{csquotes}
 \PassOptionsToPackage{%
-%backend=biber, % Instead of bibtex
-backend=bibtex8,bibencoding=ascii,%
-language=auto,%
-style=numeric-comp,%
-%style=authoryear-comp, % Author 1999, 2010
-%bibstyle=authoryear,dashed=false, % dashed: substitute rep. author with ---
-sorting=none, % name, year, title
-maxbibnames=10, % default: 3, et al.
-%backref=true,%
-natbib=true % natbib compatibility mode (\citep and \citet still work)
+	%backend=biber, % Instead of bibtex
+	backend=bibtex8,bibencoding=ascii,%
+	language=auto,%
+	style=numeric-comp,%
+	%style=authoryear-comp, % Author 1999, 2010
+	%bibstyle=authoryear,dashed=false, % dashed: substitute rep. author with ---
+	sorting=none, % name, year, title
+	maxbibnames=10, % default: 3, et al.
+	%backref=true,%
+	natbib=true % natbib compatibility mode (\citep and \citet still work)
 }{biblatex}
 \usepackage{biblatex}
- 
- %------------------------------------------------
+
+%------------------------------------------------
 
 \PassOptionsToPackage{fleqn}{amsmath} % Math environments and more by the AMS 
- \usepackage{amsmath}
+\usepackage{amsmath}
 
 \DeclareMathOperator*{\argmax}{argmax}   % Jan Hlavacek
 \DeclareMathOperator*{\argmin}{argmin}   % Jan Hlavacek
- 
- %------------------------------------------------
+
+%------------------------------------------------
 
 \usepackage{amssymb} % The extended math symbols, e.g. lesssim and gtrsim
 \usepackage{braket} % the braket
@@ -215,38 +179,38 @@ natbib=true % natbib compatibility mode (\citep and \citet still work)
 \pdfadjustspacing=1
 
 \hypersetup{
-% Uncomment the line below to remove all links (to references, figures, tables, etc), useful for b/w printouts
-%draft, 
-colorlinks=False,
-linktocpage=true,
-pdfstartpage=3,
-pdfstartview=FitV,
-% Uncomment the line below if you want to have black links (e.g. for printing black and white)
-%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV, 
-breaklinks=true,
-pdfpagemode=UseNone,
-pageanchor=true,
-pdfpagemode=UseOutlines,%
-plainpages=false,
-bookmarksnumbered,
-bookmarksopen=true,
-bookmarksopenlevel=1,%
-hypertexnames=true,
-pdfhighlight=/O,%nesting=true,%frenchlinks,%
-urlcolor=webbrown,
-linkcolor=RoyalBlue,
-citecolor=webgreen,
-%pagecolor=RoyalBlue,%
-%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
-%------------------------------------------------
-% PDF file meta-information
-pdftitle={\myTitle},
-pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
-pdfsubject={},
-pdfkeywords={},
-pdfcreator={pdfLaTeX},
-pdfproducer={LaTeX with hyperref and classicthesis}
-%------------------------------------------------
+	% Uncomment the line below to remove all links (to references, figures, tables, etc), useful for b/w printouts
+	%draft, 
+	colorlinks=False,
+	linktocpage=true,
+	pdfstartpage=3,
+	pdfstartview=FitV,
+	% Uncomment the line below if you want to have black links (e.g. for printing black and white)
+	%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV, 
+	breaklinks=true,
+	pdfpagemode=UseNone,
+	pageanchor=true,
+	pdfpagemode=UseOutlines,%
+	plainpages=false,
+	bookmarksnumbered,
+	bookmarksopen=true,
+	bookmarksopenlevel=1,%
+	hypertexnames=true,
+	pdfhighlight=/O,%nesting=true,%frenchlinks,%
+	urlcolor=webbrown,
+	linkcolor=RoyalBlue,
+	citecolor=webgreen,
+	%pagecolor=RoyalBlue,%
+	%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+	%------------------------------------------------
+	% PDF file meta-information
+	pdftitle={\myTitle},
+	pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
+	pdfsubject={},
+	pdfkeywords={},
+	pdfcreator={pdfLaTeX},
+	pdfproducer={LaTeX with hyperref and classicthesis}
+	%------------------------------------------------
 }
 
 %----------------------------------------------------------------------------------------
@@ -258,26 +222,26 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 \makeatletter
 \@ifpackageloaded{babel}
 {
-\addto\extrasamerican{
-\renewcommand*{\figureautorefname}{Figure}
-\renewcommand*{\tableautorefname}{Table}
-\renewcommand*{\partautorefname}{Part}
-\renewcommand*{\chapterautorefname}{Chapter}
-\renewcommand*{\sectionautorefname}{Section}
-\renewcommand*{\subsectionautorefname}{Section}
-\renewcommand*{\subsubsectionautorefname}{Section}
-}
-\addto\extrasngerman{
-\renewcommand*{\paragraphautorefname}{Absatz}
-\renewcommand*{\subparagraphautorefname}{Unterabsatz}
-\renewcommand*{\footnoteautorefname}{Fu\"snote}
-\renewcommand*{\FancyVerbLineautorefname}{Zeile}
-\renewcommand*{\theoremautorefname}{Theorem}
-\renewcommand*{\appendixautorefname}{Anhang}
-\renewcommand*{\equationautorefname}{Gleichung}
-\renewcommand*{\itemautorefname}{Punkt}
-}
-\providecommand{\subfigureautorefname}{\figureautorefname} % Fix to getting autorefs for subfigures right
+	\addto\extrasamerican{
+		\renewcommand*{\figureautorefname}{Figure}
+		\renewcommand*{\tableautorefname}{Table}
+		\renewcommand*{\partautorefname}{Part}
+		\renewcommand*{\chapterautorefname}{Chapter}
+		\renewcommand*{\sectionautorefname}{Section}
+		\renewcommand*{\subsectionautorefname}{Section}
+		\renewcommand*{\subsubsectionautorefname}{Section}
+	}
+	\addto\extrasngerman{
+		\renewcommand*{\paragraphautorefname}{Absatz}
+		\renewcommand*{\subparagraphautorefname}{Unterabsatz}
+		\renewcommand*{\footnoteautorefname}{Fu\"snote}
+		\renewcommand*{\FancyVerbLineautorefname}{Zeile}
+		\renewcommand*{\theoremautorefname}{Theorem}
+		\renewcommand*{\appendixautorefname}{Anhang}
+		\renewcommand*{\equationautorefname}{Gleichung}
+		\renewcommand*{\itemautorefname}{Punkt}
+	}
+	\providecommand{\subfigureautorefname}{\figureautorefname} % Fix to getting autorefs for subfigures right
 }{\relax}
 \makeatother
 
@@ -294,16 +258,16 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 %\setlength{\marginparwidth}{7em}%
 %\setlength{\marginparsep}{2em}%
 \usepackage[
-	paperwidth=6in,  % Book width
-	paperheight=9in, % Book height
-	inner=0.75in,    % Inner margin for binding
-	outer=1in,       % Outer margin
-	top=1in,         % Top margin
-	bottom=1in,      % Bottom margin
-	headheight=0.5in, % Header height
-	headsep=0.25in,  % Header separation
-	footskip=0.5in   % Footer skip
-	]{geometry}
+paperwidth=155mm,
+paperheight=230mm,
+inner=20mm,
+outer=17mm,
+top=28mm,
+bottom=21mm,
+headheight=12pt,
+headsep=6mm,
+footskip=12mm
+]{geometry}
 
 %----------------------------------------------------------------------------------------
 %	USING DIFFERENT FONTS
@@ -323,3 +287,49 @@ pdfproducer={LaTeX with hyperref and classicthesis}
 %	Including pdf's
 %----------------------------------------------------------------------------------------
 \usepackage{pdfpages}
+
+%----------------------------------------------------------------------------------------
+%	USEFUL COMMANDS
+%----------------------------------------------------------------------------------------
+
+% COMMANDS FOR REFERENCES
+\newcommand{\chref}[1]{\hyperref[#1]{Chapter~\ref{#1}}}
+\newcommand{\secref}[1]{\hyperref[#1]{Section~\ref{#1}}}
+\newcommand{\subsecref}[1]{\hyperref[#1]{Subsection~\ref{#1}}}
+\newcommand{\tabref}[1]{\hyperref[#1]{Table~\ref{#1}}}
+\newcommand{\figref}[1]{\hyperref[#1]{Figure~\ref{#1}}}
+\newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref{#1}}}
+\newcommand{\lstref}[1]{\hyperref[#1]{Listing~\ref{#1}}}
+\newcommand{\EQref}[1]{\hyperref[#1]{Equation~\ref{#1}}}
+\newcommand{\dfref}[1]{\hyperref[#1]{Definition~\ref{#1}}}
+\newcommand{\axref}[1]{\hyperref[#1]{Axiom~\ref{#1}}}
+\newcommand{\thref}[1]{\hyperref[#1]{Theorem~\ref{#1}}}
+\newcommand{\exref}[1]{\hyperref[#1]{Example~\ref{#1}}}
+\renewcommand{\algref}[1]{\hyperref[#1]{Algorithm~\ref{#1}}}
+
+\newcommand{\chrefpage}[1]{\hyperref[#1]{Chapter~\vref{#1}}}
+\newcommand{\secrefpage}[1]{\hyperref[#1]{Section~\vref{#1}}}
+\newcommand{\subsecrefpage}[1]{\hyperref[#1]{Subsection~\vref{#1}}}
+\newcommand{\tabrefpage}[1]{\hyperref[#1]{Table~\vref{#1}}}
+\newcommand{\figrefpage}[1]{\hyperref[#1]{Figure~\vref{#1}}}
+\newcommand{\apprefpage}[1]{\hyperref[#1]{Appendix~\vref{#1}}}
+\newcommand{\lstrefpage}[1]{\hyperref[#1]{Listing~\vref{#1}}}
+\newcommand{\eqrefpage}[1]{\hyperref[#1]{Equation~\vref{#1}}}
+\newcommand{\algrefpage}[1]{\hyperref[#1]{Algorithm~\vref{#1}}}
+
+\newcommand{\ie}{i.\,e.}
+\newcommand{\Ie}{I.\,e.}
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.} 
+
+\newcounter{dummy} % Necessary for correct hyperlinks (to index, bib, etc.)
+\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+\newlength{\abcd} % for ab..z string length calculation
+
+
+% Remove page number from chapter-opening pages (KOMA-Script way)
+\usepackage{scrlayer-scrpage}
+\clearpairofpagestyles
+\ihead{\headmark}
+\ohead{\pagemark}
+\renewcommand*{\chapterpagestyle}{empty}

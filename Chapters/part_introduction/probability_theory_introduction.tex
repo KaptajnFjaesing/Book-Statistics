@@ -312,7 +312,11 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
-	Let $X(\omega)\in \Omega_X$ and $Y(\omega)\in \Omega_Y$ be independent continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that $f(X=x,Y=y)=f(X=x)f(Y=y)$, then $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$.
+	Let $X(\omega)\in \Omega_X$ and $Y(\omega)\in \Omega_Y$ be independent continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
+	\begin{equation}
+	f(X=x,Y=y)=f(X=x)f(Y=y),	
+	\end{equation}
+	then $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$.
 \end{theorem}
 
 \begin{proof}
@@ -387,7 +391,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Variable transformation}
-	\emph{Let $X = \ln\big(\frac{Y}{1-Y}\big)$ be a continuous random variable with PDF $f(X=x)\propto $const. The inverse function is given by}
+	\emph{Let $X = \ln\big(\frac{Y}{1-Y}\big)$ be a continuous random variable with a constant PDF, i.e. $f(X=x)\propto $const. The inverse function is given by}
 	\begin{equation}
 		g^{-1}(y) = \ln\bigg(\frac{y}{1-y}\bigg).
 	\end{equation}
@@ -404,17 +408,17 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{definition}[Error-Propagation]
 	\label{def:error_propagation}
-	Let $X_1 \ldots, X_n$ be continuous random variables with means $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\text{Var}[X_1] \ldots, \text{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the $X_i$, can be written
+	Let $X_1 \ldots, X_n$ be continuous random variables with expectations $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\text{Var}[X_1] \ldots, \text{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the random variables $X_1, \ldots, X_n$, can be written
 	\begin{equation}
-		\begin{split}
-			\text{Var}[g(X_1 \ldots, X_n)] &\equiv \mathbb{E}\big[(g(X_1 \ldots, X_n) - \mathbb{E}[g(X_1 \ldots, X_n)])^2\big] \\
-			&= \mathbb{E}\big[g(X_1\ldots, X_n)^2\big] - (\mathbb{E}[g(X_1 \ldots, X_n)])^2.
-		\end{split}
+			\text{Var}[g(X_1 \ldots, X_n)] \equiv \mathbb{E}\big[(g(X_1 \ldots, X_n) - \mathbb{E}[g(X_1 \ldots, X_n)])^2\big] 
 	\end{equation}
-	In practice, the variance is often analytically intractable, in which case, a linear approximation of the variance can be used. This involves expanding $g$ about the means using a first-order Taylor series expansion around the point $=\{X_1 = \mathbb{E}[X_1] \ldots, X_n = \mathbb{E}[X_n]\}$
+	In practice, the variance is often analytically intractable, in which case, a linear approximation of the variance can be used. This involves expanding $g$ about the expectation values using a first-order Taylor series expansion around the 
+	\begin{equation}
+		 \text{point}=\{X_1 = \mathbb{E}[X_1] \ldots, X_n = \mathbb{E}[X_n]\}
+	\end{equation}
 	\begin{equation}
 		\begin{split}
-			g(X_1, \ldots, X_n) =& g(\text{point}) + \sum_{i=1}^n (X_i - \mu_i) \frac{\partial g}{\partial X_i} \bigg|_{\text{point}} + \mathcal{O}(\partial^2 g) \\
+			g(X_1, \ldots, X_n) =& g(\text{point}) + \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i} \bigg|_{\text{point}} + \mathcal{O}(\partial^2 g) \\
 		\end{split}
 		\label{e1}
 	\end{equation}
@@ -422,12 +426,13 @@ Correlation and covariance are both measures of the relationship between two ran
 	\begin{equation}
 		\begin{split}
 			\text{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
-			&= \mathbb{E}\bigg[\bigg( \sum_{i=1}^n (X_i - \mu_i) \frac{\partial g}{\partial X_i}\bigg|_{\text{point}} + \mathcal{O}(\partial^2 f)\bigg)^2\bigg] \\
+			&= \mathbb{E}\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{\text{point}} + \mathcal{O}(\partial^2 g)\bigg)^2\bigg] \\
 			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{\text{point}}^2\text{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{\text{point}} \text{Cov}[X_i, X_j]\\
 			&\quad + \mathcal{O}(\partial^2 g).
 		\end{split}
+	\label{eq:var_approx}
 	\end{equation}
-	where it has been used that $\mathbb{E}[g]=g(\text{point})+\mathcal{O}(\partial^2g)$ and it is understood all derivatives are evaluated at the means of the random variables. When the random variables are independent, $\text{Cov}[X_i, X_j] = 0$ for all $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and the formula simplifies to
+	where it has been used that $\mathbb{E}[g]=g(\text{point})+\mathcal{O}(\partial^2g)$ and it is understood all derivatives are evaluated at the expectations of the random variables. When the random variables are independent, $\text{Cov}[X_i, X_j] = 0$ for all $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and equation \eqref{eq:var_approx} simplifies to
 	\begin{equation}
 		\text{Var}[g] \approx \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{\text{point}}^2\text{Var}[X_i].
 	\end{equation}
