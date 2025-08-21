@@ -1,6 +1,6 @@
 \chapter{Introduction to Probability Theory}
 \label{chp:probaiblity_theory}
-Probability theory aims to provide a mathematical framework for analyzing random experiments, where outcomes cannot be predicted with certainty beforehand. Its objective is to systematically study and understand the potential outcomes of these experiments. 
+Probability theory provides a mathematical framework for analyzing random experiments, where outcomes cannot be predicted with certainty in advance. Its objective is to systematically study and understand the possible outcomes of such experiments.
 \begin{definition}[Sample Space]
 	The sample space, denoted by \( \Omega \), represents the set of all possible outcomes of a random experiment. It encompasses every conceivable result that could occur, serving as the foundation for analyzing probabilities associated with different outcomes.
 \end{definition}
@@ -88,11 +88,19 @@ Together, the probability measure, the sample space and the algebra form the tup
 \end{definition}
 \begin{definition}[Independence]
 	\label{def:independence}
-	Events $E_1$ and $E_2$  in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ are said to be conditionally independent if
+	Events $E_1$ and $E_2$  in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ are said to be independent if
 	\begin{equation}
 		\mathbb{P}(E_1,E_2) = \mathbb{P}(E_1) \mathbb{P}(E_2).
 		\label{eq:ind}
 	\end{equation}
+\end{definition}
+
+\begin{definition}[Conditional Independence]
+\label{def:conditional_independence}
+Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
+\begin{equation}
+\mathbb{P}(E_1, E_2 | E_3) = \mathbb{P}(E_1|E_3)\mathbb{P}(E_2|E_3).
+\end{equation}
 \end{definition}
 
 
@@ -205,39 +213,64 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 
 \begin{definition}[Expected value]
 	\label{def:expectation}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the expected valued of $X$, denoted by $\mathbb{E}[X]$, is defined by the Lebesgue integral~\citep{taboga2021}
+	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the expected value of $X$, denoted by $\mathbb{E}[X]$, is defined by the Lebesgue integral~\citep{taboga2021}
 	\begin{equation}
-		\mathbb{E}_X[X]\equiv \int _\Omega X(\omega)d\mathbb{P}(\{\omega\}).
+		\mathbb{E}[X] \equiv \int_\Omega X(\omega)\, d\mathbb{P}(\omega).
 		\label{eq:expected_value}
 	\end{equation}
 \end{definition}
+
 \begin{theorem}[Non-negativity of expected value]
-	If $X\geq 0$ for a random variable $X$, then $\mathbb{E}_X[X]\geq 0$.
+	If $X\geq 0$ for a random variable $X$, then $\mathbb{E}[X]\geq 0$.
 \end{theorem}
 \begin{theorem}[Linearity of expected value]
-	The expectation is a linear operator meaning $\mathbb{E}_X[a+X] = a+\mathbb{E}_X[X]$ and $\mathbb{E}_X[aX] = a\mathbb{E}_X[X]$ for any constant $a$.
+	\label{theorem:exp_linear}
+	The expectation is a linear operator meaning $\mathbb{E}[a+X] = a+\mathbb{E}[X]$ and $\mathbb{E}[aX] = a\mathbb{E}[X]$ for any constant $a$.
 \end{theorem}
 \begin{theorem}[The law of the unconscious statistician]
 	The law of the unconscious statistician generalize the expectation of a random variable to the expectation of a function $g: \Omega \mapsto \mathbb{R}$ of a random variable $X(\omega)\in \Omega_X\quad \forall \omega \in \Omega$ defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$ such that
 	\begin{equation}
-		\mathbb{E}[g(X)]\equiv \int _\Omega g(X(\omega))d\mathbb{P}(\{\omega\}).
+		\mathbb{E}[g(X)]\equiv \int _\Omega g(X(\omega))d\mathbb{P}(\omega).
 		\label{eq:expected_value2}
 	\end{equation}
 \end{theorem}
 
 \begin{definition}[Variance]
 	\label{def:variance}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the variance of $X$, denoted by $\text{Var}[X]$, is defined viz
+	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the variance of $X$, denoted by $\operatorname{Var}[X]$, is defined viz
 	\begin{equation}
 		\begin{split}
-			\text{Var}[X]&\equiv \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]\\
-			&= \mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2.
+			\operatorname{Var}[X]&\equiv \mathbb{E}[(X-\mathbb{E}[X])^2]\\
+			&= \mathbb{E}[X^2]-\mathbb{E}[X]^2.
 		\end{split}
 	\end{equation}
 \end{definition}
-\begin{theorem}[Non-linearity of variance]
-	The variance is a non-linear opeator, where $Var[a+X]=Var[X]$ and $Var[aX]=a^2Var[X]$ for any constant $a$.
+
+% --- Markov's Inequality ---
+\begin{theorem}[Markov's Inequality]
+Let $X$ be a non-negative random variable and $a > 0$. Then
+\begin{equation}
+\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}[X]}{a}.
+\end{equation}
 \end{theorem}
+\begin{proof}
+	Let $\mathbf{1}_{\{X\ge a\}}$ denote the indicator of the event $\{X\ge a\}$. Since $X$ is non-negative and $a>0$
+	\begin{equation}
+		a\mathbf{1}_{\{X\ge a\}} \le X.
+	\end{equation}
+	Taking expectations and using \thref{theorem:exp_linear}
+	\begin{equation}
+		a\,\mathbb{E}\big[\mathbf{1}_{\{X\ge a\}}\big] \le \mathbb{E}[X].
+	\end{equation}
+	But $\mathbb{E}[\mathbf{1}_{\{X\ge a\}}]=\mathbb{P}(X\ge a)$, so
+	\begin{equation}
+		a\,\mathbb{P}(X\ge a) \le \mathbb{E}[X],
+	\end{equation}
+	and rearranging yields Markov's inequality
+	\begin{equation}
+		\mathbb{P}(X\ge a) \le \frac{\mathbb{E}[X]}{a}.
+	\end{equation}
+\end{proof}
 
 
 \begin{definition}[Image Measure]
@@ -259,13 +292,13 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 		\end{split}
 		\label{eq:disc}
 	\end{equation}
-	According to \axref{ax:non_neg}-\axref{ax:add} $\sum_{\text{all }x} p(X=x) = 1$ and $p(X=x) \geq 0 \quad \forall x\in \Omega_X$. 
+	According to \axref{ax:non_neg}-\axref{ax:add} $\sum_{\text{all }x} p(X=x) = 1$ and $p(X=x) \geq 0 \, \forall x\in \Omega_X$. 
 \end{definition}
 
 \begin{theorem}[Expected value of discrete random variable]
 	The expected value of a discrete random variable $X$ with probability mass function $p$ can be written
 	\begin{equation}
-		\mathbb{E}_X[X]=\sum_{i}x_ip(X = x_i).
+		\mathbb{E}[X]=\sum_{i}x_ip(X = x_i).
 	\end{equation}
 \end{theorem}
 
@@ -280,23 +313,23 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 		\mathbb{P}(\{\omega \in \Omega | X(\omega) \leq x\}) = \int_{-\infty}^x f(X = t) \, dt,
 		\label{eq:cont}
 	\end{equation}
-	 where $\int_{-\infty}^\infty f(X=t) dt = 1$ and $f(X=x)=0$ for any individual point $x \in \mathbb{R}$.
+	 where $\int_{-\infty}^\infty f(X=t) dt = 1$ and $f(X=t)=0$ for any individual point $t \in \mathbb{R}$.
 \end{definition}
 
 \begin{theorem}[Expected value of continuous random variable]
 	\label{theorem:expectaion_continuous}
 	The expected value of a continuous random variable $X$ with probability density function $f$ can be written 
 	\begin{equation}
-		\mathbb{E}_X[X]=\int_{\Omega_X}xf(X =x)dx.
+		\mathbb{E}[X]=\int_{\Omega_X}xf(X =x)dx.
 	\end{equation}
 \end{theorem}
 \begin{theorem}[Total expectation]
 	\label{theorem:total_expectation}
-	The expectation of a random variable $X$ can be expressed in terms of another random variable $Y$ viz
+	Let $X: \Omega \mapsto \Omega_X$ and $Y: \Omega \mapsto \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then
 	\begin{equation}
-			\mathbb{E}_X[X] = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X|Y=y]],
+		\mathbb{E}_X[X] = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X| Y]],
 	\end{equation}
-	where the subscript specify the probability distribution the expectation is with respect to.
+	where the subscript indicates the probability distribution the expectation is taken with respect to.
 \end{theorem}
 \begin{proof}
 	\begin{equation}
@@ -304,15 +337,15 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 			\mathbb{E}_X[X] &= \int_{\Omega_X} dx x f(X=x)\\
 			& = \int_{\Omega_Y} dy\int_{\Omega_X}dx x f(X=x,Y=y)\\
 			& =  \int_{\Omega_Y} dy f(Y=y) \int_{\Omega_X}dx x f(X=x|Y=y)\\
-			& =  \int_{\Omega_Y} dy f(Y=y) \underbrace{\int_{\Omega_X}dx x f(X=x|Y=y)}_{= \mathbb{E}_{X|Y}[X|Y=y]}\\
-			& = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X|Y=y]].
+			& =  \int_{\Omega_Y} dy f(Y=y) \underbrace{\int_{\Omega_X}dx x f(X=x|Y=y)}_{= \mathbb{E}_{X|Y}[X|Y]}\\
+			& = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X|Y]].
 		\end{split}
 	\end{equation}
 \end{proof}
 
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
-	Let $X(\omega)\in \Omega_X$ and $Y(\omega)\in \Omega_Y$ be independent continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
+	Let $X: \Omega \mapsto \Omega_X$ and $Y: \Omega \mapsto \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
 	\begin{equation}
 	f(X=x,Y=y)=f(X=x)f(Y=y),	
 	\end{equation}
@@ -331,34 +364,38 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 
 \begin{definition}[Covariance]
 	\label{def:covariance}
-	Let $X$ and $Y$ be a real-valued random variables defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\text{Cov}[X,Y]$, is defined viz
+	Let $X: \Omega \mapsto \Omega_X$ and $Y: \Omega \mapsto \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}[X,Y]$, is defined viz
 	\begin{equation}
 		\begin{split}
-			\text{Cov}[X,Y]&=\mathbb{E}_{XY}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
+			\operatorname{Cov}[X,Y]&=\mathbb{E}_{XY}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
 			&=\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y],
 		\end{split}
 	\end{equation}
 \end{definition}
 \begin{theorem}[Covariance of independent random variables]
 	\label{theorem:covariance_of_independent_variables}
-	For independent random variables $X\in \Omega_X$ and $Y\in \Omega_Y$ the covariance is given by $\text{Cov}[X,Y]=0$.
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent, then their covariance is
+	\begin{equation}
+		\operatorname{Cov}[X,Y] = 0.
+	\end{equation}
+	
 \end{theorem}
 \begin{proof}
-	Using $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$ (\thref{theorem:expectation_independent}) in \dfref{def:covariance} yield $\text{Cov}[X,Y]=0$.
+	Using $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$ (\thref{theorem:expectation_independent}) in \dfref{def:covariance} yield $\operatorname{Cov}[X,Y]=0$.
 \end{proof}
 
 
 \begin{definition}[Correlation]
-	Let $X$ and $Y$ be real-valued random variables defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\text{Corr}[X,Y]$, is defined as
+	Let $X$ and $Y$ be real-valued random variables defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
 	\begin{equation}
 		\begin{split}
-			\text{Corr}[X,Y] &= \frac{\text{Cov}[X,Y]}{\sqrt{\text{Var}[X]  \text{Var}[Y]}} \\
+			\operatorname{Corr}[X,Y] &= \frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}[X]  \operatorname{Var}[Y]}} \\
 			&= \frac{\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\left(\mathbb{E}_X[X^2] - \mathbb{E}_X[X]^2\right) \left(\mathbb{E}_Y[Y^2] - \mathbb{E}_Y[Y]^2\right)}}.
 		\end{split}
 	\end{equation}
 \end{definition}
 
-Correlation and covariance are both measures of the relationship between two random variables. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\text{Corr}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
+Correlation and covariance are both measures of the relationship between two random variables. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
 
 \begin{definition}[Change of Variables for PDFs]
 	\label{def:change_of_variables}
@@ -401,65 +438,67 @@ Correlation and covariance are both measures of the relationship between two ran
 			f(Y=y) &= f\left( X = g^{-1}(y) \right) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y}\\
 			& = \text{const}\cdot \frac{1-Y}{Y}\bigg(\frac{1}{1-Y}+\frac{Y}{(1-Y)^2}\bigg)\bigg|_{Y=y}\\
 			&=\text{const}\cdot Y^{-1}(1-Y)^{-1}|_{Y=y}\\
-			&=\text{Beta}(Y=y|a=0,b=0).
+			&=\operatorname{Beta}(Y=y|a=0,b=0).
 		\end{split}
 	\end{equation}
 \end{example}
+\newpage
 
 \begin{definition}[Error-Propagation]
 	\label{def:error_propagation}
-	Let $X_1 \ldots, X_n$ be continuous random variables with expectations $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\text{Var}[X_1] \ldots, \text{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the random variables $X_1, \ldots, X_n$, can be written
+	Let $X_1 \ldots, X_n$ be continuous random variables with expectations $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\operatorname{Var}[X_1] \ldots, \operatorname{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the random variables $X_1, \ldots, X_n$, can be written
 	\begin{equation}
-			\text{Var}[g(X_1 \ldots, X_n)] \equiv \mathbb{E}\big[(g(X_1 \ldots, X_n) - \mathbb{E}[g(X_1 \ldots, X_n)])^2\big] 
+			\operatorname{Var}[g(X_1 \ldots, X_n)] \equiv \mathbb{E}\big[(g(X_1 \ldots, X_n) - \mathbb{E}[g(X_1 \ldots, X_n)])^2\big] 
 	\end{equation}
-	In practice, the variance is often analytically intractable, in which case, a linear approximation of the variance can be used. This involves expanding $g$ about the expectation values using a first-order Taylor series expansion around the 
+	In practice, the variance is often analytically intractable, in which case, a linear approximation of the variance can be used. This involves expanding $g$ about the expectation values using a first-order Taylor series expansion around the expectation values. Let $X = (X_1, \dots, X_n)$ and define 
 	\begin{equation}
-		 \text{point}=\{X_1 = \mathbb{E}[X_1] \ldots, X_n = \mathbb{E}[X_n]\}
+		 \mathbb{E}[X] = (\mathbb{E}[X_1], \dots, \mathbb{E}[X_n])
 	\end{equation}
+	then
 	\begin{equation}
 		\begin{split}
-			g(X_1, \ldots, X_n) =& g(\text{point}) + \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i} \bigg|_{\text{point}} + \mathcal{O}(\partial^2 g) \\
+			g(X_1, \ldots, X_n) =& g(\mathbb{E}[X]) + \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}[X]} + \mathcal{O}(\|X - \mathbb{E}[X]\|^2) \\
 		\end{split}
 		\label{e1}
 	\end{equation}
 	with this approximation, the variance of $g$ can be approximated viz
 	\begin{equation}
 		\begin{split}
-			\text{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
-			&= \mathbb{E}\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{\text{point}} + \mathcal{O}(\partial^2 g)\bigg)^2\bigg] \\
-			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{\text{point}}^2\text{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{\text{point}} \text{Cov}[X_i, X_j]\\
-			&\quad + \mathcal{O}(\partial^2 g).
+			\operatorname{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
+			&= \mathbb{E}\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}[X]} + \mathcal{O}(\|X - \mathbb{E}[X]\|^2)\bigg)^2\bigg] \\
+			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}[X]}^2\operatorname{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{X=\mathbb{E}[X]} \operatorname{Cov}[X_i, X_j]\\
+			&\quad + \mathcal{O}(\|X - \mathbb{E}[X]\|^3).
 		\end{split}
 	\label{eq:var_approx}
 	\end{equation}
-	where it has been used that $\mathbb{E}[g]=g(\text{point})+\mathcal{O}(\partial^2g)$ and it is understood all derivatives are evaluated at the expectations of the random variables. When the random variables are independent, $\text{Cov}[X_i, X_j] = 0$ for all $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and equation \eqref{eq:var_approx} simplifies to
+	If the random variables are independent, $\mathrm{Cov}[X_i, X_j] = 0$ for $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and equation \eqref{eq:var_approx} simplifies to
 	\begin{equation}
-		\text{Var}[g] \approx \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{\text{point}}^2\text{Var}[X_i].
+		\operatorname{Var}[g] \approx \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}[X]}^2\operatorname{Var}[X_i].
 	\end{equation}
 \end{definition}
-
+\newpage
 \begin{example}
 	A company produce square plates. Let the plate dimensions be characterized by two independent random variables $X\sim \mathcal{N}(2m,(0.01m)^2)$ and $Y\sim \mathcal{N}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From \dfref{def:error_propagation}, the exact variance is
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
-			\text{Var}[XY]&=\mathbb{E}[(XY)^2]-(\mathbb{E}[XY])^2\\
+			\operatorname{Var}[XY]&=\mathbb{E}[(XY)^2]-(\mathbb{E}[XY])^2\\
 			&=\bigg(Var[X]+\mathbb{E}[X]\bigg)\bigg(V[y]+\mathbb{E}[Y]\bigg)-\mathbb{E}[X]^2\mathbb{E}[Y]^2\\
-			&=\mathbb{E}[Y]^2\text{Var}[X]+\mathbb{E}[X]^2\text{Var}[Y]+\text{Var}[X]\text{Var}[Y]
+			&=\mathbb{E}[Y]^2\operatorname{Var}[X]+\mathbb{E}[X]^2\operatorname{Var}[Y]+\operatorname{Var}[X]\operatorname{Var}[Y]
 		\end{split}
 	\end{equation}
-	where it has been used that $X$ and $Y$ are independent, such that $\mathbb{E}[(XY)^2]=\mathbb{E}[X^2]\mathbb{E}[Y^2]$.	Via the linear approximation
+	where it has been used that $X$ and $Y$ are independent, such that $\mathbb{E}[(XY)^2]=\mathbb{E}[X^2]\mathbb{E}[Y^2]$.	Via the linear approximation from \dfref{def:error_propagation}
 	\begin{equation}
 		\label{eq:var2}
 		\begin{split}
-			\text{Var}[XY]&\approx\sum_{i = X,Y} \bigg( \frac{\partial (XY)}{\partial i}\bigg|_{X = \mu_X,Y = \mu_Y}  \bigg)^2\text{Var}[i]\\
-			&=\mathbb{E}[Y]^2\text{Var}[X]+\mathbb{E}[X]^2\text{Var}[Y]
+			\operatorname{Var}[XY]&\approx\sum_{i = X,Y} \bigg( \frac{\partial (XY)}{\partial i}\bigg|_{X = \mathbb{E}[X],Y = \mathbb{E}[Y]}  \bigg)^2\operatorname{Var}[i]\\
+			&=\mathbb{E}[Y]^2\operatorname{Var}[X]+\mathbb{E}[X]^2\operatorname{Var}[Y]
 		\end{split}
 	\end{equation}
 	Comparing \EQref{eq:var1} and \EQref{eq:var2} the relative difference can be written
 	\begin{equation}
 		\begin{split}
-			\frac{\text{Var}[XY]-\text{Var}[XY]|_{\text{linear approximation}}}{\text{Var}[XY]} &= \frac{\text{Var}[X]\text{Var}[Y]}{\text{Var}[XY]}\\
+			\frac{\operatorname{Var}[XY]-\operatorname{Var}[XY]|_{\text{linear approximation}}}{\operatorname{Var}[XY]} &= \frac{\operatorname{Var}[X]\operatorname{Var}[Y]}{\operatorname{Var}[XY]}\\
 			& \simeq 1.6\cdot 10^{-5}.
 		\end{split}
 	\end{equation}
@@ -482,7 +521,7 @@ Correlation and covariance are both measures of the relationship between two ran
 			&= \{(\text{\Gentsroom,\Gentsroom}),(\text{\Gentsroom,\Ladiesroom}),(\text{\Ladiesroom,\Gentsroom}),(\text{\Ladiesroom,\Ladiesroom})\}.
 		\end{split}
 	\end{equation}
-	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \mapsto \{0,1,2\}$ and $G: \Omega \mapsto \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$. The probability mass function associated to $B$ and $G$ is given by \EQref{eq:disc}, such that e.g.
+	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \mapsto \{0,1,2\}$ and $G: \Omega \mapsto \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$. The probability mass function associated to $B$ and $G$ is given by \dfref{def:pmf}, such that e.g.
 	\begin{equation}
 		p(B = 1, G = 1)= \mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\}).
 	\end{equation}
@@ -494,16 +533,24 @@ Correlation and covariance are both measures of the relationship between two ran
 		\begin{equation}
 			p(G=1,B\geq 1) = \frac{p(B\geq1|G=1)p(G=1)}{p(B\geq 1)}.
 		\end{equation}
-		Given the father has two children, if he has exactly one girl, then the other must be a boy, so $p(B\geq 1|G=1)=1$. $p(G=1)=\frac{1}{2}$ since it is a priori assumed to be equally likely to be a boy or girl. $p(B\geq 1)=1-p(G=2,B=0)=\frac{3}{4}$, so
+		Given the father has two children, if he has exactly one girl, then the other must be a boy, so $p(B\geq 1|G=1)=1$. $p(G=1)=\frac{1}{2}$ since it is a priori assumed to be equally likely to be a boy or girl. 
+		\begin{equation}
+			p(B\geq 1)=1-p(G=2,B=0)=\frac{3}{4},
+		\end{equation}
+		so
 		\begin{equation}
 			p(G=1|B\geq 1) = \frac{2}{3}.
 		\end{equation}
 		
 		\item Suppose instead the father meets one of his children and it is a boy.What is the probability that the other is a girl?
 		
-		Since one child is known to be a boy, what is asked about is $p(G=1|B=1)=\frac{1}{2}$.
+		Since one child is known to be a boy, what is asked about is
+		\begin{equation}
+			p(G=1|B=1)=\frac{1}{2}.
+		\end{equation}
 	\end{enumerate}
 \end{example}
+
 
 \begin{example}
 	\index{Example: Crime}
@@ -543,17 +590,18 @@ Correlation and covariance are both measures of the relationship between two ran
 		
 	\end{enumerate}
 \end{example}
+\newpage
 
 \begin{example}
 	\index{Example: Variance of a sum}
-	Show that the variance of a sum is $\text{Var}[X+Y]=\text{Var}[X]+\text{Var}[Y]+2\text{Cov}[X,Y]$.
+	Show that the variance of a sum is $\operatorname{Var}[X+Y]=\operatorname{Var}[X]+\operatorname{Var}[Y]+2\operatorname{Cov}[X,Y]$.
 	
 	\begin{equation}
 		\begin{split}
-			\text{Var}[X+Y] &= \mathbb{E}_{XY}[(X+Y-\mathbb{E}_{XY}[X+Y])^2]\\
+			\operatorname{Var}[X+Y] &= \mathbb{E}_{XY}[(X+Y-\mathbb{E}_{XY}[X+Y])^2]\\
 			&= \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]+\mathbb{E}_Y[(Y-\mathbb{E}_Y[Y])^2]\\
 			&\quad+2\mathbb{E}_{XY}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
-			& = \text{Var}[X]+\text{Var}[Y]+2\text{Cov}[X,Y].
+			& = \operatorname{Var}[X]+\operatorname{Var}[Y]+2\operatorname{Cov}[X,Y].
 		\end{split}
 	\end{equation}
 \end{example}
@@ -615,18 +663,18 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \text{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\text{Corr}[X,Y]=0$.
+	Let $X\sim \text{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
 	
 	\begin{equation}
 		\begin{split}
-			\text{Corr}[X,Y] & = \frac{\text{Cov}[X,Y]}{\sqrt{\text{Var}[X]\text{Var}[Y]}}\\
-			& = \frac{\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\text{Var}[X]\text{Var}[Y]}}\\
+			\operatorname{Corr}[X,Y] & = \frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}\\
+			& = \frac{\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}\\
 		\end{split}
 	\end{equation}
 	In this case for the nonimator
 	\begin{equation}
 		\begin{split}
-			\text{Cov}[X,Y] &= \int dx x^3 p(x)-\int dx' x'p(x')\int dx'' x''^2p(x'')\\
+			\operatorname{Cov}[X,Y] &= \int dx x^3 p(x)-\int dx' x'p(x')\int dx'' x''^2p(x'')\\
 			&= \frac{1}{b-a}\int_{a}^{b}x^3dx-\frac{1}{(b-a)^2}\int_{a}^{b}dx' x'\int_{a}^{b}dx'' x''^2\\
 			&= \frac{1}{12}(a-b)^2(a+b)\\
 			&=0
@@ -635,13 +683,14 @@ Correlation and covariance are both measures of the relationship between two ran
 	where the last equality comes from the fact that $a+b = 0$ in this case. However, we need to make sure the denominator does not diverge
 	\begin{equation}
 		\begin{split}
-			\text{Var}[X]\text{Var}[X^2] & =\big(\mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2\big) \big(\mathbb{E}_X[X^4]-\mathbb{E}_X[X^2]^2\big)\\
+			\operatorname{Var}[X]\operatorname{Var}[X^2] & =\big(\mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2\big) \big(\mathbb{E}_X[X^4]-\mathbb{E}_X[X^2]^2\big)\\
 			& = \frac{1}{540}(b-a)^4(4a^2+7ab+4b^2)\\
 			&\neq 0.
 		\end{split}
 	\end{equation}
-	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\text{Corr}[X,X^2]=0$.
+	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\operatorname{Corr}[X,X^2]=0$.
 \end{example}
+\newpage
 
 \begin{example}
 	\index{Example: Correlation coefficient}
@@ -660,13 +709,13 @@ Correlation and covariance are both measures of the relationship between two ran
 		The variance
 		\begin{equation}
 			\begin{split}
-				\text{Var}[Y] &= \mathbb{E}_Y[Y^2]-\cancelto{0}{\mathbb{E}_Y[Y]^2}\\
+				\operatorname{Var}[Y] &= \mathbb{E}_Y[Y^2]-\cancelto{0}{\mathbb{E}_Y[Y]^2}\\
 				& = \mathbb{E}_{WX}[W^2X^2]\\
 				&= \mathbb{E}_W[W^2]\mathbb{E}_X[X^2]\\
-				& = \mathbb{E}_W[W^2]\text{Var}[X]
+				& = \mathbb{E}_W[W^2]\operatorname{Var}[X]
 			\end{split}
 		\end{equation}
-		since $\text{Var}[X]=\mathbb{E}_X[X^2]-\cancelto{0}{\mathbb{E}_X[X]^2}=1$. Now
+		since $\operatorname{Var}[X]=\mathbb{E}_X[X^2]-\cancelto{0}{\mathbb{E}_X[X]^2}=1$. Now
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}_W[W^2]&= \frac{1}{n}\sum_{i=1}^nw_i^2p(W = w_i)\\
@@ -674,15 +723,15 @@ Correlation and covariance are both measures of the relationship between two ran
 				&= 1
 			\end{split}
 		\end{equation}
-		so $\text{Var}[Y] =1$.
-		\item Show $\text{Cov}[X,Y]=0$. Thus X and Y are uncorrelated but dependent, even though they are Gaussian.
+		so $\operatorname{Var}[Y] =1$.
+		\item Show $\operatorname{Cov}[X,Y]=0$. Thus X and Y are uncorrelated but dependent, even though they are Gaussian.
 		
 		\begin{equation}
 			\begin{split}
-				\text{Cov}[X,Y] &= \text{Cov}[X,WX] \\
+				\operatorname{Cov}[X,Y] &= \operatorname{Cov}[X,WX] \\
 				&= \mathbb{E}_{WX}[WX^2]-\mathbb{E}_X[X]\mathbb{E}_{WX}[WX]\\
 				&= \mathbb{E}_W[W]\mathbb{E}_X[X^2]-\mathbb{E}_W[W]\mathbb{E}_X[X]^2\\
-				&= \mathbb{E}_W[W]\text{Var}[X]\\
+				&= \mathbb{E}_W[W]\operatorname{Var}[X]\\
 				& = 0
 			\end{split}
 		\end{equation}
@@ -703,49 +752,53 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Prove that $-1\leq \text{Corr}[X,Y]\leq 1$.\newline
+	Prove that $-1\leq \operatorname{Corr}[X,Y]\leq 1$.\newline
 	
 	Since the variance is defined as positive definite
 	\begin{equation}
+		\label{eq:corr_deriv}
 		\begin{split}
-			0\leq& \text{Var}\bigg[\frac{X}{\sigma_X}\pm\frac{Y}{\sigma_Y}\bigg]\\
-			& = \frac{\text{Var}[X]}{\sigma_X^2}+\frac{\text{Var}[Y]}{\sigma_Y^2}\pm \frac{2}{\sigma_X\sigma_Y}\text{Cov}[X,Y]\\
-			& = \frac{\text{Var}[X]}{\sigma_X^2}+\frac{\text{Var}[Y]}{\sigma_Y^2}\pm 2\text{Corr}[X,Y]\\
-			& = 2\pm 2\text{Corr}[X,Y]
+			0\leq& \operatorname{Var}\bigg[\frac{X}{\sigma_X}\pm\frac{Y}{\sigma_Y}\bigg]\\
+			& = \frac{\operatorname{Var}[X]}{\sigma_X^2}+\frac{\operatorname{Var}[Y]}{\sigma_Y^2}\pm \frac{2}{\sigma_X\sigma_Y}\operatorname{Cov}[X,Y]\\
+			& = \frac{\operatorname{Var}[X]}{\sigma_X^2}+\frac{\operatorname{Var}[Y]}{\sigma_Y^2}\pm 2\operatorname{Corr}[X,Y]\\
+			& = 2\pm 2\operatorname{Corr}[X,Y]
 		\end{split}
 	\end{equation}
-	where for the last equality it has been used that $\sigma_i^2=\text{Var}[i]$. $0\leq 2\pm 2\text{Corr}[X,Y]\Leftrightarrow -1\leq \text{Corr}[X,Y]\leq 1$.		
+	where for the last equality it has been used that $\sigma_i^2=\operatorname{Var}[i]$. From equation \eqref{eq:corr_deriv} the result follows
+	\begin{equation}
+		-1\leq \operatorname{Corr}[X,Y]\leq 1.
+	\end{equation}	
 \end{example}
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Show that if $Y=aX+b$ for some parameters $a>0$ and $b$, then $\text{Corr}[X,Y]=1$. Similarly show that if $a<0$, then $\text{Corr}[X,Y]=-1$.
+	Show that if $Y=aX+b$ for some parameters $a>0$ and $b$, then $\operatorname{Corr}[X,Y]=1$. Similarly show that if $a<0$, then $\operatorname{Corr}[X,Y]=-1$.
 	
 	\begin{equation}
-		\text{Corr}[X,Y] = \frac{\text{Cov}[X,Y]}{\sqrt{\text{Var}[X]\text{Var}[Y]}}
+		\operatorname{Corr}[X,Y] = \frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\text{Cov}[X,Y] & = \mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]\\
+			\operatorname{Cov}[X,Y] & = \mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]\\
 			&= \mathbb{E}_X[X(aX+b)]-\mathbb{E}_X[X]\mathbb{E}_X[aX+b]\\
 			&= a\mathbb{E}_X[X^2]+b\mathbb{E}_X[X]-a\mathbb{E}_X[X]^2-b\mathbb{E}_X[X]\\
-			&=a\text{Var}[X]
+			&=a\operatorname{Var}[X]
 		\end{split}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\text{Var}[Y] &= \text{Var}[aX+b]\\
-			&= a^2\text{Var}[X]+\cancelto{0}{\text{Var}[b]}+2\cancelto{0}{\text{Cov}[aX,b]}\\
-			& = a^2\text{Var}[X]
+			\operatorname{Var}[Y] &= \operatorname{Var}[aX+b]\\
+			&= a^2\operatorname{Var}[X]+\cancelto{0}{\operatorname{Var}[b]}+2\cancelto{0}{\operatorname{Cov}[aX,b]}\\
+			& = a^2\operatorname{Var}[X]
 		\end{split}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\text{Corr}[X,Y] &= \frac{a\text{Var}[X]}{\sqrt{a^2\text{Var}[X]\text{Var}[X]}}\\
+			\operatorname{Corr}[X,Y] &= \frac{a\operatorname{Var}[X]}{\sqrt{a^2\operatorname{Var}[X]\operatorname{Var}[X]}}\\
 			&=\frac{a}{|a|}		
 		\end{split}
 	\end{equation}
-	Hence, the sign of "$a$" determine if $\text{Corr}[X,Y]=\pm 1$ for the particular $Y$ of this example.
+	Hence, the sign of "$a$" determine if $\operatorname{Corr}[X,Y]=\pm 1$ for the particular $Y$ of this example.
 \end{example}
 
 \begin{example}

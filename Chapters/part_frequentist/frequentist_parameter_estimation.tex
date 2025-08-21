@@ -8,7 +8,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\begin{equation}
 		\begin{split}
 			\mathcal{I}(w) &\equiv \mathbb{E} [l(X|w)^2|w,I]\\
-			&= \text{Var}[l(X|w)|w,I].
+			&= \operatorname{Var}[l(X|w)|w,I].
 		\end{split}
 	\end{equation}
 \end{definition}
@@ -16,7 +16,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 \begin{proof}
 	In general 
 	\begin{equation}
-		\mathbb{E} [l(X|w)^2|w,I] = \text{Var}[l(X|w)|w,I]+\mathbb{E}[l(X|w)|w,I]^2
+		\mathbb{E} [l(X|w)^2|w,I] = \operatorname{Var}[l(X|w)|w,I]+\mathbb{E}[l(X|w)|w,I]^2
 	\end{equation}
 	however
 	\begin{equation}
@@ -70,7 +70,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 		\begin{split}
 			\mathbb{E}[C(\hat{w}, w)|w,D,I] &= \mathbb{E}[(\hat{w}-w)^2|w,D,I]\\ 
 			&= \mathbb{E}[(\hat{w}-\mathbb{E}[\hat{w}])^2]+(w-\mathbb{E}[\hat{w}])^2\\
-			&=\text{Var}[\hat{w}]+\text{Bias}[\hat{w}]^2\\
+			&=\operatorname{Var}[\hat{w}]+\text{Bias}[\hat{w}]^2\\
 		\end{split}
 		\label{eq:MSE}
 	\end{equation}
@@ -88,18 +88,18 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 	\begin{proof}
 		From theorem \thref{theorem:MSE}
 		\begin{equation}
-			\mathbb{E}[(\hat{w}-w)^2] = \text{Var}[\hat{w}]+\text{Bias}[\hat{w}]^2.
+			\mathbb{E}[(\hat{w}-w)^2] = \operatorname{Var}[\hat{w}]+\text{Bias}[\hat{w}]^2.
 		\end{equation}
-		Under the regularity conditions where the MLE is unbiased and has asymptotically minimal variance, the bias term vanish, meaning $\text{Bias}[\hat{w}_{\text{MLE}}] = 0$ and the variance term $\text{Var}[\hat{w}_{\text{MLE}}]$ is minimized among a class of estimators. Thus, the expected quadratic cost for the MLE can be approximated by
+		Under the regularity conditions where the MLE is unbiased and has asymptotically minimal variance, the bias term vanish, meaning $\text{Bias}[\hat{w}_{\text{MLE}}] = 0$ and the variance term $\operatorname{Var}[\hat{w}_{\text{MLE}}]$ is minimized among a class of estimators. Thus, the expected quadratic cost for the MLE can be approximated by
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2] &\approx \text{Var}[\hat{w}_{\text{MLE}}]\\
+				\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2] &\approx \operatorname{Var}[\hat{w}_{\text{MLE}}]\\
 				&\approx \frac{\text{tr}[I(w)^{-1}]}{n},
 			\end{split}
 		\end{equation}
 		where \thref{thm:unbiased_mle} was used for the second line. The Cramer-Rao lower bound~\citep{Rao1973Linear} for variance states that 
 		\begin{equation}
-			\text{Var}[\hat{w}]\geq \frac{\text{tr}[I(w)^{-1}]}{n},
+			\operatorname{Var}[\hat{w}]\geq \frac{\text{tr}[I(w)^{-1}]}{n},
 		\end{equation}
 		implying that the MLE decision rule acheives the smallest possible variance asymptotically and therefore that 
 		\begin{equation}
@@ -126,7 +126,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 			\begin{split}
 				\mathbb{E}[\hat{w}] & = \frac{1}{n}\sum_{i=1}^n\mathbb{E}[X_i]\\
 				&=w,\\
-				\text{Var}[\hat{w}]	&= \frac{1}{n^2}\sum_{i=1}^n\text{Var}[X_i]\\
+				\operatorname{Var}[\hat{w}]	&= \frac{1}{n^2}\sum_{i=1}^n\operatorname{Var}[X_i]\\
 				& = \frac{w(1-w)}{n},\\
 				\mathbb{E}[(\hat{w}-w)^2]&=\frac{w(1-w)}{n}.
 			\end{split} 
@@ -140,7 +140,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}[\hat{w}] & = 0.5,\\
-				\text{Var}[\hat{w}]	&= 0,\\
+				\operatorname{Var}[\hat{w}]	&= 0,\\
 				\mathbb{E}[(\hat{w}-w)^2]&=(0.5-w)^2.
 			\end{split} 
 		\end{equation}
@@ -154,7 +154,7 @@ Given a decision rule, $U(x,w)$, the unknown parameter $w$ need to be estimated.
 			\begin{split}
 				\mathbb{E}[\hat{w}] & = \mathbb{E}[X_1]\\
 				&=w,\\
-				\text{Var}[\hat{w}]	&= \text{Var}[X_1]\\
+				\operatorname{Var}[\hat{w}]	&= \operatorname{Var}[X_1]\\
 				& = w(1-w),\\
 				\mathbb{E}[(\hat{w}-w)^2]&=w(1-w).
 			\end{split} 
