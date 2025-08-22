@@ -8,10 +8,18 @@ repository = "https://github.com/KaptajnFjaesing/Book-Statistics"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11.8,<3.13"
+pymc = "^5.10.4"
 ipykernel = "^6.29.5"
 numpy = "^2.1.3"
 matplotlib = "^3.9.3"
+pandas = "^2.3.2"
+scikit-learn = "^1.7.1"
+scipy = "^1.16.1"
+tqdm = "^4.67.1"
+ipywidgets = "^8.1.7"
+jax = "^0.7.1"
+numpyro = "^0.19.0"
 
 [build-system]
 requires = ["poetry-core"]
