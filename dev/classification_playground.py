@@ -11,6 +11,12 @@ from sklearn.metrics import roc_auc_score
 from sklearn.base import BaseEstimator, TransformerMixin
 from tqdm import tqdm
 import pymc as pm
+from sklearn.preprocessing import KBinsDiscretizer
+import seaborn as sns
+import lightgbm as lgb
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.calibration import calibration_curve
+from sklearn.metrics import roc_auc_score, average_precision_score
 
 
 def kalibrated_model(scores, score_col, prior0, bw_method='silverman'):
@@ -68,46 +74,30 @@ class WoETransformer(BaseEstimator, TransformerMixin):
         return X_woe.values
 
 def bayesian_logistic_regression(
-    X_train, y_train, X_test, draws=1000, tune=500, chains=4, cores=1, nuts_sampler="numpyro", class_prior=None, class_weight=None
+    X_train,
+    y_train,
+    X_test,
+    draws=1000,
+    tune=500,
+    chains=4,
+    cores=1,
+    nuts_sampler="numpyro"
 ):
     """
     Bayesian logistic regression with optional informative prior on bias for class imbalance.
-    If class_prior is given (e.g., 0.02 for 2% positive class), the bias prior mean is set to logit(class_prior).
-    If class_weight is given (e.g., {0: 1, 1: 10}), the likelihood is weighted accordingly.
     """
-    import math
-
-    # Set bias prior mean based on class prior if provided
-    if class_prior is not None:
-        bias_mu = math.log(class_prior / (1 - class_prior))
-    else:
-        bias_mu = 0
 
     with pm.Model() as logistic_model:
         x = pm.Data("x", X_train, dims=["obs_id", "feature"])
         y = pm.Data("y", y_train, dims=["obs_id"])
 
         weights = pm.Normal("weights", mu=0, sigma=0.1, dims=["feature"])
-        bias = pm.Normal("bias", mu=bias_mu, sigma=0.1)
+        bias = pm.Normal("bias", mu=0, sigma=0.1)
 
         logits = pm.Deterministic("logits", pm.math.dot(x, weights) + bias, dims=["obs_id"])
         p = pm.Deterministic("p", pm.math.sigmoid(logits), dims=["obs_id"])
 
-        # Weighted likelihood
-        if class_weight is not None:
-            # Calculate weights for each observation
-            obs_weights = np.array([class_weight[int(label)] for label in y_train])
-            
-            # Define Bernoulli distribution
-            bernoulli_dist = pm.Bernoulli.dist(p=p)
-            
-            # Compute logp for each observation
-            logp = pm.logp(bernoulli_dist, y)
-            
-            # Apply weights via a Potential
-            pm.Potential("weighted_likelihood", (logp * obs_weights).sum())
-        else:
-            y_obs = pm.Bernoulli("y_obs", p=p, observed=y, dims=["obs_id"])
+        pm.Bernoulli("y_obs", p=p, observed=y, dims=["obs_id"])
 
         idata = pm.sample(draws=draws, tune=tune, chains=chains, cores=cores, nuts_sampler=nuts_sampler)
 
@@ -120,25 +110,139 @@ def bayesian_logistic_regression(
     return y_pred_proba, idata
 
 
+def exploratory_binary_analysis(X: pd.DataFrame, y: pd.Series, n_bins: int = 10):
+    df = X.copy()
+    df["target"] = y
+    
+    # --- Density plots (grid of subplots) ---
+    n_features = X.shape[1]
+    ncols = 2
+    nrows = int(np.ceil(n_features / ncols))
+    
+    fig, axes = plt.subplots(nrows, ncols, figsize=(12, 4 * nrows))
+    axes = axes.flatten()
+    
+    for i, col in enumerate(X.columns):
+        ax = axes[i]
+        sns.kdeplot(data=df, x=col, hue="target", common_norm=False, ax=ax)
+        ax.set_title(f"Distribution of {col} by class")
+    
+    for j in range(i+1, len(axes)):  # remove empty subplots
+        fig.delaxes(axes[j])
+    
+    plt.tight_layout()
+    plt.show()
+    
+    # --- Log-odds plot (all features together) ---
+    plt.figure(figsize=(8, 6))
+    
+    for col in X.columns:
+        if pd.api.types.is_numeric_dtype(X[col]):
+            est = KBinsDiscretizer(n_bins=n_bins, encode="ordinal", strategy="quantile")
+            bins = est.fit_transform(X[[col]]).astype(int).flatten()
+            temp = pd.DataFrame({col+"_bin": bins, "target": y})
+            
+            mean_target = temp.groupby(col+"_bin")["target"].mean()
+            centers = [X[col][bins == b].mean() for b in mean_target.index]
+            
+            odds = mean_target / (1 - mean_target + 1e-9)
+            logit = np.log(odds + 1e-9)
+            
+            plt.plot(centers, logit, marker="o", label=col)
+    
+    plt.xlabel("Feature value")
+    plt.ylabel("Log-odds of target=1")
+    plt.title("Log-odds plots (binned)")
+    plt.legend()
+    plt.show()
 
-# 1. Generate mock data
+def bayesian_nn_classifier(
+    X_train, y_train, X_test,
+    hidden_units1=16,
+    hidden_units2=8,
+    draws=1000,
+    tune=500,
+    chains=4,
+    cores=1,
+    nuts_sampler="numpyro"
+):
+    with pm.Model() as model:
+        x = pm.Data("x", X_train)
+        y = pm.Data("y", y_train)
+
+        # Layer 1
+        w1 = pm.Normal("w1", 0, 1, shape=(X_train.shape[1], hidden_units1))
+        b1 = pm.Normal("b1", 0, 1, shape=(hidden_units1,))
+        
+        linear_layer1 = pm.math.dot(x, w1) + b1
+        hidden_layer1 = pm.math.maximum(linear_layer1, 0)
+
+        # Output layer
+        w2 = pm.Normal("w2", 0, 1, shape=(hidden_units1, hidden_units2))
+        b2 = pm.Normal("b2", 0, 1, shape=(hidden_units2,))
+        linear_layer2 = pm.math.dot(hidden_layer1, w2) + b2
+        hidden_layer2 = pm.math.maximum(linear_layer2, 0)
+        
+        w_out = pm.Normal("w_out", 0, 1, shape=(hidden_units2,))
+        b_out = pm.Normal("b_out", 0, 1)
+        
+        logits = pm.Deterministic("logits", pm.math.dot(hidden_layer2, w_out) + b_out)
+
+        p = pm.Deterministic("p", pm.math.sigmoid(logits))
+        pm.Bernoulli("y_obs", p=p, observed=y)
+
+        idata = pm.sample(
+            draws=draws,
+            tune=tune,
+            chains=chains,
+            cores=cores,
+            nuts_sampler=nuts_sampler
+        )
+
+        # Predict
+        pm.set_data({"x": X_test})
+        ppc = pm.sample_posterior_predictive(idata, var_names=["p"])
+        y_pred_proba = ppc.posterior_predictive["p"].mean(("chain","draw")).values
+
+    return y_pred_proba, idata
+
+# --- Example usage with synthetic data ---
 X, y = make_classification(
-    n_samples=100000,
+    n_samples=10000,
     n_features=6,
     n_informative=3,
     n_redundant=1,
     n_repeated=2,
-    n_clusters_per_class=1,
-    class_sep=1,
-    flip_y=0.000,
-    weights=[0.02, 0.98],  # Make class 1 rare
+    n_clusters_per_class=2,
+    class_sep = 0.5,
+    flip_y=0.05,
+    weights=[0.02, 0.98],  # Rare positive class
     random_state=42
 )
-X[y == 1] = np.sign(X[y == 1]) * np.abs(X[y == 1]) ** (1/3)
 
-feature_names = [f"feature_{i+1}" for i in range(6)]
-df = pd.DataFrame(X, columns = feature_names)
-df['target'] = y
+# Add some non-linearity for the positive class
+X = np.sign(X) * np.abs(X) ** (1/3)
+
+feature_names = [f"feature_{i+1}" for i in range(X.shape[1])]
+df = pd.DataFrame(X, columns=feature_names)
+# Add nonlinear transformations per class
+df["feature_1"] = df["feature_1"].copy()
+df.loc[y == 1, "feature_1"] = np.sign(df.loc[y == 1, "feature_1"])*np.abs(df.loc[y == 1, "feature_1"]) ** (1/2)  # square only for class 1
+
+df["feature_2"] = df["feature_2"].copy()
+df.loc[y == 1, "feature_2"] = np.sin(df.loc[y == 1, "feature_2"])  # sine only for class 1
+
+df["feature_3"] = df["feature_3"].copy()
+df.loc[y == 1, "feature_3"] = df.loc[y == 1, "feature_3"] * df.loc[y == 1, "feature_4"]  # interaction only for class 1
+
+# Strongly nonlinear separation
+df["feature_5"] = np.sin(df["feature_1"]) * np.cos(df["feature_2"])
+
+y_series = pd.Series(y, name="target")
+
+
+# Run exploratory analysis
+exploratory_binary_analysis(df, y_series)
 
 
 #%%
@@ -151,6 +255,8 @@ auc_woe_kalibrated_list = []
 auc_norm_kalibrated_list = []
 auc_bayes_list = []
 auc_bayes_kalibrated_list = []
+auc_lgb_list = []
+auc_bayes_list2 = []
 
 for split_seed in tqdm(range(N_SPLITS)):
     # 1. Single train/test split for both models
@@ -207,10 +313,43 @@ for split_seed in tqdm(range(N_SPLITS)):
 
     # 5. Bayesian logistic regression on normalized features
     y_pred_bayes, _ = bayesian_logistic_regression(
-        X_train_norm, y_train, X_test_norm, draws=500, tune=250, chains=4, cores=1, nuts_sampler="numpyro", class_prior=0.02, class_weight= {0: 1, 1: 10}
+        X_train_norm, y_train, X_test_norm, draws=1000, tune=250, chains=4, cores=1, nuts_sampler="numpyro"
     )
     auc_bayes = roc_auc_score(y_test, y_pred_bayes)
     auc_bayes_list.append(auc_bayes)
+
+    # 6. LightGBM classifier on raw features
+    lgb_clf = lgb.LGBMClassifier(
+        n_estimators=500,
+        learning_rate=0.05,
+        num_leaves=64,
+        max_depth=-1,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        random_state=split_seed
+    )
+    lgb_clf.fit(X_train_raw, y_train)
+
+    # Predict
+    y_pred_lgb = lgb_clf.predict_proba(X_test_raw)[:, 1]
+    auc_lgb = roc_auc_score(y_test, y_pred_lgb)
+    auc_lgb_list.append(auc_lgb)
+
+    # 7. Bayesian TLP classifier
+    y_pred_bayes2, _ = bayesian_nn_classifier(
+        X_train = X_train_norm,
+        y_train = y_train, 
+        X_test = X_test_norm,
+        hidden_units1=16,
+        hidden_units2=8,
+        draws=200,
+        tune=200,
+        chains=4,
+        cores=1,
+        nuts_sampler="numpyro"
+    )
+    auc_bayes2 = roc_auc_score(y_test, y_pred_bayes2)
+    auc_bayes_list2.append(auc_bayes2)
 
 
 #%%
@@ -221,28 +360,43 @@ print(f"AUC (normalized features, KDE calibrated): mean={np.mean(auc_norm_kalibr
 print(f"AUC (WoE features): mean={np.mean(auc_woe_list):.3f}, std={np.std(auc_woe_list):.3f}")
 print(f"AUC (WoE features, KDE calibrated): mean={np.mean(auc_woe_kalibrated_list):.3f}, std={np.std(auc_woe_kalibrated_list):.3f} \n")
 
+print(f"AUC (Bayesian logistic regression): mean={np.mean(auc_bayes_list2):.3f}, std={np.std(auc_bayes_list2):.3f}")
 print(f"AUC (Bayesian normalized): mean={np.mean(auc_bayes_list):.3f}, std={np.std(auc_bayes_list):.3f}")
+print(f"AUC (LGBM): mean={np.mean(auc_lgb_list):.3f}, std={np.std(auc_lgb_list):.3f}")
 #%% Investigation
 
-
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
-
-disp_norm = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, (y_pred_norm >= 0.578).astype(int)))
+disp_norm = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, (y_pred_norm >= 0.5).astype(int)))
 disp_norm.plot()
 plt.title("Confusion Matrix: Logistic Regression")
 plt.show()
 
 
-disp_bayes = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, (y_pred_bayes >= 0.578).astype(int)))
+disp_bayes = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, (y_pred_lgb >= 0.5).astype(int)))
 disp_bayes.plot()
 plt.title("Confusion Matrix: Bayesian Logistic Regression")
 plt.show()
 
 
+prob_true, prob_pred = calibration_curve(y_test, y_pred_lgb, n_bins=30)
+prob_true2, prob_pred2 = calibration_curve(y_test, y_pred_norm, n_bins=30)
+prob_true3, prob_pred3 = calibration_curve(y_test, y_pred_woe_kalibrated, n_bins=30)
+prob_true4, prob_pred4 = calibration_curve(y_test, y_pred_bayes, n_bins=30)
+
+
+plt.plot(prob_pred, prob_true, marker='o', label = "LGBM")
+plt.plot(prob_pred2, prob_true2, marker='o', label = "Logistic Regression")
+plt.plot(prob_pred3, prob_true3, marker='o', label = "WoE + Logistic Regression + KDE")
+plt.plot(prob_pred4, prob_true4, marker='o', label = "Bayesian Logistic Regression")
+
+plt.plot([0,1], [0,1], linestyle='--')  # perfect calibration
+plt.xlabel("Predicted probability")
+plt.ylabel("True frequency")
+plt.title("Calibration plot")
+plt.show()
+
 #%%
 
 
-from sklearn.metrics import roc_auc_score, average_precision_score
 
 roc_auc = roc_auc_score(y_test, y_pred_norm)
 avg_prec = average_precision_score(y_test, y_pred_norm)
@@ -253,19 +407,10 @@ print("Average precision:", avg_prec)
 
 #%%
 
-from sklearn.calibration import calibration_curve
-import matplotlib.pyplot as plt
 
-prob_true, prob_pred = calibration_curve(y_test, y_pred_bayes, n_bins=30)
-prob_true2, prob_pred2 = calibration_curve(y_test, y_pred_norm, n_bins=30)
 
-plt.plot(prob_pred, prob_true, marker='o')
-plt.plot(prob_pred2, prob_true2, marker='o')
-plt.plot([0,1], [0,1], linestyle='--')  # perfect calibration
-plt.xlabel("Predicted probability")
-plt.ylabel("True frequency")
-plt.title("Calibration plot")
-plt.show()
+
+
 
 
 #%%
