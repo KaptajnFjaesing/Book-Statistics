@@ -408,14 +408,6 @@ print("Average precision:", avg_prec)
 #%%
 
 
-
-
-
-
-
-#%%
-
-
 # 1. Single train/test split for both models
 X_train_raw, X_test_raw, y_train, y_test = train_test_split(
     df[feature_names], df['target'], test_size=0.3, random_state=split_seed
