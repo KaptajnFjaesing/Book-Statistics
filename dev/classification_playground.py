@@ -5,18 +5,21 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, KBinsDiscretizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score
 from sklearn.base import BaseEstimator, TransformerMixin
 from tqdm import tqdm
 import pymc as pm
-from sklearn.preprocessing import KBinsDiscretizer
 import seaborn as sns
 import lightgbm as lgb
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import (
+    roc_auc_score,
+    average_precision_score,
+    roc_auc_score, 
+    log_loss,
+    brier_score_loss
+)
 from sklearn.calibration import calibration_curve
-from sklearn.metrics import roc_auc_score, average_precision_score
 
 
 def kalibrated_model(scores, score_col, prior0, bw_method='silverman'):
@@ -156,12 +159,12 @@ def exploratory_binary_analysis(X: pd.DataFrame, y: pd.Series, n_bins: int = 10)
     plt.legend()
     plt.show()
 
-def bayesian_nn_classifier(
+def bayesian_tlp_classifier(
     X_train, y_train, X_test,
     hidden_units1=16,
     hidden_units2=8,
     draws=1000,
-    tune=500,
+    tune=200,
     chains=4,
     cores=1,
     nuts_sampler="numpyro"
@@ -206,6 +209,51 @@ def bayesian_nn_classifier(
 
     return y_pred_proba, idata
 
+def bayesian_slp_classifier(
+    X_train, y_train, X_test,
+    hidden_units=16,
+    draws=1000,
+    tune=200,
+    chains=4,
+    cores=1,
+    nuts_sampler="numpyro"
+):
+    with pm.Model() as model:
+        x = pm.Data("x", X_train)
+        y = pm.Data("y", y_train)
+
+        # Single hidden layer
+        w1 = pm.Normal("w1", 0, 1, shape=(X_train.shape[1], hidden_units))
+        b1 = pm.Normal("b1", 0, 1, shape=(hidden_units,))
+        
+        linear_layer1 = pm.math.dot(x, w1) + b1
+        hidden_layer1 = pm.math.maximum(linear_layer1, 0)  # ReLU
+
+        # Output layer
+        w_out = pm.Normal("w_out", 0, 1, shape=(hidden_units,))
+        b_out = pm.Normal("b_out", 0, 1)
+        
+        logits = pm.Deterministic("logits", pm.math.dot(hidden_layer1, w_out) + b_out)
+
+        p = pm.Deterministic("p", pm.math.sigmoid(logits))
+        pm.Bernoulli("y_obs", p=p, observed=y)
+
+        idata = pm.sample(
+            draws=draws,
+            tune=tune,
+            chains=chains,
+            cores=cores,
+            nuts_sampler=nuts_sampler
+        )
+
+        # Predict
+        pm.set_data({"x": X_test})
+        ppc = pm.sample_posterior_predictive(idata, var_names=["p"])
+        y_pred_proba = ppc.posterior_predictive["p"].mean(("chain","draw")).values
+
+    return y_pred_proba, idata
+
+
 # --- Example usage with synthetic data ---
 X, y = make_classification(
     n_samples=10000,
@@ -240,23 +288,16 @@ df["feature_5"] = np.sin(df["feature_1"]) * np.cos(df["feature_2"])
 
 y_series = pd.Series(y, name="target")
 
-
 # Run exploratory analysis
 exploratory_binary_analysis(df, y_series)
+
 
 
 #%%
 
 N_SPLITS = 1  # Number of random splits
 
-auc_norm_list = []
-auc_woe_list = []
-auc_woe_kalibrated_list = []
-auc_norm_kalibrated_list = []
-auc_bayes_list = []
-auc_bayes_kalibrated_list = []
-auc_lgb_list = []
-auc_bayes_list2 = []
+results = []
 
 for split_seed in tqdm(range(N_SPLITS)):
     # 1. Single train/test split for both models
@@ -273,8 +314,6 @@ for split_seed in tqdm(range(N_SPLITS)):
     lr_norm = LogisticRegression()
     lr_norm.fit(X_train_norm, y_train)
     y_pred_norm = lr_norm.predict_proba(X_test_norm)[:, 1]
-    auc_norm = roc_auc_score(y_test, y_pred_norm)
-    auc_norm_list.append(auc_norm)
 
     # Extract scores (logits) for normalized features
     scores_norm = (-lr_norm.decision_function(X_test_norm) * 20 / np.log(2)).astype(int)
@@ -288,8 +327,6 @@ for split_seed in tqdm(range(N_SPLITS)):
     lr_woe = LogisticRegression()
     lr_woe.fit(X_train_woe, y_train)
     y_pred_woe = lr_woe.predict_proba(X_test_woe)[:, 1]
-    auc_woe = roc_auc_score(y_test, y_pred_woe)
-    auc_woe_list.append(auc_woe)
 
     # Extract scores (logits) for WoE features
     scores_woe = (-lr_woe.decision_function(X_test_woe)*20/np.log(2)).astype(int)
@@ -303,236 +340,131 @@ for split_seed in tqdm(range(N_SPLITS)):
     prior0 = (y_train == 0).mean()
     # KDE calibration for WoE scores
     y_pred_woe_kalibrated = kalibrated_model(scores_df, 'score_woe', prior0)
-    auc_woe_kalibrated = roc_auc_score(y_test, y_pred_woe_kalibrated)
-    auc_woe_kalibrated_list.append(auc_woe_kalibrated)
 
     # KDE calibration for norm scores
     y_pred_norm_kalibrated = kalibrated_model(scores_df, 'score_norm', prior0)
-    auc_norm_kalibrated = roc_auc_score(y_test, y_pred_norm_kalibrated)
-    auc_norm_kalibrated_list.append(auc_norm_kalibrated)
 
     # 5. Bayesian logistic regression on normalized features
     y_pred_bayes, _ = bayesian_logistic_regression(
         X_train_norm, y_train, X_test_norm, draws=1000, tune=250, chains=4, cores=1, nuts_sampler="numpyro"
     )
-    auc_bayes = roc_auc_score(y_test, y_pred_bayes)
-    auc_bayes_list.append(auc_bayes)
 
     # 6. LightGBM classifier on raw features
     lgb_clf = lgb.LGBMClassifier(
-        n_estimators=500,
-        learning_rate=0.05,
-        num_leaves=64,
-        max_depth=-1,
-        subsample=0.8,
-        colsample_bytree=0.8,
+        n_estimators=100,
+        learning_rate=0.04,
         random_state=split_seed
     )
     lgb_clf.fit(X_train_raw, y_train)
-
-    # Predict
     y_pred_lgb = lgb_clf.predict_proba(X_test_raw)[:, 1]
-    auc_lgb = roc_auc_score(y_test, y_pred_lgb)
-    auc_lgb_list.append(auc_lgb)
 
     # 7. Bayesian TLP classifier
-    y_pred_bayes2, _ = bayesian_nn_classifier(
+    y_pred_bayes2, _ = bayesian_tlp_classifier(
         X_train = X_train_norm,
         y_train = y_train, 
         X_test = X_test_norm,
         hidden_units1=16,
         hidden_units2=8,
-        draws=200,
+        draws=300,
         tune=200,
         chains=4,
         cores=1,
         nuts_sampler="numpyro"
     )
-    auc_bayes2 = roc_auc_score(y_test, y_pred_bayes2)
-    auc_bayes_list2.append(auc_bayes2)
 
+    # 7. Bayesian TLP classifier
+    y_pred_bayes3, _ = bayesian_slp_classifier(
+        X_train = X_train_norm,
+        y_train = y_train, 
+        X_test = X_test_norm,
+        hidden_units=16,
+        draws=300,
+        tune=200,
+        chains=4,
+        cores=1,
+        nuts_sampler="numpyro"
+    )
+
+    preds = {
+        "Normalization + Log. Reg.": y_pred_norm,
+        "WoE + Log. Reg.": y_pred_woe,
+        "WoE + Log. Reg + Kalibration": y_pred_woe_kalibrated,
+        "Normalization + Log. Reg. + Kalibration": y_pred_norm_kalibrated,
+        "Bayesian Log. Reg.": y_pred_bayes,
+        "lgbm": y_pred_lgb,
+        "Bayesian NN": y_pred_bayes2,
+        "Bayesian SLP": y_pred_bayes3
+    }
+
+    # Compute metrics for each model
 
 #%%
-# Print summary statistics
-print(f"AUC (normalized features): mean={np.mean(auc_norm_list):.3f}, std={np.std(auc_norm_list):.3f}")
-print(f"AUC (normalized features, KDE calibrated): mean={np.mean(auc_norm_kalibrated_list):.3f}, std={np.std(auc_norm_kalibrated_list):.3f} \n")
+    n_bins = 10  # number of bins for ECE
 
-print(f"AUC (WoE features): mean={np.mean(auc_woe_list):.3f}, std={np.std(auc_woe_list):.3f}")
-print(f"AUC (WoE features, KDE calibrated): mean={np.mean(auc_woe_kalibrated_list):.3f}, std={np.std(auc_woe_kalibrated_list):.3f} \n")
+    for model_name, y_prob in preds.items():
+        # Compute calibration curve (quantile strategy ensures roughly equal points per bin)
+        prob_true, prob_pred = calibration_curve(y_test, y_prob, n_bins=n_bins, strategy="quantile")
 
-print(f"AUC (Bayesian logistic regression): mean={np.mean(auc_bayes_list2):.3f}, std={np.std(auc_bayes_list2):.3f}")
-print(f"AUC (Bayesian normalized): mean={np.mean(auc_bayes_list):.3f}, std={np.std(auc_bayes_list):.3f}")
-print(f"AUC (LGBM): mean={np.mean(auc_lgb_list):.3f}, std={np.std(auc_lgb_list):.3f}")
+        # Assign each prediction to a bin
+        bin_edges = np.quantile(y_prob, np.linspace(0, 1, n_bins + 1))
+        bin_indices = np.digitize(y_prob, bins=bin_edges, right=True) - 1
+        # Ensure indices are within valid range
+        bin_indices = np.clip(bin_indices, 0, n_bins - 1)
+
+        # Compute ECE
+        ece = 0.0
+        for i in range(len(prob_true)):
+            count_in_bin = np.sum(bin_indices == i)
+            ece += (count_in_bin / len(y_test)) * np.abs(prob_true[i] - prob_pred[i])
+
+        # Store metrics
+        metrics = {
+            "split_seed": split_seed,
+            "model": model_name,
+            "AUC_ROC": roc_auc_score(y_test, y_prob),
+            "AUC_PR": average_precision_score(y_test, y_prob),
+            "LogLoss": log_loss(y_test, y_prob),
+            "Brier": brier_score_loss(y_test, y_prob),
+            "ECE": ece
+        }
+        results.append(metrics)
+
+oos_results_df = pd.DataFrame(results)
+
+#%%
+print(oos_results_df)
 #%% Investigation
 
-disp_norm = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, (y_pred_norm >= 0.5).astype(int)))
-disp_norm.plot()
-plt.title("Confusion Matrix: Logistic Regression")
-plt.show()
+plt.figure(figsize=(7, 7))
 
+for name, y_prob in preds.items():
+    prob_true, prob_pred = calibration_curve(y_test, y_prob, n_bins=5)
+    plt.plot(prob_pred, prob_true, marker="o", label=name)
 
-disp_bayes = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test, (y_pred_lgb >= 0.5).astype(int)))
-disp_bayes.plot()
-plt.title("Confusion Matrix: Bayesian Logistic Regression")
-plt.show()
+# perfect calibration line
+plt.plot([0, 1], [0, 1], linestyle="--", color="gray")
 
-
-prob_true, prob_pred = calibration_curve(y_test, y_pred_lgb, n_bins=30)
-prob_true2, prob_pred2 = calibration_curve(y_test, y_pred_norm, n_bins=30)
-prob_true3, prob_pred3 = calibration_curve(y_test, y_pred_woe_kalibrated, n_bins=30)
-prob_true4, prob_pred4 = calibration_curve(y_test, y_pred_bayes, n_bins=30)
-
-
-plt.plot(prob_pred, prob_true, marker='o', label = "LGBM")
-plt.plot(prob_pred2, prob_true2, marker='o', label = "Logistic Regression")
-plt.plot(prob_pred3, prob_true3, marker='o', label = "WoE + Logistic Regression + KDE")
-plt.plot(prob_pred4, prob_true4, marker='o', label = "Bayesian Logistic Regression")
-
-plt.plot([0,1], [0,1], linestyle='--')  # perfect calibration
 plt.xlabel("Predicted probability")
 plt.ylabel("True frequency")
 plt.title("Calibration plot")
+plt.legend()
 plt.show()
 
 #%%
+from sklearn.isotonic import IsotonicRegression
 
+# y_pred_proba: predicted probabilities from your Bayesian model
+# y_train, y_test: ground truth
 
+# Fit an isotonic regression on the validation set
+iso_reg = IsotonicRegression(out_of_bounds="clip")
+iso_reg.fit(preds['Bayesian NN'], y_test)
 
-roc_auc = roc_auc_score(y_test, y_pred_norm)
-avg_prec = average_precision_score(y_test, y_pred_norm)
+# Calibrated probabilities
+y_pred_calibrated = iso_reg.predict(preds['Bayesian NN'])
 
-print("ROC AUC:", roc_auc)
-print("Average precision:", avg_prec)
-
-
-#%%
-
-
-# 1. Single train/test split for both models
-X_train_raw, X_test_raw, y_train, y_test = train_test_split(
-    df[feature_names], df['target'], test_size=0.3, random_state=split_seed
-)
-
-# 2. Normalize features
-scaler = StandardScaler()
-X_train_norm = scaler.fit_transform(X_train_raw)
-X_test_norm = scaler.transform(X_test_raw)
-
-# 3. Train logistic regression on normalized features
-lr_norm = LogisticRegression()
-lr_norm.fit(X_train_norm, y_train)
-y_pred_norm = lr_norm.predict_proba(X_test_norm)[:, 1]
-auc_norm = roc_auc_score(y_test, y_pred_norm)
-print(auc_norm)
-
-# Extract scores (logits) for normalized features
-scores_norm = (-lr_norm.decision_function(X_test_norm) *20/np.log(2)).astype(int)
-
-# 4. WoE transformation
-woe = WoETransformer(bins=5)
-woe.fit(X_train_raw, y_train)
-X_train_woe = woe.transform(X_train_raw)
-X_test_woe = woe.transform(X_test_raw)
-
-lr_woe = LogisticRegression()
-lr_woe.fit(X_train_woe, y_train)
-y_pred_woe = lr_woe.predict_proba(X_test_woe)[:, 1]
-auc_woe = roc_auc_score(y_test, y_pred_woe)
-
-# Extract scores (logits) for WoE features
-scores_woe = (-lr_woe.decision_function(X_test_woe)*20/np.log(2)).astype(int)
-
-scores_df = pd.DataFrame({
-    "score_norm": scores_norm,
-    "score_woe": scores_woe,
-    "target": y_test
-})
-
-
+prob_true, prob_pred = calibration_curve(y_test, y_pred_calibrated, n_bins=10)
 plt.figure()
-plt.hist(scores_norm[scores_df['target'] == 0], bins=100, alpha=0.5, label='Normalized Scores', density=True, color='blue')
-plt.hist(scores_norm[scores_df['target'] == 1], bins=100, alpha=0.5, label='Normalized Scores', density=True, color='orange')
-plt.show()
-
-plt.figure()
-plt.hist(lr_norm.decision_function(X_test_norm)[scores_df['target'] == 0], bins=100, alpha=0.5, label='Normalized Scores', density=True, color='blue')
-plt.hist(lr_norm.decision_function(X_test_norm)[scores_df['target'] == 1], bins=100, alpha=0.5, label='Normalized Scores', density=True, color='orange')
-plt.show()
-
+plt.plot(prob_pred, prob_true, marker="o", label=name)
 
 #%%
-
-
-# 1. Single train/test split for both models
-X_train_raw, X_test_raw, y_train, y_test = train_test_split(
-    df[feature_names], y, test_size=0.3, random_state=1
-)
-
-# 2. Normalize features
-scaler = StandardScaler()
-X_train_norm = scaler.fit_transform(X_train_raw)
-X_test_norm = scaler.transform(X_test_raw)
-
-with pm.Model() as logistic_model:
-    x = pm.Data("x", X_train_norm, dims=["obs_id", "feature"])
-    y = pm.Data("y", y_train, dims=["obs_id"])
-
-    # Priors for weights and bias
-    weights = pm.Normal("weights", mu=0, sigma=1, dims=["feature"])
-    bias = pm.Normal("bias", mu=0, sigma=1)
-
-    # Linear combination
-    logits = pm.Deterministic("logits", pm.math.dot(x, weights) + bias, dims=["obs_id"])
-    # Sigmoid link for probability
-    p = pm.Deterministic("p", pm.math.sigmoid(logits), dims=["obs_id"])
-
-    # Bernoulli likelihood
-    y_obs = pm.Bernoulli("y_obs", p=p, observed=y, dims=["obs_id"])
-
-    # Sample from the posterior
-    idata = pm.sample(draws=1000, tune=500, chains=4, cores=1, nuts_sampler ="numpyro")
-
-#%%
-
-# To make predictions on new data:
-with logistic_model:
-    pm.set_data({"x": X_test_norm})
-    posterior_pred = pm.sample_posterior_predictive(idata, var_names=["p"])
-    y_pred_proba = posterior_pred.posterior_predictive['p'].mean(("chain", "draw")).values
-#%%
-
-from sklearn.metrics import precision_recall_curve, average_precision_score
-import matplotlib.pyplot as plt
-
-from sklearn.metrics import f1_score
-
-# Suppose you already ran your function:
-# y_pred_proba, idata = bayesian_logistic_regression(...)
-# and you have y_test
-
-precision, recall, thresholds = precision_recall_curve(y_test, y_pred_bayes)
-avg_prec = average_precision_score(y_test, y_pred_bayes)
-
-plt.plot(recall, precision, marker='.')
-plt.xlabel("Recall")
-plt.ylabel("Precision")
-plt.title(f"Precision-Recall curve (AP={avg_prec:.3f})")
-plt.grid(True)
-plt.show()
-
-
-# Example 1: Pick threshold that maximizes F1
-f1_scores = 2 * (precision * recall) / (precision + recall + 1e-9)
-best_idx = np.argmax(f1_scores)
-best_threshold = thresholds[best_idx]
-print("Best F1 threshold:", best_threshold)
-print("Precision:", precision[best_idx], "Recall:", recall[best_idx])
-
-# Example 2: Pick threshold for recall >= 0.9
-target_recall = 0.9
-idx = np.where(recall >= target_recall)[0][0]
-thr_for_recall = thresholds[idx]
-print(f"Threshold for recall≥{target_recall}: {thr_for_recall}")
-print("Precision:", precision[idx], "Recall:", recall[idx])
-#%%
-
