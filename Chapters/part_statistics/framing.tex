@@ -1,0 +1,245 @@
+\section{Framing of Statistics}
+\label{sec:framing_statistics}
+In this book, the field of statistics\index{Statistics as a game against Nature} will be framed as a game against Nature, as is conventionally done i decision theory. In this game there are two players or decision makers
+\begin{enumerate}
+	\item \textbf{Robot:} This is the name given to the primary decision maker.
+	
+	\item \textbf{Nature:} This decision maker is a mysterious entity that is unpredictable to the Robot. It has its own set of actions, and it can choose them in a way that interferes with the achievements of the Robot. Nature can be considered as a synthetic decision maker that is constructed for the purposes of modeling uncertainty in the decision-making or planning process.
+\end{enumerate}
+The game is described by the interaction between the Robot and Nature, characterized by the probability space, $(\Omega, \mathcal{F}, \mathbb{P})$, the parameter space $\Omega_W$, and the set of probability distributions $\mathcal{P}$ parameterized by the parameters $w\in \Omega_W$. Imagine that the Robot and Nature each make a decision by choosing an action from a set, $u \in \Omega_U$ and $s \in \Omega_S$, respectively. $\Omega_U$ is referred to as the action space, and $\Omega_S$ as the Nature action space. The Robot receives a numerical penalty, assigned by a cost function, depending on the two decisions made.
+\begin{definition}[Cost Function]
+	\label{def:cost_function}
+	A cost function associates a numerical penalty depending on decision $u \in \Omega_U$ and $s \in \Omega_S$,
+	\begin{equation}
+		C: \Omega_U \times \Omega_S \mapsto \mathbb{R}.
+	\end{equation}
+\end{definition}
+Given the observation $X=x$ as well as a set of past observations and matching actions of Nature $D = \{(x_i,s_i)|i=1:n\}$, the Robot's objective is to formulate a decision rule that minimize the expected cost associated with its decisions.
+\begin{definition}[Decision Rule]
+	\label{def:decision_rule}
+	A decision rule is a function \( U \) that maps from the observation space \( \Omega_X \) and past observations and decisions \( \Omega_X^n \times \Omega_S^n \) to a set of possible actions \( \Omega_U \), meaning
+	\begin{equation}
+		U: \Omega_X\times \Omega_S \mapsto \Omega_U.
+	\end{equation}
+\end{definition}
+\begin{example}
+	\label{ex:rain}
+	Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
+	\begin{equation}
+		\mathbb{U} = \{"\text{bring umbrella}", "\text{don't bring umbrella}"\}.
+	\end{equation}
+	Nature have already picked whether or not it will rain later, i.e.
+	\begin{equation}
+		\Omega_S = \{"\text{rain}", "\text{no rain}"\},
+	\end{equation}
+	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$ weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast})$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
+\end{example}
+
+The random variable $X: \Omega \mapsto \Omega_X$ represent the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S: \Omega \mapsto \Omega_S$ represent the different possible decisions of Nature. $\Omega_X$ and $\Omega_S$ have associated $\sigma$-algebras and probability measures, however, such details are assumed \emph{to be understood} in the practical application of statistics. Given the observation $X=x$ as well as a set of past observations
+\begin{equation}
+	D = \{(X=x_1,S=s_1),\dots (X=x_n,S=s_n)\},
+\end{equation}
+the objective of the Robot is to minimize the expected cost associated with its decisions~\cite{murphy2023probabilistic}
+\begin{equation}
+	\begin{split}
+		\mathbb{E}[C(U, S)|I] &= \int dD dx ds  C(U(x,D),s) p(X=x,S=s,D|I)\\
+		& = \int d\tilde{D} ds  C(U(\tilde{D}),s) p(S=s,\tilde{D}|I)
+	\end{split}
+	\label{eq:conditional_expected_cost}
+\end{equation}
+where $\tilde{D} = \{D,X= x\}$ and the Robot aims to find the decision rule which minimizes \EQref{eq:conditional_expected_cost}, meaning
+\begin{equation}
+	U^* = \arg\min_{U} \mathbb{E}[C(U, S)|I].
+	\label{eq:decision_rule_x}
+\end{equation}	
+From \thref{theorem:total_expectation}
+\begin{equation}
+	\mathbb{E}[C(U, S)|I] = \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]].
+	\label{eq:total2}
+\end{equation}
+Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
+\begin{equation}
+	\begin{split}
+		U^* &= \arg\min_{U} \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]]\\
+		&= \arg\min_{U} \int dxp(\tilde{D}|I) \mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I].
+	\end{split}
+	\label{eq:decision_rule2}
+\end{equation}
+Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
+\begin{equation}
+	\begin{split}
+		U^*(\tilde{D}) &= \arg\min_{U(\tilde{D})} \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]\\
+		& = \arg\min_{U(\tilde{D})}\int  ds C(U(\tilde{D}),s) p(S=s|X=x,D,I).
+	\end{split}
+	\label{eq:decision_rule3}
+\end{equation}
+\begin{example}
+	In general the random variable $X$ represent the observations the Robot has available that are related to the decision Nature is going to make. However, this information may not be given, in which case $\{x,D_x\}=\emptyset$ and consequently
+	\begin{equation}
+		\begin{split}
+			\tilde{D} &= \{S_1 =s_1,\dots S_n=s_n\}\\
+			&\equiv D_s.
+		\end{split}
+	\end{equation}
+	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From \EQref{eq:decision_rule} the optimal action for the Robot can be written
+	\begin{equation}
+		U^*(D_s) = \arg\min_{U(D_s)} \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]
+		\label{eq:best_decision1}
+	\end{equation}
+\end{example}
+
+\subsection{Assigning a Cost Function}
+\label{sec:assing_cost}
+The cost function (see definition \ref{def:cost_function}) associates a numerical penalty to the Robot's action and thus the details of it determine the decisions made by the Robot. Under certain conditions, a cost function can be shown to exist~\citep{lavalle2006planning}, however, there is no systematic way of producing or deriving the cost function beyond applied logic. In general, the topic can be split into considering a continuous and discrete action space, $\Omega_U$. 	
+
+\subsubsection{Continuous Action Space}
+In case of a continuous action space, the cost function is typically picked from a set of standard choices.	
+\begin{definition}[Linear Cost Function]
+	\label{def:linear_cost_function}
+	The linear cost function is defined viz
+	\begin{equation}
+		C(U(\tilde{D}),s) \equiv |U(\tilde{D})-s|.
+	\end{equation}
+	
+\end{definition}
+\begin{theorem}[Median Decision Rule]
+	Assuming the cost function of \dfref{def:linear_cost_function}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int_{-\infty}^{\infty} ds |U(\tilde{D})-s| p(s|\tilde{D},I)\\
+			&= \int_{-\infty}^{U(\tilde{D})} (s-U(\tilde{D}))p(s|\tilde{D},I)ds\\
+			&\quad+\int_{U(\tilde{D})}^\infty (U(\tilde{D})-s)p(s|\tilde{D},I)ds\\
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			0 &=\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)+\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds\\
+			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)-\int_{U^*(\tilde{D})}^\infty p(s|\tilde{D},I)ds
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds &= \int_{U^*(\tilde{D})}^\infty p(s|\tilde{D},I)ds\\
+			&= 1- \int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds\\
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds = \frac{1}{2}
+	\end{equation}
+	which is the definition of the median.
+\end{theorem}
+
+\begin{definition}[Quadratic Cost Function]
+	\label{def:quadratic_cost}
+	The quadratic cost function is defined as
+	\begin{equation}
+		C(U(\tilde{D}),s) \equiv (U(\tilde{D})-s)^2.
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[Expectation Decision Rule]
+	\label{theorem:expectation_decision_rule}
+	Assuming the cost function of \dfref{def:quadratic_cost}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int ds (U(\tilde{D})-s)^2 p(s|\tilde{D},I)\\
+			&\Downarrow\\
+			\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int ds sp(s|\tilde{D},I)\\
+			&=0\\
+			&\Downarrow\\
+			U^*(\tilde{D})& = \int ds sp(s|\tilde{D},I)\\
+			&= \mathbb{E}[S|\tilde{D},I]
+		\end{split}
+	\end{equation}
+	which is the definition of the expectation value.
+\end{theorem}
+
+\begin{definition}[0-1 Cost Function]
+	\label{def:0_1_cost_function}
+	The 0-1 cost function is defined viz
+	\begin{equation}
+		C(U(\tilde{D}),s) \equiv 1-\delta(U(\tilde{D})-s).
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[MAP Decision Rule]
+	\label{theorem:MAP}
+	The maximum aposteriori (MAP) follows from assuming 0-1 loss viz
+	\begin{equation}
+		\mathbb{E}_{S|\tilde{D}}[C((\tilde{D}), S)|\tilde{D},I] = 1-\int ds \delta(U(\tilde{D})-s) p(s|\tilde{D},I)
+	\end{equation}
+	meaning
+	\begin{equation}
+		\begin{split}
+			\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{dp(s|\tilde{D},I)}{ds}\bigg|_{s=U^*(\tilde{D})}\\
+			&=0\\
+		\end{split}
+	\end{equation}
+	which is the definition of the MAP.
+\end{theorem}
+
+
+\begin{example}
+	Take
+	\begin{equation}
+		C(U(x), s) = \alpha\cdot \text{swish}(U(x)-s,\beta)+(1-\alpha)\cdot\text{swish}(s-U(x),\beta)
+	\end{equation}
+	where
+	\begin{equation}
+		\text{swish}(z,\beta) = \frac{z}{1+e^{-z\beta}}.
+	\end{equation}
+	and $z\equiv U(x)-s$. Taking $\alpha \ll 1$, then $z<0$ will be penalized relatively more than $z>0$. $z<0$ corresponds to underestimation, so this is penalized greater relative to overestimation. Now
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C|\dots ] =\int ds p(s|\dots) \bigg(&\alpha\cdot \text{swish}(U(x)-s,\beta)\\
+			&+(1-\alpha)\cdot\text{swish}(s-U(x),\beta)\bigg)
+		\end{split}
+	\end{equation}
+	Let $z\equiv U(x)-s$, then
+	\begin{equation}
+		\begin{split}
+			\frac{dC}{dU(x)} & = \frac{dC}{dz}\frac{dz}{dU(x)}\\
+			& = \bigg(\frac{\alpha}{1+e^{-\beta z}}-\frac{1-\alpha}{1+e^{\beta z}}\\
+			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU(x)}\\
+			&= \frac{\beta z e^{\beta z}-e^{\beta z}-1}{(1+e^{\beta z})^2}+\alpha+\mathcal{O}(\alpha^2)\\
+			&\approx  \alpha -\frac{1}{(1+e^{\beta z})^2}
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			\frac{d\mathbb{E}[C|\dots ]}{dU(x)} &\approx \int ds p(s|\dots) \bigg(\alpha -\frac{1}{(1+e^{\beta z})^2}\bigg)\\
+			& = \alpha -\int ds p(s|\dots)\frac{1}{(1+e^{\beta z})^2}\\
+			& = 0
+		\end{split}
+	\end{equation}
+	$\frac{1}{(1+e^{\beta z})^2}$ approximate a unit step which is $1$ for $z<0$ and $0$ otherwise. $z<0 \Rightarrow s>U(x)$. This means
+	\begin{equation}
+		\int_{-\infty}^{\infty} ds p(s|\dots)\frac{1}{(1+e^{\beta z})^2} \approx \int_{U(x)}^{\infty} ds p(s|\dots)
+	\end{equation}
+	This means
+	\begin{equation}
+		\alpha \approx \int_{U(x)}^{\infty} ds p(s|\dots).
+	\end{equation}
+\end{example}
+
+\subsubsection{Discrete Action Space}
+In case of a continuous action space, the conditional expected loss can be written
+\begin{equation}
+	\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] = \sum_{s\in \mathbb{S}}^nC(U(\tilde{D}),s)p(s|\tilde{D},I),
+\end{equation}
+where the cost function is typically represented in matrix form viz
+\begin{center}
+	\begin{tabular}{ c  c  c  c  c  }
+		&& $S$& & \\
+		&& $s_1$ & \dots & $s_{\text{dim}(\Omega_S)}$ \\
+		\cline{3-5}
+		$U(x)$ & $u_1$& \multicolumn{1}{|l}{$C(u_1, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_1, s_{\text{dim}(\Omega_S)})$} \\
+		& \vdots & \multicolumn{1}{|l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l|}{\vdots} \\
+		& $u_{\text{dim}(\Omega_U)}$ & \multicolumn{1}{|l}{$C(u_{\text{dim}(\Omega_U)}, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_{\text{dim}(\Omega_U)}, s_{\text{dim}(\Omega_S)})$} \\
+		\cline{3-5}
+	\end{tabular}
+\end{center}
+
+\subsection{Statistical Paradigms}
+So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (\dfref{def:bayesian_statistics}) and Frequentist (\dfref{def:frequentist_statistics}) paradigms. The difference between the two comes to light when considering the parameters of Natures model.  

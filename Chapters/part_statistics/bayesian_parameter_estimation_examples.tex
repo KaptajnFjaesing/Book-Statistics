@@ -1,0 +1,30 @@
+\begin{example}
+	Consider the scenario where two sets of costumers are subjected to two different products, $A$ and $B$. After exposure to the product, the costumer will be asked whether or not they are satisfied and they will be able to answer "yes" or "no" to this. Denote the probability of a costumer liking product $A/B$ by $w_A/w_B$, respectively. In this context, the probabilities $w_A/w_B$ are parameters of Natures model (similar to how the probability is a parameters for a binomial distribution). What will be of interest is the integral of the joint probability distribution where $w_B>w_A$, meaning
+	\begin{equation}
+		p(w_B > w_A|D,I)= \int_0^1\int_{w_A}^1p(w_A,w_B|D,I)dw_Adw_B.
+		\label{e1}
+	\end{equation}
+	Assuming the costumer sets are independent
+	\begin{equation}
+		\begin{split}
+			p(w_A,w_B|D,I) &= p(w_B|w_A,D,I)p(w_A|D,I)\\
+			& = p(w_B|D_A,I)p(w_A|D_A,I),
+		\end{split}
+	\end{equation}
+	with
+	\begin{equation}
+		p(w_i|D_i,I)=\frac{p(D_i|w_i,I)p(w_i|I)}{p(D_i|I)}.
+	\end{equation}
+	Assuming a beta prior and a binomial likelihood yields (since the binomial and beta distributions are conjugate)
+	\begin{equation}
+		p(w_i|D_i,I)=\frac{w_i^{\alpha_i-1}(1-w_i)^{\beta_i-1}}{B(\alpha_i,\beta_i)},
+	\end{equation}
+	where $\alpha_i\equiv \alpha+s_i$, $\beta_i\equiv \beta+f_i$ and $s_i/f_i$ denotes the successes/failure, respectively, registered in the two sets of costumers. Evaluating \EQref{e1} yields
+	\begin{equation}
+		p(w_B > w_A|D,I)= \sum_{j=0}^{\alpha_B-1}\frac{B(\alpha_A+j,\beta_A+\beta_B)}{(\beta_B+j)B(1+j,\beta_B)B(\alpha_A,\beta_A)}.
+	\end{equation}
+	
+\end{example}
+
+
+

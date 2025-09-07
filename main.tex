@@ -43,48 +43,19 @@ pagesize=pdftex,
 	%	THESIS CONTENT - CHAPTERS
 	%----------------------------------------------------------------------------------------
 	
-	\include{Chapters/part_introduction/preface}
-	
-	\part{Introduction}
-	\label{part:introduction}
+	\input{Chapters/part_introduction/preface}
 	\input{Chapters/part_introduction/set_theory_introduction}
 	\input{Chapters/part_introduction/probability_theory_introduction}
-	\input{Chapters/part_introduction/statistics_introduction}
 	\input{Chapters/part_introduction/assigning_probabilities}
-	\input{Chapters/part_introduction/framing_statistics}
 	
-	\cleardoublepage % Empty page before the start of the next part
+	\input{Chapters/part_introduction/statistics_introduction}
+	\input{Chapters/part_statistics/framing}
+	\input{Chapters/part_statistics/bayesian_statistics}
+	\input{Chapters/part_statistics/frequentist_statistics}
 	
-	\part{Frequentist Statistics} % First part of the thesis
-	\label{part:frequentist}
-	\input{Chapters/part_frequentist/frequentist_statistics_introduction}
-	\input{Chapters/part_frequentist/frequentist_parameter_estimation}
-	
-	\cleardoublepage % Empty page before the start of the next part
-	
-	\part{Bayesian Statistics} % First part of the thesis
-	\label{part:bayesian}
-	
-	% CHP: Introduction to Bayesian statistics
-	\input{Chapters/part_bayesian/baeysian_statistics_introduction} 
-	
-	% CHP: Assigning a cost function
-	\input{Chapters/part_bayesian/regression}
-	\input{Chapters/part_bayesian/regression_examples}
-	\input{Chapters/part_bayesian/classification}
-	\input{Chapters/part_bayesian/classification_examples}
-	
-	% CHP: Inference about Natures model
-	\input{Chapters/part_bayesian/inference_about_natures_model}
-	\input{Chapters/part_bayesian/parameter_estimation_examples}
-	
-	
-	\include{Chapters/dev/renzos_rule}
-	
-	\part{Reflection}
+
 	\input{Chapters/part_outro/reflections}
 	
-	\cleardoublepage % Empty page before the start of the next part
 	
 	
 	%----------------------------------------------------------------------------------------
@@ -92,9 +63,7 @@ pagesize=pdftex,
 	%----------------------------------------------------------------------------------------
 	
 	\appendix
-	
-	\part{Appendix} % New part of the thesis for the appendix
-	
+
 	\include{Chapters/appendices/app_HMC_algorithm}
 	\include{Chapters/appendices/app_Nested_sampling}
 	
