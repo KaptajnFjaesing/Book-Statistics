@@ -428,7 +428,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Variable transformation}
-	\emph{Let $X = \ln\big(\frac{Y}{1-Y}\big)$ be a continuous random variable with a constant PDF, i.e. $f(X=x)\propto $const. The inverse function is given by}
+	\emph{Let $X = \ln\big(\frac{Y}{1-Y}\big)$ be a continuous random variable with a constant PDF, i.e. $f(X=x)\propto \operatorname{const}$. The inverse function is given by}
 	\begin{equation}
 		g^{-1}(y) = \ln\bigg(\frac{y}{1-y}\bigg).
 	\end{equation}
@@ -436,8 +436,8 @@ Correlation and covariance are both measures of the relationship between two ran
 	\begin{equation}
 		\begin{split}
 			f(Y=y) &= f\left( X = g^{-1}(y) \right) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y}\\
-			& = \text{const}\cdot \frac{1-Y}{Y}\bigg(\frac{1}{1-Y}+\frac{Y}{(1-Y)^2}\bigg)\bigg|_{Y=y}\\
-			&=\text{const}\cdot Y^{-1}(1-Y)^{-1}|_{Y=y}\\
+			& = \operatorname{const}\cdot \frac{1-Y}{Y}\bigg(\frac{1}{1-Y}+\frac{Y}{(1-Y)^2}\bigg)\bigg|_{Y=y}\\
+			&=\operatorname{const}\cdot Y^{-1}(1-Y)^{-1}|_{Y=y}\\
 			&=\operatorname{Beta}(Y=y|a=0,b=0).
 		\end{split}
 	\end{equation}

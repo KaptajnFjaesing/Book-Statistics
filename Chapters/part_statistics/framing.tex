@@ -14,14 +14,20 @@ The game is described by the interaction between the Robot and Nature, character
 		C: \Omega_U \times \Omega_S \mapsto \mathbb{R}.
 	\end{equation}
 \end{definition}
-Given the observation $X=x$ as well as a set of past observations and matching actions of Nature $D = \{(x_i,s_i)|i=1:n\}$, the Robot's objective is to formulate a decision rule that minimize the expected cost associated with its decisions.
+Given the observation $X=x$ as well as a set of past observations and matching actions of Nature
+\begin{equation}
+	D=\{(X = x^{(i)},S= s^{(i)})\}_{i=1}^n,
+\end{equation}
+the Robot's objective is to formulate a decision rule that minimize the expected cost associated with its decisions.
 \begin{definition}[Decision Rule]
 	\label{def:decision_rule}
-	A decision rule is a function \( U \) that maps from the observation space \( \Omega_X \) and past observations and decisions \( \Omega_X^n \times \Omega_S^n \) to a set of possible actions \( \Omega_U \), meaning
+	A decision rule is a function $U$ that prescribes an action based on the current observation and past data. Formally, let $x \in \Omega_X$ be a new observation and $D \in (\Omega_X \times \Omega_S)^n$ denote the past observations and corresponding actions of Nature. Then a decision rule is a mapping
 	\begin{equation}
-		U: \Omega_X\times \Omega_S \mapsto \Omega_U.
+		U: \Omega_X \times (\Omega_X \times \Omega_S)^n \to \Omega_U,
 	\end{equation}
+	where $\Omega_U$ is the action space of the Robot.
 \end{definition}
+
 \begin{example}
 	\label{ex:rain}
 	Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
@@ -32,14 +38,10 @@ Given the observation $X=x$ as well as a set of past observations and matching a
 	\begin{equation}
 		\Omega_S = \{"\text{rain}", "\text{no rain}"\},
 	\end{equation}
-	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$ weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast})$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
+	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$ weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast}, D)$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
 \end{example}
 
-The random variable $X: \Omega \mapsto \Omega_X$ represent the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S: \Omega \mapsto \Omega_S$ represent the different possible decisions of Nature. $\Omega_X$ and $\Omega_S$ have associated $\sigma$-algebras and probability measures, however, such details are assumed \emph{to be understood} in the practical application of statistics. Given the observation $X=x$ as well as a set of past observations
-\begin{equation}
-	D = \{(X=x_1,S=s_1),\dots (X=x_n,S=s_n)\},
-\end{equation}
-the objective of the Robot is to minimize the expected cost associated with its decisions~\cite{murphy2023probabilistic}
+The random variable $X: \Omega \mapsto \Omega_X$ represent the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S: \Omega \mapsto \Omega_S$ represent the different possible decisions of Nature. $\Omega_X$ and $\Omega_S$ have associated $\sigma$-algebras and probability measures, however, such details are assumed to be understood in the practical application of statistics. Given the observation $X=x$, as well as data $D$, the objective of the Robot is to minimize the expected cost associated with its decisions~\cite{murphy2023probabilistic}
 \begin{equation}
 	\begin{split}
 		\mathbb{E}[C(U, S)|I] &= \int dD dx ds  C(U(x,D),s) p(X=x,S=s,D|I)\\
@@ -61,7 +63,7 @@ Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
 \begin{equation}
 	\begin{split}
 		U^* &= \arg\min_{U} \mathbb{E}_{\tilde{D}}[\mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I]]\\
-		&= \arg\min_{U} \int dxp(\tilde{D}|I) \mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I].
+		&= \arg\min_{U} \int d\tilde{D}p(\tilde{D}|I) \mathbb{E}_{S|\tilde{D}}[C(U, S)|\tilde{D},I].
 	\end{split}
 	\label{eq:decision_rule2}
 \end{equation}
@@ -69,7 +71,7 @@ Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral
 \begin{equation}
 	\begin{split}
 		U^*(\tilde{D}) &= \arg\min_{U(\tilde{D})} \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]\\
-		& = \arg\min_{U(\tilde{D})}\int  ds C(U(\tilde{D}),s) p(S=s|X=x,D,I).
+		& = \arg\min_{U(\tilde{D})}\int  ds C(U(\tilde{D}),s) p(s|\tilde{D},I).
 	\end{split}
 	\label{eq:decision_rule3}
 \end{equation}
@@ -77,11 +79,11 @@ Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral
 	In general the random variable $X$ represent the observations the Robot has available that are related to the decision Nature is going to make. However, this information may not be given, in which case $\{x,D_x\}=\emptyset$ and consequently
 	\begin{equation}
 		\begin{split}
-			\tilde{D} &= \{S_1 =s_1,\dots S_n=s_n\}\\
+			\tilde{D} &= \{S =s^{(1)},\dots S=s^{(n)}\}\\
 			&\equiv D_s.
 		\end{split}
 	\end{equation}
-	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From \EQref{eq:decision_rule} the optimal action for the Robot can be written
+	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From \EQref{eq:decision_rule3} the optimal action for the Robot can be written
 	\begin{equation}
 		U^*(D_s) = \arg\min_{U(D_s)} \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]
 		\label{eq:best_decision1}
@@ -103,6 +105,7 @@ In case of a continuous action space, the cost function is typically picked from
 	
 \end{definition}
 \begin{theorem}[Median Decision Rule]
+	\label{def:median_decision_rule}
 	Assuming the cost function of \dfref{def:linear_cost_function}
 	\begin{equation}
 		\begin{split}
@@ -113,7 +116,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			0 &=\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			0 &=\frac{\partial \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
 			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)+\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds\\
 			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)-\int_{U^*(\tilde{D})}^\infty p(s|\tilde{D},I)ds
 		\end{split}
@@ -145,11 +148,11 @@ In case of a continuous action space, the cost function is typically picked from
 		\begin{split}
 			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int ds (U(\tilde{D})-s)^2 p(s|\tilde{D},I)\\
 			&\Downarrow\\
-			\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int ds sp(s|\tilde{D},I)\\
+			\frac{\partial \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int ds sp(s|\tilde{D},I)\\
 			&=0\\
 			&\Downarrow\\
 			U^*(\tilde{D})& = \int ds sp(s|\tilde{D},I)\\
-			&= \mathbb{E}[S|\tilde{D},I]
+			&= \mathbb{E}_{S|\tilde{D}}[S|\tilde{D},I]
 		\end{split}
 	\end{equation}
 	which is the definition of the expectation value.
@@ -167,12 +170,12 @@ In case of a continuous action space, the cost function is typically picked from
 	\label{theorem:MAP}
 	The maximum aposteriori (MAP) follows from assuming 0-1 loss viz
 	\begin{equation}
-		\mathbb{E}_{S|\tilde{D}}[C((\tilde{D}), S)|\tilde{D},I] = 1-\int ds \delta(U(\tilde{D})-s) p(s|\tilde{D},I)
+		\mathbb{E}_{S|\tilde{D}}[C((\tilde{D}), S)|\tilde{D},I] = 1-\int ds \delta(U(\tilde{D})-s) p(S = s|\tilde{D},I)
 	\end{equation}
 	meaning
 	\begin{equation}
 		\begin{split}
-			\frac{d \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{dp(s|\tilde{D},I)}{ds}\bigg|_{s=U^*(\tilde{D})}\\
+			\frac{\partial \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{\partial p(S = U(\tilde{D})|\tilde{D},I)}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
 			&=0\\
 		\end{split}
 	\end{equation}
@@ -181,52 +184,54 @@ In case of a continuous action space, the cost function is typically picked from
 
 
 \begin{example}
-	Take
+	The median decision rule is symmetric with respect to $z(\tilde{D},s) \equiv U(\tilde{D})-s$, meaning underestimation ($z<0$) and overestimation ($z>0$) is penalized equally. This decision rule can be generalized to favoring either scenario by adopting the cost function
 	\begin{equation}
-		C(U(x), s) = \alpha\cdot \text{swish}(U(x)-s,\beta)+(1-\alpha)\cdot\text{swish}(s-U(x),\beta)
+		C(U(\tilde{D}), s) = \alpha\cdot \operatorname{swish}(U(\tilde{D})-s,\beta)
+		+(1-\alpha)\cdot \operatorname{swish}(s-U(\tilde{D}),\beta),
 	\end{equation}
 	where
 	\begin{equation}
-		\text{swish}(z,\beta) = \frac{z}{1+e^{-z\beta}}.
+		\operatorname{swish}(z,\beta) = \frac{z}{1+e^{-\beta z}}.
 	\end{equation}
-	and $z\equiv U(x)-s$. Taking $\alpha \ll 1$, then $z<0$ will be penalized relatively more than $z>0$. $z<0$ corresponds to underestimation, so this is penalized greater relative to overestimation. Now
+	Taking $\alpha \ll 1$ means $z<0$ will be penalized relatively more than $z>0$. The expected cost is
+	\begin{equation}
+		\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] = \int ds \, p(S=s|\tilde{D},I)\, C(U(\tilde{D}),s).
+	\end{equation}
+	The derivative of the expected cost with respect to the decision rule can be approximated viz
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C|\dots ] =\int ds p(s|\dots) \bigg(&\alpha\cdot \text{swish}(U(x)-s,\beta)\\
-			&+(1-\alpha)\cdot\text{swish}(s-U(x),\beta)\bigg)
-		\end{split}
-	\end{equation}
-	Let $z\equiv U(x)-s$, then
-	\begin{equation}
-		\begin{split}
-			\frac{dC}{dU(x)} & = \frac{dC}{dz}\frac{dz}{dU(x)}\\
+			\frac{dC}{dU} & = \frac{dC}{dz}\frac{dz}{dU}\\
 			& = \bigg(\frac{\alpha}{1+e^{-\beta z}}-\frac{1-\alpha}{1+e^{\beta z}}\\
-			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU(x)}\\
+			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU}\\
 			&= \frac{\beta z e^{\beta z}-e^{\beta z}-1}{(1+e^{\beta z})^2}+\alpha+\mathcal{O}(\alpha^2)\\
 			&\approx  \alpha -\frac{1}{(1+e^{\beta z})^2}
 		\end{split}
 	\end{equation}
+	leading to the approximate expected cost
 	\begin{equation}
 		\begin{split}
-			\frac{d\mathbb{E}[C|\dots ]}{dU(x)} &\approx \int ds p(s|\dots) \bigg(\alpha -\frac{1}{(1+e^{\beta z})^2}\bigg)\\
-			& = \alpha -\int ds p(s|\dots)\frac{1}{(1+e^{\beta z})^2}\\
+			\frac{d\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{dU(\tilde{D})} &\approx \int ds p(s|\tilde{D},I) \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},s)})^2}\bigg)\\
+			& = \alpha -\int ds p(s|\tilde{D},I)\frac{1}{(1+e^{\beta z(\tilde{D},s)})^2}.\\
 			& = 0
 		\end{split}
 	\end{equation}
-	$\frac{1}{(1+e^{\beta z})^2}$ approximate a unit step which is $1$ for $z<0$ and $0$ otherwise. $z<0 \Rightarrow s>U(x)$. This means
+	For large $\beta$, the factor $\frac{1}{(1+e^{\beta (U(\tilde{D})-s)})^2}$ approaches the indicator $\mathbb{1}\{s>U(\tilde{D})\}$. Hence,
 	\begin{equation}
-		\int_{-\infty}^{\infty} ds p(s|\dots)\frac{1}{(1+e^{\beta z})^2} \approx \int_{U(x)}^{\infty} ds p(s|\dots)
+		\int_{-\infty}^{\infty} ds p(s|\tilde{D},I)\frac{1}{(1+e^{\beta z(\tilde{D},s)})^2} \approx \int_{U(\tilde{D})}^{\infty} ds p(s|\tilde{D},I)
 	\end{equation}
-	This means
+	This means the optimal decision rule can be written viz
 	\begin{equation}
-		\alpha \approx \int_{U(x)}^{\infty} ds p(s|\dots).
+		\alpha \approx \int_{U(\tilde{D})}^{\infty} ds p(s|\tilde{D},I).
+		\label{eq:quantile_decision_rule}
 	\end{equation}
+	The optimal decision $U^*(\tilde{D})$ is the $\alpha$-quantile of the conditional distribution $p(S|\tilde{D},I)$. This rule is known as the quantile decision rule.
 \end{example}
 
 \subsubsection{Discrete Action Space}
 In case of a continuous action space, the conditional expected loss can be written
 \begin{equation}
-	\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] = \sum_{s\in \mathbb{S}}^nC(U(\tilde{D}),s)p(s|\tilde{D},I),
+	\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] = \sum_{s\in \Omega_S}C(U(\tilde{D}),s)p(s|\tilde{D},I),
+	\label{eq:conditional_cost_discrete}
 \end{equation}
 where the cost function is typically represented in matrix form viz
 \begin{center}
@@ -234,12 +239,189 @@ where the cost function is typically represented in matrix form viz
 		&& $S$& & \\
 		&& $s_1$ & \dots & $s_{\text{dim}(\Omega_S)}$ \\
 		\cline{3-5}
-		$U(x)$ & $u_1$& \multicolumn{1}{|l}{$C(u_1, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_1, s_{\text{dim}(\Omega_S)})$} \\
+		$U(\tilde{D})$ & $u_1$& \multicolumn{1}{|l}{$C(u_1, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_1, s_{\text{dim}(\Omega_S)})$} \\
 		& \vdots & \multicolumn{1}{|l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l|}{\vdots} \\
 		& $u_{\text{dim}(\Omega_U)}$ & \multicolumn{1}{|l}{$C(u_{\text{dim}(\Omega_U)}, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_{\text{dim}(\Omega_U)}, s_{\text{dim}(\Omega_S)})$} \\
 		\cline{3-5}
 	\end{tabular}
 \end{center}
+Note that the lower index represent realized values of $s$ whereas an upper index represent datapoints.
+
+\begin{example}
+	With reference to \exref{ex:rain}, the possible states of Nature are $s_1 = "\text{rain}"$ and $s_2 = "\text{no rain}"$, whereas each observed outcome $s^{(i)}$ in the dataset 
+	\begin{equation}
+		D = \{(x^{(1)},s^{(1)}),(x^{(2)},s^{(2)}),(x^{(3)},s^{(3)})\}
+	\end{equation}
+	takes a value in $\{s_1,s_2\}$. For instance, one possible dataset realization could be $s^{(1)}=s_1$, $s^{(2)}=s_1$, and $s^{(3)}=s_2$.
+\end{example}
+
+\begin{example}
+	Consider a binary classification problem with action space $\Omega_U = \{u_1,u_2\}$ and Nature's state space $\Omega_S = \{s_1, s_2\}$, where $u_1$ corresponds to predicting class $s_1$ and $u_2$ to predicting class $s_2$. Let
+	\begin{equation}
+		D = \{(x^{(i)},s^{(i)})\}_{i=1}^n
+	\end{equation}
+	denote the training data, where $s^{(i)} \in \Omega_S$ are observed realizations of Nature's states. Let $U(x,D)$ be a classifier based on the probability $p(S = s | x, D, I)$. Define a threshold $k\in[0,1]$ and the decision rule
+	\begin{equation}
+		U_k(x,D) =
+		\begin{cases}
+			u_1, & p(S=s_2 | x, D, I) < k,\\
+			u_2, & p(S=s_2 | x, D, I) \ge k.
+		\end{cases}
+	\end{equation}
+	For a fixed threshold $k$, classifier performance is summarized in the confusion matrix
+	\begin{center}
+		\begin{tabular}{ c  c  c c}
+			&& $S$ &  \\
+			&& $s_1$ & $s_2$ \\
+			\cline{3-4}
+			$U(x,D)$ & $u_1$& \multicolumn{1}{|l}{TP(k)} & \multicolumn{1}{l|}{FP(k)}\\
+			& $u_2$& \multicolumn{1}{|l}{FN(k)} & \multicolumn{1}{l|}{TN(k)}\\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	and standard performance measures are defined as
+	\begin{align}
+		\operatorname{TPR(k)} &= \frac{\operatorname{TP(k)}}{\operatorname{TP(k)} + \operatorname{FN(k)}},\\
+		\operatorname{FPR(k)} &= \frac{\operatorname{FP(k)}}{\operatorname{FP(k)} + \operatorname{TN(k)}},\\
+		\operatorname{Accuracy(k)} &= \frac{\operatorname{TP(k)} + \operatorname{TN(k)}}{\operatorname{TP(k)} + \operatorname{TN(k)} + \operatorname{FP(k)} + \operatorname{FN(k)}}.
+	\end{align}
+	Varying the threshold $k$ over $[0,1]$ defines a family of classifiers $U_k(x,D)$, which induces a set of points
+	\begin{equation}
+		\operatorname{ROC} = \{ (\operatorname{FPR(k)}, \operatorname{TPR(k)}) : k \in [0,1] \}.
+	\end{equation}
+	The Area Under the ROC\index{AUROC}\index{Area Under the ROC} Curve (AUROC) is a threshold-independent measure. Let $X_{(s_1)}$ and $X_{(s_2)}$ denote independent draws from the class-conditional distributions $p(x | S = s_1)$ and $p(x | S = s_2)$, respectively. Then
+	\begin{equation}
+		\operatorname{AUROC} = p( p(S=s_2 | X_{(s_2)}, D, I) > p(S=s_2 | X_{(s_1)}, D, I)| D, I ),
+	\end{equation}
+	i.e., the probability that the classifier assigns a higher score to a randomly chosen positive instance than to a randomly chosen negative instance. Equivalently,
+	\begin{equation}
+		\operatorname{AUROC} = \int_0^1 \operatorname{TPR}(\operatorname{FPR}^{-1}(u)) \, du,
+	\end{equation}
+	under regularity conditions ensuring $\operatorname{FPR}$ is invertible. The Accuracy Ratio\index{Accuracy Ratio}\index{AR} (AR), or normalized Gini coefficient\index{Normalized Gini coefficient}, is defined from the AUROC as
+	\begin{equation}
+		\operatorname{AR} = 2 \cdot \operatorname{AUROC} - 1.
+	\end{equation}
+	and provide a measure rescaled to the interval $[-1,1]$.
+	
+\end{example}
+
+
+\begin{example}
+	\index{Example: Bayesian decision theory}
+	Consider a discrete action space with an observation $X=x$ and available data $D$ ($\tilde{D} \equiv {x, D}$). Picking a class corresponds to an action, so classification can be viewed as a game against nature, where nature has picked the true class and the robot has to pick a class as well. Suppose there are only two classes and the cost function is defined by the matrix
+	\begin{center}
+		\begin{tabular}{ c  c  c  c }
+			&& $S$& \\
+			&& $s_1$ & $s_2$  \\
+			\cline{3-4}
+			$U(\tilde{D})$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{12}$}  \\
+			& $u_2$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{$0$} \\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	\begin{enumerate}
+		\item Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $k$ and predicting $U(\tilde{D})=u_1$ if $p(S=\sigma_2|\tilde{D},I) < k$ and $U(\tilde{D})=u_2$ if $p(S=\sigma_2|\tilde{D},I)\geq k$. What is $k$ as a function of $\lambda_{12}$ and $\lambda_{21}$?\newline
+		
+		The conditional expected cost (\EQref{eq:conditional_cost_discrete})
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] & = \sum_sC(U(\tilde{D}),S=s)p(S=s|\tilde{D},I)\\
+				& = C(U(\tilde{D}),S=s_1)p(S=s_1|\tilde{D},I)\\
+				& \quad+C(U(\tilde{D}),S=s_2)p(S=s_2|\tilde{D},I)\\
+			\end{split}
+		\end{equation}
+		For the different possible actions
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|\tilde{D}}[C(u_1, S)|\tilde{D},I] &= \lambda_{12}p(S=s_2|\tilde{D},I),\\
+				\mathbb{E}_{S|\tilde{D}}[C(u_2, S)|\tilde{D},I] &= \lambda_{21}p(S=s_1|\tilde{D},I),\\
+			\end{split}
+		\end{equation}
+		$U(\tilde{D})=u_1$ iff
+		\begin{equation}
+			\mathbb{E}_{S|\tilde{D}}[C(u_1,S)|\tilde{D},I]<\mathbb{E}_{S|\tilde{D}}[C(u_1,S)|\tilde{D},I])
+		\end{equation}
+		meaning
+		\begin{equation}
+			\begin{split}
+				\lambda_{12}p(S=s_2|\tilde{D},I)&<\lambda_{21}p(S = s_1|\tilde{D},I)\\
+				&=\lambda_{21}(1-p(S =s_2|\tilde{D},I))
+			\end{split}
+		\end{equation}
+		meaning $U(\tilde{D}) = u_1$ iff
+		\begin{equation}
+			p(S=s_2|\tilde{D},I)<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k
+		\end{equation}
+		
+		
+		\item Show a loss matrix where the threshold is $0.1$.\newline
+		
+		$k = \frac{1}{21}=\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}} \Rightarrow \lambda_{12}=9\lambda_{21}$ yielding the loss matrix
+		
+		\begin{center}
+			\begin{tabular}{ c  c  c  c }
+				&& $S$& \\
+				&& $s_1$ & $s_2$  \\
+				\cline{3-4}
+				$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{21}$}  \\
+				& $u_2$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{0} \\
+				\cline{3-4}
+			\end{tabular}
+		\end{center}
+		
+		You may set $\lambda_{21}=1$ since only the relative magnitude is important in relation to making a decision.
+		
+	\end{enumerate}
+	
+	
+\end{example}
+
+
+\begin{example}
+	\index{Example: Bayesian decision theory}
+	In many classification problems one has the option of assigning $x$ to class $k\in K$ or, if the robot is too uncertain, choosing a reject option. If the cost for rejection is less than the cost of falsely classifying the object, it may be the optimal action. Define the cost function as follows
+	\begin{equation}
+		C(U(\tilde{D}),s)=\begin{cases}
+			0 & \text{if correct classification ($U(\tilde{D})=s$)}\\
+			\lambda_r & \text{if reject option $U(\tilde{D})=$ reject}\\
+			\lambda_s & \text{if wrong classification ($U(\tilde{D})\neq s$)}\\
+		\end{cases}.
+	\end{equation}
+	
+	\begin{enumerate}
+		\item Show that the minimum cost is obtained if the robot decides on class $U(\tilde{D})$ if $p(S=U(\tilde{D})|\tilde{D},I)\geq p(S\neq U(\tilde{D})|\tilde{D},I)$ and if $p(S=U(\tilde{D})|\tilde{D},I)\geq 1-\frac{\lambda_r}{\lambda_s}$.\newline
+		
+		The conditional expected cost if the robot does not pick the reject option, meaning $U(\tilde{D})\in \mathbb{U}\setminus\text{reject}$
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] & = \sum_s C(U(\tilde{D}),S=s)p(S=s|\tilde{D},I)\\
+				&= \sum_{s\neq U(\tilde{D})}\lambda_sp(S=s|\tilde{D},I)\\
+				&= \lambda_s(1-p(S=U(\tilde{D})|\tilde{D},I))
+			\end{split}
+			\label{eq:cost1a}
+		\end{equation}
+		where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $S=U(\tilde{D})$ does not enter the sum. For the third equality it has been used that summing over all but $S=u$ is equal to $1-p(S=U(\tilde{D})|\tilde{D},I)$. The larger $p(S=U(\tilde{D})|\tilde{D},I)$, the smaller loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the robot picks the reject option
+		\begin{equation}
+			\begin{split}
+				\mathbb{E}_{S|\tilde{D}}[C(\text{reject}, S)|\tilde{D},I]&= \lambda_r\sum_sp(S=s|\tilde{D},I)\\
+				&=\lambda_r.
+			\end{split}
+			\label{eq:cost2a}
+		\end{equation}
+		Equation \eqref{eq:cost1a} show picking $\arg\max_{U(\tilde{D})\in \mathbb{U}\setminus \text{reject}} p(S=U(\tilde{D})|\tilde{D},I)$ is the best option among classes $U(\tilde{D})\neq \text{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using equations \eqref{eq:cost1} and \eqref{eq:cost2a} yields
+		\begin{equation}
+			(1-p(S=U(\tilde{D})|\tilde{D},I))\lambda_s< \lambda_r
+		\end{equation}
+		meaning
+		\begin{equation}
+			p(S=U(\tilde{D})|\tilde{D},I)\geq 1-\frac{\lambda_r}{\lambda_s}.
+		\end{equation}
+		
+		\item Describe qualitatively what happens as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$.\newline
+		
+		$\frac{\lambda_r}{\lambda_s}=0$ means rejection is rated as a successful classification -- i.e. no cost associated -- and this become the best option (rejection that is) unless $p(S=U(\tilde{D})|\tilde{D},I)=1$, corresponding to knowing the correct class with absolute certainty. In other words; in this limit rejection is best unless the robot is certain of the correct class. $\frac{\lambda_r}{\lambda_s}=1$ means rejection is rated a misclassification -- i.e. $\lambda_r=\lambda_s$ -- and thus and "automatic cost". Hence, in this case rejection is never chosen. In between the limits, an interpolation of interpretations apply.
+	\end{enumerate}
+\end{example}
 
 \subsection{Statistical Paradigms}
 So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (\dfref{def:bayesian_statistics}) and Frequentist (\dfref{def:frequentist_statistics}) paradigms. The difference between the two comes to light when considering the parameters of Natures model.  
