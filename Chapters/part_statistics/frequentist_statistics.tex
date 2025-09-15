@@ -14,7 +14,7 @@ This gives rise to a nested decision problem with two levels:
 	\item[\textit{ii)}] Prediction/decision: given a new observation $x$ and the parameter estimate $\hat{w}(D)$, apply the decision rule $U$ to determine an action.
 \end{enumerate}
 
-To avoid notational ambiguity, a distinction is made between the decision rule used for prediction, denoted $U$, and the decision rule used for parameter estimation, denoted $\hat{w}$. The practical decision rule for a new observation $x$ therefore takes the form
+To avoid notational ambiguity, a distinction is made between the decision rule used for prediction, denoted $U$, and the decision rule used for parameter estimation, denoted $\hat{w}$. The practical decision rule for a new observation $x \in \Omega_X$ therefore takes the form
 \begin{equation}
 	U^*(x, \hat{w}^*(D)),
 \end{equation}
@@ -22,12 +22,11 @@ where $\hat{w}^*(D)$ denotes the optimal parameter decision rule, obtained from 
 
 
 
-
 \subsection{Frequentist Regression}
 \label{chp:frequentist_regression}
-In the Frequentist paradigm, regression involves the Robot constructing a model $f: \Omega_W \times \Omega_X \mapsto \mathbb{R}$, parameterized by $w \in \Omega_W$, to approximate Nature's actions $S$ based on observed data $X$. As in Bayesian regression (\secref{chp:regression}), the output of $f$ is real-valued, so that $S$ is assumed continuous. The model $f$ serves as the Robot's surrogate for Nature's mechanism, providing predictions of Nature's action given observed data $x \in \Omega_X$. \newline
+In the Frequentist paradigm, regression involves the Robot constructing a model $f: \Omega_W \times \Omega_X \mapsto \mathbb{R}$, parameterized by $w \in \Omega_W$, to approximate Nature's actions $s\in \Omega_S$ based on observed data $x\in \Omega_X$. As in Bayesian regression (\secref{chp:regression}), the output of $f$ is real-valued, so that $S$ is assumed continuous. The model $f$ serves as the Robot's surrogate for Nature's mechanism, providing predictions of Nature's action given observed data $x \in \Omega_X$. \newline
 
-Suppose Nature's action $S$ given observed data $X$ is distributed according to a normal distribution with mean $f(w,x)$ and precision $\xi \in \Omega_{\Xi}$,
+Suppose Nature's action $s\in\Omega_S$ given observed data $x\in \Omega_X$ is distributed according to a normal distribution with mean $f(w,x)$ and precision $\xi \in \Omega_{\Xi}$,
 \begin{equation}
 	p(s | x, w, \xi, I) 
 	= \sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(w,x)-s)^2}.
@@ -60,12 +59,10 @@ with
 \begin{equation}
 	\sum_{s\in \Omega_S} p(S = s | x, w, I) = 1.
 \end{equation}
-
 The Robot's action space is typically equal to Nature's action space, $\Omega_U = \Omega_S$, possibly with the addition of a reject option at cost $\lambda$. Using the 0--1 cost function with optional reject,
 \begin{equation}
 	C(U(x,w), s) = 1 - \delta_{U(x,w),s} + (\lambda-1)\delta_{U(x,w), \text{"Reject"}}.
 \end{equation}
-
 Let $\hat{w}^*(D)$ denote the optimal Frequentist estimator of the model parameters obtained from past data $D$. The optimal decision rule for a new observation $x$ is
 \begin{equation}
 	\begin{split}
@@ -83,20 +80,19 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{definition}[Fisher Information]
 	\label{def:fisher_information}
-	Take $D_s = \{s_1, \dots, s_n\}$, $D_x = \{x_1, \dots, x_n\}$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_s | D_x, w, I)$ denote the likelihood of observing Natures actions $D_s$ given observed data $D_x$ and $w$. The Fisher information is defined as
+	Take $D_s= \{s_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_s | D_x, w, I)$ denote the likelihood of observing Natures actions $D_s$ given observed data $D_x$ and $w$. The Fisher information is defined as
 	\begin{equation}
 		\begin{split}
 			\mathcal{I}(w) &\equiv \mathbb{E} \bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_s|D_x, w,I)\bigg)^2 \Bigg| D_x, w,I\bigg]\\
 			&= \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_s|D_x, w,I) \Bigg| D_x, w,I\bigg].
 		\end{split}
 	\end{equation}
-	where $\partial_w$ denotes $\frac{\partial}{\partial w}$.
 \end{definition}
 
 \begin{proof}
 	In general
 	\begin{equation}
-		\mathbb{E}\bigg[(\frac{\partial}{\partial w} \ln p)^2\bigg] 
+		\mathbb{E}\bigg[\bigg(\frac{\partial}{\partial w} \ln p\bigg)^2\bigg] 
 		= \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p\bigg] + 
 		\bigg(\mathbb{E}\bigg[\frac{\partial}{\partial w} \ln p\bigg]\bigg)^2.
 	\end{equation}
@@ -128,7 +124,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 	where $\mathcal{I}_i(w)$ is the Fisher information of the $i$-th observation:
 	\begin{equation}
-		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(s_i | x_i, w, I)\Big)^2 \Bigg| x_i, w, I \Bigg].
+		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Bigg(\frac{\partial}{\partial w} \ln p(s_i | x_i, w, I)\Bigg)^2 \Bigg| x_i, w, I \Bigg].
 	\end{equation}
 \end{theorem}
 
@@ -228,8 +224,8 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[\hat{w}(D_s)|w,I] &= \frac{1}{n} \sum_{i=1}^n \mathbb{E}[s_i|w,I] = w,\\
-				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[s_i|w,I] = \frac{w(1-w)}{n},\\
+				\mathbb{E}[\hat{w}(D_s)|w,I] &= \frac{1}{n} \sum_{i=1}^n \mathbb{E}[S|w,I] = w,\\
+				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[S|w,I] = \frac{w(1-w)}{n},\\
 				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= \operatorname{Var}[\hat{w}(D_s)|w,I] = \frac{w(1-w)}{n}.
 			\end{split}
 		\end{equation}
@@ -254,8 +250,8 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[\hat{w}(D_s)|w,I] &= \mathbb{E}[s_1|w,I] = w,\\
-				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \operatorname{Var}[s_1|w,I] = w(1-w),\\
+				\mathbb{E}[\hat{w}(D_s)|w,I] &= \mathbb{E}[S|w,I] = w,\\
+				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \operatorname{Var}[S|w,I] = w(1-w),\\
 				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= w(1-w).
 			\end{split}
 		\end{equation}
