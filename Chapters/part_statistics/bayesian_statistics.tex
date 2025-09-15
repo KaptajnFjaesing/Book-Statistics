@@ -26,7 +26,7 @@ To evaluate $p(w|D,I)$ a combination of the chain rule (\thref{theorem:chain_rul
 	\end{split}
 	\label{eq:pa2}
 \end{equation}
-where $D_s= \{s^{(i)}\}_{i=1}^n$, $D_x = \{x^{(i)}\}_{i=1}^n$ and $p(D_s|D_x,I)$ can be expanded via marginalization and \axref{ax:observation_relevance} has been used for the first and second equality.
+where $D_s= \{s_i\}_{i=1}^n$, $D_x = \{x_i\}_{i=1}^n$ and $p(D_s|D_x,I)$ can be expanded via marginalization and \axref{ax:observation_relevance} has been used for the first and second equality.
 
 \begin{axiom}[Relevance of Observations]
 	\label{ax:observation_relevance}
@@ -126,7 +126,7 @@ where
 Besides its function in the HMC algorithm, the Hamiltonian represent the details of the Bayesian model well and should be a familiar sight for people used to the more commonly applied frequentist formalism\index{Frequentist statistics} (since, in this case, it is in form similar to a cost function comprised of a sum of squared errors, weight decay on the coefficients and further penalty terms~\citep{hastie_09,murphy2013machine,Goodfellow2016}). Using \EQref{eq:bayes2}-\EQref{eq:ss} yields
 \begin{equation}
 	\begin{split}
-		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln(\xi)] +\frac{\xi}{2}\sum_{i=1}^{n}(f(w,x^{(i)})-s^{(i)})^2\\
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln(\xi)] +\frac{\xi}{2}\sum_{i=1}^{n}(f(w,x_i)-s_i)^2\\
 		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
 		&\qquad\qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}w_l^2\bigg)\\
 		&\quad+\ln(\Gamma(\tilde{\alpha}))-\tilde{\alpha}\ln(\tilde{\beta})+(1-\tilde{\alpha})\ln(\xi)+\tilde{\beta}\xi+const.
@@ -188,8 +188,8 @@ where from \axref{ax:observation_relevance} $p(w|D_x,I) = p(w|I)$. Assuming the 
 where $p(w|\lambda,I)p(\lambda|I)$ is given by \EQref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
 \begin{equation}
 	\begin{split}
-		p(D_s|D_x,w,I) &=\prod_{i=1}^{n}p(S = s^{(i)}|X = x^{(i)},w,I)\\
-		&=\prod_{i=1}^{n}f_{S = s^{(i)}}(w,x^{(i)})\\
+		p(D_s|D_x,w,I) &=\prod_{i=1}^{n}p(S = s_i|X = x_i,w,I)\\
+		&=\prod_{i=1}^{n}f_{S = s_i}(w,x_i)\\
 	\end{split}.
 	\label{lik}
 \end{equation}
@@ -205,7 +205,7 @@ where
 Using \EQref{eq:q5}-\EQref{lik} in equation \eqref{ham3} yields the Hamiltonian
 \begin{equation}
 	\begin{split}
-		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln(f_{S = s^{(i)}}(w,x^{(i)}))+\text{const}\\
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln(f_{S = s_i}(w,x_i))+\text{const}\\
 		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
 		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}w_l^2\bigg)\\
 	\end{split}.

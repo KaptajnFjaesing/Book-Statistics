@@ -16,7 +16,7 @@ The game is described by the interaction between the Robot and Nature, character
 \end{definition}
 Given the observation $X=x$ as well as a set of past observations and matching actions of Nature
 \begin{equation}
-	D=\{(X = x^{(i)},S= s^{(i)})\}_{i=1}^n,
+	D=\{(X = x_i,S= s_i)\}_{i=1}^n,
 \end{equation}
 the Robot's objective is to formulate a decision rule that minimize the expected cost associated with its decisions.
 \begin{definition}[Decision Rule]
@@ -79,7 +79,7 @@ Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral
 	In general the random variable $X$ represent the observations the Robot has available that are related to the decision Nature is going to make. However, this information may not be given, in which case $\{x,D_x\}=\emptyset$ and consequently
 	\begin{equation}
 		\begin{split}
-			\tilde{D} &= \{S =s^{(1)},\dots S=s^{(n)}\}\\
+			\tilde{D} &=\{S= s_i\}_{i=1}^n\\
 			&\equiv D_s.
 		\end{split}
 	\end{equation}
@@ -237,45 +237,45 @@ where the cost function is typically represented in matrix form viz
 \begin{center}
 	\begin{tabular}{ c  c  c  c  c  }
 		&& $S$& & \\
-		&& $s_1$ & \dots & $s_{\text{dim}(\Omega_S)}$ \\
+		&& $s^{(1)}$ & \dots & $s^{(\text{dim}(\Omega_S))}$ \\
 		\cline{3-5}
-		$U(\tilde{D})$ & $u_1$& \multicolumn{1}{|l}{$C(u_1, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_1, s_{\text{dim}(\Omega_S)})$} \\
+		$U(\tilde{D})$ & $u^{(1)}$& \multicolumn{1}{|l}{$C(u^{(1)}, s^{(1)})$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u^{(1)}, s^{(\text{dim}(\Omega_S))})$} \\
 		& \vdots & \multicolumn{1}{|l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l|}{\vdots} \\
-		& $u_{\text{dim}(\Omega_U)}$ & \multicolumn{1}{|l}{$C(u_{\text{dim}(\Omega_U)}, s_1)$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u_{\text{dim}(\Omega_U)}, s_{\text{dim}(\Omega_S)})$} \\
+		& $u^{(\text{dim}(\Omega_U))}$ & \multicolumn{1}{|l}{$C(u^{(\text{dim}(\Omega_U))}, s^{(1)})$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u^{(\text{dim}(\Omega_U))}, s^{(\text{dim}(\Omega_S)}))$} \\
 		\cline{3-5}
 	\end{tabular}
 \end{center}
-Note that the lower index represent realized values of $s$ whereas an upper index represent datapoints.
+Note that the upper index represent realized values of $s$ whereas a lower index represent datapoints.
 
 \begin{example}
-	With reference to \exref{ex:rain}, the possible states of Nature are $s_1 = "\text{rain}"$ and $s_2 = "\text{no rain}"$, whereas each observed outcome $s^{(i)}$ in the dataset 
+	With reference to \exref{ex:rain}, the possible states of Nature are $s^{(1)} = "\text{rain}"$ and $s^{(2)} = "\text{no rain}"$, whereas each observed outcome $s_i$ in the dataset 
 	\begin{equation}
-		D = \{(x^{(1)},s^{(1)}),(x^{(2)},s^{(2)}),(x^{(3)},s^{(3)})\}
+		D = \{(x_1,s_1),(x_2,s_2),(x_3,s_3)\}
 	\end{equation}
-	takes a value in $\{s_1,s_2\}$. For instance, one possible dataset realization could be $s^{(1)}=s_1$, $s^{(2)}=s_1$, and $s^{(3)}=s_2$.
+	takes a value in $\{s^{(1)},s^{(2)}\}$. For instance, one possible dataset realization could be $s_1=s^{(1)}$, $s_2=s^{(1)}$, and $s_3=s^{(2)}$.
 \end{example}
 
 \begin{example}
-	Consider a binary classification problem with action space $\Omega_U = \{u_1,u_2\}$ and Nature's state space $\Omega_S = \{s_1, s_2\}$, where $u_1$ corresponds to predicting class $s_1$ and $u_2$ to predicting class $s_2$. Let
+	Consider a binary classification problem with action space $\Omega_U = \{u^{(1)},u^{(2)}\}$ and Nature's state space $\Omega_S = \{s^{(1)}, s^{(2)}\}$, where $u^{(1)}$ corresponds to predicting class $s^{(1)}$ and $u^{(2)}$ to predicting class $s^{(2)}$. Let
 	\begin{equation}
-		D = \{(x^{(i)},s^{(i)})\}_{i=1}^n
+		D = \{(x_i,s_i)\}_{i=1}^n
 	\end{equation}
-	denote the training data, where $s^{(i)} \in \Omega_S$ are observed realizations of Nature's states. Let $U(x,D)$ be a classifier based on the probability $p(S = s | x, D, I)$. Define a threshold $k\in[0,1]$ and the decision rule
+	denote the training data, where $s_i \in \Omega_S$ are observed realizations of Nature's states. Let $U(x,D)$ be a classifier based on the probability $p(S = s | x, D, I)$. Define a threshold $k\in[0,1]$ and the decision rule
 	\begin{equation}
 		U_k(x,D) =
 		\begin{cases}
-			u_1, & p(S=s_2 | x, D, I) < k,\\
-			u_2, & p(S=s_2 | x, D, I) \ge k.
+			u^{(1)}, & p(S=s^{(2)} | x, D, I) < k,\\
+			u^{(2)}, & p(S=s^{(2)} | x, D, I) \ge k.
 		\end{cases}
 	\end{equation}
 	For a fixed threshold $k$, classifier performance is summarized in the confusion matrix
 	\begin{center}
 		\begin{tabular}{ c  c  c c}
 			&& $S$ &  \\
-			&& $s_1$ & $s_2$ \\
+			&& $s^{(1)}$ & $s^{(2)}$ \\
 			\cline{3-4}
-			$U(x,D)$ & $u_1$& \multicolumn{1}{|l}{TP(k)} & \multicolumn{1}{l|}{FP(k)}\\
-			& $u_2$& \multicolumn{1}{|l}{FN(k)} & \multicolumn{1}{l|}{TN(k)}\\
+			$U(x,D)$ & $u^{(1)}$& \multicolumn{1}{|l}{TP(k)} & \multicolumn{1}{l|}{FP(k)}\\
+			& $u^{(2)}$& \multicolumn{1}{|l}{FN(k)} & \multicolumn{1}{l|}{TN(k)}\\
 			\cline{3-4}
 		\end{tabular}
 	\end{center}
@@ -289,9 +289,9 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 	\begin{equation}
 		\operatorname{ROC} = \{ (\operatorname{FPR(k)}, \operatorname{TPR(k)}) : k \in [0,1] \}.
 	\end{equation}
-	The Area Under the ROC\index{AUROC}\index{Area Under the ROC} Curve (AUROC) is a threshold-independent measure. Let $X_{(s_1)}$ and $X_{(s_2)}$ denote independent draws from the class-conditional distributions $p(x | S = s_1)$ and $p(x | S = s_2)$, respectively. Then
+	The Area Under the ROC\index{AUROC}\index{Area Under the ROC} Curve (AUROC) is a threshold-independent measure. Let $X_{(s^{(1)})}$ and $X_{(s^{(2)})}$ denote independent draws from the class-conditional distributions $p(x | S = s^{(1)})$ and $p(x | S = s^{(2)})$, respectively. Then
 	\begin{equation}
-		\operatorname{AUROC} = p( p(S=s_2 | X_{(s_2)}, D, I) > p(S=s_2 | X_{(s_1)}, D, I)| D, I ),
+		\operatorname{AUROC} = p( p(S=s^{(2)} | X_{(s^{(2)})}, D, I) > p(S=s^{(2)} | X_{(s^{(1)})}, D, I)| D, I ),
 	\end{equation}
 	i.e., the probability that the classifier assigns a higher score to a randomly chosen positive instance than to a randomly chosen negative instance. Equivalently,
 	\begin{equation}
@@ -312,45 +312,45 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 	\begin{center}
 		\begin{tabular}{ c  c  c  c }
 			&& $S$& \\
-			&& $s_1$ & $s_2$  \\
+			&& $s^{(1)}$ & $s^{(2)}$  \\
 			\cline{3-4}
-			$U(\tilde{D})$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{12}$}  \\
-			& $u_2$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{$0$} \\
+			$U(\tilde{D})$ & $u^{(1)}$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{12}$}  \\
+			& $u^{(2)}$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{$0$} \\
 			\cline{3-4}
 		\end{tabular}
 	\end{center}
 	\begin{enumerate}
-		\item Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $k$ and predicting $U(\tilde{D})=u_1$ if $p(S=\sigma_2|\tilde{D},I) < k$ and $U(\tilde{D})=u_2$ if $p(S=\sigma_2|\tilde{D},I)\geq k$. What is $k$ as a function of $\lambda_{12}$ and $\lambda_{21}$?\newline
+		\item Show that the decision $u$ that minimizes the expected loss is equivalent to setting a probability threshold $k$ and predicting $U(\tilde{D})=u^{(1)}$ if $p(S=s^{(2)}|\tilde{D},I) < k$ and $U(\tilde{D})=u^{(2)}$ if $p(S=s^{(2)}|\tilde{D},I)\geq k$. What is $k$ as a function of $\lambda_{12}$ and $\lambda_{21}$?\newline
 		
 		The conditional expected cost (\EQref{eq:conditional_cost_discrete})
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] & = \sum_sC(U(\tilde{D}),S=s)p(S=s|\tilde{D},I)\\
-				& = C(U(\tilde{D}),S=s_1)p(S=s_1|\tilde{D},I)\\
-				& \quad+C(U(\tilde{D}),S=s_2)p(S=s_2|\tilde{D},I)\\
+				& = C(U(\tilde{D}),S=s^{(1)})p(S=s^{(1)}|\tilde{D},I)\\
+				& \quad+C(U(\tilde{D}),S=s^{(2)})p(S=s^{(2)}|\tilde{D},I)\\
 			\end{split}
 		\end{equation}
 		For the different possible actions
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}_{S|\tilde{D}}[C(u_1, S)|\tilde{D},I] &= \lambda_{12}p(S=s_2|\tilde{D},I),\\
-				\mathbb{E}_{S|\tilde{D}}[C(u_2, S)|\tilde{D},I] &= \lambda_{21}p(S=s_1|\tilde{D},I),\\
+				\mathbb{E}_{S|\tilde{D}}[C(u^{(1)}, S)|\tilde{D},I] &= \lambda_{12}p(S=s^{(2)}|\tilde{D},I),\\
+				\mathbb{E}_{S|\tilde{D}}[C(u^{(2)}, S)|\tilde{D},I] &= \lambda_{21}p(S=s^{(1)}|\tilde{D},I),\\
 			\end{split}
 		\end{equation}
 		$U(\tilde{D})=u_1$ iff
 		\begin{equation}
-			\mathbb{E}_{S|\tilde{D}}[C(u_1,S)|\tilde{D},I]<\mathbb{E}_{S|\tilde{D}}[C(u_1,S)|\tilde{D},I])
+			\mathbb{E}_{S|\tilde{D}}[C(u^{(1)},S)|\tilde{D},I]<\mathbb{E}_{S|\tilde{D}}[C(u^{(1)},S)|\tilde{D},I])
 		\end{equation}
 		meaning
 		\begin{equation}
 			\begin{split}
-				\lambda_{12}p(S=s_2|\tilde{D},I)&<\lambda_{21}p(S = s_1|\tilde{D},I)\\
-				&=\lambda_{21}(1-p(S =s_2|\tilde{D},I))
+				\lambda_{12}p(S=s^{(2)}|\tilde{D},I)&<\lambda_{21}p(S = s^{(1)}|\tilde{D},I)\\
+				&=\lambda_{21}(1-p(S =s^{(2)}|\tilde{D},I))
 			\end{split}
 		\end{equation}
 		meaning $U(\tilde{D}) = u_1$ iff
 		\begin{equation}
-			p(S=s_2|\tilde{D},I)<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k
+			p(S=s^{(2)}|\tilde{D},I)<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k
 		\end{equation}
 		
 		
@@ -361,10 +361,10 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 		\begin{center}
 			\begin{tabular}{ c  c  c  c }
 				&& $S$& \\
-				&& $s_1$ & $s_2$  \\
+				&& $s^{(1)}$ & $s^{(2)}$  \\
 				\cline{3-4}
-				$U(x)$ & $u_1$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{21}$}  \\
-				& $u_2$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{0} \\
+				$U(\tilde{D})$ & $u^{(1)}$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$9\lambda_{21}$}  \\
+				& $u^{(2)}$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{0} \\
 				\cline{3-4}
 			\end{tabular}
 		\end{center}
@@ -389,9 +389,15 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 	\end{equation}
 	
 	\begin{enumerate}
-		\item Show that the minimum cost is obtained if the robot decides on class $U(\tilde{D})$ if $p(S=U(\tilde{D})|\tilde{D},I)\geq p(S\neq U(\tilde{D})|\tilde{D},I)$ and if $p(S=U(\tilde{D})|\tilde{D},I)\geq 1-\frac{\lambda_r}{\lambda_s}$.\newline
-		
-		The conditional expected cost if the robot does not pick the reject option, meaning $U(\tilde{D})\in \mathbb{U}\setminus\text{reject}$
+		\item Show that the minimum cost is obtained if the robot decides on class $U(\tilde{D})$ if
+		\begin{equation}
+			p(S=U(\tilde{D})|\tilde{D},I)\geq p(S\neq U(\tilde{D})|\tilde{D},I)
+		\end{equation}
+		 and if 
+		 \begin{equation}
+		 	p(S=U(\tilde{D})|\tilde{D},I)\geq 1-\frac{\lambda_r}{\lambda_s}.
+		 \end{equation}
+		The conditional expected cost if the robot does not pick the reject option, meaning $U(\tilde{D})\in \Omega_U\setminus\text{reject}$
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] & = \sum_s C(U(\tilde{D}),S=s)p(S=s|\tilde{D},I)\\
@@ -400,7 +406,7 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 			\end{split}
 			\label{eq:cost1a}
 		\end{equation}
-		where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $S=U(\tilde{D})$ does not enter the sum. For the third equality it has been used that summing over all but $S=u$ is equal to $1-p(S=U(\tilde{D})|\tilde{D},I)$. The larger $p(S=U(\tilde{D})|\tilde{D},I)$, the smaller loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the robot picks the reject option
+		where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $S=U(\tilde{D})$ does not enter the sum. For the third equality it has been used that summing over all but $S=U(\tilde{D})$ is equal to $1-p(S=U(\tilde{D})|\tilde{D},I)$. The larger $p(S=U(\tilde{D})|\tilde{D},I)$, the smaller loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the robot picks the reject option
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}_{S|\tilde{D}}[C(\text{reject}, S)|\tilde{D},I]&= \lambda_r\sum_sp(S=s|\tilde{D},I)\\
@@ -408,7 +414,7 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 			\end{split}
 			\label{eq:cost2a}
 		\end{equation}
-		Equation \eqref{eq:cost1a} show picking $\arg\max_{U(\tilde{D})\in \mathbb{U}\setminus \text{reject}} p(S=U(\tilde{D})|\tilde{D},I)$ is the best option among classes $U(\tilde{D})\neq \text{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using equations \eqref{eq:cost1} and \eqref{eq:cost2a} yields
+		Equation \eqref{eq:cost1a} show picking $\arg\max_{U(\tilde{D})\in \Omega_U\setminus \text{reject}} p(S=U(\tilde{D})|\tilde{D},I)$ is the best option among classes $U(\tilde{D})\neq \text{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using \EQref{eq:cost1a} and \EQref{eq:cost2a} yields
 		\begin{equation}
 			(1-p(S=U(\tilde{D})|\tilde{D},I))\lambda_s< \lambda_r
 		\end{equation}
@@ -419,7 +425,18 @@ Note that the lower index represent realized values of $s$ whereas an upper inde
 		
 		\item Describe qualitatively what happens as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$.\newline
 		
-		$\frac{\lambda_r}{\lambda_s}=0$ means rejection is rated as a successful classification -- i.e. no cost associated -- and this become the best option (rejection that is) unless $p(S=U(\tilde{D})|\tilde{D},I)=1$, corresponding to knowing the correct class with absolute certainty. In other words; in this limit rejection is best unless the robot is certain of the correct class. $\frac{\lambda_r}{\lambda_s}=1$ means rejection is rated a misclassification -- i.e. $\lambda_r=\lambda_s$ -- and thus and "automatic cost". Hence, in this case rejection is never chosen. In between the limits, an interpolation of interpretations apply.
+		\begin{equation}
+			\frac{\lambda_r}{\lambda_s}=0
+		\end{equation}
+		means rejection is rated as a successful classification -- i.e. no cost associated -- and this become the best option (rejection that is) unless
+		\begin{equation}
+			p(S=U(\tilde{D})|\tilde{D},I)=1,
+		\end{equation}
+		corresponding to knowing the correct class with absolute certainty. In other words; in this limit rejection is best unless the robot is certain of the correct class. 
+		\begin{equation}
+			\frac{\lambda_r}{\lambda_s}=1
+		\end{equation} 
+		means rejection is rated a misclassification -- i.e. $\lambda_r=\lambda_s$ -- and thus and "automatic cost". Hence, in this case rejection is never chosen. In between the limits, an interpolation of interpretations apply.
 	\end{enumerate}
 \end{example}
 

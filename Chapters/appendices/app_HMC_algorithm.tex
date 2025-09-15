@@ -4,7 +4,7 @@ This appendix is taken from \citet{petersen2020}. The Hamiltonian Monte Carlo Al
 \begin{equation}
 	\begin{split}
 		\mathbb{E}[f] &= \int f(\theta)g(\theta)d\theta\\
-		& \approx \frac{1}{N}\sum_{j\in g}f(\theta^{(i)}),
+		& \approx \frac{1}{N}\sum_{j\in g}f(\theta_j),
 	\end{split}
 \end{equation}
 with $f$ being a generic function and $N$ denoting the number of samples from the posterior distribution, $g$. The sample $\{j\}$ from $g$ can be generated via a MCMC algorithm that has $g$ as a stationary distribution. The Markov chain is defined by an initial distribution for the initial state of the chain, $\theta$, and a set of transition probabilities, $p(\theta'|\theta)$, determining the sequential evolution of the chain. A distribution of points in the Markov Chain are said to comprise a stationary distribution if they are drawn from the same distribution and that this distribution persist once established. Hence, if $g$ is the a stationary distribution of the Markov Chain defined by the initial point $\theta$ and the transition probability $p(\theta'|\theta)$, then~\citep{Neal:1996}

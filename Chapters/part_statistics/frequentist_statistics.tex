@@ -116,9 +116,9 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{theorem}[Fisher Information for Independent Observations]
 	\label{thm:fisher_sample}
-	Take $D_s= \{s^{(i)}\}_{i=1}^n$ , $D_x = \{x^{(i)}\}_{i=1}^n$ and let $w \in \Omega_W$ be a parameter of the model. Assume the likelihood factorizes as
+	Take $D_s= \{s_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a parameter of the model. Assume the likelihood factorizes as
 	\begin{equation}
-		p(D_s | D_x, w, I) = \prod_{i=1}^{n} p(s^{(i)} | x^{(i)}, w, I).
+		p(D_s | D_x, w, I) = \prod_{i=1}^{n} p(s_i | x_i, w, I).
 	\end{equation}
 	Then, the Fisher information of the full dataset is
 	\begin{equation}
@@ -128,14 +128,14 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 	where $\mathcal{I}_i(w)$ is the Fisher information of the $i$-th observation:
 	\begin{equation}
-		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(s^{(i)} | x^{(i)}, w, I)\Big)^2 \Bigg| x^{(i)}, w, I \Bigg].
+		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(s_i | x_i, w, I)\Big)^2 \Bigg| x_i, w, I \Bigg].
 	\end{equation}
 \end{theorem}
 
 
 \begin{definition}[Maximum Likelihood Estimator (MLE) Decision Rule]
 	\label{def:MLE}
-	Take $D_s= \{s^{(i)}\}_{i=1}^n$ , $D_x = \{x^{(i)}\}_{i=1}^n$ and let $w \in \Omega_W$ be a fixed but unknown parameter. The Maximum Likelihood Estimator (MLE) decision rule $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_s$ given $D_x$
+	Take $D_s= \{s_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a fixed but unknown parameter. The Maximum Likelihood Estimator (MLE) decision rule $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_s$ given $D_x$
 	\begin{equation}
 		\hat{w}_{\mathrm{MLE}}(D) \equiv \arg \max_{w \in \Omega_W} p(D_s | D_x, w, I),
 	\end{equation}
@@ -156,7 +156,10 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\label{def:minimax}
 	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum expected cost, meaning (\EQref{eq:conditional_expected_cost})
 	\begin{equation}
-		\hat{w}' \equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w,I].
+		\begin{split}
+			\hat{w}' &\equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w,I]\\
+			& = \inf_{\hat{w}}\sup_{w\in \Omega_W}\int dD  C(\hat{w}(D),w) p(D|w,I).
+		\end{split}
 	\end{equation}
 \end{definition}
 
@@ -215,19 +218,19 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 
 \begin{example}
-	Take $D_s= \{s^{(i)}\}_{i=1}^n$ with $s^{(i)} \sim \mathrm{Ber}(w)$, and let $w\in [0,1]$ be the unknown parameter. Determine the quadratic cost of three different decision rules for estimating $w$: the arithmetic sample mean, the constant $0.5$, and the first observation $s_1$.
+	Take $D_s= \{S = s_i\}_{i=1}^n$ with $S \sim \mathrm{Ber}(w)$, and let $w\in [0,1]$ be the unknown parameter. Determine the quadratic cost of three different decision rules for estimating $w$: the arithmetic sample mean, the constant $0.5$, and the first observation $s_1$.
 	
 	\begin{itemize}
 		\item Arithmetic mean:
 		\begin{equation}
-			\hat{w} = \frac{1}{n} \sum_{i=1}^n s^{(i)}
+			\hat{w}(D_s) = \frac{1}{n} \sum_{i=1}^n s_i
 		\end{equation}
 		with
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[\hat{w}|w,I] &= \frac{1}{n} \sum_{i=1}^n \mathbb{E}[s^{(i)}|w,I] = w,\\
-				\operatorname{Var}[\hat{w}|w,I] &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[s^{(i)}|w,I] = \frac{w(1-w)}{n},\\
-				\mathbb{E}[(\hat{w}-w)^2|w,I] &= \operatorname{Var}[\hat{w}|w,I] = \frac{w(1-w)}{n}.
+				\mathbb{E}[\hat{w}(D_s)|w,I] &= \frac{1}{n} \sum_{i=1}^n \mathbb{E}[s_i|w,I] = w,\\
+				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[s_i|w,I] = \frac{w(1-w)}{n},\\
+				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= \operatorname{Var}[\hat{w}(D_s)|w,I] = \frac{w(1-w)}{n}.
 			\end{split}
 		\end{equation}
 		
@@ -246,14 +249,14 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		
 		\item First observation:
 		\begin{equation}
-			\hat{w} = s_1
+			\hat{w}(D_s) = s_1
 		\end{equation}
 		with
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[\hat{w}|w,I] &= \mathbb{E}[s_1|w,I] = w,\\
-				\operatorname{Var}[\hat{w}|w,I] &= \operatorname{Var}[s_1|w,I] = w(1-w),\\
-				\mathbb{E}[(\hat{w}-w)^2|w,I] &= w(1-w).
+				\mathbb{E}[\hat{w}(D_s)|w,I] &= \mathbb{E}[s_1|w,I] = w,\\
+				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \operatorname{Var}[s_1|w,I] = w(1-w),\\
+				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= w(1-w).
 			\end{split}
 		\end{equation}
 	\end{itemize}
@@ -271,49 +274,49 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 
 \begin{example}
-	Take $D_s= \{s^{(i)}\}_{i=1}^n$ with $s^{(i)}\sim \mathrm{Ber}(w)$, and let $w\in [0,1]$ be the unknown parameter. Determine the maximum likelihood estimate of $w$.\newline
+	Take $D_s= \{S= s_i\}_{i=1}^n$ with $S\sim \mathrm{Ber}(w)$, and let $w\in [0,1]$ be the unknown parameter. Determine the maximum likelihood estimate of $w$.\newline
 	
 	\noindent In this case
 	\begin{equation}
 		\begin{split}
 			p(D_s|D_x,w,I) & =p(D_s|w,I)\\
-			& = \prod_{i=1}^nw^{s^{(i)}}(1-w)^{1-s^{(i)}}.
+			& = \prod_{i=1}^nw^{s_i}(1-w)^{1-s_i}.
 		\end{split}
 	\end{equation}
 	Let $l(w)\equiv \ln p(D_s|D_x,w,I)$, then
 	\begin{equation}
 		\begin{split}
 			\argmax_wl(w) & = \argmax_wp(D_s|w,I)\\
-			&= \argmax_w\ln \bigg(\prod_{i=1}^nw^{s^{(i)}}(1-w)^{1-s^{(i)}}\bigg)\\
-			&=\argmax_w \bigg[\ln w\sum_{i=1}^ns^{(i)} + \ln(1-w)\sum_{i=1}^n(1-s^{(i)})\bigg]
+			&= \argmax_w\ln \bigg(\prod_{i=1}^nw^{s_i}(1-w)^{1-s_i}\bigg)\\
+			&=\argmax_w \bigg[\ln w\sum_{i=1}^ns_i + \ln(1-w)\sum_{i=1}^n(1-s_i)\bigg]
 		\end{split}
 	\end{equation}
 	Now 
 	\begin{equation}
-		\frac{d}{dw}l(w)=\frac{\sum_{i=1}^ns^{(i)}}{w}-\frac{n-\sum_{i=1}^ns^{(i)}}{1-w}
+		\frac{d}{dw}l(w)=\frac{\sum_{i=1}^ns_i}{w}-\frac{n-\sum_{i=1}^ns_i}{1-w}
 	\end{equation}
 	Requiring the derivative to vanish means the maximum likelihood estimate of $w$ is given by
 	\begin{equation}
-		\hat{w}_{\text{MLE}}(D_s)=\frac{1}{n}\sum_{i=1}^ns^{(i)}.
+		\hat{w}_{\text{MLE}}(D_s)=\frac{1}{n}\sum_{i=1}^ns_i.
 	\end{equation}
 \end{example}
 \begin{example}
-	Take $D_s= \{s^{(i)}\}_{i=1}^n$ with $s^{(i)}\sim \mathrm{Exp}(w)$, and let $w> 0$ be the unknown parameter. Determine the maximum likelihood estimate of $w$.\newline
+	Take $D_s= \{S = s_i\}_{i=1}^n$ with $S\sim \mathrm{Exp}(w)$, and let $w> 0$ be the unknown parameter. Determine the maximum likelihood estimate of $w$.\newline
 	
 	\noindent In this case
 	\begin{equation}
 		\begin{split}
 			p(D_s|D_x,w,I)& =p(D_s|w,I)\\
-			& =\prod_{i=1}^nw e^{-w s^{(i)}}.
+			& =\prod_{i=1}^nw e^{-w s_i}.
 		\end{split}
 	\end{equation}
 	Let $l(w)\equiv \ln p(D_s|D_x,w,I)$, then
 	\begin{equation}
-		\frac{d}{dw}l(w)=\frac{n}{w}-\sum_{i=1}^ns^{(i)}
+		\frac{d}{dw}l(w)=\frac{n}{w}-\sum_{i=1}^ns_i
 	\end{equation}
 	Requiring the derivative to vanish means the maximum likelihood estimate of $w$ is given by
 	\begin{equation}
-		\hat{w}_{\text{MLE}}(D_s)=\frac{1}{\frac{1}{n}\sum_{i=1}^ns^{(i)}}.
+		\hat{w}_{\text{MLE}}(D_s)=\frac{1}{\frac{1}{n}\sum_{i=1}^ns_i}.
 	\end{equation}
 \end{example}
 
