@@ -107,6 +107,7 @@ Although probability measures\index{Probability measure interpretation} are well
 
 
 \begin{definition}[Frequentist Statistics]
+	\label{def:frequentist_statistics}
 	Frequentist statistics is a paradigm that adopts \axref{ax:parameter_fixed} and \dfref{def:objective_probability} of probability. 
 \end{definition}
 
@@ -115,12 +116,16 @@ Although probability measures\index{Probability measure interpretation} are well
 	Bayesian statistics is a paradigm that adopts \axref{ax:parameter_variable} and definition \dfref{def:subjective_probability} of probability. 
 \end{definition}
 
-\begin{example}
-	\label{def:frequentist_statistics}
-	In the Frequentist approach one can say; if an experiment is repeated many times, in (e.g.) $95 \%$ of these cases the computed confidence interval will contain the true parameter value.\newline
-	In the Bayesian approach one can say; given the observed data, there is a $95 \%$ probability that the value of the true parameter lies within the Bayesian interval.\newline
-	Note how in the Frequentist approach the true parameter is fixed and the confidence interval is varying. In the Bayesian approach the interval is fixed and the true parameter is varying. 
-\end{example}
+
+\begin{remark}[Frequentist vs.\ Bayesian Interpretation]
+	\label{rem:frequentist_statistics}
+	In the Frequentist framework, parameters are fixed but unknown, and probability statements concern the variability of estimators across hypothetical repeated samples. For instance, a $95\%$ confidence interval means that if the experiment were repeated many times, approximately $95\%$ of the constructed intervals would contain the true parameter value. \newline
+	
+	In the Bayesian framework, parameters are treated as random variables with a posterior distribution given the observed data. A $95\%$ credible interval therefore means that, conditional on the data and prior information, there is a $95\%$ probability that the true parameter lies within the interval.\newline
+	
+	Thus, in the Frequentist view, the interval varies across repeated experiments while the parameter remains fixed, whereas in the Bayesian view, the interval is fixed (given the data) and the parameter is uncertain.
+\end{remark}
+
 
 \begin{example}
 	Consider a Bayesian statistical model involving both a normal distribution with parameters $\mu,\sigma$ and a beta distribution with parameters $a,b$, then
@@ -132,6 +137,7 @@ Although probability measures\index{Probability measure interpretation} are well
 such that each individual parameter has an associated probability distribution.
 \end{example}
 
-\section{Relaxation of Notation}
+\begin{remark}[Relaxation of Notation]
 \label{sec:notation}
 Fortunately, a lot of the details around probability spaces and measures can be abstracted in the practical application of statistics. For this reason, in the remainder of the book, where the practical application of statistics is considered, the notation and formalization especially around probability spaces, algebras, probability measures etc. is relaxed considerably -- which is the norm, by the way. Specifically, in the rest of this book, $p$ will be used to denote anything related to probability distributions or measures and the probability for a random variable to take on a specific value , e.g. $p(X=x)$, will usually be denoted $p(x)$ for shorthand. This relaxation of notation facilitates advanced manipulation of probabilities, which would otherwise be incredibly cumbersome. It is, however, beneficial to have some background knowledge about the formal definitions, hence this introduction.
+\end{remark}

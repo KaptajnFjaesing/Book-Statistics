@@ -77,8 +77,8 @@ where $m$ is a reference distribution that is invariant under parameter transfor
 	\begin{equation}
 		\begin{split}
 			p(z|\lambda,I) &= \frac{e^{-\lambda_1x-\lambda_2x^2}}{K}\\
-			&= \sqrt{\frac{\lambda_2}{\pi}}e^{-\frac{\lambda_1^2}{4\lambda_2}-\lambda_1z-\lambda_2z^2}\\
-		\end{split}.
+			&= \sqrt{\frac{\lambda_2}{\pi}}e^{-\frac{\lambda_1^2}{4\lambda_2}-\lambda_1z-\lambda_2z^2}.\\
+		\end{split}
 	\end{equation}
 	Now, imposing the mean constraint
 	\begin{equation}
@@ -132,3 +132,250 @@ where $m$ is a reference distribution that is invariant under parameter transfor
 	\end{equation}
 	which is the beta distribution\index{Maximum entropy}. 
 \end{example}
+
+
+\begin{example}
+	\index{Example: Maximum entropy Gamma distribution}
+	Consider a continuous random variable $Z \in [0,\infty)$ with known mean $\mu$ and known logarithmic mean $\nu$. In this case
+	\begin{equation}
+		F = - p(z|\lambda,I) \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z p(z|\lambda,I) - \lambda_2 \ln(z) p(z|\lambda,I),
+	\end{equation}
+	and derivative
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 - \lambda_1 z - \lambda_2 \ln z\\
+			& = 0
+		\end{split}
+	\end{equation}
+	meaning
+	\begin{equation}
+		\begin{split}
+			p(z|\lambda,I)&= m(z) e^{-1-\lambda_0 - \lambda_1 z - \lambda_2 \ln z}\\
+			& = \tilde{m}(z)  z^{-\lambda_2} e^{-\lambda_1 z}
+		\end{split}
+		\label{eq:gam1}
+	\end{equation}
+	where $\tilde{m}(z) = m(z) e^{-1-\lambda_0}$. Taking a uniform measure ($m(z) = \text{const}$) and imposing normalization
+	\begin{equation}
+		\begin{split}
+			\int_0^\infty p(z|\lambda,I) dz &= \tilde{m} \int_0^\infty z^{-\lambda_2} e^{-\lambda_1 z} dz\\
+			& = 1.
+		\end{split}
+	\end{equation}
+	The integral is recognized as the Gamma function
+	\begin{equation}
+		\int_0^\infty z^{\alpha-1} e^{-\beta z} dz = \frac{\Gamma(\alpha)}{\beta^\alpha}
+	\end{equation}
+	with $\alpha = 1 - \lambda_2$ and $\beta = \lambda_1$. Substituting $\tilde{m}$, $\alpha$, $\beta$ back into \EQref{eq:gam1}
+	\begin{equation}
+		p(z|\lambda,I) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
+	\end{equation}
+	which is the Gamma distribution\index{Maximum entropy}.
+\end{example}
+
+\begin{example}
+	\index{Example: Maximum entropy Exponential distribution}
+	Consider a continuous random variable $Z \in [0,\infty)$ with known mean $\mu$. In this case
+	\begin{equation}
+		F = - p(z|\lambda,I) \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z p(z|\lambda,I),
+	\end{equation}
+	and derivative
+	\begin{equation}
+		\frac{\partial F}{\partial p(z|\lambda,I)} = -1 - \ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 - \lambda_1 z = 0.
+	\end{equation}
+	Solving for $p(z|\lambda,I)$ gives
+	\begin{equation}
+		p(z|\lambda,I) = m(z) e^{-1-\lambda_0 - \lambda_1 z}.
+		\label{eq:n13}
+	\end{equation}
+	Taking $m(z) = \text{const}$ and imposing normalization constraint
+	\begin{equation}
+		\begin{split}
+			\int_0^\infty p(z|\lambda,I) dz &= m e^{-1-\lambda_0}\int_0^\infty e^{- \lambda_1 z} dz\\
+			& = m e^{-1-\lambda_0} \frac{1}{\lambda_1}\\
+			&= 1\\
+		\end{split}
+		\label{eq:na1}
+	\end{equation}
+	and the mean constraint
+	\begin{equation}
+		\begin{split}
+			\int_0^\infty z p(z|\lambda,I) dz &= \int_0^\infty z \lambda_1 e^{-\lambda_1 z} dz\\
+			& = \frac{1}{\lambda_1}\\
+			&= \mu.
+		\end{split}
+		\label{eq:na2}
+	\end{equation}
+	Combining \EQref{eq:na1}, \EQref{eq:na2} and \EQref{eq:n13} yields
+	\begin{equation}
+		p(z|\lambda,I) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
+	\end{equation}
+	which is the Gamma distribution\index{Maximum entropy}.
+\end{example}
+
+
+
+\begin{example}
+	\index{Example: Maximum entropy bernoulli distribution}
+	Consider a random variable $Z\in\{0,1\}$ with mean $\mu$. In this case
+	\begin{equation}
+		\mathcal{L} = \sum_{z=0}^1 F
+	\end{equation}
+	 $F$ can be written
+	\begin{equation}
+		F = - p(z|\lambda,I)\ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 zp(z|\lambda,I),
+	\end{equation}
+	with the derivative
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg) - \lambda_0 - \lambda_1 z\\
+			& = 0,
+		\end{split}
+	\end{equation}
+	meaning
+	\begin{equation}
+		p(z|\lambda,I) = m(z) e^{-1-\lambda_0 - \lambda_1 z}.
+	\end{equation}
+	Taking a uniform measure ($m= const$) and imposing the normalization constraint
+	\begin{equation}
+		\begin{split}
+			\sum_{z=0}^1 p(z) &=m e^{-1-\lambda_0}\bigg(1+ e^{- \lambda_1}\bigg)\\
+			&=1
+		\end{split}
+	\end{equation}
+	and mean constraint
+	\begin{equation}
+		\begin{split}
+			\sum_{z=0}^1 zp(z) &=m e^{-1-\lambda_0}e^{- \lambda_1}\\
+			& = \frac{1}{1+ e^{\lambda_1}}\\
+			&=\mu
+		\end{split}
+	\end{equation}
+	This means
+	\begin{equation}
+		\begin{split}
+			p(0|\lambda,I) &= m e^{-1-\lambda_0}\\
+			&= \frac{1}{1+ e^{- \lambda_1}}\\
+			& = 1-\mu
+		\end{split}
+	\end{equation}	
+	and
+	\begin{equation}
+		\begin{split}
+			p(1|\lambda,I) &= m e^{-1-\lambda_0-\lambda_1}\\
+			&=\mu,
+		\end{split}
+	\end{equation}
+	or 
+	\begin{equation}
+		p(z|\lambda,I) = \mu^z (1-\mu)^{1-z}.
+	\end{equation}
+	which is the Bernoulli distribution\index{Maximum entropy}.
+\end{example}
+
+\begin{example}
+	\index{Example: Maximum entropy Binomial distribution}
+	Consider $Z \in \{0,1,\dots,n\}$ representing the total number of successes in $n$ independent Bernoulli trials with mean $\mu$. Using the principle of maximum entropy, define
+	\begin{equation}
+		F = - p(z|\lambda,I) \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z\, p(z|\lambda,I),
+	\end{equation}
+	with the derivative
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 - \lambda_1 z\\
+			& = 0,
+		\end{split}
+	\end{equation}
+	which implies
+	\begin{equation}
+		p(z|\lambda,I) = m(z) e^{-\lambda_0 - \lambda_1 z}.
+	\end{equation}
+	Taking a uniform measure for the underlying sequences of Bernoulli trials, equivalent to $m(z) = \binom{n}{z}$, and imposing the normalization constraint
+	\begin{equation}
+		\begin{split}
+			\sum_{z=0}^n p(z|\lambda,I) &= \sum_{z=0}^n \binom{n}{z} e^{-\lambda_0 - \lambda_1 z}\\
+			& = 1,
+		\end{split}
+	\end{equation}
+	yields
+	\begin{equation}
+		e^{-\lambda_0} = (1 + e^{-\lambda_1})^{-n}.
+	\end{equation}
+	The mean constraint
+	\begin{equation}
+		\begin{split}
+			\sum_{z=0}^n z\, p(z|\lambda,I) &= n \frac{e^{-\lambda_1}}{1 + e^{-\lambda_1}}\\
+			& = n\mu
+		\end{split}
+	\end{equation}
+	gives
+	\begin{equation}
+		e^{-\lambda_1} = \frac{\mu}{1-\mu}.
+	\end{equation}
+	Finally, substituting $e^{-\lambda_0}$ and $e^{-\lambda_1}$ into $p(z|\lambda,I)$ gives the maximum entropy distribution
+	\begin{equation}
+		p(z|\lambda,I) = \binom{n}{z} \mu^z (1-\mu)^{n-z},
+	\end{equation}
+	which is the Binomial distribution\index{Maximum entropy}.
+\end{example}
+
+
+\begin{example}
+	\index{Example: Maximum entropy Poisson distribution}
+	Consider a random variable $Z \in \{0,1,2,\dots\}$ with a known mean $\mu$. In this case
+	\begin{equation}
+		\mathcal{L} = \sum_{z=0}^\infty F
+	\end{equation}
+	and $F$ can be written
+	\begin{equation}
+		F = -p(z|\lambda,I)\ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z p(z|\lambda,I),
+	\end{equation}
+	with the derivative
+	\begin{equation}
+		\begin{split}
+			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg) - \lambda_0 - \lambda_1 z \\
+			&= 0,
+		\end{split}
+	\end{equation}
+	meaning
+	\begin{equation}
+		p(z|\lambda,I) = m(z) e^{-1-\lambda_0 - \lambda_1 z}.
+		\label{eq:qsa}
+	\end{equation}
+	For the Poisson distribution, the measure encodes the counting of configurations for each $z$ and is given by $m(z) = 1/z!$. Imposing this measure and the normalization constraint
+	\begin{equation}
+		\begin{split}
+			\sum_{z=0}^{\infty} p(z|\lambda,I) &= \sum_{z=0}^{\infty} \frac{e^{-1-\lambda_0 - \lambda_1 z}}{z!}\\
+			& = e^{-1-\lambda_0} \sum_{z=0}^{\infty} \frac{e^{-\lambda_1 z}}{z!}\\
+			& = 1,
+		\end{split}
+		\label{eq:asd}
+	\end{equation}
+	Identifying the sum with the Taylor expansion
+	\begin{equation}
+		\sum_{z=0}^{\infty} \frac{e^{-\lambda_1 z}}{z!} = e^{e^{-\lambda}}
+	\end{equation}
+	yields
+	\begin{equation}
+		e^{-1-\lambda_0} = e^{-e^{-\lambda_1}} \quad \Rightarrow \quad 1+\lambda_0 = e^{-\lambda_1}.
+		\label{eq:qwe}
+	\end{equation}
+	Imposing the mean constraint
+	\begin{equation}
+		\begin{split}
+			\sum_{z=0}^{\infty} z p(z|\lambda,I)& = e^{-1-\lambda_0} \sum_{z=1}^{\infty} \frac{z e^{-\lambda_1 z}}{z!}\\
+			& = e^{-1-\lambda_0} \sum_{z=1}^{\infty} \frac{e^{-\lambda_1 z}}{(z-1)!}\\
+			& = e^{-\lambda_1} e^{-1-\lambda_0}\sum_{y=0}^{\infty} \frac{e^{-\lambda_1 y}}{y!}\\
+			& = e^{-\lambda_1}\\
+			& = \mu
+		\end{split}
+		\label{eq:qty}
+	\end{equation}
+	where \EQref{eq:asd} and $y = z-1$ has been used. Combining \EQref{eq:qsa}, \EQref{eq:qwe} and \EQref{eq:qty} yield
+	\begin{equation}
+		p(z|\lambda,I) = \frac{\mu^ze^{-\mu }}{z!} .
+	\end{equation}
+	which is the Poisson distribution\index{Maximum entropy}.
+\end{example}
+
+

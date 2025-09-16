@@ -78,6 +78,29 @@ From equation \EQref{freq:decision_classification} it is clear that in Frequenti
 \label{chp:frequentist_parameter_estimation}
 As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_classification}, both regression and classification in the Frequentist paradigm can be reframed as problems of parameter estimation. This makes parameter estimation the central focus of Frequentist statistics. Unlike in Bayesian statistics, where parameters are intermediate quantities to be marginalized over, in the Frequentist framework the parameters are fixed but unknown, and their determination carries substantive interpretational and practical importance. Estimators of these parameters serve as decision rules that summarize past observations into actionable predictions.
 
+\begin{definition}[Sampling distribution]
+	Let $D$ denote the observed dataset and let $\hat{w}(D)$ be a decision rule (estimator) for the fixed-but-unknown parameter $w\in\Omega_W$. The \emph{sampling distribution} of $\hat{w}$ is the probability distribution of the random variable $\hat{w}(D)$ induced by repeated sampling of $D$ from the data-generating mechanism $p(D \mid w,I)$.	
+\end{definition}
+
+\begin{remark}[Bayesian versus Frequentist perspective]
+	The sampling distribution of an estimator $\hat{w}(D)$ is central to the Frequentist paradigm, since all uncertainty arises from the randomness of the data $D \sim p(D \mid w,I)$ while the parameter $w$ is treated as a fixed but unknown constant. In Bayesian statistics, by contrast, uncertainty about $w$ is represented by a posterior distribution $p(w \mid D, I)$ after observing data. Both approaches yield distributions over possible parameter values or estimates, but their conceptual origin differs: in the Frequentist case, the distribution is over repeated samples of data, whereas in the Bayesian case, the distribution is over the parameter itself given the observed data.
+\end{remark}
+
+\begin{example}
+	In practice, the true sampling distribution of an estimator $\hat{w}(D)$ is rarely available in closed form. The \emph{bootstrap} provides an approximation technique based solely on the observed dataset. Let $D = \{(x_i,s_i)\}_{i=1}^n$ be the dataset. A bootstrap sample $D^{*}$ is constructed by sampling $n$ observations with replacement from $D$. Repeating this procedure $B$ times yields bootstrap replicates $\hat{w}(D^{*1}), \ldots, \hat{w}(D^{*B})$, whose empirical distribution approximates the sampling distribution of $\hat{w}(D)$. 
+	
+	Common quantities derived from the bootstrap include:
+	\begin{itemize}
+		\item The bootstrap estimate of variance:
+		\begin{equation}
+			\widehat{\operatorname{Var}}_{\mathrm{boot}}[\hat{w}] = \frac{1}{B-1}\sum_{b=1}^B \left(\hat{w}(D^{*b}) - \overline{\hat{w}}^{*}\right)^2,
+		\end{equation}
+		where $\overline{\hat{w}}^{*} = \frac{1}{B}\sum_{b=1}^B \hat{w}(D^{*b})$.
+		\item The bootstrap confidence interval, constructed from quantiles of the bootstrap distribution of $\hat{w}$.
+	\end{itemize}
+\end{example}
+
+
 \begin{definition}[Fisher Information]
 	\label{def:fisher_information}
 	Take $D_s= \{s_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_s | D_x, w, I)$ denote the likelihood of observing Natures actions $D_s$ given observed data $D_x$ and $w$. The Fisher information is defined as
@@ -128,7 +151,6 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 \end{theorem}
 
-
 \begin{definition}[Maximum Likelihood Estimator (MLE) Decision Rule]
 	\label{def:MLE}
 	Take $D_s= \{s_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a fixed but unknown parameter. The Maximum Likelihood Estimator (MLE) decision rule $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_s$ given $D_x$
@@ -138,15 +160,16 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	where $I$ denotes the background information.
 \end{definition}
 
-
-\begin{theorem}[Asymptotic Unbiasedness of the MLE]
+\begin{theorem}[Asymptotic Sampling Distribution of the MLE]
 	\label{thm:unbiased_mle}
-	Under standard regularity conditions, the MLE $\hat{w}_{\mathrm{MLE}}$ is asymptotically unbiased and normally distributed:
+	Let $\hat{w}_{\mathrm{MLE}}(D)$ denote the Maximum Likelihood Estimator (MLE) of the fixed-but-unknown parameter $w$. Under standard regularity conditions, the sampling distribution of $\hat{w}_{\mathrm{MLE}}$ satisfies
 	\begin{equation}
 		\sqrt{n}\,\big(\hat{w}_{\mathrm{MLE}} - w\big) \xrightarrow{\text{d}} \mathcal{N}\big(0, \mathcal{I}(w)^{-1}\big),
 	\end{equation}
-	where $\mathcal{I}(w)$ is the Fisher information matrix evaluated at $w$ and $\xrightarrow{\text{d}}$ denotes convergence in distribution as $n \to \infty$.
+	where $\mathcal{I}(w)$ is the Fisher information matrix evaluated at $w$ and $\xrightarrow{\text{d}}$ denotes convergence in distribution as $n \to \infty$. 
+	That is, the sampling distribution of the MLE becomes approximately normal, centered at the true parameter $w$ with variance given by the inverse Fisher information.
 \end{theorem}
+
 
 \begin{definition}[Minimax Decision Rule]
 	\label{def:minimax}
@@ -224,9 +247,14 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[\hat{w}(D_s)|w,I] &= \frac{1}{n} \sum_{i=1}^n \mathbb{E}[S|w,I] = w,\\
-				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[S|w,I] = \frac{w(1-w)}{n},\\
-				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= \operatorname{Var}[\hat{w}(D_s)|w,I] = \frac{w(1-w)}{n}.
+				\mathbb{E}[\hat{w}(D_s)|w,I] &=  \int dD_s \hat{w}(D_s) p(D_s|w,I)\\
+				& = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[S|w,I]\\
+				& = w,\\
+				\operatorname{Var}[\hat{w}(D_s)|w,I] & =\int dD_s (\hat{w}(D_s)-\mathbb{E}[\hat{w}(D_s)|w,I])^2 p(D_s|w,I)\\
+				 &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[S|w,I]\\
+				 & = \frac{w(1-w)}{n},\\
+				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= \operatorname{Var}[\hat{w}(D_s)|w,I]+(\mathbb{E}[\hat{w}(D_s)|w,I]-w)^2\\
+				& = \frac{w(1-w)}{n}.
 			\end{split}
 		\end{equation}
 		
@@ -250,22 +278,16 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[\hat{w}(D_s)|w,I] &= \mathbb{E}[S|w,I] = w,\\
-				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \operatorname{Var}[S|w,I] = w(1-w),\\
+				\mathbb{E}[\hat{w}(D_s)|w,I] &= \mathbb{E}[S|w,I]\\
+				& = w,\\
+				\operatorname{Var}[\hat{w}(D_s)|w,I] &= \operatorname{Var}[S|w,I] +(\mathbb{E}[\hat{w}(D_s)|w,I]-w)^2\\
+				&= w(1-w),\\
 				\mathbb{E}[(\hat{w}(D_s)-w)^2|w,I] &= w(1-w).
 			\end{split}
 		\end{equation}
 	\end{itemize}
 	
 	The arithmetic mean minimizes the quadratic cost over the entire range of $w$, while the constant $0.5$ performs better for specific values of $w$. The cost of using $s_1$ is independent of $n$, making it less favorable as the sample size increases.
-	
-	\begin{figure}[H]
-		\captionsetup{width=1\textwidth}
-		\centering
-		\includegraphics[width=1\textwidth]{figures/ber_example.pdf}
-		\caption{Quadratic cost, $\mathbb{E}[(\hat{w} - w)^2|w,I]$, for three decision rules: arithmetic mean (blue), first observation $s_1$ (orange), and constant $0.5$ (green).}
-		\label{fig:pen}
-	\end{figure}
 \end{example}
 
 

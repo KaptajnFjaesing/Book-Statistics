@@ -307,7 +307,6 @@ Note that the upper index represent realized values of $s$ whereas a lower index
 
 
 \begin{example}
-	\index{Example: Bayesian decision theory}
 	Consider a discrete action space with an observation $X=x$ and available data $D$ ($\tilde{D} \equiv {x, D}$). Picking a class corresponds to an action, so classification can be viewed as a game against nature, where nature has picked the true class and the robot has to pick a class as well. Suppose there are only two classes and the cost function is defined by the matrix
 	\begin{center}
 		\begin{tabular}{ c  c  c  c }
@@ -378,7 +377,6 @@ Note that the upper index represent realized values of $s$ whereas a lower index
 
 
 \begin{example}
-	\index{Example: Bayesian decision theory}
 	In many classification problems one has the option of assigning $x$ to class $k\in K$ or, if the robot is too uncertain, choosing a reject option. If the cost for rejection is less than the cost of falsely classifying the object, it may be the optimal action. Define the cost function as follows
 	\begin{equation}
 		C(U(\tilde{D}),s)=\begin{cases}
@@ -440,5 +438,6 @@ Note that the upper index represent realized values of $s$ whereas a lower index
 	\end{enumerate}
 \end{example}
 
-\subsection{Statistical Paradigms}
-So far in this chapter, there has been no reference to the statistical paradigms (Bayesian and Frequentist). This is because all so far is valid for both the Bayesian (\dfref{def:bayesian_statistics}) and Frequentist (\dfref{def:frequentist_statistics}) paradigms. The difference between the two comes to light when considering the parameters of Natures model.  
+\begin{remark}[Connection to Statistical Paradigms]
+	So far in this chapter, there has been no reference to statistical paradigms (Bayesian or Frequentist). This is because all preceding material is valid under both the Bayesian (\dfref{def:bayesian_statistics}) and Frequentist (\dfref{def:frequentist_statistics}) paradigms. The difference between the two becomes apparent when considering the parameters of Nature's model.
+\end{remark}
