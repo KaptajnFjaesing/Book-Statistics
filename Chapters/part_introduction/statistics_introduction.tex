@@ -8,30 +8,42 @@ where $\Omega_{X_i}$ is part of the probability space $(\Omega_{X_i},\mathcal{F}
 \begin{equation}
 	\mathbb{P}_{X_i} = \mathbb{P}\circ X_i^{-1}
 \end{equation}
-is the push forward measure (see \dfref{def:image_measure}) of $\mathbb{P}$ with respect to $X_i$. The joint probability measure can be defined viz
-\begin{equation}
-	\mathbb{P}_{X_1,\dots X_n}= \mathbb{P}\circ(X_1,\dots X_n)^{-1}.
-\end{equation}
-on the measurable space 
-\begin{equation}
-	(\Omega_{X_1}\times \dots\times \Omega_{X_n}, \mathcal{F}_{X_1}\otimes \dots \otimes \mathcal{F}_{X_n})
-\end{equation}
-which for brevity will be written $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. Depending on the discrete or continuous nature of the different random variables, there are discrete (PMF, see \dfref{def:pmf}) or continuous probability distributions (PDF, see \dfref{def:pdf}) associated to the joint probability measure. All probability distributions related to the random variables can be derived from the joint probability distribution via marginalization (see \thref{theorem:law_of_total_probability}).
-
-\begin{definition}[Set of Probability Measures]
-	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. It is assumed, often based on prior information, that $\mathbb{P}_{X_1,\dots X_n}\in \mathcal{P}'\subseteq \mathcal{P}$, which is described in parametric form viz
+is the push forward measure (see \dfref{def:image_measure}) of $\mathbb{P}$ with respect to $X_i$. 
+\begin{definition}[The Joint Probability Measure]
+	The joint probability measure is the push forward measure
 	\begin{equation}
-		\mathcal{P}'=\{\mathbb{P}_{X_1,\dots X_n}(w)| w \in \Omega_W\},
+		\mathbb{P}_{X_1,\dots X_n} = \mathbb{P}\circ(X_1,\dots X_n)^{-1}.
 	\end{equation}
-	where $\Omega_W$ is called the parameter space.
+	on the measurable space 
+	\begin{equation}
+		(\Omega_{X_1}\times \dots\times \Omega_{X_n}, \mathcal{F}_{X_1}\otimes \dots \otimes \mathcal{F}_{X_n})
+	\end{equation}
+	which for brevity will be written $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. Depending on the discrete or continuous nature of the different random variables, there are discrete (PMF, see \dfref{def:pmf}) or continuous probability distributions (PDF, see \dfref{def:pdf}) associated to the joint probability measure. All probability distributions related to the random variables can be derived from the joint probability distribution via \thref{theorem:law_of_total_probability}.
 \end{definition}
+
+\begin{definition}[Set of All Probability Measures]
+	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$.
+\end{definition}
+
+\begin{definition}[Parametric Subset of Probability Measures]
+	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. It is assumed, often based on prior information, that the joint probability measure $\mathbb{P}_{X_{1:n}}$ belongs to a parametric subset
+	\begin{equation}
+		\mathcal{P}' = \{\, \mathbb{P}_{X_{1:n}}(w) \mid w \in \Omega_W \,\} \subseteq \mathcal{P},
+	\end{equation}
+	where $\Omega_W$ is the parameter space.
+\end{definition}
+
 \begin{definition}[Parameter Space]
 	\label{def:parameter_space}
-	$\mathbb{P}_{X_1,\dots X_n}(w)\in \mathcal{P}'$ is specified by parameters $w\in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}.
+	The parameter space $\Omega_W$ is the set of all values $w$ that index the distributions $\mathbb{P}_{X_1,\dots,X_n}(w)\in \mathcal{P}'$\index{Parameter space}.
 \end{definition}
 
-\begin{definition}[Identifiable statistical model]
-	A statistical model is identifiable if $w\in \Omega_W \mapsto \mathbb{P}_{X_1,\dots X_n}(w)\in \mathcal{P}'$ is injective (one-to-one).
+\begin{definition}[Identifiable Statistical Model]
+	A statistical model is identifiable if the mapping 
+	\begin{equation}
+		w \in \Omega_W \mapsto \mathbb{P}_{X_1,\dots,X_n}(w) \in \mathcal{P}'
+	\end{equation}
+	is injective (i.e., distinct parameter values correspond to distinct distributions).
 \end{definition}
 
 The parameters $w\in \Omega_W$ can either be viewed as fixed constants or the realization of a random variable.
