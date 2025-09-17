@@ -188,6 +188,7 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 \end{proof}
 
 \begin{example}
+	\index{Example: Fair die}
 	Consider the roll of a fair six-sided die. The sample space for this experiment is given by $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from \EQref{eq:cond}
 	\begin{equation}
 		\begin{split}
@@ -200,23 +201,34 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 
 \begin{definition}[Random Variable]
 	\label{def:random_Variable}
-	A random variable $X$ is a function 
+	\index{Random variable}
+	A random variable $X$ is a function
 	\begin{equation}
 		X: \Omega \mapsto \Omega_X
 	\end{equation}
-	that maps outcomes from a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, where $\Omega_X$ is the codomain of $X$ and $\mathcal{F}_X$ is a $\sigma$-algebra on $\Omega_X$. The $\sigma$-algebra $\mathcal{F}_X$ ensures that $X$ is measurable, meaning that for any set $x \in \mathcal{F}_X$, the preimage $X^{-1}(x)$ must belong to $\mathcal{F}$. Formally, this can be written as
+	that maps outcomes from a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, where $\Omega_X$ is the codomain of $X$ and $\mathcal{F}_X$ is a $\sigma$-algebra on $\Omega_X$. The $\sigma$-algebra $\mathcal{F}_X$ ensures that $X$ is measurable, meaning that for any set $B \in \mathcal{F}_X$, the preimage $X^{-1}(B)$ must belong to $\mathcal{F}$. Formally, this can be written as
 	\begin{equation}
-		X^{-1}(x) = \{\omega \in \Omega | X(\omega) = x\} \in \mathcal{F} \quad \forall x \in \mathcal{F}_X.
+		X^{-1}(B) = \{\omega \in \Omega | X(\omega) \in B\} \in \mathcal{F} \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
 	Random variables are classified as either discrete or continuous, based on the discrete or continuous nature of their sample space. Discrete random variables have countable sample spaces, while continuous random variables have uncountable sample spaces, often modeled as intervals on the real line. The role of random variables is to provide a numerical representation of the outcomes of a random experiment, allowing quantification and analysis of the likelihood of different numerical outcomes. 
 \end{definition}
 
-\begin{definition}[Expected value]
-	\label{def:expectation}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the expected value of $X$, denoted by $\mathbb{E}[X]$, is defined by the Lebesgue integral~\citep{taboga2021}
+\begin{definition}[Image Measure]
+	\label{def:image_measure}
+	\index{Image measure}
+	Let $X: \Omega \mapsto \Omega_X$ be a random variable that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
 	\begin{equation}
-		\mathbb{E}[X] \equiv \int_\Omega X(\omega)\, d\mathbb{P}(\omega).
-		\label{eq:expected_value}
+		\mathbb{P}\circ X^{-1}: \mathcal{F}_X\mapsto [0,1]
+	\end{equation}
+	defines a probability measure on $(\Omega_X, \mathcal{F}_X)$. $\mathbb{P}\circ X^{-1} = \mathbb{P}_X$ is called the image measure or the pushforward measure\index{Pushforward measure} of $\mathbb{P}$.
+\end{definition}
+
+\begin{definition}[Expected value via image measure]
+	\label{def:expectation_image}
+	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, and let $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$ be the image (pushforward) measure (\dfref{def:image_measure}) of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value of $X$, denoted by $\mathbb{E}[X]$, can be defined viz
+	\begin{equation}
+		\mathbb{E}[X] \equiv \int_{\Omega_X} x \mathbb{P}_X(dx).
+		\label{eq:expected_value_image}
 	\end{equation}
 \end{definition}
 
@@ -227,17 +239,18 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 	\label{theorem:exp_linear}
 	The expectation is a linear operator meaning $\mathbb{E}[a+X] = a+\mathbb{E}[X]$ and $\mathbb{E}[aX] = a\mathbb{E}[X]$ for any constant $a$.
 \end{theorem}
-\begin{theorem}[The law of the unconscious statistician]
-	The law of the unconscious statistician generalize the expectation of a random variable to the expectation of a function $g: \Omega \mapsto \mathbb{R}$ of a random variable $X(\omega)\in \Omega_X\quad \forall \omega \in \Omega$ defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$ such that
+\begin{theorem}[Law of the Unconscious Statistician]
+	\label{th:lotus}
+	Let $X$ be a random variable defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $g: \Omega_X \to \mathbb{R}$ be any measurable function. Denote the image (pushforward) measure (\dfref{def:image_measure}) of $X$ by $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$. Then
 	\begin{equation}
-		\mathbb{E}[g(X)]\equiv \int _\Omega g(X(\omega))d\mathbb{P}(\omega).
-		\label{eq:expected_value2}
+		\mathbb{E}[g(X)] \equiv \int_{\Omega_X} g(x) \mathbb{P}_X(dx).
+		\label{eq:lotus_image}
 	\end{equation}
 \end{theorem}
 
 \begin{definition}[Variance]
 	\label{def:variance}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the variance of $X$, denoted by $\operatorname{Var}[X]$, is defined viz
+	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the variance of $X$, denoted by $\operatorname{Var}[X]$, is defined viz\index{Variance}
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}[X]&\equiv \mathbb{E}[(X-\mathbb{E}[X])^2]\\
@@ -246,7 +259,6 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 	\end{equation}
 \end{definition}
 
-% --- Markov's Inequality ---
 \begin{theorem}[Markov's Inequality]
 Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{equation}
@@ -254,15 +266,15 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \end{equation}
 \end{theorem}
 \begin{proof}
-	Let $\mathbf{1}_{\{X\ge a\}}$ denote the indicator of the event $\{X\ge a\}$. Since $X$ is non-negative and $a>0$
+	Let $1_{\{X\ge a\}}$ denote the indicator of the event $\{X\ge a\}$. Since $X$ is non-negative and $a>0$
 	\begin{equation}
-		a\mathbf{1}_{\{X\ge a\}} \le X.
+		a1_{\{X\ge a\}} \le X.
 	\end{equation}
 	Taking expectations and using \thref{theorem:exp_linear}
 	\begin{equation}
-		a\,\mathbb{E}\big[\mathbf{1}_{\{X\ge a\}}\big] \le \mathbb{E}[X].
+		a\,\mathbb{E}\big[1_{\{X\ge a\}}\big] \le \mathbb{E}[X].
 	\end{equation}
-	But $\mathbb{E}[\mathbf{1}_{\{X\ge a\}}]=\mathbb{P}(X\ge a)$, so
+	But $\mathbb{E}[1_{\{X\ge a\}}]=\mathbb{P}(X\ge a)$, so
 	\begin{equation}
 		a\,\mathbb{P}(X\ge a) \le \mathbb{E}[X],
 	\end{equation}
@@ -272,23 +284,13 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\end{equation}
 \end{proof}
 
-
-\begin{definition}[Image Measure]
-	\label{def:image_measure}
-	Let $X: \Omega \mapsto \Omega_X$ be a random variable that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
-	\begin{equation}
-		\mathbb{P}\circ X^{-1}: \mathcal{F}_X\mapsto [0,1]
-	\end{equation}
-	defines a probability measure on $(\Omega_X, \mathcal{F}_X)$. $\mathbb{P}\circ X^{-1}$ is called the image measure or the push forward measure of $\mathbb{P}$.
-\end{definition}
-
 \begin{definition}[Probability Mass Function]
 	\label{def:pmf}
-	In case of a discrete random variable $X: \Omega \mapsto \Omega_X$ that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, the image measure is defined as the probability mass function
+	In case of a discrete random variable $X: \Omega \mapsto \Omega_X$ that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, the image measure (\dfref{def:image_measure})\index{Image measure} is defined as the probability mass function\index{Probability Mass Function (PMF)}
 	\begin{equation}
 		\begin{split}
-			p( X = x) &\equiv  \mathbb{P}\circ X^{-1}(x)\\
-			& = \mathbb{P}(X^{-1}(x)).
+			p( X = x) &\equiv  \mathbb{P}_X(\{x\})\\
+			& = \mathbb{P}(X^{-1}(\{x\})).
 		\end{split}
 		\label{eq:disc}
 	\end{equation}
@@ -303,28 +305,49 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \end{theorem}
 
 \begin{definition}[Probability Density Function]
-	\label{def:pdf}
-	Let $X: \Omega \mapsto \Omega_X$ be a continuous random variable that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. Probabilities are described using a probability density function (PDF) 
-	 \begin{equation}
-	 	f: \Omega_X \mapsto \mathbb{R}_{\geq 0},
-	 \end{equation}
-	 which is related to the probability measure viz
+	\label{def:pdf_image_measure}
+	Let $X: \Omega \to \Omega_X$ be a continuous random variable on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. Denote the image (pushforward) measure (\dfref{def:image_measure}) of $X$ by
 	\begin{equation}
-		\mathbb{P}(\{\omega \in \Omega | X(\omega) \leq x\}) = \int_{-\infty}^x f(X = t) \, dt,
-		\label{eq:cont}
+		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)) \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
-	 where $\int_{-\infty}^\infty f(X=t) dt = 1$ and $f(X=t)=0$ for any individual point $t \in \mathbb{R}$.
+	If there exists a non-negative measurable function
+	\begin{equation}
+		f: \Omega_X \to \mathbb{R}_{\ge 0}
+	\end{equation} 
+	such that
+	\begin{equation}
+		\mathbb{P}_X(B) = \int_B f(x) d\lambda(x), \quad \forall B \in \mathcal{B}(\Omega_X),
+	\end{equation}
+	where $\lambda$ denotes the Lebesgue measure and $\mathcal{B}(\Omega_X)$ is the Borel $\sigma$-algebra on $\Omega_X$, then $f$ is called the probability density function (PDF)\index{Probability Density Function (PDF)} of $X$. The PDF satisfies
+	\begin{equation}
+		f(x) \ge 0 \quad \forall x \in \Omega_X, 
+		\qquad 
+		\int_{\Omega_X} f(x) d\lambda(x) = 1.
+	\end{equation}
 \end{definition}
+
+\begin{example}
+	Let $X$ be a continuous random variable with PDF $f$. For an interval $[a,b] \subseteq \Omega_X$,
+	\begin{equation}
+		\begin{split}
+			\mathbb{P}(a \le X \le b) 
+			&= \mathbb{P}_X([a,b])\\ 
+			&= \int_{[a,b]} f(x) d\lambda(x)\\ 
+			&= \int_a^b f(x) dx.
+		\end{split}
+	\end{equation}
+\end{example}
 
 \begin{theorem}[Expected value of continuous random variable]
 	\label{theorem:expectaion_continuous}
 	The expected value of a continuous random variable $X$ with probability density function $f$ can be written 
 	\begin{equation}
-		\mathbb{E}[X]=\int_{\Omega_X}xf(X =x)dx.
+		\mathbb{E}[X]=\int_{\Omega_X}xf(x)dx.
 	\end{equation}
 \end{theorem}
 \begin{theorem}[Total expectation]
 	\label{theorem:total_expectation}
+	\index{Total expectation}
 	Let $X: \Omega \mapsto \Omega_X$ and $Y: \Omega \mapsto \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then
 	\begin{equation}
 		\mathbb{E}_X[X] = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X| Y]],
@@ -345,6 +368,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
+	\index{Independent random variables}
 	Let $X: \Omega \mapsto \Omega_X$ and $Y: \Omega \mapsto \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
 	\begin{equation}
 	f(X=x,Y=y)=f(X=x)f(Y=y),	
@@ -364,6 +388,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 \begin{definition}[Covariance]
 	\label{def:covariance}
+	\index{Covariance}
 	Let $X: \Omega \mapsto \Omega_X$ and $Y: \Omega \mapsto \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}[X,Y]$, is defined viz
 	\begin{equation}
 		\begin{split}
@@ -386,6 +411,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 
 \begin{definition}[Correlation]
+	\index{Correlation}
 	Let $X$ and $Y$ be real-valued random variables defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
 	\begin{equation}
 		\begin{split}
@@ -399,6 +425,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{definition}[Change of Variables for PDFs]
 	\label{def:change_of_variables}
+	\index{Change of variables for PDFs}
 	Let $X$ be a continuous random variable with probability density function (PDF) $f(X =x)$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Suppose $Y = g(X)$ is a continuous and differentiable function of $X$, and let $g^{-1}$ denote the inverse function of $g$. If $Y = g(X)$ and the inverse function $g^{-1}$ exists and is differentiable, the PDF of the random variable $Y$, denoted $f(Y=y)$, can be obtained by the change of variables formula viz~\cite{Sivia2006}
 	\begin{equation}
 		f(Y = y) = f(X = g^{-1}(y)) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y}.
@@ -442,7 +469,6 @@ Correlation and covariance are both measures of the relationship between two ran
 		\end{split}
 	\end{equation}
 \end{example}
-\newpage
 
 \begin{definition}[Error-Propagation]
 	\label{def:error_propagation}
@@ -471,13 +497,14 @@ Correlation and covariance are both measures of the relationship between two ran
 		\end{split}
 	\label{eq:var_approx}
 	\end{equation}
-	If the random variables are independent, $\mathrm{Cov}[X_i, X_j] = 0$ for $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and equation \eqref{eq:var_approx} simplifies to
+	If the random variables are independent, $\mathrm{Cov}[X_i, X_j] = 0$ for $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and equation \eqref{eq:var_approx} simplifies to\index{Error propagation}
 	\begin{equation}
 		\operatorname{Var}[g] \approx \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}[X]}^2\operatorname{Var}[X_i].
 	\end{equation}
 \end{definition}
-\newpage
+
 \begin{example}
+	\index{Example: Error propagation}
 	A company produce square plates. Let the plate dimensions be characterized by two independent random variables $X\sim \mathcal{N}(2m,(0.01m)^2)$ and $Y\sim \mathcal{N}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From \dfref{def:error_propagation}, the exact variance is
 	\begin{equation}
 		\label{eq:var1}
@@ -553,7 +580,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 
 \begin{example}
-	\index{Example: Crime}
+	\index{Example: Prosecutor}
 	Suppose a crime has been committed. Blood is found at the crime scene for which there is no innocent explanation. It is of the type which is present in $1\%$ of the population.
 	
 	\begin{enumerate}
@@ -590,7 +617,6 @@ Correlation and covariance are both measures of the relationship between two ran
 		
 	\end{enumerate}
 \end{example}
-\newpage
 
 \begin{example}
 	\index{Example: Variance of a sum}
@@ -690,7 +716,6 @@ Correlation and covariance are both measures of the relationship between two ran
 	\end{equation}
 	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\operatorname{Corr}[X,X^2]=0$.
 \end{example}
-\newpage
 
 \begin{example}
 	\index{Example: Correlation coefficient}
@@ -802,6 +827,7 @@ Correlation and covariance are both measures of the relationship between two ran
 \end{example}
 
 \begin{example}
+	\index{Example: Secretary problem}
 	Let $n \in \mathbb{N}$ denote the total number of candidates, presented sequentially in uniformly random order. After observing the $k$-th candidate, an irrevocable decision must be made: either to accept or reject the candidate. The objective is to maximize the probability of selecting the candidate with the highest rank among all $n$ candidates.\newline
 	
 	Let $r \in \{0,1,\dots,n-1\}$ denote the number of candidates to be automatically rejected. Define the strategy $\sigma_r$ as follows: reject the first $r$ candidates, then select the first subsequent candidate whose observed rank exceeds all ranks observed among the first $r$ candidates. Let $\mathbb{P}_n(r)$ denote the probability that strategy $\sigma_r$ selects the best candidate. For $k \in \{r+1,\dots,n\}$, the probability that the $k$-th candidate is the best and is selected by $\sigma_r$ is

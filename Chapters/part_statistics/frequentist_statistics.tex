@@ -79,7 +79,7 @@ From equation \EQref{freq:decision_classification} it is clear that in Frequenti
 As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_classification}, both regression and classification in the Frequentist paradigm can be reframed as problems of parameter estimation. This makes parameter estimation the central focus of Frequentist statistics. Unlike in Bayesian statistics, where parameters are intermediate quantities to be marginalized over, in the Frequentist framework the parameters are fixed but unknown, and their determination carries substantive interpretational and practical importance. Estimators of these parameters serve as decision rules that summarize past observations into actionable predictions.
 
 \begin{definition}[Sampling distribution]
-	Let $D$ denote the observed dataset and let $\hat{w}(D)$ be a decision rule (estimator) for the fixed-but-unknown parameter $w\in\Omega_W$. The \emph{sampling distribution} of $\hat{w}$ is the probability distribution of the random variable $\hat{w}(D)$ induced by repeated sampling of $D$ from the data-generating mechanism $p(D \mid w,I)$.	
+	Let $D$ denote the observed dataset and let $\hat{w}(D)$ be a decision rule (estimator) for the fixed-but-unknown parameter $w\in\Omega_W$. The sampling distribution\index{Sampling distribution} of $\hat{w}$ is the probability distribution of the random variable $\hat{w}(D)$ induced by repeated sampling of $D$ from the data-generating mechanism $p(D \mid w,I)$.	
 \end{definition}
 
 \begin{remark}[Bayesian versus Frequentist perspective]
@@ -87,7 +87,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 \end{remark}
 
 \begin{example}
-	In practice, the true sampling distribution of an estimator $\hat{w}(D)$ is rarely available in closed form. The \emph{bootstrap} provides an approximation technique based solely on the observed dataset. Let $D = \{(x_i,s_i)\}_{i=1}^n$ be the dataset. A bootstrap sample $D^{*}$ is constructed by sampling $n$ observations with replacement from $D$. Repeating this procedure $B$ times yields bootstrap replicates $\hat{w}(D^{*1}), \ldots, \hat{w}(D^{*B})$, whose empirical distribution approximates the sampling distribution of $\hat{w}(D)$. 
+	In practice, the true sampling distribution of an estimator $\hat{w}(D)$ is rarely available in closed form. The \emph{bootstrap} provides an approximation technique based solely on the observed dataset. Let $D = \{(x_i,s_i)\}_{i=1}^n$ be the dataset. A bootstrap\index{Bootstrapping} sample $D^{*}$ is constructed by sampling $n$ observations with replacement from $D$. Repeating this procedure $B$ times yields bootstrap replicates $\hat{w}(D^{*1}), \ldots, \hat{w}(D^{*B})$, whose empirical distribution approximates the sampling distribution of $\hat{w}(D)$. 
 	
 	Common quantities derived from the bootstrap include:
 	\begin{itemize}
@@ -103,7 +103,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{definition}[Fisher Information]
 	\label{def:fisher_information}
-	Take $D_s= \{s_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_s | D_x, w, I)$ denote the likelihood of observing Natures actions $D_s$ given observed data $D_x$ and $w$. The Fisher information is defined as
+	Take $D_s= \{s_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_s | D_x, w, I)$ denote the likelihood of observing Natures actions $D_s$ given observed data $D_x$ and $w$. The Fisher information\index{Fisher information} is defined as
 	\begin{equation}
 		\begin{split}
 			\mathcal{I}(w) &\equiv \mathbb{E} \bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_s|D_x, w,I)\bigg)^2 \Bigg| D_x, w,I\bigg]\\
@@ -153,7 +153,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{definition}[Maximum Likelihood Estimator (MLE) Decision Rule]
 	\label{def:MLE}
-	Take $D_s= \{s_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a fixed but unknown parameter. The Maximum Likelihood Estimator (MLE) decision rule $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_s$ given $D_x$
+	Take $D_s= \{s_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a fixed but unknown parameter. The Maximum Likelihood Estimator (MLE) decision rule \index{Maximum likelihood estimator} $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_s$ given $D_x$
 	\begin{equation}
 		\hat{w}_{\mathrm{MLE}}(D) \equiv \arg \max_{w \in \Omega_W} p(D_s | D_x, w, I),
 	\end{equation}
@@ -173,7 +173,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{definition}[Minimax Decision Rule]
 	\label{def:minimax}
-	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum expected cost, meaning (\EQref{eq:conditional_expected_cost})
+	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum\index{Minimax} expected cost, meaning (\EQref{eq:conditional_expected_cost})
 	\begin{equation}
 		\begin{split}
 			\hat{w}' &\equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w,I]\\
@@ -203,7 +203,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{corollary}[MLE is Approximately Minimax for quadratic Loss]
 	\label{cor:MLE_minimax}
-	Under certain regularity conditions, the Maximum Likelihood decision rule (MLE) $\hat{w}_{\text{MLE}}$ is approximately minimax for the quadratic cost function (\dfref{def:quadratic_cost}), meaning it approximately minimizes the maximum expected cost.
+	Under certain regularity conditions, the Maximum Likelihood decision rule (MLE) $\hat{w}_{\text{MLE}}$ is approximately minimax for the quadratic cost function (\dfref{def:quadratic_cost}), meaning it approximately minimizes the maximum expected cost\index{Minimax}.
 	
 	\begin{proof}
 		From theorem \thref{theorem:MSE}

@@ -8,9 +8,9 @@ where $\Omega_{X_i}$ is part of the probability space $(\Omega_{X_i},\mathcal{F}
 \begin{equation}
 	\mathbb{P}_{X_i} = \mathbb{P}\circ X_i^{-1}
 \end{equation}
-is the push forward measure (see \dfref{def:image_measure}) of $\mathbb{P}$ with respect to $X_i$. 
+is the image measure (see \dfref{def:image_measure}\index{Image measure}) of $\mathbb{P}$ with respect to $X_i$. 
 \begin{definition}[The Joint Probability Measure]
-	The joint probability measure is the push forward measure
+	The joint probability measure is the image measure
 	\begin{equation}
 		\mathbb{P}_{X_1,\dots X_n} = \mathbb{P}\circ(X_1,\dots X_n)^{-1}.
 	\end{equation}
@@ -53,7 +53,7 @@ The parameters $w\in \Omega_W$ can either be viewed as fixed constants or the re
 \end{axiom}
 \begin{axiom}[Parameter as a Random Variable]
 	\label{ax:parameter_variable}
-	The parameter $w\in \Omega_W$ is treated as a realization of a random variable. In this case, the parameter space must be endowed with a $\sigma$-algebra ($\mathcal{F}_W$) and a probability measure ($\mathbb{P}_W$) that must be the result of another measure pushed forward (see \dfref{def:image_measure}) with respect to the random variable $W$. This means
+	The parameter $w\in \Omega_W$ is treated as a realization of a random variable. In this case, the parameter space must be endowed with a $\sigma$-algebra ($\mathcal{F}_W$) and a probability measure ($\mathbb{P}_W$) that must be the result of another image measure (see \dfref{def:image_measure} \index{Image measure}) with respect to the random variable $W$. This means
 	\begin{equation}
 		W: \Omega \mapsto \Omega_W
 	\end{equation}
@@ -61,7 +61,7 @@ The parameters $w\in \Omega_W$ can either be viewed as fixed constants or the re
 	\begin{equation}
 		\mathbb{P}_W: \mathcal{F}_W \mapsto [0,1],
 	\end{equation}
-	is called the prior measure, which is the push forward measure of $\mathbb{P}$ with respect to $W$, i.e.
+	is called the prior measure, which is the image measure of $\mathbb{P}$ with respect to $W$, i.e.
 	\begin{equation}
 		\mathbb{P}_W = \mathbb{P}\circ W^{-1}.
 	\end{equation}
