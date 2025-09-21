@@ -1,0 +1,94 @@
+\documentclass[crop=false]{standalone} % crop=false prevents standalone from trimming the page
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{cfr-lm} 
+\usepackage[active,tightpage]{preview}
+\usepackage{xcolor} % already loaded by tikz, but you can add named colors
+
+\definecolor{darkroyalblue}{RGB}{0,20,50}
+\PreviewEnvironment{tikzpicture}
+
+
+
+% --- book sizes ---
+\newlength{\bookwidth}   \setlength{\bookwidth}{158mm}
+\newlength{\bookheight}  \setlength{\bookheight}{236mm}
+\newlength{\spinewidth}  \setlength{\spinewidth}{10.4mm} % <-- change X here
+\newlength{\bleed}       \setlength{\bleed}{17mm}
+
+\newlength{\totalwidth}  \setlength{\totalwidth}{\dimexpr 2\bookwidth+\spinewidth+2\bleed\relax}
+\newlength{\totalheight} \setlength{\totalheight}{\dimexpr \bookheight+2\bleed\relax}
+
+% one geometry load only, set page to full cover (including bleed)
+\usepackage[
+paperwidth=\the\totalwidth,
+paperheight=\the\totalheight,
+margin=0pt
+]{geometry}
+
+
+\pgfmathsetmacro{\frontcenterfactor}{((158 - 10)*0.5 + 10)/158} % The text should be centered at a box starting 1 cm from the left
+
+\begin{document}
+	\noindent % ensure nothing (not even an indent) appears before the picture
+	\thispagestyle{empty}
+	\begin{tikzpicture} % no overlay
+		% page edge (bleed) -- dashed so you can see the bleed area
+		\draw[very thin,dashed] (0,0) rectangle (\totalwidth,\totalheight);
+		
+		% content area origin = bottom-left of back cover (inside bleed)
+		\begin{scope}[xshift=\bleed,yshift=\bleed]
+			% back cover
+			%\draw[thick] (0,0) rectangle (\bookwidth,\bookheight);
+			\fill[darkroyalblue, opacity=1] (0,0) rectangle (\bookwidth,\bookheight);
+			
+			% spine
+			%\draw[thick] (\bookwidth,0) rectangle (\bookwidth+\spinewidth,\bookheight);
+			\fill[darkroyalblue, opacity=1] (\bookwidth,0) rectangle (\bookwidth+\spinewidth,\bookheight);
+			
+			% front cover
+			%\draw[thick] (\bookwidth+\spinewidth,0) rectangle (2\bookwidth+\spinewidth,\bookheight);
+			 \fill[darkroyalblue, opacity=1] (\bookwidth+\spinewidth,0) rectangle (2\bookwidth+\spinewidth,\bookheight);
+			
+		\end{scope}
+		
+		% front image (fills front cover area)
+		%\node[anchor=south west, inner sep=0pt, opacity=0.1] 
+		%at (\dimexpr\bleed+\bookwidth+\spinewidth\relax,\bleed)
+		%{\includegraphics[width=\bookwidth,height=\bookheight]{fpim2.jpg}};
+		
+		% front title + author (tweak positions/sizes as needed)
+		\node[align=center,text width=\dimexpr\bookwidth-20mm\relax,
+		font=\fontsize{35}{32}\selectfont]
+		at (\dimexpr\bleed+\bookwidth+\spinewidth+\frontcenterfactor\bookwidth\relax,
+		\dimexpr\bleed+0.6\bookheight\relax)
+		{\textcolor{white}{INTRODUCTION\\ TO STATISTICS}};
+		
+		\node[align=center,text width=\dimexpr\bookwidth-20mm\relax,
+		font=\fontsize{22}{20}\selectfont]
+		at (\dimexpr\bleed+\bookwidth+\spinewidth+\frontcenterfactor\bookwidth\relax,
+		\dimexpr\bleed+0.48\bookheight\relax)
+		{\textcolor{white}{THEORY, METHOD AND \\APPLICATION}};
+		
+		\node[align=center,text width=\dimexpr\bookwidth-20mm\relax,
+		font=\fontsize{16}{20}\selectfont]
+		at (\dimexpr\bleed+\bookwidth+\spinewidth+\frontcenterfactor\bookwidth\relax,
+		\dimexpr\bleed+0.3\bookheight\relax)
+		{\textcolor{white}{JONAS PETERSEN}};
+		
+		% spine text (rotate -90 or 90 depending on the desired orientation)
+		\node[anchor=center,rotate=-90,transform shape,font=\fontsize{10}{16}\selectfont]
+		at (\dimexpr\bleed+\bookwidth+0.5\spinewidth\relax,
+		\dimexpr\bleed+0.9\bookheight\relax)
+		{\textcolor{white}{JONAS PETERSEN}};
+		
+		\node[anchor=center,rotate=-90,transform shape,font=\fontsize{10}{16}\selectfont]
+		at (\dimexpr\bleed+\bookwidth+0.5\spinewidth\relax,
+		\dimexpr\bleed+0.65\bookheight\relax)
+		{\textcolor{white}{INTRODUCTION TO STATISTICS}};
+		
+		
+		
+	\end{tikzpicture}
+
+\end{document}

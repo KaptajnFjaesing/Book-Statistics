@@ -11,11 +11,12 @@ BCOR=5mm,
 fontsize=10pt, % Binding correction, paper type and font size
 ngerman,
 american, % Languages, change this to your language(s)
-pagesize=pdftex,
 ]{scrbook} 
 
 \input{classicthesis-config}
 \addbibresource{refs.bib} % The file housing your bibliography
+
+
 
 \begin{document}
 	\frenchspacing % Reduces space after periods to make text more compact
@@ -43,20 +44,15 @@ pagesize=pdftex,
 	%	THESIS CONTENT - CHAPTERS
 	%----------------------------------------------------------------------------------------
 	
-	\input{Chapters/part_introduction/preface}
-	\input{Chapters/part_introduction/set_theory_introduction}
-	\input{Chapters/part_introduction/probability_theory_introduction}
-	\input{Chapters/part_introduction/assigning_probabilities}
+	\input{Chapters/preface}
+	\input{Chapters/set_theory_introduction}
+	\input{Chapters/probability_theory_introduction}
+	\input{Chapters/assigning_probabilities}
 	
-	\input{Chapters/part_introduction/statistics_introduction}
-	\input{Chapters/part_statistics/framing}
-	\input{Chapters/part_statistics/bayesian_statistics}
-	\input{Chapters/part_statistics/frequentist_statistics}
-	
-
-	\input{Chapters/part_outro/reflections}
-	
-	
+	\input{Chapters/statistics_introduction}
+	\input{Chapters/framing}
+	\input{Chapters/bayesian_statistics}
+	\input{Chapters/frequentist_statistics}
 	
 	%----------------------------------------------------------------------------------------
 	%	THESIS CONTENT - APPENDICES
@@ -64,7 +60,7 @@ pagesize=pdftex,
 	
 	\appendix
 
-	\include{Chapters/appendices/app_HMC_algorithm}
+	\include{Chapters/app_HMC_algorithm}
 	
 	
 	%----------------------------------------------------------------------------------------
