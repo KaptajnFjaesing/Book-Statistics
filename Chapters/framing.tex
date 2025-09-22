@@ -4,16 +4,16 @@ In this book, statistics is framed as a game against Nature, following conventio
 
 \begin{definition}[Robot]
 	\label{def:robot}
-	The Robot is the primary decision maker in the statistical game.
+	The Robot is the primary decision maker in the statistical game.\index{Robot}
 \end{definition}
 
 \begin{definition}[Nature]
 	\label{def:nature}	
-	Nature is an unpredictable decision maker that can interfere with the Robot's outcomes. It models uncertainty in the decision-making process.
+	Nature is an unpredictable decision maker that can interfere with the Robot's outcomes. It models uncertainty in the decision-making process.\index{Nature}
 \end{definition}
 
 \begin{remark}[Statistical game setup]
-	The game between the Robot and Nature is formalized by a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, a parameter space $\Omega_W$, and a set of probability distributions $\mathcal{P}$ parameterized by $w\in \Omega_W$. The Robot and Nature each make a decision by choosing actions $u \in \Omega_U$ and $s \in \Omega_S$, respectively. The Robot receives a penalty from a cost function depending on both actions.
+	The game between the Robot and Nature is formalized by a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, a parameter space $\Omega_W$, and a set of probability distributions $\mathcal{P}$ parameterized by $w\in \Omega_W$. The Robot and Nature each make a decision by choosing actions $u \in \Omega_U$ and $s \in \Omega_S$, respectively. The Robot receives a penalty from a cost function depending on both actions.\index{Game against Nature}
 \end{remark}
 
 \begin{definition}[Cost Function]
@@ -41,7 +41,7 @@ the Robot's objective is to formulate a decision rule that minimize the expected
 	\label{ex:rain}
 	Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
 	\begin{equation}
-		\mathbb{U} = \{"\text{bring umbrella}", "\text{don't bring umbrella}"\}.
+		\Omega_U = \{"\text{bring umbrella}", "\text{don't bring umbrella}"\}.
 	\end{equation}
 	Nature have already picked whether or not it will rain later, i.e.
 	\begin{equation}
@@ -119,25 +119,25 @@ In case of a continuous action space, the cost function is typically picked from
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] &= \int_{-\infty}^{\infty} ds |U(\tilde{D})-s| p(s|\tilde{D},I)\\
-			&= \int_{-\infty}^{U(\tilde{D})} (s-U(\tilde{D}))p(s|\tilde{D},I)ds\\
-			&\quad+\int_{U(\tilde{D})}^\infty (U(\tilde{D})-s)p(s|\tilde{D},I)ds\\
+			&= \int_{-\infty}^{U(\tilde{D})}ds (s-U(\tilde{D}))p(s|\tilde{D},I)\\
+			&\quad+\int_{U(\tilde{D})}^\infty ds (U(\tilde{D})-s)p(s|\tilde{D},I)\\
 		\end{split}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
 			0 &=\frac{\partial \mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
-			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)+\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds\\
-			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)-\int_{U^*(\tilde{D})}^\infty p(s|\tilde{D},I)ds
+			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)+\int_{-\infty}^{U^*(\tilde{D})}ds p(s|\tilde{D},I)\\
+			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)-\int_{U^*(\tilde{D})}^\infty ds p(s|\tilde{D},I)
 		\end{split}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds &= \int_{U^*(\tilde{D})}^\infty p(s|\tilde{D},I)ds\\
-			&= 1- \int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds\\
+			\int_{-\infty}^{U^*(\tilde{D})}ds p(s|\tilde{D},I) &= \int_{U^*(\tilde{D})}^\infty ds p(s|\tilde{D},I)\\
+			&= 1- \int_{-\infty}^{U^*(\tilde{D})} ds p(s|\tilde{D},I)\\
 		\end{split}
 	\end{equation}
 	\begin{equation}
-		\int_{-\infty}^{U^*(\tilde{D})} p(s|\tilde{D},I)ds = \frac{1}{2}
+		\int_{-\infty}^{U^*(\tilde{D})} ds p(s|\tilde{D},I) = \frac{1}{2}
 	\end{equation}
 	which is the definition of the median.
 \end{theorem}
@@ -204,7 +204,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\end{equation}
 	Taking $\alpha \ll 1$ means $z<0$ will be penalized relatively more than $z>0$. The expected cost is
 	\begin{equation}
-		\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] = \int ds \, p(S=s|\tilde{D},I)\, C(U(\tilde{D}),s).
+		\mathbb{E}_{S|\tilde{D}}[C(U(\tilde{D}), S)|\tilde{D},I] = \int ds  p(S=s|\tilde{D},I)\, C(U(\tilde{D}),s).
 	\end{equation}
 	The derivative of the expected cost with respect to the decision rule can be approximated viz
 	\begin{equation}

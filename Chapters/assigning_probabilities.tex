@@ -19,16 +19,16 @@ The principle of maximum entropy\index{Maximum entropy}, first proposed by \cite
 
 The maximum entropy principle asserts that the probability distribution $p(z|\lambda, I)$ that best represents the current state of knowledge is the one that maximizes the constrained entropy~\citep{Sivia2006}. Using the method of Lagrange multipliers, the constrained entropy is expressed via the Lagrangian
 \begin{equation}
-	\mathcal{L} = \int F \, dz,
+	\mathcal{L} = \int dz F ,
 \end{equation}
 with
 \begin{equation}
 	F = -p(z|\lambda, I) \ln \frac{p(z|\lambda, I)}{m(z)} 
 	- \lambda_0 p(z|\lambda, I) - \sum_{j=1}^n \lambda_j C_j(z).
 \end{equation}
-Here, $m(z)$, referred to as the \emph{reference measure} or \emph{Lebesgue measure}, ensures that the entropy
+Here, $m(z)$, referred to as the reference measure\index{Reference measure} or Lebesgue measure\index{Lebesgue measure}, ensures that the entropy
 \begin{equation}
-	- \int p(z|\lambda, I) \ln \frac{p(z|\lambda, I)}{m(z)} \, dz
+	- \int dz p(z|\lambda, I) \ln \frac{p(z|\lambda, I)}{m(z)}
 \end{equation}
 is invariant under changes of variables. The functions $C_j(z)$ represent additional constraints imposed by the background information $I$ (\dfref{def:background_information}), beyond the normalization constraint. The Lagrangian is maximized by solving the Euler-Lagrange equation
 \begin{equation}
@@ -46,9 +46,9 @@ leading to
 \begin{equation}
 	p(z|\lambda, I) = m(z) e^{-1 - \sum_j \lambda_j C_j(z)} = \tilde{m}(z) e^{- \sum_j \lambda_j C_j(z)},
 \end{equation}
-where $\tilde{m}(z) \equiv m(z) e^{-1}$. Enforcing normalization $\int p(z|\lambda, I) dz = 1$ gives
+where $\tilde{m}(z) \equiv m(z) e^{-1}$. Enforcing normalization $\int dz p(z|\lambda, I) = 1$ gives
 \begin{equation}
-	p(z|\lambda, I) = \frac{\tilde{m}(z) e^{- \sum_j \lambda_j C_j(z)}}{\int \tilde{m}(z') e^{- \sum_j \lambda_j C_j(z')} dz'}.
+	p(z|\lambda, I) = \frac{\tilde{m}(z) e^{- \sum_j \lambda_j C_j(z)}}{\int dz' \tilde{m}(z') e^{- \sum_j \lambda_j C_j(z')}}.
 \end{equation}
 The reference measure $m$ is invariant under parameter transformations, and the Lagrange multipliers $\lambda_j$ are determined by the additional constraints, e.g., on the mean or variance of $Z$.
 
@@ -75,7 +75,7 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			\int p(z|\lambda,I) dz &= me^{-1-\lambda_0}\int e^{-\lambda_1z-\lambda_2z^2}dz\\
+			\int dz p(z|\lambda,I) &= me^{-1-\lambda_0}\int dz e^{-\lambda_1z-\lambda_2z^2}\\
 			&= me^{-1-\lambda_0}\sqrt{\frac{\pi}{\lambda_2}}e^{\frac{\lambda_1^2}{4\lambda_2}}\\
 			&=1.
 		\end{split}
@@ -90,7 +90,7 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	Now, imposing the mean constraint
 	\begin{equation}
 		\begin{split}
-			\int zp(z|\lambda,I) dz &= \frac{\int ze^{-\lambda_1z-\lambda_2z^2}dz}{K}\\
+			\int dz zp(z|\lambda,I) &= \frac{\int dz ze^{-\lambda_1z-\lambda_2z^2}}{K}\\
 			&= -\frac{\lambda_1}{2\lambda_2}\\
 			&=\mu.
 		\end{split}
@@ -128,7 +128,7 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			\int p(z|\lambda,I) dz &= me^{-1-\lambda_0}\int z^{-\lambda_1}(1-z)^{-\lambda_2}dz\\
+			\int dz p(z|\lambda,I) &= me^{-1-\lambda_0}\int dz z^{-\lambda_1}(1-z)^{-\lambda_2}\\
 			&= me^{-1-\lambda_0}\frac{\Gamma(1-\lambda_1)\Gamma(1-\lambda_2)}{\Gamma(2-\lambda_1-\lambda_2)}\\
 			&=1.
 		\end{split}
@@ -165,13 +165,13 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	where $\tilde{m}(z) = m(z) e^{-1-\lambda_0}$. Taking a uniform measure ($m(z) = \text{const}$) and imposing normalization
 	\begin{equation}
 		\begin{split}
-			\int_0^\infty p(z|\lambda,I) dz &= \tilde{m} \int_0^\infty z^{-\lambda_2} e^{-\lambda_1 z} dz\\
+			\int_0^\infty dz p(z|\lambda,I) &= \tilde{m} \int_0^\infty dz z^{-\lambda_2} e^{-\lambda_1 z}\\
 			& = 1.
 		\end{split}
 	\end{equation}
 	The integral is recognized as the Gamma function
 	\begin{equation}
-		\int_0^\infty z^{\alpha-1} e^{-\beta z} dz = \frac{\Gamma(\alpha)}{\beta^\alpha}
+		\int_0^\infty z^{\alpha-1} dz e^{-\beta z} = \frac{\Gamma(\alpha)}{\beta^\alpha}
 	\end{equation}
 	with $\alpha = 1 - \lambda_2$ and $\beta = \lambda_1$. Substituting $\tilde{m}$, $\alpha$, $\beta$ back into \EQref{eq:gam1}
 	\begin{equation}
@@ -198,7 +198,7 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	Taking $m(z) = \text{const}$ and imposing normalization constraint
 	\begin{equation}
 		\begin{split}
-			\int_0^\infty p(z|\lambda,I) dz &= m e^{-1-\lambda_0}\int_0^\infty e^{- \lambda_1 z} dz\\
+			\int_0^\infty dz p(z|\lambda,I) &= m e^{-1-\lambda_0}\int_0^\infty dz e^{- \lambda_1 z}\\
 			& = m e^{-1-\lambda_0} \frac{1}{\lambda_1}\\
 			&= 1\\
 		\end{split}
@@ -207,7 +207,7 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	and the mean constraint
 	\begin{equation}
 		\begin{split}
-			\int_0^\infty z p(z|\lambda,I) dz &= \int_0^\infty z \lambda_1 e^{-\lambda_1 z} dz\\
+			\int_0^\infty dz z p(z|\lambda,I) &= \int_0^\infty dz z \lambda_1 e^{-\lambda_1 z}\\
 			& = \frac{1}{\lambda_1}\\
 			&= \mu.
 		\end{split}

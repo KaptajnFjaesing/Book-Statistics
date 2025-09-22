@@ -24,7 +24,11 @@ where $\hat{w}^*(D)$ denotes the optimal parameter decision rule, obtained from 
 
 \subsection{Frequentist Regression}
 \label{chp:frequentist_regression}
-In the Frequentist paradigm, regression involves the Robot constructing a model $f: \Omega_W \times \Omega_X \mapsto \mathbb{R}$, parameterized by $w \in \Omega_W$, to approximate Nature's actions $s\in \Omega_S$ based on observed data $x\in \Omega_X$. As in Bayesian regression (\secref{chp:regression}), the output of $f$ is real-valued, so that $S$ is assumed continuous. The model $f$ serves as the Robot's surrogate for Nature's mechanism, providing predictions of Nature's action given observed data $x \in \Omega_X$. \newline
+In the Frequentist paradigm, regression involves the Robot constructing a model,
+\begin{equation}
+	f: \Omega_W \times \Omega_X \mapsto \mathbb{R},
+\end{equation}
+parameterized by $w \in \Omega_W$, to approximate Nature's actions $s\in \Omega_S$ based on observed data $x\in \Omega_X$. As in Bayesian regression (\secref{chp:regression}), the output of $f$ is real-valued, so that $S$ is assumed continuous. The model $f$ serves as the Robot's surrogate for Nature's mechanism, providing predictions of Nature's action given observed data $x \in \Omega_X$. \newline
 
 Suppose Nature's action $s\in\Omega_S$ given observed data $x\in \Omega_X$ is distributed according to a normal distribution with mean $f(w,x)$ and precision $\xi \in \Omega_{\Xi}$,
 \begin{equation}
@@ -43,15 +47,13 @@ where $I$ denotes the background information (\dfref{def:background_information}
 \end{equation}
 \EQref{freq:decision} represents the Frequentist optimal decision rule conditional on the parameter estimate, whereas \EQref{eq:q3} represents the Bayesian optimal decision rule, which averages over the posterior distribution of the model parameters (and latent variables) given the data. From equation \EQref{freq:decision} it is clear that in Frequentist statistics, regression is reframed as parameter estimation.
 
-
 \subsection{Frequentist Classification}
 \label{chp:frequentist_classification}
-
 In the Frequentist paradigm, classification involves the Robot constructing a model
 \begin{equation}
-	f: \Omega_W \times \Omega_X \mapsto \Delta^K, \quad w \in \Omega_W,
+	f: \Omega_W \times \Omega_X \mapsto \Delta^K,
 \end{equation}
-where $\Delta^K$ is the $K$-dimensional probability simplex and $\Omega_S \in \{1,\dots,K\}$ represents Nature's discrete action (class label). The model predicts the conditional probability of each class given the input $x \in \Omega_X$:
+parameterized by $w \in \Omega_W$, where $\Delta^K$ is the $K$-dimensional probability simplex and $\Omega_S \in \{1,\dots,K\}$ represents Nature's discrete action (class label). The model predicts the conditional probability of each class given the input $x \in \Omega_X$
 \begin{equation}
 	p(S = s | x, w, I) = f_s(w, x), \quad s \in \{1,\dots,K\},
 \end{equation}
@@ -163,7 +165,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\label{thm:unbiased_mle}
 	Let $\hat{w}_{\mathrm{MLE}}(D)$ denote the Maximum Likelihood Estimator (MLE) of the fixed-but-unknown parameter $w$. Under standard regularity conditions, the sampling distribution of $\hat{w}_{\mathrm{MLE}}$ satisfies
 	\begin{equation}
-		\sqrt{n}\,\big(\hat{w}_{\mathrm{MLE}} - w\big) \xrightarrow{\text{d}} \mathcal{N}\big(0, \mathcal{I}(w)^{-1}\big),
+		\sqrt{n}\,\big(\hat{w}_{\mathrm{MLE}} - w\big) \xrightarrow{\text{d}} \operatorname{Norm}\big(0, \mathcal{I}(w)^{-1}\big),
 	\end{equation}
 	where $\mathcal{I}(w)$ is the Fisher information matrix evaluated at $w$ and $\xrightarrow{\text{d}}$ denotes convergence in distribution as $n \to \infty$. 
 	That is, the sampling distribution of the MLE becomes approximately normal, centered at the true parameter $w$ with variance given by the inverse Fisher information.
@@ -195,7 +197,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 	where conditions have been suppressed in the second line (to fit to the page) and the bias of the estimator of $\hat{w}$ is defined viz
 	\begin{equation}
-		\text{Bias}[\hat{w}|w,I]\equiv w-\mathbb{E}[\hat{w}|I].
+		\operatorname{Bias}[\hat{w}|w,I]\equiv w-\mathbb{E}[\hat{w}|I].
 	\end{equation}
 	If $\mathbb{E}[C(\hat{w}, w)|w,I] \to 0$ as $n \to \infty$, then $\hat{w}$ is a weakly consistent estimator of $w$, i.e., $\hat{w} \xrightarrow{p} w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, there is bias-variance which means that both cannot be minimized at the same time. 
 \end{theorem}

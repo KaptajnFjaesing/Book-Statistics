@@ -2,11 +2,11 @@
 \label{chp:probaiblity_theory}
 Probability theory provides a mathematical framework for analyzing random experiments, where outcomes cannot be predicted with certainty in advance. Its objective is to systematically study and understand the possible outcomes of such experiments.
 \begin{definition}[Sample Space]
-	The sample space, denoted by \( \Omega \), represents the set of all possible outcomes of a random experiment. It encompasses every conceivable result that could occur, serving as the foundation for analyzing probabilities associated with different outcomes.
+	The sample space\index{Sample space}, denoted by $\Omega$, represents the set of all possible outcomes of a random experiment. It encompasses every conceivable result that could occur, serving as the foundation for analyzing probabilities associated with different outcomes.
 \end{definition}
 
 \begin{definition}[Event]
-	An event, $E$, is a subset of the sample space, denoted by $E \subseteq \Omega$, that corresponds to a specific collection of possible outcomes in a random experiment. Events may consist of single or multiple outcomes and are defined by the occurrence or non-occurrence of particular conditions.
+	An event\index{Event}, $E$, is a subset of the sample space, denoted by $E \subseteq \Omega$, that corresponds to a specific collection of possible outcomes in a random experiment. Events may consist of single or multiple outcomes and are defined by the occurrence or non-occurrence of particular conditions.
 \end{definition}
 
 \begin{example}
@@ -15,7 +15,7 @@ Probability theory provides a mathematical framework for analyzing random experi
 \end{example}
 
 \begin{definition}[Event Space]
-	The set containing all valid possible events for a random experiment is referred to as the event space, $\mathcal{F}$. The notion of "all valid possible events for a random experiment" is formally defined by requiring $\mathcal{F}$ to be a $\sigma$-algebra satisfying the following properties:
+	The set containing all valid possible events for a random experiment is referred to as the event space\index{Event space}, $\mathcal{F}$. The notion of "all valid possible events for a random experiment" is formally defined by requiring $\mathcal{F}$ to be a $\sigma$-algebra satisfying the following properties:
 	\begin{enumerate}
 		\item $\mathcal{F}$ is the set of all subsets of the sample space $\Omega$, including the empty set $\emptyset$ and $\Omega$ itself, along with various combinations of outcomes.
 		\item Closure under complementation: If $E$ is in the $\sigma$-algebra ($E \in \mathcal{F}$), then its complement $E^c$ is also in the $\sigma$-algebra.
@@ -168,7 +168,7 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 \begin{proof}
 	Consider an event $A\subseteq \Omega$ and a partition $\{E_1,E_2,\dots E_n\}$ of $\Omega$ such that $\cup_{i}E_i=\Omega$. For mutually exclusive events (which a partition by definition is), finite additivity can be used such that
 	\begin{equation}
-		\sum_{i}\mathbb{P}(A,E_i) = \mathbb{P}(\bigcup_{i}(A,E_i)).
+		\sum_{i}\mathbb{P}(A,E_i) = \mathbb{P}\bigg(\bigcup_{i}(A,E_i)\bigg).
 		\label{eq:qq1}
 	\end{equation} 
 	$\bigcup_{i}(A,E_i)$ is the union of all intersections between $A$ and the $E$'s. However, since the $E$'s form a partition of $\Omega$, they together form $\Omega$ and the intersection between $\Omega$ and $A$ is $A$, meaning
@@ -316,13 +316,13 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\end{equation} 
 	such that
 	\begin{equation}
-		\mathbb{P}_X(B) = \int_B f(x) d\lambda(x), \quad \forall B \in \mathcal{B}(\Omega_X),
+		\mathbb{P}_X(B) = \int_B d\lambda(x) f(x), \quad \forall B \in \mathcal{B}(\Omega_X),
 	\end{equation}
-	where $\lambda$ denotes the Lebesgue measure and $\mathcal{B}(\Omega_X)$ is the Borel $\sigma$-algebra on $\Omega_X$, then $f$ is called the probability density function (PDF)\index{Probability Density Function (PDF)} of $X$. The PDF satisfies
+	where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} and $\mathcal{B}(\Omega_X)$ is the Borel $\sigma$-algebra on $\Omega_X$, then $f$ is called the probability density function (PDF)\index{Probability Density Function (PDF)} of $X$. The PDF satisfies
 	\begin{equation}
 		f(x) \ge 0 \quad \forall x \in \Omega_X, 
 		\qquad 
-		\int_{\Omega_X} f(x) d\lambda(x) = 1.
+		\int_{\Omega_X} d\lambda(x) f(x) = 1.
 	\end{equation}
 \end{definition}
 
@@ -332,8 +332,8 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 		\begin{split}
 			\mathbb{P}(a \le X \le b) 
 			&= \mathbb{P}_X([a,b])\\ 
-			&= \int_{[a,b]} f(x) d\lambda(x)\\ 
-			&= \int_a^b f(x) dx.
+			&= \int_{[a,b]} d\lambda(x) f(x) \\ 
+			&= \int_a^b dx f(x).
 		\end{split}
 	\end{equation}
 \end{example}
@@ -342,7 +342,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\label{theorem:expectaion_continuous}
 	The expected value of a continuous random variable $X$ with probability density function $f$ can be written 
 	\begin{equation}
-		\mathbb{E}[X]=\int_{\Omega_X}xf(x)dx.
+		\mathbb{E}[X]=\int_{\Omega_X} dx xf(x).
 	\end{equation}
 \end{theorem}
 \begin{theorem}[Total expectation]
@@ -379,8 +379,8 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{proof}
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}_{XY}[XY] &= \int_{\Omega_X}\int_{\Omega_Y} x y f(X=x,Y=y)dxdy\\
-			&= \int_{\Omega_X} x f(X=x)dx\int_{\Omega_Y}yf(Y=y)dy\\
+			\mathbb{E}_{XY}[XY] &= \int_{\Omega_X}dx\int_{\Omega_Y}dy x y f(X=x,Y=y)\\
+			&= \int_{\Omega_X}dx x f(X=x)\int_{\Omega_Y}dy yf(Y=y)\\
 			&= \mathbb{E}_X[X]\mathbb{E}_Y[Y]\\
 		\end{split}
 	\end{equation}
@@ -408,7 +408,6 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{proof}
 	Using $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$ (\thref{theorem:expectation_independent}) in \dfref{def:covariance} yield $\operatorname{Cov}[X,Y]=0$.
 \end{proof}
-
 
 \begin{definition}[Correlation]
 	\index{Correlation}
@@ -469,24 +468,35 @@ Correlation and covariance are both measures of the relationship between two ran
 	\end{equation}
 \end{example}
 
-\begin{definition}[Error-Propagation]
+\begin{definition}[Error Propagation]
 	\label{def:error_propagation}
-	Let $X_1 \ldots, X_n$ be continuous random variables with expectations $\mathbb{E}[X_1] \ldots, \mathbb{E}[X_n]$ and variances denoted $\operatorname{Var}[X_1] \ldots, \operatorname{Var}[X_n]$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Consider a function $g(X_1, \ldots, X_n)$ of these random variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the random variables $X_1, \ldots, X_n$, can be written
-	\begin{equation}
-			\operatorname{Var}[g(X_1 \ldots, X_n)] \equiv \mathbb{E}\big[(g(X_1 \ldots, X_n) - \mathbb{E}[g(X_1 \ldots, X_n)])^2\big] 
-	\end{equation}
-	In practice, the variance is often analytically intractable, in which case, a linear approximation of the variance can be used. This involves expanding $g$ about the expectation values using a first-order Taylor series expansion around the expectation values. Let $X = (X_1, \dots, X_n)$ and define 
-	\begin{equation}
-		 \mathbb{E}[X] = (\mathbb{E}[X_1], \dots, \mathbb{E}[X_n])
-	\end{equation}
-	then
+	Let $X_1, \dots, X_n$ be continuous random variables defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let 
+	$g:\mathbb{R}^n \to \mathbb{R}$ be a differentiable function of these variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the random variables $X_1, \dots, X_n$, can be written
 	\begin{equation}
 		\begin{split}
-			g(X_1, \ldots, X_n) =& g(\mathbb{E}[X]) + \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}[X]} + \mathcal{O}(\|X - \mathbb{E}[X]\|^2) \\
+			\operatorname{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
+			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}[X]}^2\operatorname{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{X=\mathbb{E}[X]} \operatorname{Cov}[X_i, X_j]\\
+			&\quad + \mathcal{O}(\|X - \mathbb{E}[X]\|^3).
 		\end{split}
+		\label{eq:var_approx}
+	\end{equation}
+\end{definition}
+
+\begin{proof}
+	With the notation $X = (X_1, \dots, X_n)$ and $\mathbb{E}[X] = (\mathbb{E}[X_1], \dots, \mathbb{E}[X_n])$ $g(X)$ can be written as a Taylor expansion around $\mathbb{E}[X]$ viz
+	\begin{equation}
+		g(X) = g(\mathbb{E}[X]) + \sum_{i=1}^n  \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}[X]} (X_i - \mathbb{E}[X_i]) + \mathcal{O}(\|X - \mathbb{E}[X]\|^2).
 		\label{e1}
 	\end{equation}
-	with this approximation, the variance of $g$ can be approximated viz
+	Consequently
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[g(X)] &= g(\mathbb{E}[X])+ \sum_{i=1}^n \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}[X]}\, \cancelto{0}{\mathbb{E}[X_i - \mathbb{E}[X_i]]}  + \mathcal{O}(\|X - \mathbb{E}[X]\|^2)\\
+			& = g(\mathbb{E}[X]) + \mathcal{O}(\|X - \mathbb{E}[X]\|^2)\\
+		\end{split}
+		\label{e2}
+	\end{equation}
+	meaning the variance of $g$ can be approximated viz
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
@@ -494,26 +504,30 @@ Correlation and covariance are both measures of the relationship between two ran
 			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}[X]}^2\operatorname{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{X=\mathbb{E}[X]} \operatorname{Cov}[X_i, X_j]\\
 			&\quad + \mathcal{O}(\|X - \mathbb{E}[X]\|^3).
 		\end{split}
-	\label{eq:var_approx}
 	\end{equation}
-	If the random variables are independent, $\mathrm{Cov}[X_i, X_j] = 0$ for $i \neq j$ (see \thref{theorem:covariance_of_independent_variables}), and equation \eqref{eq:var_approx} simplifies to\index{Error propagation}
+\end{proof}
+
+\begin{remark}[Independent Random Variables]
+	\label{remark:error_prop_independent}
+	If the random variables $X_1, \dots, X_n$ are independent, then $\mathrm{Cov}[X_i, X_j] = 0$ for all \(i \neq j\) (see \thref{theorem:covariance_of_independent_variables}). In this case, \dfref{def:error_propagation} simplifies to
 	\begin{equation}
-		\operatorname{Var}[g] \approx \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}[X]}^2\operatorname{Var}[X_i].
+		\operatorname{Var}[g(X_1, \dots, X_n)] \approx \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\Big|_{X = \mathbb{E}[X]}\right)^2 \operatorname{Var}[X_i].
 	\end{equation}
-\end{definition}
+	This is the commonly used form of the linear error-propagation formula for independent variables.
+\end{remark}
 
 \begin{example}
 	\index{Example: Error propagation}
-	A company produce square plates. Let the plate dimensions be characterized by two independent random variables $X\sim \mathcal{N}(2m,(0.01m)^2)$ and $Y\sim \mathcal{N}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From \dfref{def:error_propagation}, the exact variance is
+	A company produce square plates. Let the plate dimensions be characterized by two independent random variables\index{Normal distribution} $X\sim \operatorname{Norm}(2m,(0.01m)^2)$ and $Y\sim \operatorname{Norm}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From \dfref{def:error_propagation}, the exact variance is
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
 			\operatorname{Var}[XY]&=\mathbb{E}[(XY)^2]-(\mathbb{E}[XY])^2\\
-			&=\bigg(Var[X]+\mathbb{E}[X]\bigg)\bigg(V[y]+\mathbb{E}[Y]\bigg)-\mathbb{E}[X]^2\mathbb{E}[Y]^2\\
+			&=\bigg(\operatorname{Var}[X]+\mathbb{E}[X]\bigg)\bigg(\operatorname{Var}[Y]+\mathbb{E}[Y]\bigg)-\mathbb{E}[X]^2\mathbb{E}[Y]^2\\
 			&=\mathbb{E}[Y]^2\operatorname{Var}[X]+\mathbb{E}[X]^2\operatorname{Var}[Y]+\operatorname{Var}[X]\operatorname{Var}[Y]
 		\end{split}
 	\end{equation}
-	where it has been used that $X$ and $Y$ are independent, such that $\mathbb{E}[(XY)^2]=\mathbb{E}[X^2]\mathbb{E}[Y^2]$.	Via the linear approximation from \dfref{def:error_propagation}
+	where it has been used that $X$ and $Y$ are independent, such that $\mathbb{E}[(XY)^2]=\mathbb{E}[X^2]\mathbb{E}[Y^2]$.	Via the linear approximation from \rmref{remark:error_prop_independent}
 	\begin{equation}
 		\label{eq:var2}
 		\begin{split}
@@ -533,7 +547,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Father with Amnesia}
-	Consider a thought experiment in which a father with amnesia is told he has two children, but does not know the sex of them. The sample space can be constructed from the sample space for each child
+	Consider a thought experiment in which a father with amnesia is told he has two children, but does not know the sex of them. The sample space can be constructed from the sample space\index{Sample space} for each child
 	\begin{equation}
 		\begin{split}
 			\Omega_{\text{child 1}} &= \{\text{\Gentsroom,\Ladiesroom}\},\\
@@ -547,7 +561,7 @@ Correlation and covariance are both measures of the relationship between two ran
 			&= \{(\text{\Gentsroom,\Gentsroom}),(\text{\Gentsroom,\Ladiesroom}),(\text{\Ladiesroom,\Gentsroom}),(\text{\Ladiesroom,\Ladiesroom})\}.
 		\end{split}
 	\end{equation}
-	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \mapsto \{0,1,2\}$ and $G: \Omega \mapsto \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$. The probability mass function associated to $B$ and $G$ is given by \dfref{def:pmf}, such that e.g.
+	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \mapsto \{0,1,2\}$ and $G: \Omega \mapsto \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$ \index{Random variable}. The probability mass function associated to $B$ and $G$ is given by \dfref{def:pmf}\index{PMF}, such that e.g.
 	\begin{equation}
 		p(B = 1, G = 1)= \mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\}).
 	\end{equation}
@@ -587,30 +601,33 @@ Correlation and covariance are both measures of the relationship between two ran
 		
 		Let $E$ denote the event of having the blood type found at the crime scene, then "there is a $1\%$ chance that the defendant would have the crime blood type if he were innocent" means
 		\begin{equation}
-			\mathbb{P}(E|\text{innocent})=0.01.
+			\mathbb{P}(E|\operatorname{innocent})=0.01.
 		\end{equation}
 		This is not the relevant quantity, rather
 		\begin{equation}
-			\mathbb{P}(\text{innocent}|E)=\frac{\mathbb{P}(E|\text{innocent})\mathbb{P}(\text{innocent})}{p(E)}.
+			\mathbb{P}(\operatorname{innocent}|E)=\frac{\mathbb{P}(E|\operatorname{innocent})\mathbb{P}(\operatorname{innocent})}{\mathbb{P}(E)}.
 		\end{equation}
 		Since
 		\begin{equation}
-			\mathbb{P}(\text{innocent}|E)+\mathbb{P}(\text{guilty}|E)=1
+			\mathbb{P}(\operatorname{innocent}|E)+\mathbb{P}(\operatorname{guilty}|E)=1
 		\end{equation}
-		and so $\mathbb{P}(\text{innocent}|E)=0.01$ means $\mathbb{P}(\text{guilty}|E)=0.99$, which is what is stated in the exercise, however, in general \(\mathbb{P}(E|\text{innocent})\neq \mathbb{P}(\text{innocent}|E)\).
+		and so $\mathbb{P}(\operatorname{innocent}|E)=0.01$ means $\mathbb{P}(\operatorname{guilty}|E)=0.99$, which is what is stated in the exercise, however, in general
+		\begin{equation}
+			\mathbb{P}(E|\operatorname{innocent})\neq \mathbb{P}(\operatorname{innocent}|E).
+		\end{equation}
 		
 		\item The defender claims: "The crime occurred in a city of $800\, 000$ people. Hence, the blood type found at the crime scene would be found in $800\, 000 \cdot 0.01=8\, 000$ people". The evidence has thus provided a probability of $\frac{1}{8\, 000}$ that the defendant is guilty, and therefore has no relevance". This is known as the defendants fallacy. What is wrong with this argument?
 		
 		\begin{equation}
-			\mathbb{P}(\text{guilty}|E)=\frac{\mathbb{P}(E|\text{guilty})\mathbb{P}(\text{guilty})}{\mathbb{P}(E)},
+			\mathbb{P}(\operatorname{guilty}|E)=\frac{\mathbb{P}(E|\operatorname{guilty})\mathbb{P}(\operatorname{guilty})}{\mathbb{P}(E)},
 		\end{equation}
-		with $\mathbb{P}(E|\text{guilty}) = 1$, $\mathbb{P}(\text{guilty})=\frac{1}{8\,000}$ and 
+		with $\mathbb{P}(E|\operatorname{guilty}) = 1$, $\mathbb{P}(\operatorname{guilty})=\frac{1}{8\,000}$ and 
 		\begin{equation}
-			\mathbb{P}(E) = \mathbb{P}(E|\text{guilty})\mathbb{P}(\text{guilty})+\mathbb{P}(E|\text{innocent})p(\text{innocent})
+			\mathbb{P}(E) = \mathbb{P}(E|\operatorname{guilty})\mathbb{P}(\operatorname{guilty})+\mathbb{P}(E|\operatorname{innocent})\mathbb{P}(\operatorname{innocent})
 		\end{equation}
-		where $\mathbb{P}(E|\text{innocent})=0.01$ and $\mathbb{P}(\text{innocent})=1-\mathbb{P}(\text{guilty})$, meaning
+		where $\mathbb{P}(E|\operatorname{innocent})=0.01$ and $\mathbb{P}(\operatorname{innocent})=1-\mathbb{P}(\operatorname{guilty})$, meaning
 		\begin{equation}
-			\mathbb{P}(\text{guilty}|E)=\frac{100}{800\,099}.
+			\mathbb{P}(\operatorname{guilty}|E)=\frac{100}{800\,099}.
 		\end{equation}
 		$\frac{100}{800\,099}$ is very close to $\frac{1}{8\,000}$, however, this assumes the only evidence against the defendant is the blood type found at the crime scene. If this changes, the calculation can change significantly, depending on the evidence.
 		
@@ -637,7 +654,7 @@ Correlation and covariance are both measures of the relationship between two ran
 	Let "s" denote the event of being sick, "h" the event of being healthy, "p" the event of a positive test and "n" the event of a negative test, then  
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(\text{s}|\text{p}) &= \frac{\mathbb{P}(\text{p}|\text{sick})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p})}\\
+			\mathbb{P}(\text{s}|\text{p}) &= \frac{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p})}\\
 			&= \frac{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})+\mathbb{P}(\text{p}|\text{h})\mathbb{P}(\text{h})}\\
 		\end{split}
 	\end{equation}
@@ -688,7 +705,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \text{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
+	Let $X\sim \operatorname{Unif}{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
 	
 	\begin{equation}
 		\begin{split}
@@ -696,7 +713,7 @@ Correlation and covariance are both measures of the relationship between two ran
 			& = \frac{\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}\\
 		\end{split}
 	\end{equation}
-	In this case for the nonimator
+	In this case for the nominator
 	\begin{equation}
 		\begin{split}
 			\operatorname{Cov}[X,Y] &= \int dx x^3 p(x)-\int dx' x'p(x')\int dx'' x''^2p(x'')\\
@@ -718,11 +735,11 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim N(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable defined by $p(W=-1)=p(W=1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
+	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable defined by $p(W=-1)=p(W=1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
 	\begin{enumerate}
-		\item Show $Y\sim N(\mu =0, \sigma^2 = 1)$.\newline
+		\item Show $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$.\newline
 		
-		To show that $Y\sim N(\mu =0, \sigma^2 = 1)$, show that Y has zero mean and unity variance.
+		To show that $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$, show that Y has zero mean and unity variance.
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}_Y[Y] &= \mathbb{E}_{WX}[WX]\\
