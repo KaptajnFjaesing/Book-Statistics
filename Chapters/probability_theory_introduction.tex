@@ -19,7 +19,7 @@ Probability theory provides a mathematical framework for analyzing random experi
 	\begin{enumerate}
 		\item $\mathcal{F}$ is the set of all subsets of the sample space $\Omega$, including the empty set $\emptyset$ and $\Omega$ itself, along with various combinations of outcomes.
 		\item Closure under complementation: If $E$ is in the $\sigma$-algebra ($E \in \mathcal{F}$), then its complement $E^c$ is also in the $\sigma$-algebra.
-		\item Closure under countable union and intersection: If the events $E_1, E_2, E_3, \dots$ are in the $\sigma$-algebra ($E_i \in \mathcal{F}$ for all $i$), then their countable union $\bigcup_{i=1}^{\infty} E_i$ and intersection $\bigcap_{i=1}^{\infty} E_i$ are also in the $\sigma$-algebra.
+		\item Closure under countable union and intersection: If the events $E_1, E_2, \dots$ are in the $\sigma$-algebra ($E_i \in \mathcal{F}$ for all $i$), then their countable union $\bigcup_{i=1}^{\infty} E_i$ and intersection $\bigcap_{i=1}^{\infty} E_i$ are also in the $\sigma$-algebra.
 	\end{enumerate}
 	In the case where the outcomes of the random experiment can take discrete values, these properties are sufficient. However, in the case where the outcomes are continuous, $\mathcal{F}$ is required to be a Borel $\sigma$-algebra, meaning it must further fulfill the closure property under countable intersection with open sets. This ensures that $\mathcal{F}$ contains all sets that can be formed by taking unions, intersections, and complements of open sets, which are essential for defining probabilities in continuous spaces.
 \end{definition}
@@ -220,12 +220,16 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 	\begin{equation}
 		\mathbb{P}\circ X^{-1}: \mathcal{F}_X\mapsto [0,1]
 	\end{equation}
-	defines a probability measure on $(\Omega_X, \mathcal{F}_X)$. $\mathbb{P}\circ X^{-1} = \mathbb{P}_X$ is called the image measure or the pushforward measure\index{Pushforward measure} of $\mathbb{P}$.
+	defines a probability measure on $(\Omega_X, \mathcal{F}_X)$. $\mathbb{P}\circ X^{-1} \equiv \mathbb{P}_X$ is called the image measure or the pushforward measure\index{Pushforward measure} of $\mathbb{P}$.
 \end{definition}
 
 \begin{definition}[Expected value via image measure]
 	\label{def:expectation_image}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, and let $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$ be the image (pushforward) measure (\dfref{def:image_measure}) of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value of $X$, denoted by $\mathbb{E}[X]$, can be defined viz
+	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, and let
+	\begin{equation}
+		\mathbb{P}_X = \mathbb{P} \circ X^{-1}
+	\end{equation} 
+	be the image (pushforward) measure (\dfref{def:image_measure}) of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value of $X$, denoted by $\mathbb{E}[X]$, can be defined viz
 	\begin{equation}
 		\mathbb{E}[X] \equiv \int_{\Omega_X} x \mathbb{P}_X(dx).
 		\label{eq:expected_value_image}
@@ -294,13 +298,20 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 		\end{split}
 		\label{eq:disc}
 	\end{equation}
-	According to \axref{ax:non_neg}-\axref{ax:add} $\sum_{\text{all }x} p(X=x) = 1$ and $p(X=x) \geq 0 \, \forall x\in \Omega_X$. 
+	According to \axref{ax:non_neg}-\axref{ax:add}
+	\begin{equation}
+		\sum_{x\in \Omega_X} p(X=x) = 1
+	\end{equation} 
+	and
+	\begin{equation}
+		p(X=x) \geq 0, \quad \forall x\in \Omega_X.
+	\end{equation}
 \end{definition}
 
 \begin{theorem}[Expected value of discrete random variable]
 	The expected value of a discrete random variable $X$ with probability mass function $p$ can be written
 	\begin{equation}
-		\mathbb{E}[X]=\sum_{i}x_ip(X = x_i).
+		\mathbb{E}[X]=\sum_{x\in \Omega_X}xp(X = x).
 	\end{equation}
 \end{theorem}
 
@@ -308,7 +319,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\label{def:pdf}
 	Let $X: \Omega \to \Omega_X$ be a continuous random variable on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. Denote the image (pushforward) measure (\dfref{def:image_measure}) of $X$ by
 	\begin{equation}
-		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)) \quad \forall B \in \mathcal{F}_X.
+		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
 	If there exists a non-negative measurable function
 	\begin{equation}
@@ -686,7 +697,7 @@ Correlation and covariance are both measures of the relationship between two ran
 			&\quad+\mathbb{P}(o_3|c_1,z_3)\mathbb{P}(c_1,z_3).
 		\end{split}
 	\end{equation}
-	$\mathbb{P}(o_3|c_1,z_3)=0$ since the host will not open the door with the prize. $p(o_3|c_1,z_2)=1$ since the host has no other option in this case. $\mathbb{P}(o_3|c_1,z_1)=\frac{1}{2}$ since the host has two options in this case. There is no connection between the choice of door and position of the prize, so $\mathbb{P}(c_1, z_j)=\mathbb{P}(c_1)\mathbb{P}(z_j)$ and initially $\mathbb{P}(z_j)=\mathbb{P}(z_k)\forall j,k\in \{1,2,3\}$. Hence
+	$\mathbb{P}(o_3|c_1,z_3)=0$ since the host will not open the door with the prize. $p(o_3|c_1,z_2)=1$ since the host has no other option in this case. $\mathbb{P}(o_3|c_1,z_1)=\frac{1}{2}$ since the host has two options in this case. There is no connection between the choice of door and position of the prize, so $\mathbb{P}(c_1, z_j)=\mathbb{P}(c_1)\mathbb{P}(z_j)$ and initially $\mathbb{P}(z_j)=\mathbb{P}(z_k)$ $\forall j,k\in \{1,2,3\}$. Hence
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(z_1|o_3,c_1) &= \frac{\mathbb{P}(o_3|c_1,z_1)}{\sum_i\mathbb{P}(o_3|c_1,z_i)}\\
