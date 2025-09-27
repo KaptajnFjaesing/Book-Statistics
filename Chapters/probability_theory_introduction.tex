@@ -433,6 +433,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 Correlation and covariance are both measures of the relationship between two random variables. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
 
+\newpage
 \begin{definition}[Change of Variables for PDFs]
 	\label{def:change_of_variables}
 	\index{Change of variables for PDFs}
@@ -605,45 +606,56 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Prosecutor}
-	Suppose a crime has been committed. Blood is found at the crime scene for which there is no innocent explanation. It is of the type which is present in $1\%$ of the population.
+	Suppose a crime has been committed. Blood is found at the crime scene for which there is no innocent explanation. It is of the type that is present in $1\%$ of the population. Let $E$ denote the event that a person has the blood type found at the crime scene. Then
+	\begin{equation}
+		\mathbb{P}(E) = 0.01.
+		\label{eq:proseca}
+	\end{equation}
 	
-	\begin{enumerate}
-		\item The prosecutor claims: "There is a $1\%$ chance that the defendant would have the crime blood type if he were innocent. Thus there is a $99\%$ chance that he is guilty". This is known as the prosecutors fallacy. What is wrong with this argument?
-		
-		Let $E$ denote the event of having the blood type found at the crime scene, then "there is a $1\%$ chance that the defendant would have the crime blood type if he were innocent" means
-		\begin{equation}
-			\mathbb{P}(E|\operatorname{innocent})=0.01.
-		\end{equation}
-		This is not the relevant quantity, rather
-		\begin{equation}
-			\mathbb{P}(\operatorname{innocent}|E)=\frac{\mathbb{P}(E|\operatorname{innocent})\mathbb{P}(\operatorname{innocent})}{\mathbb{P}(E)}.
-		\end{equation}
-		Since
-		\begin{equation}
-			\mathbb{P}(\operatorname{innocent}|E)+\mathbb{P}(\operatorname{guilty}|E)=1
-		\end{equation}
-		and so $\mathbb{P}(\operatorname{innocent}|E)=0.01$ means $\mathbb{P}(\operatorname{guilty}|E)=0.99$, which is what is stated in the exercise, however, in general
-		\begin{equation}
-			\mathbb{P}(E|\operatorname{innocent})\neq \mathbb{P}(\operatorname{innocent}|E).
-		\end{equation}
-		
-		\item The defender claims: "The crime occurred in a city of $800\, 000$ people. Hence, the blood type found at the crime scene would be found in $800\, 000 \cdot 0.01=8\, 000$ people". The evidence has thus provided a probability of $\frac{1}{8\, 000}$ that the defendant is guilty, and therefore has no relevance". This is known as the defendants fallacy. What is wrong with this argument?
-		
-		\begin{equation}
-			\mathbb{P}(\operatorname{guilty}|E)=\frac{\mathbb{P}(E|\operatorname{guilty})\mathbb{P}(\operatorname{guilty})}{\mathbb{P}(E)},
-		\end{equation}
-		with $\mathbb{P}(E|\operatorname{guilty}) = 1$, $\mathbb{P}(\operatorname{guilty})=\frac{1}{8\,000}$ and 
-		\begin{equation}
-			\mathbb{P}(E) = \mathbb{P}(E|\operatorname{guilty})\mathbb{P}(\operatorname{guilty})+\mathbb{P}(E|\operatorname{innocent})\mathbb{P}(\operatorname{innocent})
-		\end{equation}
-		where $\mathbb{P}(E|\operatorname{innocent})=0.01$ and $\mathbb{P}(\operatorname{innocent})=1-\mathbb{P}(\operatorname{guilty})$, meaning
-		\begin{equation}
-			\mathbb{P}(\operatorname{guilty}|E)=\frac{100}{800\,099}.
-		\end{equation}
-		$\frac{100}{800\,099}$ is very close to $\frac{1}{8\,000}$, however, this assumes the only evidence against the defendant is the blood type found at the crime scene. If this changes, the calculation can change significantly, depending on the evidence.
-		
-	\end{enumerate}
+	The prosecutor claims: ``There is a $1\%$ chance that the defendant would have the crime blood type if he were innocent. Thus, there is a $99\%$ chance that he is guilty.'' This is known as the prosecutor's fallacy. What is wrong with this argument?\newline
+	
+	The prosecutor's claim can be written as
+	\begin{equation}
+		\mathbb{P}(E \mid \operatorname{innocent}) = 0.01 \Rightarrow \mathbb{P}(\operatorname{guilty} \mid E) = 0.99.
+		\label{eq:prosec1}
+	\end{equation}		
+	
+	To investigate this claim, note that from \dfref{def:conditional_probability}, 
+	\begin{equation}
+		\begin{split}
+			\mathbb{P}(E \mid \operatorname{innocent}) &= \frac{\mathbb{P}(E, \operatorname{innocent})}{\mathbb{P}(\operatorname{innocent})} \\
+			&= \frac{\mathbb{P}(\operatorname{innocent} \mid E)}{\mathbb{P}(\operatorname{innocent})} \mathbb{P}(E).
+		\end{split}
+	\end{equation}
+	Hence, in general, $\mathbb{P}(E \mid \operatorname{innocent}) \neq \mathbb{P}(E)$. Suppose there are $N$ people in the world, and $M \leq N$ of these have the blood type found at the crime scene. In that case,
+	\begin{equation}
+		\frac{\mathbb{P}(\operatorname{innocent} \mid E)}{\mathbb{P}(\operatorname{innocent})} = \frac{\frac{M-1}{M}}{\frac{N-1}{N}},
+	\end{equation}
+	which approaches $1$ in the limit $N \rightarrow \infty$. Hence, $\mathbb{P}(E \mid \operatorname{innocent}) \simeq \mathbb{P}(E)$ can be a good approximation, but it is not an exact relation.\newline 
+	Assuming $\mathbb{P}(E \mid \operatorname{innocent}) = 0.01$, the prosecutor's claim can be further analyzed using \dfref{def:conditional_probability}, viz.
+	\begin{equation}
+		\mathbb{P}(\operatorname{guilty} \mid E) + \mathbb{P}(\operatorname{innocent} \mid E) = \frac{\mathbb{P}(\operatorname{guilty}, E) + \mathbb{P}(\operatorname{innocent}, E)}{\mathbb{P}(E)}.
+	\end{equation}
+	Innocent and guilty are complementary events that form a partition of the sample space, meaning (\thref{theorem:law_of_total_probability})
+	\begin{equation}
+		\mathbb{P}(\operatorname{guilty}, E) + \mathbb{P}(\operatorname{innocent}, E) = \mathbb{P}(E),
+	\end{equation}
+	and thereby
+	\begin{equation}
+		\mathbb{P}(\operatorname{guilty} \mid E) + \mathbb{P}(\operatorname{innocent} \mid E) = 1.
+	\end{equation}
+	This means that if $\mathbb{P}(\operatorname{guilty} \mid E) = 0.99$, then $\mathbb{P}(\operatorname{innocent} \mid E) = 0.01$, and from \thref{theorem:bayes_theorem},
+	\begin{equation}
+			\mathbb{P}(\operatorname{innocent} \mid E) = \frac{\mathbb{P}(E \mid \operatorname{innocent}) \, \mathbb{P}(\operatorname{innocent})}{\mathbb{P}(E)}
+		\label{eq:prosec}
+	\end{equation}
+	From equation \eqref{eq:prosec}, it is clear that in general
+	\begin{equation}
+		\mathbb{P}(E \mid \operatorname{innocent}) \neq \mathbb{P}(\operatorname{innocent} \mid E),
+	\end{equation}
+	and so even if $\mathbb{P}(E \mid \operatorname{innocent}) = 0.01$, the prosecutor's claim (\EQref{eq:prosec1}) is not true.
 \end{example}
+
 
 \begin{example}
 	\index{Example: Variance of a sum}
@@ -658,6 +670,8 @@ Correlation and covariance are both measures of the relationship between two ran
 		\end{split}
 	\end{equation}
 \end{example}
+
+\newpage
 \begin{example}
 	\index{Example: Bad news from the doctor}
 	After your yearly checkup, the doctor has bad news and good news. The bad news is that you tested positive for a serious disease, and that the test is $99\%$ accurate (i.e. the probability of testing positive given that you have the disease is $99\%$, as is the probability of testing negative given that you don't have the disease). The good news is that this is a rare disease, striking only one in $10\,000$ people. What are the chances that you actually have the disease?\newline
@@ -714,9 +728,10 @@ Correlation and covariance are both measures of the relationship between two ran
 	Since $\mathbb{P}(z_2|o_3,c_1)>\mathbb{P}(z_1|o_3,c_1)>\mathbb{P}(z_3|o_3,c_1)$, door number $2$ is the optimal choise. Hence,answer "b)" is correct. The intuition behind the answer is the information the contestant has at the time of making the decision; initially, there is no a priori information and so $\mathbb{P}(z_1|o_3,c_1)=\frac{1}{3}$. At this time, there is $\frac{2}{3}$ probability that the prize is behind doors $2,3$. When the gameshow host open door $3$, this probability converge on door $2$.
 \end{example}
 
+\newpage
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \operatorname{Unif}{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
+	Let $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
 	
 	\begin{equation}
 		\begin{split}
@@ -802,6 +817,7 @@ Correlation and covariance are both measures of the relationship between two ran
 	
 \end{example}
 
+\newpage
 \begin{example}
 	\index{Example: Correlation coefficient}
 	Prove that $-1\leq \operatorname{Corr}[X,Y]\leq 1$.\newline
@@ -855,7 +871,7 @@ Correlation and covariance are both measures of the relationship between two ran
 
 \begin{example}
 	\index{Example: Secretary problem}
-	Let $n \in \mathbb{N}$ denote the total number of candidates, presented sequentially in uniformly random order. After observing the $k$-th candidate, an irrevocable decision must be made: either to accept or reject the candidate. The objective is to maximize the probability of selecting the candidate with the highest rank among all $n$ candidates.\newline
+	Let $n$ denote the total number of candidates, presented sequentially in uniformly random order. After observing the $k$-th candidate, an irrevocable decision must be made: either to accept or reject the candidate. The objective is to maximize the probability of selecting the candidate with the highest rank among all $n$ candidates.\newline
 	
 	Let $r \in \{0,1,\dots,n-1\}$ denote the number of candidates to be automatically rejected. Define the strategy $\sigma_r$ as follows: reject the first $r$ candidates, then select the first subsequent candidate whose observed rank exceeds all ranks observed among the first $r$ candidates. Let $\mathbb{P}_n(r)$ denote the probability that strategy $\sigma_r$ selects the best candidate. For $k \in \{r+1,\dots,n\}$, the probability that the $k$-th candidate is the best and is selected by $\sigma_r$ is
 	\begin{equation}
@@ -863,11 +879,17 @@ Correlation and covariance are both measures of the relationship between two ran
 	\end{equation}
 	Summation over all admissible positions yields
 	\begin{equation}
-		\mathbb{P}_n(r) = \sum_{k=r+1}^{n} \frac{r}{n(k-1)} = \frac{r}{n} \sum_{k=r}^{n-1} \frac{1}{k}.
+		\begin{split}
+			\mathbb{P}_n(r) &= \sum_{k=r+1}^{n} \frac{r}{n(k-1)}\\
+			& = \frac{r}{n} \sum_{k=r}^{n-1} \frac{1}{k}.
+		\end{split}
 	\end{equation}  
 	For large $n$, the sum may be approximated by an integral:
 	\begin{equation}
-		\mathbb{P}_n(r) \approx \frac{r}{n} \int_{r}^{n} \frac{dx}{x} = \frac{r}{n} \ln\frac{n}{r}.
+		\begin{split}
+			\mathbb{P}_n(r) &\approx \frac{r}{n} \int_{r}^{n} \frac{dx}{x}\\
+			& = \frac{r}{n} \ln\frac{n}{r}.
+		\end{split}
 	\end{equation}
 	Setting $r = \alpha n$, $\alpha \in (0,1)$, gives
 	\begin{equation}
@@ -875,8 +897,14 @@ Correlation and covariance are both measures of the relationship between two ran
 	\end{equation}
 	The maximum occurs at
 	\begin{equation}
-		\frac{d}{d\alpha} \big(\alpha \ln \tfrac{1}{\alpha}\big) = \ln \frac{1}{\alpha} - 1 = 0 \implies \alpha = \frac{1}{e}.
+		\begin{split}
+			\frac{d}{d\alpha} \big(\alpha \ln \tfrac{1}{\alpha}\big) &= \ln \frac{1}{\alpha} - 1\\
+			& = 0
+		\end{split}
+	\end{equation}
+	meaning
+	\begin{equation}
+		\alpha = \frac{1}{e}.
 	\end{equation}
 	The optimal stopping strategy consists of rejecting the first $\frac{n}{e}$ candidates, then selecting the first candidate superior to all previously observed. The maximum probability of success converges to $\mathbb{P}_n \to \frac{1}{e} \approx 0.368$ as $n \to \infty$. This strategy extends naturally to situations where candidates arrive sequentially over time. In the continuous-time setting, the first $1/e$ fraction of the time interval is used purely for observation, and thereafter the first candidate exceeding all previous observations is selected.
-	
 \end{example}
