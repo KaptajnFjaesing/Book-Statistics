@@ -4,13 +4,15 @@ Set theory is a fundamental branch of mathematical logic that underpins much of 
 
 
 \begin{definition}[Membership]
+	\label{def:membership}
 	In set theory, the membership relation between an object $o$ and a set $A$ is fundamental. $o \in A$ denotes that $o$ is an element or member of $A$.
 \end{definition}
 
 \begin{definition}[Set]
-	A set\index{Set} is a collection of distinct objects, considered as an object in its own right. Sets are typically denoted using curly braces $\{\}$ and can be described in two primary ways:
+	\label{def:set}
+	A set\index{Set} is a collection of distinct objects, considered as an object in its own right. Sets are typically denoted using curly braces $\{\}$ and can be described in terms of their elements (\dfref{def:membership}) in two primary ways:
 	\begin{enumerate}
-		\item By listing its elements separated by commas, e.g., $A = \{a_1, a_2, a_3\}$.
+		\item By listing its elements  separated by commas, e.g., $A = \{a_1, a_2, a_3\}$.
 		\item By specifying a characterizing property of its elements, e.g., \newline $A = \{x \mid x \text{ is a natural number}\}$.
 	\end{enumerate}
 	Sets can also be illustrated graphically, as shown in \figref{fig:generic_set}.
@@ -23,7 +25,8 @@ Set theory is a fundamental branch of mathematical logic that underpins much of 
 \end{definition}
 
 \begin{definition}[Subset]
-	A set $A$ is called a subset\index{Subset} of a set $B$, denoted $A \subseteq B$, if every element of $A$ is also an element of $B$. Formally, $A\subseteq B$ if $\forall x \in A, x \in B$. By this definition, a set is always a subset of itself.
+	\label{def:subset}
+	The set $A$ is called a subset\index{Subset} of the set $B$, denoted $A \subseteq B$, if every element of $A$ is also an element of $B$. Formally, $A\subseteq B$ if $\forall x \in A, x \in B$. By this definition, a set is always a subset of itself.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width = 0.5\textwidth]{figures/set_subset.pdf}
@@ -33,14 +36,16 @@ Set theory is a fundamental branch of mathematical logic that underpins much of 
 \end{definition}
 
 \begin{definition}[Proper Subset]
-	A set $A$ is called a proper subset of a set $B$, denoted $A \subset B$, if $A \subseteq B$ and $A \neq B$. This means that $A$ is a subset of $B$ but $A$ is not equal to $B$; there is at least one element in $B$ that is not in $A$.
+	\label{def:proper_subset}
+	The set $A$ is called a proper subset of the set $B$, denoted $A \subset B$, if $A \subseteq B$ and $A \neq B$. This means that $A$ is a subset of $B$ but $A$ is not equal to $B$; there is at least one element in $B$ that is not in $A$.
 \end{definition}
 
 \begin{example}
-	Suppose $A = \{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, then $\{\twemoji{banana}, \twemoji{apple}\}$ and $\{\twemoji{apple}\}$ are proper subsets of $A$, meaning $\{\twemoji{banana}, \twemoji{apple}\},\{\twemoji{apple}\}\subset  A$. $\{\twemoji{banana}, \twemoji{carrot}\}$, on the other hand, is not a subset of $A$, meaning $\{\twemoji{banana}, \twemoji{carrot}\}\not\subset  A$.
-\end{example}
-\begin{example}
 	$\twemoji{banana}$, $\twemoji{apple}$, and $\twemoji{eggplant}$ are members (elements) of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, but are not subsets of it; and in turn, the subsets, such as $\{\twemoji{banana}\}$, are not members of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$.
+\end{example}
+
+\begin{example}
+	Suppose $A = \{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, then $\{\twemoji{banana}, \twemoji{apple}\}$ and $\{\twemoji{apple}\}$ are proper subsets of $A$, meaning $\{\twemoji{banana}, \twemoji{apple}\},\{\twemoji{apple}\}\subset  A$. $\{\twemoji{banana}, \twemoji{carrot}\}$, on the other hand, is not a subset of $A$, meaning $\{\twemoji{banana}, \twemoji{carrot}\}\not\subset  A$.
 \end{example}
 
 \begin{definition}[Empty Set]
@@ -108,11 +113,12 @@ Set theory is a fundamental branch of mathematical logic that underpins much of 
 \end{definition}
 
 \begin{definition}[Power Set]
+	\label{def:power_set}
 	The power set\index{Power set} of a set $A$, denoted by $2^A$, is defined as the set containing all possible subsets of $A$, including $A$ itself and the empty set.
 \end{definition}
 
 \begin{example}
-	Suppose $A = \{a_1,a_2,a_3\}$, then
+	The Power set (\dfref{def:power_set}) of the set $A = \{a_1,a_2,a_3\}$ can be written
 	\begin{equation}
 		\begin{split}
 			2^A = \{&\emptyset, \{a_1\}, \{a_2\}, \{a_3\}, \{a_1, a_2\},\\
@@ -151,15 +157,16 @@ Set theory is a fundamental branch of mathematical logic that underpins much of 
 \end{definition}
 
 \begin{definition}[Cartesian Product]
-	The Cartesian product of sets $A$ and $B$, denoted by $A \times B$, is defined as the set containing all ordered pairs $(a, b)$, where $a$ is in $A$ and $b$ is in $B$.
+	\label{def:cartesian_product}
+	The cartesian product of sets $A$ and $B$, denoted by $A \times B$, is defined as the set containing all ordered pairs $(a, b)$, where $a$ is in $A$ and $b$ is in $B$.
 \end{definition}
 
 \begin{example}
-	Suppose $A= \{a_1,a_2\}$ and $B=\{b_1,b_2,b_3\}$, then
+	The Cartesian product (\dfref{def:cartesian_product}) between sets $A = \{a_1, a_2\}$ and $B = \{b_1, b_2, b_3\}$ can be written
 	\begin{equation}
 		\begin{split}
 			A\times B = \{&(a_1,b_1),(a_1,b_2),(a_1,b_3),\\
-			&(a_2,b_1),(a_2,b_2),(a_2,b_3)\}
+			&(a_2,b_1),(a_2,b_2),(a_2,b_3)\}.
 		\end{split}
 	\end{equation}
 \end{example}

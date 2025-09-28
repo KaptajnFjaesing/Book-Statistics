@@ -24,10 +24,14 @@ Probability theory provides a mathematical framework for analyzing random experi
 	In the case where the outcomes of the random experiment can take discrete values, these properties are sufficient. However, in the case where the outcomes are continuous, $\mathcal{F}$ is required to be a Borel $\sigma$-algebra, meaning it must further fulfill the closure property under countable intersection with open sets. This ensures that $\mathcal{F}$ contains all sets that can be formed by taking unions, intersections, and complements of open sets, which are essential for defining probabilities in continuous spaces.
 \end{definition}
 
+\begin{definition}[Measurable Space]
+	\label{def:measurable_space}
+	The pair \( (\Omega, \mathcal{F}) \) is called a measurable space.
+\end{definition}
 
 \begin{example}
 	\label{ex:die2}
-	For the roll with the fair die considered in \exref{ex:die1}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$ and the event space (the set of all possible events) is given by
+	For the roll with the fair die considered in \exref{ex:die1}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$ and the event space is given by
 	\begin{equation}
 		\begin{split}
 			\mathcal{F}&=\{\emptyset, \{\epsdice{1}\},\{\epsdice{1},\epsdice{3}\},\{\epsdice{3}\},\{\epsdice{1},\epsdice{2},\epsdice{3},\epsdice{4}\},\{\epsdice{5}\},\dots\}\\
@@ -36,20 +40,19 @@ Probability theory provides a mathematical framework for analyzing random experi
 	\end{equation}
 \end{example}
 
-\begin{definition}[Measurable Space]
-	\label{def:measurable_space}
-	The pair \( (\Omega, \mathcal{F}) \) is called a measurable space.
-\end{definition}
-
-Probability can loosely be defined~\cite{chan2021introduction} as a measure of the size of an event (a set) relative to the sample space (another set), meaning it is a function that operates on an event (a set). In particular the probability measure maps any valid event, i.e. any $E\in \mathcal{F}$, to a number between $0$ and $1$, representing the relative size of the event to the sample space.
-
 \begin{definition}[Probability Measure]
 	\label{def:probability}
-	A Probability measure\index{Probability Measure}, $\mathbb{P}$, is a set function \index{Set function} defined on a measurable space (\dfref{def:measurable_space}) $(\Omega, \mathcal{F})$
+	Loosely speaking, probability can be regarded~\cite{chan2021introduction} 
+	as a measure of the size of an event relative to the sample space. 
+	Formally, a probability measure\index{Probability Measure} $\mathbb{P}$ 
+	is a set function\index{Set function} defined on a measurable space 
+	(\dfref{def:measurable_space}) $(\Omega, \mathcal{F})$
 	\begin{equation}
-		\mathbb{P}: \mathcal{F} \mapsto [0,1]
+		\mathbb{P}: \mathcal{F} \to [0,1],
 	\end{equation}
-	that obey~\cite{kolmogorov1950foundations} \axref{ax:non_neg}-\axref{ax:add}\index{Axioms of probability theory}.
+	such that for every event $E \in \mathcal{F}$, $\mathbb{P}(E)$ represents its 
+	relative size, and $\mathbb{P}$ satisfies the axioms of probability theory 
+	(\axref{ax:non_neg}-\axref{ax:add})~\cite{kolmogorov1950foundations}.
 \end{definition}
 
 \begin{axiom}[Non-negativity]
@@ -75,7 +78,17 @@ Probability can loosely be defined~\cite{chan2021introduction} as a measure of t
 		\mathbb{P}\left(\bigcup_{i=1}^{\infty} \mathit{E}_i\right) = \sum_{i=1}^{\infty} \mathbb{P}(\mathit{E}_i) \quad \forall \mathit{E}_i \in \mathcal{F} \text{ where } \bigcap_{i=1}^{\infty} \mathit{E}_i = \emptyset.
 	\end{equation}
 \end{axiom}
-Together, the probability measure, the sample space and the algebra form the tuple $(\Omega, \mathcal{F}, \mathbb{P})$ which define what a probability space\index{Probability space}. The non-negativity and normalization axioms are largely matters of convention, although it is non-trivial that probability measures take at least the two values $0$ and $1$, and that they have a maximal value (unlike various other measures, such as length, volume, and so on, which are unbounded). The axioms are supplemented by two definitions.
+\begin{definition}[Probability Space]
+	\label{def:probability_space}
+	A probability space\index{Probability space} is a triple 
+	$(\Omega, \mathcal{F}, \mathbb{P})$, where $\Omega$ is the sample space, 
+	$\mathcal{F}$ is a $\sigma$-algebra of subsets of $\Omega$ (the events), 
+	and $\mathbb{P}$ is a probability measure on $(\Omega, \mathcal{F})$ (see \dfref{def:probability}).
+\end{definition}
+
+\begin{remark}
+	\axref{ax:non_neg} and \axref{ax:norm} are largely matters of convention, although it is non-trivial that probability measures take at least the two values $0$ and $1$, and that they have a maximal value (unlike various other measures, such as length, volume, and so on, which are unbounded).
+\end{remark}
 
 \begin{definition}[Conditional Probability]
 	\label{def:conditional_probability}
@@ -127,7 +140,9 @@ From \axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}, the 
 	\end{equation}
 	Continuing in this way, \EQref{eq:prod} follows.
 \end{proof}
-\EQref{eq:prod} illustrates how to decompose the joint probability of multiple events into a product of conditional probabilities. The idea is to calculate the probability of each event in the sequence conditioned on the occurrence of the previous events in the chain. The chain rule is particularly powerful when dealing with complex systems where events may be interdependent. It allows breaking down joint probabilities into more manageable conditional probabilities, making it easier to analyze and model intricate relationships between events. Whether in the context of statistical modeling or machine learning, the chain rule plays a key role in calculating the joint probability of multiple events and provides a foundation for more advanced probabilistic reasoning.
+\begin{remark}
+	\thref{theorem:chain_rule} illustrates how to decompose the joint probability of multiple events into a product of conditional probabilities. The idea is to calculate the probability of each event in the sequence conditioned on the occurrence of the previous events in the chain. The chain rule is particularly powerful when dealing with complex systems where events may be interdependent. It allows breaking down joint probabilities into more manageable conditional probabilities, making it easier to analyze and model intricate relationships between events. Whether in the context of statistical modeling or machine learning, the chain rule plays a key role in calculating the joint probability of multiple events and provides a foundation for more advanced probabilistic reasoning.
+\end{remark}
 
 \begin{theorem}[Bayes theorem]
 	\label{theorem:bayes_theorem}
@@ -431,7 +446,9 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\end{equation}
 \end{definition}
 
-Correlation and covariance are both measures of the relationship between two random variables. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
+\begin{remark}
+	Correlation and covariance are both measures of the relationship between two random variables. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
+\end{remark}
 
 \newpage
 \begin{definition}[Change of Variables for PDFs]
