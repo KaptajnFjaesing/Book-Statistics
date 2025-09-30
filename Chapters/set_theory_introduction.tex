@@ -1,6 +1,6 @@
 \chapter{Introduction to Set Theory}
 \label{chp:set_theory}
-Set theory is a foundational branch of mathematics that provides the language and structure underlying much of modern mathematics, including probability theory. At its core, it studies sets -- collections of distinct objects or elements -- and the relationships between them. By introducing basic concepts such as membership, subsets, unions, intersections, and complements, set theory offers the tools needed to describe events and sample spaces. This chapter reviews the essential properties and operations of sets, laying the groundwork for the axiomatic development of probability theory and, ultimately, statistics.
+Set theory is a foundational branch of mathematics that provides the language and structure underlying much of modern mathematics, including probability theory. At its core, it studies sets---collections of distinct objects or elements---and the relationships between them. By introducing basic concepts such as membership, subsets, unions, intersections, and complements, set theory offers the tools needed to describe events and sample spaces. This chapter reviews the essential properties and operations of sets, laying the groundwork for the axiomatic development of probability theory and, ultimately, statistics.
 
 \begin{definition}[Membership]
 	\label{def:membership}
@@ -31,7 +31,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 
 \begin{definition}[Cartesian Product]
 	\label{def:cartesian_product}
-	The cartesian product of sets $A$ and $B$, denoted by $A \times B$, is defined as the set containing all ordered pairs $(a, b)$, where $a$ is in $A$ and $b$ is in $B$.
+	The Cartesian product of sets $A$ and $B$, denoted by $A \times B$, is defined as the set containing all ordered pairs $(a, b)$, where $a$ is in $A$ and $b$ is in $B$.
 \end{definition}
 
 \begin{example}
@@ -60,7 +60,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 \end{definition}
 
 \begin{example}
-	$\twemoji{banana}$, $\twemoji{apple}$, and $\twemoji{eggplant}$ are members (elements) of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, but are not subsets of it; and in turn, the subsets, such as $\{\twemoji{banana}\}$, are not members of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$.
+	$\twemoji{banana}$, $\twemoji{apple}$, and $\twemoji{eggplant}$ are members (elements) of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, but are not subsets of it; in turn, the subsets, such as $\{\twemoji{banana}\}$, are not members of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$.
 \end{example}
 
 \begin{example}
@@ -77,7 +77,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 \end{definition}
 
 \begin{example}
-	The Power set of the set $A = \{a_1,a_2,a_3\}$ can be written
+	The power set of the set $A = \{a_1,a_2,a_3\}$ can be written
 	\begin{equation}
 		\begin{split}
 			2^A = \{&\emptyset, \{a_1\}, \{a_2\}, \{a_3\}, \{a_1, a_2\},\\
@@ -99,7 +99,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\begin{figure}[h]
 		\centering
 		\includegraphics[]{figures/set_union.pdf}
-		\caption{The graphical representation of $A\cup B$. Each circle represent the sets and the colored region represent the result of the result of the binary operation.}
+		\caption{The graphical representation of $A\cup B$. Each circle represents the sets and the colored region represents the result of the binary operation.}
 		\label{fig:set_union}
 	\end{figure}
 \end{definition}
@@ -113,7 +113,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\begin{figure}[H]
 		\centering
 		\includegraphics[]{figures/set_intersection.pdf}
-		\caption{The graphical representation of $A\cap B$. Each circle represent the sets and the colored region represent the result of the result of the binary operation.}
+		\caption{The graphical representation of $A\cap B$. Each circle represents the sets and the colored region represents the result of the binary operation.}
 		\label{fig:set_intersection}
 	\end{figure}
 \end{definition}
@@ -127,7 +127,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\begin{figure}[H]
 		\centering
 		\includegraphics[]{figures/set_disjoint.pdf}
-		\caption{The graphical representation of $A\cap B= \emptyset$. Each circle represent the sets and the colored region represent the result of the result of the binary operation.}
+		\caption{The graphical representation of $A\cap B= \emptyset$. Each circle represents the sets and the colored region represents the result of the binary operation.}
 		\label{fig:set_disjoint}
 	\end{figure}
 \end{definition}
@@ -138,33 +138,34 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\begin{figure}[H]
 		\centering
 		\includegraphics[]{figures/set_complementary.pdf}
-		\caption{The graphical representation of $(A \cap B)^c$. Each circle represent the sets and the colored region represent the result of the result of the binary operation.}
+		\caption{The graphical representation of $(A \cap B)^c$. Each circle represents the sets and the colored region represents the result of the binary operation.}
 		\label{fig:set_complementation}
 	\end{figure}
 \end{definition}
 
 \begin{definition}[Difference]
-	The difference between set $A$ and $B$, denoted by $A \setminus B = A\cap B^c$, is defined as the set containing all elements in $A$ that are not in $B$. \figref{fig:set_minus} provides a graphical representation of $A\setminus B$ and $B\setminus A$.
+	The difference between sets $A$ and $B$, denoted by $A \setminus B = A\cap B^c$, is defined as the set containing all elements in $A$ that are not in $B$. \figref{fig:set_minus} provides a graphical representation of $A\setminus B$ and $B\setminus A$.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[]{figures/set_minus.pdf}
 		\includegraphics[]{figures/set_minus2.pdf}
-		\caption{The graphical representation of $A\setminus B$ (left) and $B\setminus A$ (right). Each circle represent the sets and the colored region represent the result of the result of the binary operation.}
+		\caption{The graphical representation of $A\setminus B$ (left) and $B\setminus A$ (right). Each circle represents the sets and the colored region represents the result of the binary operation.}
 		\label{fig:set_minus}
 	\end{figure}
 \end{definition}
 
 \newpage
 \begin{definition}[Symmetric Difference]
-	The symmetric difference of sets $A$ and $B$, denoted by $A \Delta B$, is defined as the set containing all elements that are in either $A$ or $B$ but not in both, meaning $A \Delta B = (A \cap B)^c$. \figref{fig:set_complementation} show the symmetric difference between sets $A$ and $B$.
+	The symmetric difference of sets $A$ and $B$, denoted by $A \Delta B$, is defined as the set containing all elements that are in either $A$ or $B$ but not in both, meaning $A \Delta B = (A \cap B)^c$. \figref{fig:set_complementation} shows the symmetric difference between sets $A$ and $B$.
 \end{definition}
 
 
 
 \begin{definition}[Partition]
+	\label{def:partition}
 	A collection of non-empty subsets $\{A_i\}$ of a set $A$ is called a partition of $A$ if the following conditions are satisfied:
 	\begin{enumerate}
-		\item The subsets $A$ are pairwise disjoint, i.e., $A_i \cap A_j = \emptyset$ for all \(i \neq j\).
+		\item The subsets $A_i$ are pairwise disjoint, i.e., $A_i \cap A_j = \emptyset$ for all \(i \neq j\).
 		\item The union of all subsets \(A_i\) is equal to the set \(A\), i.e., \(\bigcup_{i \in I} A_i = A\).
 	\end{enumerate}
 	
@@ -176,10 +177,3 @@ Set theory is a foundational branch of mathematics that provides the language an
 		\label{fig:set_partition}
 	\end{figure}
 \end{definition}
-
-
-
-
-
-
-	
