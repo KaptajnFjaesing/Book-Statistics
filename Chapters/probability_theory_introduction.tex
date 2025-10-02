@@ -3,6 +3,7 @@
 Probability theory is a foundational branch of mathematics that provides the formal framework for reasoning about uncertainty. At its core, it studies random experiments and the likelihood of their outcomes. By introducing key concepts such as sample spaces, events, probability measures, and conditional probabilities, probability theory provides the tools to model and analyze situations where outcomes cannot be predicted with certainty. This chapter reviews the essential principles and axioms of probability, laying the groundwork for statistical inference and decision-making under uncertainty.
 
 \begin{definition}[Sample Space]
+	\label{def:sample_space}
 	The sample space\index{Sample space}, denoted by $\Omega$, represents the set of all possible outcomes of a random experiment. It encompasses every conceivable result that could occur, serving as the foundation for analyzing probabilities associated with different outcomes.
 \end{definition}
 
@@ -17,13 +18,22 @@ Probability theory is a foundational branch of mathematics that provides the for
 
 \begin{definition}[$\sigma$-algebra]
 	\label{def:sigma_algebra}
-	A $\sigma$-algebra\index{$\sigma$-algebra} over a sample space $\Omega$ is a collection of subsets $\mathcal{F}$ of $\Omega$ satisfying:
+	A $\sigma$-algebra\index{$\sigma$-algebra} over a sample space $\Omega$ is a collection of subsets $\mathcal{G}$ of $\Omega$ satisfying:
 	\begin{enumerate}
-		\item $\emptyset \in \mathcal{F}$ and $\Omega \in \mathcal{F}$.
-		\item Closure under complementation: If $E \in \mathcal{F}$, then $E^c \in \mathcal{F}$.
-		\item Closure under countable unions (and hence intersections): If $E_1, E_2, \dots \in \mathcal{F}$, then $\bigcup_{i=1}^\infty E_i \in \mathcal{F}$ and $\bigcap_{i=1}^\infty E_i \in \mathcal{F}$.
+		\item $\emptyset \in \mathcal{G}$ and $\Omega \in \mathcal{G}$.
+		\item Closure under complementation: If $E \in \mathcal{G}$, then $E^c \in \mathcal{G}$.
+		\item Closure under countable unions (and hence intersections): If $E_1, E_2, \dots \in \mathcal{G}$, then $\bigcup_{i=1}^\infty E_i \in \mathcal{G}$ and $\bigcap_{i=1}^\infty E_i \in \mathcal{G}$.
 	\end{enumerate}
 \end{definition}
+
+\begin{example}
+	\label{ex:die1a}
+	For the roll with the fair die considered in \exref{ex:die1}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$ and the trivial $\sigma$-algebra on $\Omega$ is given by
+	\begin{equation}
+		\mathcal{G}_{\text{trivial}} = \{\emptyset, \Omega\}.
+	\end{equation}
+	In this case, the only events that can be described are the impossible event $\emptyset$ and the certain event $\Omega$. For instance, the event of rolling an even number $E = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ is not in $\mathcal{G}_{\text{trivial}}$.
+\end{example}
 
 \begin{definition}[Borel $\sigma$-algebra]
 	\label{def:borel_sigma_algebra}
@@ -35,68 +45,9 @@ Probability theory is a foundational branch of mathematics that provides the for
 	The set containing all valid possible events for a random experiment is referred to as the event space\index{Event space}, $\mathcal{F}$. The notion of "all valid possible events for a random experiment" is formally defined by requiring $\mathcal{F}$ to be a $\sigma$-algebra \index{$\sigma$-algebra}.
 \end{definition}
 
-\begin{definition}[Measurable Space]
-	\label{def:measurable_space}
-	The pair $ (\Omega, \mathcal{F})$ is called a measurable space.
-\end{definition}
-
-\begin{definition}[Probability Measure]
-	\label{def:probability}
-	Loosely speaking, probability can be regarded~\cite{chan2021introduction} as a measure of the size of an event relative to the sample space. Formally, a probability measure\index{Probability Measure} $\mathbb{P}$ is a set function\index{Set function} defined on a measurable space (\dfref{def:measurable_space}) $(\Omega, \mathcal{F})$
-	\begin{equation}
-		\mathbb{P}: \mathcal{F} \to [0,1],
-	\end{equation}
-	such that for every event $E \in \mathcal{F}$, $\mathbb{P}(E)$ represents its relative size, and $\mathbb{P}$ satisfies the axioms of probability theory (\axref{ax:non_neg}-\axref{ax:add})~\cite{kolmogorov1950foundations}.
-\end{definition}
-
-\begin{axiom}[Non-negativity]
-	\label{ax:non_neg}
-	For any event $E\in \mathcal{F}$, the probability measure $\mathbb{P}(E)$ is non-negative, satisfying
-	\begin{equation}
-		\mathbb{P}(E) \geq 0 \quad \forall E \in  \mathcal{F}.
-	\end{equation}
-\end{axiom}
-
-\begin{axiom}[Normalization]
-	\label{ax:norm}
-	The probability of the universal set $\Omega$ is 1, satisfying
-	\begin{equation}
-		\mathbb{P}(\Omega) = 1.
-	\end{equation}
-\end{axiom}
-
-\begin{axiom}[Additivity]
-	\label{ax:add}
-	For any countable sequence of mutually exclusive events $\mathit{E}_1, \mathit{E}_2, \ldots\in \mathcal{F}$, the probability of their union is the sum of their individual probabilities, such that
-	\begin{equation}
-		\mathbb{P}\left(\bigcup_{i=1}^{\infty} \mathit{E}_i\right) = \sum_{i=1}^{\infty} \mathbb{P}(\mathit{E}_i) \quad \forall \mathit{E}_i \in \mathcal{F} \text{ where } \bigcap_{i=1}^{\infty} \mathit{E}_i = \emptyset.
-	\end{equation}
-\end{axiom}
-
-\begin{definition}[Probability Space]
-	\label{def:probability_space}
-	A probability space\index{Probability space} is a triple 
-	$(\Omega, \mathcal{F}, \mathbb{P})$, where $\Omega$ is the sample space, 
-	$\mathcal{F}$ is a $\sigma$-algebra of subsets of $\Omega$ (the events), 
-	and $\mathbb{P}$ is a probability measure on $(\Omega, \mathcal{F})$ (see \dfref{def:probability}).
-\end{definition}
-
-
 \begin{remark}
-	For discrete sample spaces, $\mathcal{F}$ is typically the power set of $\Omega$. For continuous sample spaces, $\mathcal{F}$ is typically taken to be the Borel $\sigma$-algebra, generated by open sets in $\mathbb{R}$ ($\mathcal{B}(\mathbb{R})$), ensuring that probabilities can be consistently defined.
+	For discrete sample spaces, $\mathcal{F}$ is typically the power set of $\Omega$. For continuous sample spaces, $\mathcal{F}$ is typically taken to be the Borel $\sigma$-algebra, generated by open sets in $\mathbb{R}$ ($\mathcal{B}(\mathbb{R})$).
 \end{remark}
-
-\begin{remark}
-	In continuous sample spaces, individual outcomes (single real numbers) have probability zero. Therefore, events are nontrivial subsets of $\Omega$, typically intervals or more general Borel sets. For example, the event $E = (0.2, 0.5)$ represents the outcome that the randomly chosen number lies between $0.2$ and $0.5$.
-\end{remark}
-
-\begin{remark}
-	The restriction to Borel sets in case of a continuous sample space (rather than all subsets of $\mathbb{R}$) is not arbitrary: it avoids paradoxical constructions such as non-measurable sets (e.g. the Vitali set), which cannot be consistently assigned a probability. This ensures that the probability measure is well defined for all events in $\mathcal{F}$.
-\end{remark}
-
-\begin{example}
-	Consider choosing a real number uniformly at random from the interval $[0,1]$. Here the sample space is $\Omega = [0,1]$. Unlike the discrete case, the event space cannot simply be the power set of $[0,1]$, since not all subsets admit a well-defined probability measure. Instead, the event space is chosen as the Borel $\sigma$-algebra $\mathcal{B}([0,1])$, which includes sets such as open intervals $(0.2, 0.5)$, closed intervals $[0, 0.1]$, and countable unions and intersections thereof.
-\end{example}
 
 \begin{example}
 	\label{ex:die2}
@@ -108,6 +59,97 @@ Probability theory is a foundational branch of mathematics that provides the for
 		\end{split}
 	\end{equation}
 \end{example}
+
+\begin{definition}[Measurable Space]
+	\label{def:measurable_space}
+	A measurable space is a pair $(\Omega, \mathcal{F})$, where $\Omega$ is the sample space of a random experiment and $\mathcal{F}$ is the event space.
+\end{definition}
+
+\begin{definition}[Measure]
+	\label{def:measure}
+	\index{Measure}
+	Let $(\Omega, \mathcal{F})$ be a measurable space, where $\Omega$ is the sample space and $\mathcal{F}$ is the event space. A measure $\mu$ is a set function
+	\begin{equation}
+		\mu: \mathcal{F} \to [0,\infty]
+	\end{equation}
+	that satisfies \axref{ax:non_neg} and \axref{ax:add}.
+\end{definition}
+
+\begin{axiom}[Non-negativity]
+	\label{ax:non_neg}
+	For any event $E\in \mathcal{F}$, the measure $\mu(E)$ is non-negative, satisfying
+	\begin{equation}
+		\mu(E) \geq 0 \quad \forall E \in  \mathcal{F}.
+	\end{equation}
+\end{axiom}
+
+\begin{axiom}[Additivity]
+	\label{ax:add}
+	For any countable sequence of mutually exclusive events $\mathit{E}_1, \mathit{E}_2, \ldots\in \mathcal{F}$, the measure of their union is the sum of their individual measures, such that
+	\begin{equation}
+		\mu\left(\bigcup_{i=1}^{\infty} \mathit{E}_i\right) = \sum_{i=1}^{\infty} \mu(\mathit{E}_i) \quad \forall \mathit{E}_i \in \mathcal{F} \text{ where } \bigcap_{i=1}^{\infty} \mathit{E}_i = \emptyset.
+	\end{equation}
+\end{axiom}
+
+\begin{definition}[Measurable Function]
+	\label{def:measurable_function}
+	\index{Measurable function}
+	Let $(\Omega,\mathcal{F})$ and $(\Omega_X,\mathcal{F}_X)$ be measurable spaces. A function
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	is said to be measurable if
+	\begin{equation}
+		X^{-1}(B) \in \mathcal{F} \quad \forall B \in \mathcal{F}_X,
+	\end{equation}
+	where
+	\begin{equation}
+		X^{-1}(B) = \{\omega \in \Omega \mid X(\omega) \in B\}.
+	\end{equation}
+	In words, the preimage of every measurable set in $\mathcal{F}_X$ is a measurable set in $\mathcal{F}$.
+\end{definition}
+
+\begin{definition}[Lebesgue Measure]
+	\label{def:lebesgue_measure}
+	\index{Lebesgue measure}
+	The Lebesgue measure $\lambda$ is a measure defined on the Borel $\sigma$-algebra $\mathcal{B}(\mathbb{R})$ such that for every interval $(a,b] \subseteq \mathbb{R}$,
+	\begin{equation}
+		\lambda((a,b]) = b-a.
+	\end{equation}
+	By definition, $\lambda$ satisfies the properties of a measure and the countable additivity axiom (\axref{ax:add}), and hence extends uniquely to all sets in $\mathcal{B}(\mathbb{R})$. In higher dimensions, $\lambda$ generalizes to $\mathbb{R}^n$, where it coincides with the usual notions of length, area, and volume.
+\end{definition}
+
+\begin{definition}[Probability Measure]
+	\label{def:probability}
+	\index{Probability Measure}
+	Loosely speaking, probability can be regarded~\cite{chan2021introduction} as a measure of the size of an event relative to the sample space. Formally, a probability measure\index{Probability Measure} $\mathbb{P}$ is a measure, in accordance with \dfref{def:measure}, defined on a measurable space $(\Omega, \mathcal{F})$ that, in addition to satisfying \axref{ax:non_neg} and \axref{ax:add}, obeys the normalization property
+	\begin{equation}
+		\mathbb{P}(\Omega) = 1.
+	\end{equation}
+\end{definition}
+
+\begin{definition}[Probability Space]
+	\label{def:probability_space}
+	A probability space\index{Probability space} is a triple $(\Omega, \mathcal{F}, \mathbb{P})$, where $\Omega$ is the sample space,	$\mathcal{F}$ is the event space and $\mathbb{P}$ is a probability measure on $(\Omega, \mathcal{F})$.
+\end{definition}
+
+\begin{remark}
+	In continuous sample spaces, individual outcomes (single real numbers) have probability zero. Therefore, events are nontrivial subsets of $\Omega$, typically intervals or more general Borel sets. For example, the event 
+	\begin{equation}
+		E = (0.2, 0.5)
+	\end{equation} 
+	represents the outcome that the randomly chosen number lies between $0.2$ and $0.5$.
+\end{remark}
+
+\begin{remark}
+	The restriction to Borel sets in case of a continuous sample space (rather than all subsets of $\mathbb{R}$) is not arbitrary: it avoids paradoxical constructions such as non-measurable sets (e.g. the Vitali set), which cannot be consistently assigned a probability. This ensures that the probability measure is well defined for all events in $\mathcal{F}$.
+\end{remark}
+
+\begin{example}
+	Consider choosing a real number uniformly at random from the interval $[0,1]$. Here the sample space is $\Omega = [0,1]$. Unlike the discrete case, the event space cannot simply be the power set of $[0,1]$, since not all subsets admit a well-defined probability measure. Instead, the event space is chosen as the Borel $\sigma$-algebra $\mathcal{B}([0,1])$, which includes sets such as open intervals $(0.2, 0.5)$, closed intervals $[0, 0.1]$, and countable unions and intersections thereof.
+\end{example}
+
+
 
 
 \begin{definition}[Independence]
@@ -190,7 +232,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{theorem}[Law of Total Probability]
 	\label{theorem:law_of_total_probability}
-	Let $\{E_1, E_2, \dots, E_n\}$ be a partition\index{Partition}\index{Law of Total Probability} (\dfref{def:partition}) of the sample space $\Omega$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then, for any event $A \in \mathcal{F}$,
+	Let $\{E_1, E_2, \dots, E_n\}$ be a partition\index{Partition}\index{Law of Total Probability} of the sample space $\Omega$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, in the sense of \dfref{def:partition}. Then, for any event $A \in \mathcal{F}$,
 	\begin{equation}
 		\mathbb{P}(A) = \sum_{i=1}^n \mathbb{P}(A, E_i).
 		\label{eq:law_total_probability}
@@ -220,10 +262,9 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	which is \thref{theorem:law_of_total_probability}.
 \end{proof}
 
-\newpage
 \begin{example}
 	\index{Example: Fair die}
-	For the roll with the fair die considered in \exref{ex:die1} and \exref{ex:die2}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from \dfref{def:conditional_probability}
+	For the roll with the fair die considered in \exref{ex:die1}, \exref{ex:die1a} and \exref{ex:die2}, the sample space is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from \dfref{def:conditional_probability}
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(E_1|E_2) &= \frac{\mathbb{P}(E_1, E_2)}{\mathbb{P}(E_2)}\\
@@ -236,14 +277,11 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{definition}[Random Variable]
 	\label{def:random_Variable}
 	\index{Random variable}
-	A random variable $X$ is a function
+	A random variable $X$ is a measurable function, in the sense of \dfref{def:measurable_function},
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
-	from a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, where $\Omega_X$ is the codomain of $X$ and $\mathcal{F}_X$ is a $\sigma$-algebra on $\Omega_X$. The $\sigma$-algebra $\mathcal{F}_X$ ensures that $X$ is measurable, meaning that for any set $B \in \mathcal{F}_X$, the preimage $X^{-1}(B)$ must belong to $\mathcal{F}$. Formally, this can be written as
-	\begin{equation}
-		X^{-1}(B) = \{\omega \in \Omega | X(\omega) \in B\} \in \mathcal{F} \quad \forall B \in \mathcal{F}_X.
-	\end{equation}
+	from a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, where $\Omega_X$ is the codomain of $X$ and $\mathcal{F}_X$ is a $\sigma$-algebra on $\Omega_X$.
 \end{definition}
 
 \begin{remark}
@@ -254,7 +292,11 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{definition}[Image Measure]
 	\label{def:image_measure}
 	\index{Image measure}
-	Let $X: \Omega \to \Omega_X$ be a random variable from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
+	Let 
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	be a random variable from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
 	\begin{equation}
 		\mathbb{P}\circ X^{-1}: \mathcal{F}_X\to [0,1]
 	\end{equation}
@@ -267,7 +309,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		\mathbb{P}_X = \mathbb{P} \circ X^{-1}
 	\end{equation} 
-	be the image (pushforward) measure (\dfref{def:image_measure}) of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value of $X$, denoted by $\mathbb{E}[X]$, is defined viz
+	be the image (pushforward) measure of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value of $X$, denoted by $\mathbb{E}[X]$, is defined viz
 	\begin{equation}
 		\mathbb{E}[X] \equiv \int_{\Omega_X} x \mathbb{P}_X(dx).
 		\label{eq:expected_value_image}
@@ -283,7 +325,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{theorem}
 \begin{theorem}[Law of the Unconscious Statistician]
 	\label{th:lotus}
-	Let $X$ be a random variable defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $g: \Omega_X \to \mathbb{R}$ be any measurable function. Denote the image (pushforward) measure (\dfref{def:image_measure}) of $X$ by $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$. Then
+	Let $X$ be a random variable defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $g: \Omega_X \to \mathbb{R}$ be any measurable function. Denote the image (pushforward) measure of $X$ by $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$. Then
 	\begin{equation}
 		\mathbb{E}[g(X)] \equiv \int_{\Omega_X} g(x) \mathbb{P}_X(dx).
 		\label{eq:lotus_image}
@@ -328,7 +370,11 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 \begin{definition}[Probability Mass Function]
 	\label{def:pmf}
-	In case of a discrete random variable $X: \Omega \to \Omega_X$ that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, the image measure (\dfref{def:image_measure})\index{Image measure} is defined as the probability mass function\index{Probability Mass Function (PMF)}
+	In case of a discrete random variable
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation} 
+	from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$, the image measure\index{Image measure} is defined as the probability mass function\index{Probability Mass Function (PMF)}
 	\begin{equation}
 		\begin{split}
 			p( X = x) &\equiv  \mathbb{P}_X(\{x\})\\
@@ -336,7 +382,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 		\end{split}
 		\label{eq:disc}
 	\end{equation}
-	According to \axref{ax:non_neg}-\axref{ax:add}
+	According to \dfref{def:probability}
 	\begin{equation}
 		\sum_{x\in \Omega_X} p(X=x) = 1
 	\end{equation} 
@@ -355,7 +401,11 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 \begin{definition}[Probability Density Function]
 	\label{def:pdf}
-	Let $X: \Omega \to \Omega_X$ be a continuous random variable on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. Denote the image (pushforward) measure (\dfref{def:image_measure}) of $X$ by
+	Let
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation} 
+	be a continuous random variable on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. Denote the image (pushforward) measure of $X$ by
 	\begin{equation}
 		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
@@ -374,6 +424,14 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 		\int_{\Omega_X} d\lambda(x) f(x) = 1.
 	\end{equation}
 \end{definition}
+
+\begin{remark}
+	In the case where $\Omega_X \subseteq \mathbb{R}$, it is customary to write $d\lambda(x)$ simply as $dx$, so that
+	\begin{equation}
+		\mathbb{P}_X(B) = \int_B f(x)\, dx \quad \forall B \in \mathcal{B}(\Omega_X).
+	\end{equation}
+	Here, $dx$ is understood as integration with respect to the Lebesgue measure.
+\end{remark}
 
 \begin{example}
 	Let $X$ be a continuous random variable with PDF $f$. For an interval $[a,b] \subseteq \Omega_X$,
@@ -710,7 +768,6 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\end{equation}
 \end{example}
 
-\newpage
 \begin{example}
 	\index{Example: Bad news from the doctor}
 	After your yearly checkup, the doctor has bad news and good news. The bad news is that you tested positive for a serious disease, and that the test is $99\%$ accurate (i.e. the probability of testing positive given that you have the disease is $99\%$, as is the probability of testing negative given that you don't have the disease). The good news is that this is a rare disease, striking only one in $10\,000$ people. What are the chances that you actually have the disease?\newline
@@ -856,7 +913,6 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	
 \end{example}
 
-\newpage
 \begin{example}
 	\index{Example: Correlation coefficient}
 	Prove that $-1\leq \operatorname{Corr}[X,Y]\leq 1$.\newline
