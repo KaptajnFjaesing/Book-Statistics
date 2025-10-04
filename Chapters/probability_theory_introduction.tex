@@ -269,7 +269,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{definition}[Random Variable]
 	\label{def:random_Variable}
 	\index{Random variable}
-	A random variable $X$ is a measurable function, in the sense of \dfref{def:measurable_function},
+	A random variable $X$ is a measurable function\index{Measurable function} in the sense of \dfref{def:measurable_function},
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
@@ -288,96 +288,100 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
-	be a random variable from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
+	be a random variable from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
 	\begin{equation}
 		\mathbb{P}\circ X^{-1}: \mathcal{F}_X\to [0,1]
 	\end{equation}
-	defines a probability measure on $(\Omega_X, \mathcal{F}_X)$. $\mathbb{P}\circ X^{-1} \equiv \mathbb{P}_X$ is called the image measure or the pushforward measure\index{Pushforward measure} of $\mathbb{P}$.
+	defines a probability measure\index{Probability measure} on $(\Omega_X, \mathcal{F}_X)$. $\mathbb{P}\circ X^{-1} \equiv \mathbb{P}_X$ is called the image measure or the pushforward measure\index{Pushforward measure} of $\mathbb{P}$.
 \end{definition}
 
 \begin{remark}
-	The statement of \thref{theorem:law_of_total_probability} extends naturally from the case of a finite or countable partition to a situations where the partition of the sample space\index{Sample space}\index{Law of Total Probability} is induced by the values of a real-valued random variable\index{Random variable} $X$. In this case, instead of summing over disjoint events $\{E_i\}$, one integrates over the possible values of $X$. Formally, let 
+	\thref{theorem:law_of_total_probability} extends naturally from the case of a finite or countable partition to a situations where the partition of the sample space\index{Sample space}\index{Law of Total Probability} is induced by the values of a real-valued random variable\index{Random variable} $X$. In this case, instead of summing over disjoint events $\{E_i\}$, one integrates over the possible values of $X$. Formally, let 
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
-	be a random variable from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_X, \mathcal{F}_X)$. The law of total probability can be written as
+	be a random variable from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. \thref{theorem:law_of_total_probability} extends viz
 	\begin{equation}
-		\mathbb{P}(A) = \int \mathbb{P}(A \mid X = x) d\mathbb{P}_X(x),
+		\mathbb{P}(A) = \int \mathbb{P}(A | x) d\mathbb{P}_X(x),
 	\end{equation}
 	where $\mathbb{P}_X$ is the image measure\index{Image measure} of $X$. 
 \end{remark}
 
 \begin{definition}[Expected value]
 	\label{def:expectation_image}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, and let
+	Let $X$ be a real-valued random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F},\mathbb{P})$, and let
 	\begin{equation}
 		\mathbb{P}_X = \mathbb{P} \circ X^{-1}
 	\end{equation} 
-	be the image measure of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value of $X$, denoted by $\mathbb{E}[X]$, is defined viz
+	be the image measure\index{Image measure} of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value\index{Expected value} of $X$, denoted by $\mathbb{E}_X[X]$, is defined viz
 	\begin{equation}
-		\mathbb{E}[X] \equiv \int_{\Omega_X} x d\mathbb{P}_X(x).
+		\mathbb{E}_X[X] \equiv \int_{\Omega_X} x d\mathbb{P}_X(x).
 		\label{eq:expected_value_image}
 	\end{equation}
 \end{definition}
 
 \begin{theorem}[Non-negativity of expected value]
-	If $X\geq 0$ for a random variable $X$, then $\mathbb{E}[X]\geq 0$.
+	If $X\geq 0$ for a random variable\index{Random variable} $X$, then $\mathbb{E}_X[X]\geq 0$.
 \end{theorem}
 \begin{proof}
 	From \dfref{def:expectation_image} 
 	\begin{equation}
-		\mathbb{E}[X] = \int_{\Omega_X}x d\mathbb{P}_X(x),
+		\mathbb{E}_X[X] = \int_{\Omega_X}x d\mathbb{P}_X(x),
 	\end{equation}
-	and if $x \ge 0$ for all $x \in \Omega_X$, the integral of a non-negative function with respect to a measure is non-negative. Hence, $\mathbb{E}[X] \ge 0$.
+	and if $x \ge 0$ for all $x \in \Omega_X$, the integral of a non-negative function with respect to a measure\index{Measure} is non-negative. Hence, $\mathbb{E}_X[X] \ge 0$.
 \end{proof}
 
 \begin{theorem}[Linearity of expected value]
 	\label{theorem:exp_linear}
-	The expectation value is a linear operator meaning $\mathbb{E}[a+X] = a+\mathbb{E}[X]$ and $\mathbb{E}[aX] = a\mathbb{E}[X]$ for any constant $a$.
+	The expected value\index{Expected value} is a linear operator meaning $\mathbb{E}_X[a+X] = a+\mathbb{E}_X[X]$ and $\mathbb{E}_X[aX] = a\mathbb{E}_X[X]$ for any constant $a$.
 \end{theorem}
 \begin{proof}
 	From \dfref{def:expectation_image} 
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[a + X] &= \int_{\Omega_X}(a + x) d\mathbb{P}_X(x) \\ 
+			\mathbb{E}_X[a + X] &= \int_{\Omega_X}(a + x) d\mathbb{P}_X(x) \\ 
 			&= \int_{\Omega_X} a d\mathbb{P}_X(x) + \int_{\Omega_X} x d\mathbb{P}_X(x)\\
-			&= a + \mathbb{E}[X],
+			&= a + \mathbb{E}_X[X],
 		\end{split}
 	\end{equation}
 	since $\mathbb{P}_X(\Omega_X) = 1$. Similarly,
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[a X] &= \int_{\Omega_X} a x d\mathbb{P}_X(x) \\
+			\mathbb{E}_X[a X] &= \int_{\Omega_X} a x d\mathbb{P}_X(x) \\
 			& = a \int_{\Omega_X} x d\mathbb{P}_X(x)\\
-			 = a \mathbb{E}[X].
+			 = a \mathbb{E}_X[X].
 		\end{split}
 	\end{equation}
 \end{proof}
 
 \begin{remark}[Law of the Unconscious Statistician]
 	\label{th:lotus}
-	Let $X$ be a random variable\index{Law of the Unconscious Statistician} defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $g: \Omega_X \to \mathbb{R}$ be any measurable function. Denote the image measure of $X$ by $\mathbb{P}_X $. Then
+	Let $X$ be a random variable\index{Random variable}\index{Law of the Unconscious Statistician} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, and let 
 	\begin{equation}
-		\mathbb{E}[g(X)] \equiv \int_{\Omega_X} g(x)d\mathbb{P}_X(x).
+		g: \Omega_X \to \mathbb{R}
+	\end{equation} 
+	be a generic measurable function\index{Measurable function}. Denote the image measure\index{Image measure} of $X$ by $\mathbb{P}_X $. Then
+	\begin{equation}
+		\mathbb{E}_X[g(X)] \equiv \int_{\Omega_X} g(x)d\mathbb{P}_X(x).
 		\label{eq:lotus_image}
 	\end{equation}
 \end{remark}
 
 \begin{definition}[Variance]
 	\label{def:variance}
-	Let $X$ be a real-valued random variable defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$, then the variance of $X$, denoted by $\operatorname{Var}[X]$, is defined viz\index{Variance}
+	Let $X$ be a real-valued random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F},\mathbb{P})$, then the variance\index{Variance} of $X$, denoted by $\operatorname{Var}_X[X]$, is defined viz\index{Variance}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}[X]&\equiv \mathbb{E}[(X-\mathbb{E}[X])^2]\\
-			&= \mathbb{E}[X^2]-\mathbb{E}[X]^2.
+			\operatorname{Var}_X[X]&\equiv \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]\\
+			&= \mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2.
 		\end{split}
 	\end{equation}
 \end{definition}
 
 \begin{theorem}[Markov's Inequality]
-Let $X$ be a non-negative random variable and $a > 0$. Then
+Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Then
 \begin{equation}
-\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}[X]}{a}.
+\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}_X[X]}{a}.
 \end{equation}
 \end{theorem}
 \begin{proof}
@@ -385,100 +389,108 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	\begin{equation}
 		a1_{\{X\ge a\}} \le X.
 	\end{equation}
-	Taking expectations and using \thref{theorem:exp_linear}
+	Taking the expected values and using \thref{theorem:exp_linear}
 	\begin{equation}
-		a\,\mathbb{E}\big[1_{\{X\ge a\}}\big] \le \mathbb{E}[X].
+		a\,\mathbb{E}_X\big[1_{\{X\ge a\}}\big] \le \mathbb{E}_X[X].
 	\end{equation}
-	But $\mathbb{E}[1_{\{X\ge a\}}]=\mathbb{P}(X\ge a)$, so
+	But $\mathbb{E}_X[1_{\{X\ge a\}}]=\mathbb{P}(X\ge a)$, so
 	\begin{equation}
-		a\,\mathbb{P}(X\ge a) \le \mathbb{E}[X],
+		a\,\mathbb{P}(X\ge a) \le \mathbb{E}_X[X],
 	\end{equation}
 	and rearranging yields Markov's inequality
 	\begin{equation}
-		\mathbb{P}(X\ge a) \le \frac{\mathbb{E}[X]}{a}.
+		\mathbb{P}(X\ge a) \le \frac{\mathbb{E}_X[X]}{a}.
 	\end{equation}
 \end{proof}
 
-
 \begin{definition}[Probability Mass Function]
 	\label{def:pmf}
-	Let 
+	Let
+	\index{Probability mass function}
 	\begin{equation}
-		X: \Omega \to \Omega_X
+		X : \Omega \to \Omega_X
 	\end{equation}
-	be a discrete random variable defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, where $(\Omega_X, \mathcal{F}_X)$ is a measurable space. The image measure of $X$,
+	be a discrete random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, where $(\Omega_X, \mathcal{F}_X)$ is a measurable space\index{Measurable space}. The image measure\index{Image measure} of $X$ is defined as
 	\begin{equation}
-		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X,
+		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
-	is called the \emph{probability mass function (PMF)} if $\Omega_X$ is countable.  
-	Explicitly, for each $x \in \Omega_X$, the PMF is defined as
+	If $\Omega_X$ is countable, then $\mathbb{P}_X$ admits a probability mass function (PMF) 
 	\begin{equation}
-		p(X=x) \equiv \mathbb{P}_X(\{x\}) = \mathbb{P}(X^{-1}(\{x\})).
+		p_X : \Omega_X \to [0,1]
+	\end{equation} 
+	defined by
+	\begin{equation}
+		\begin{split}
+			p_X(x) &\equiv \mathbb{P}_X(\{x\}) \quad \forall x \in \Omega_X.
+		\end{split}
 	\end{equation}
-	By \dfref{def:probability}, the PMF satisfies
+	The PMF satisfies
 	\begin{equation}
-		\sum_{x\in \Omega_X} p(X=x) = 1, \quad 
-		p(X=x) \ge 0 \ \forall x \in \Omega_X.
+		p_X(x) \ge 0, \quad \forall x \in \Omega_X, 
+		\qquad 
+		\sum_{x \in \Omega_X} p_X(x) = 1.
 	\end{equation}
 \end{definition}
 
+
 \begin{remark}[Expected value of a discrete random variable]
 	\label{rem:expected_value_discrete}
-	If $X$ is a discrete random variable with probability mass function $p$, then the expected value reduces to
+	If $X$ is a discrete random variable with probability mass function\index{Probability mass function} $p$, then the expected value reduces to
 	\begin{equation}
-		\mathbb{E}[X]=\sum_{x\in \Omega_X} x p(X = x).
+		\mathbb{E}_X[X]=\sum_{x\in \Omega_X} x p_X(x).
+		\label{eq:discrete_exp}
 	\end{equation}
-	This follows directly from \dfref{def:expectation_image}, since the image measure $\mathbb{P}_X$ is concentrated on singletons $\{x\}$ in the discrete case.
+	\EQref{eq:discrete_exp} follows directly from \dfref{def:expectation_image}, since the image measure $\mathbb{P}_X$ is concentrated on singletons $\{x\}$ in the discrete case.
 \end{remark}
 
 \begin{definition}[Probability Density Function]
 	\label{def:pdf}
+	\index{Probability density function}
 	Let 
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation} 
-	be a continuous random variable defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. The image measure of $X$ is defined by
+	be a continuous random variable\index{Random variable} defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. The image measure\index{Image measure} of $X$ is defined by
 	\begin{equation}
 		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
 	If there exists a non-negative measurable function
 	\begin{equation}
-		f: \Omega_X \to \mathbb{R}_{\ge 0}
+		f_X: \Omega_X \to \mathbb{R}_{\ge 0}
 	\end{equation} 
 	such that
 	\begin{equation}
-		\mathbb{P}_X(B) = \int_B f(x) d\lambda(x), \quad \forall B \in \mathcal{B}(\Omega_X),
+		\mathbb{P}_X(B) = \int_B f_X(x) d\lambda(x), \quad \forall B \in \mathcal{B}(\Omega_X),
 	\end{equation}
-	where $\lambda$ denotes the Lebesgue measure on $\mathbb{R}$ (\dfref{def:lebesgue_measure}) and $\mathcal{B}(\Omega_X)$ is the Borel $\sigma$-algebra (\dfref{def:sigma_algebra}) on $\Omega_X$, then $f$ is called the \emph{probability density function (PDF)} of $X$. The PDF satisfies
+	where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} on $\mathbb{R}$ (\dfref{def:lebesgue_measure}) and $\mathcal{B}(\Omega_X)$ is the Borel $\sigma$-algebra (\dfref{def:sigma_algebra}) on $\Omega_X$, then $f_X$ is called the probability density function (PDF) of $X$. The PDF satisfies
 	\begin{equation}
-		f(x) \ge 0 \quad \forall x \in \Omega_X, \qquad 
-		\int_{\Omega_X} f(x) d\lambda(x) = 1.
+		f_X(x) \ge 0 \quad \forall x \in \Omega_X, \qquad 
+		\int_{\Omega_X} f_X(x) d\lambda(x) = 1.
 	\end{equation}
 \end{definition}
 
 \begin{remark}[Expected value of a continuous random variable]
 	\label{remark:expectation_continuous}
-	Let $X$ be a continuous random variable with PDF $f$ on $\Omega_X \subseteq \mathbb{R}$. From \dfref{def:expectation_image} and \dfref{def:pdf}	
+	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$ on $\Omega_X \subseteq \mathbb{R}$. From \dfref{def:expectation_image} and \dfref{def:pdf}	
 	\begin{equation}
-		\mathbb{E}[X] = \int_{\Omega_X} x f(x) \, d\lambda(x),
+		\mathbb{E}_X[X] = \int_{\Omega_X} x f_X(x) d\lambda(x),
 	\end{equation}
-	where $\lambda$ denotes the Lebesgue measure on $\mathbb{R}$. 
+	where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} on $\mathbb{R}$. 
 	In practice, it is customary to write $d\lambda(x)$ simply as $dx$, so that
 	\begin{equation}
-		\mathbb{E}[X] = \int_{\Omega_X} x f(x) \, dx.
+		\mathbb{E}_X[X] = \int_{\Omega_X} x f_X(x) dx.
 	\end{equation}
 	Here, $dx$ is understood as integration with respect to the Lebesgue measure.
 \end{remark}
 
-
 \begin{example}
-	Let $X$ be a continuous random variable with PDF $f$ on $\Omega_X\subseteq \mathbb{R}$. For the interval (event) $[a,b] \subseteq \Omega_X$,
+	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$ on $\Omega_X\subseteq \mathbb{R}$. For the interval (event) $[a,b] \subseteq \Omega_X$,
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(a \le X \le b) 
 			&= \mathbb{P}_X([a,b])\\ 
-			&= \int_{[a,b]} f(x) d\lambda(x)\\ 
-			&= \int_a^b f(x) dx.
+			&= \int_{[a,b]} f_X(x) d\lambda(x)\\ 
+			&= \int_a^b f_X(x) dx.
 		\end{split}
 	\end{equation}
 \end{example}
@@ -486,7 +498,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{theorem}[Total expectation]
 	\label{theorem:total_expectation}
 	\index{Total expectation}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then
 	\begin{equation}
 		\mathbb{E}_X[X] = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X| Y]],
 	\end{equation}
@@ -495,9 +507,9 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{proof}
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}_X[X] &= \int_{\Omega_X} x f(x) dx\\
-			& = \int_{\Omega_Y} \int_{\Omega_X} x f(x,y) dx dy\\
-			& =  \int_{\Omega_Y} f(y) \underbrace{\int_{\Omega_X}x f(x|y) dx}_{= \mathbb{E}_{X|Y}[X|Y]}dy\\
+			\mathbb{E}_X[X] &= \int_{\Omega_X} x f_X(x) dx\\
+			& = \int_{\Omega_Y} \int_{\Omega_X} x f_{X,Y}(x,y) dx dy\\
+			& =  \int_{\Omega_Y} f_Y(y) \underbrace{\int_{\Omega_X}x f_{X|Y}(x|y) dx}_{= \mathbb{E}_{X|Y}[X|Y]}dy\\
 			& = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X|Y]].
 		\end{split}
 	\end{equation}
@@ -506,18 +518,18 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
 	\index{Independent random variables}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
 	\begin{equation}
-	f(x,y)=f(x)f(y),	
+	f_{X,Y}(x,y)=f_X(x)f_Y(y),	
 	\end{equation}
-	then $\mathbb{E}_{XY}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$.
+	then $\mathbb{E}_{X,Y}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$.
 \end{theorem}
 
 \begin{proof}
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}_{XY}[XY] &= \int_{\Omega_X}\int_{\Omega_Y}x y f(x,y) dy dx\\
-			&= \int_{\Omega_X} x f(x) dx\int_{\Omega_Y} yf(y) dy\\
+			\mathbb{E}_{X,Y}[XY] &= \int_{\Omega_X}\int_{\Omega_Y}x y f_{X,Y}(x,y) dy dx\\
+			&= \int_{\Omega_X} x f_X(x) dx\int_{\Omega_Y} yf_Y(y) dy\\
 			&= \mathbb{E}_X[X]\mathbb{E}_Y[Y]\\
 		\end{split}
 	\end{equation}
@@ -526,164 +538,222 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 \begin{definition}[Covariance]
 	\label{def:covariance}
 	\index{Covariance}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}[X,Y]$, is defined viz
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}_{X,Y}[X,Y]$, is defined viz
 	\begin{equation}
 		\begin{split}
-			\operatorname{Cov}[X,Y]&=\mathbb{E}_{XY}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
-			&=\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y],
+			\operatorname{Cov}_{X,Y}[X,Y]&=\mathbb{E}_{X,Y}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
+			&=\mathbb{E}_{X,Y}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y],
 		\end{split}
 	\end{equation}
 \end{definition}
 \begin{theorem}[Covariance of independent random variables]
 	\label{theorem:covariance_of_independent_variables}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent, then their covariance is
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent, then their covariance is
 	\begin{equation}
-		\operatorname{Cov}[X,Y] = 0.
+		\operatorname{Cov}_{X,Y}[X,Y] = 0.
 	\end{equation}
 	
 \end{theorem}
 \begin{proof}
-	Using \thref{theorem:expectation_independent} in \dfref{def:covariance} yield $\operatorname{Cov}[X,Y]=0$.
+	Using \thref{theorem:expectation_independent} in \dfref{def:covariance} yields $\operatorname{Cov}_{X,Y}[X,Y]=0$.
 \end{proof}
 
 \begin{definition}[Correlation]
 	\index{Correlation}
-	Let $X$ and $Y$ be real-valued random variables defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
 	\begin{equation}
 		\begin{split}
-			\operatorname{Corr}[X,Y] &= \frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}[X]  \operatorname{Var}[Y]}} \\
-			&= \frac{\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\left(\mathbb{E}_X[X^2] - \mathbb{E}_X[X]^2\right) \left(\mathbb{E}_Y[Y^2] - \mathbb{E}_Y[Y]^2\right)}}.
+			\operatorname{Corr}_{X,Y}[X,Y] &= \frac{\operatorname{Cov}_{X,Y}[X,Y]}{\sqrt{\operatorname{Var}_X[X]  \operatorname{Var}_Y[Y]}} \\
+			&= \frac{\mathbb{E}_{X,Y}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\left(\mathbb{E}_X[X^2] - \mathbb{E}_X[X]^2\right) \left(\mathbb{E}_Y[Y^2] - \mathbb{E}_Y[Y]^2\right)}}.
 		\end{split}
 	\end{equation}
 \end{definition}
 
 \begin{remark}
-	Correlation and covariance are both measures of the relationship between two random variables. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
+	Correlation and covariance are both measures of the relationship between two random variables\index{Random variable}. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}_{X,Y}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
 \end{remark}
 
 \begin{definition}[Change of Variables for PDFs]
 	\label{def:change_of_variables}
 	\index{Change of variables for PDFs}
-	Let $X$ be a continuous random variable with probability density function (PDF) $f(X =x)$, defined on a probability space $(\Omega, \mathcal{F},\mathbb{P})$. Suppose $Y = g(X)$ is a continuous and differentiable function of $X$, and let $g^{-1}$ denote the inverse function of $g$. If $Y = g(X)$ and the inverse function $g^{-1}$ exists and is differentiable, the PDF of the random variable $Y$, denoted $f(Y=y)$, can be obtained by the change of variables formula viz~\cite{Sivia2006}
+	Let $X: \Omega \to \Omega_X$ be a continuous random variable\index{Random variable} with probability density function\index{Probability density function} (PDF) $f_X$, defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Suppose $Y = g(X)$, where $g$ is a continuous and differentiable function with differentiable inverse $g^{-1}$. Then the PDF of $Y$, denoted $f_Y$, is given by the change of variables formula~\cite{Sivia2006}
 	\begin{equation}
-		f(Y = y) = f(X = g^{-1}(y)) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y}.
-		\label{eq:change_of_variables}
+		f_Y(y) = f_X\bigl(g^{-1}(y)\bigr) \, \left| \frac{d}{dy} g^{-1}(y) \right|, \quad y \in \Omega_Y,
 	\end{equation}
+	where $\Omega_Y = g(\Omega_X)$ is the codomain of $Y$.
 \end{definition}
 
+\newpage
 \begin{example}
-	Let $X$ be a continuous random variable with PDF $f(X =x)$, and let $Y = g(X) = aX + b$, where $a \neq 0$ and $b$ are constants. The inverse function is given by
-	\begin{equation}
-		g^{-1}(y) = \frac{y - b}{a}
-	\end{equation}
-	Using \dfref{def:change_of_variables}
+	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$, and let 
 	\begin{equation}
 		\begin{split}
-			f(Y=y) &= f\left( X = g^{-1}(y) \right) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y} \\
-			&= f\left(X =  \frac{y - b}{a} \right) \left| \frac{d}{d Y} \left( \frac{Y - b}{a} \right) \right|_{Y=y} \\
-			&= f\left(X = \frac{y - b}{a} \right) \left| \frac{1}{a} \right|.
+			Y &= g(X)\\ 
+			&= aX + b,
 		\end{split}
 	\end{equation}
-	Thus, the PDF of $Y$ is
+	where $a \neq 0$ and $b$ are constants. The inverse function is
 	\begin{equation}
-		f(Y= y) = \frac{1}{|a|} f\left(X =  \frac{y - b}{a} \right).
+		g^{-1}(y) = \frac{y - b}{a}.
+	\end{equation}
+	Using \dfref{def:change_of_variables}, the PDF of $Y$ is
+	\begin{equation}
+		\begin{split}
+			f_Y(y) &= f_X\bigl(g^{-1}(y)\bigr) \left| \frac{d}{dy} g^{-1}(y) \right| \\
+			&= f_X\left(\frac{y - b}{a}\right) \left| \frac{1}{a} \right|.
+		\end{split}
+	\end{equation}
+	Hence,
+	\begin{equation}
+		f_Y(y) = \frac{1}{|a|} f_X\left(\frac{y - b}{a}\right).
 	\end{equation}
 \end{example}
 
 \begin{example}
 	\index{Example: Variable transformation}
-	\emph{Let $X = \ln\big(\frac{Y}{1-Y}\big)$ be a continuous random variable with a constant PDF, i.e. $f(X=x)\propto \operatorname{const}$. The inverse function is given by}
-	\begin{equation}
-		g^{-1}(y) = \ln\bigg(\frac{y}{1-y}\bigg).
-	\end{equation}
-	Using \dfref{def:change_of_variables}
+	Let $X$ be a continuous random variable\index{Random variable} with constant PDF $f_X(x) \propto \operatorname{const}$, and define
 	\begin{equation}
 		\begin{split}
-			f(Y=y) &= f\left( X = g^{-1}(y) \right) \left| \frac{d}{d Y} \left( g^{-1}(Y) \right) \right|_{Y=y}\\
-			& = \operatorname{const}\cdot \frac{1-Y}{Y}\bigg(\frac{1}{1-Y}+\frac{Y}{(1-Y)^2}\bigg)\bigg|_{Y=y}\\
-			&=\operatorname{const}\cdot Y^{-1}(1-Y)^{-1}|_{Y=y}\\
-			&=\operatorname{Beta}(Y=y|a=0,b=0).
+			Y &= g(X)\\
+			& = \frac{e^X}{1 + e^X}.
+		\end{split}
+	\end{equation}
+	The inverse function is
+	\begin{equation}
+		g^{-1}(y) = \ln\left(\frac{y}{1-y}\right).
+	\end{equation}
+	Using \dfref{def:change_of_variables}, the PDF of $Y$ is
+	\begin{equation}
+		\begin{split}
+			f_Y(y) &= f_X\bigl(g^{-1}(y)\bigr) \left| \frac{d}{dy} g^{-1}(y) \right| \\
+			&= \operatorname{const} \cdot \left| \frac{d}{dy} \ln\left(\frac{y}{1-y}\right) \right| \\
+			&= \operatorname{const} \cdot \frac{1}{y(1-y)}, \quad y \in (0,1).
 		\end{split}
 	\end{equation}
 \end{example}
 
-\begin{definition}[Error Propagation]
-	\label{def:error_propagation}
-	Let $X_1, \dots, X_n$ be continuous random variables defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let 
-	$g:\mathbb{R}^n \to \mathbb{R}$ be a differentiable function of these variables. The variance of $g$, which quantifies the uncertainty in $g$ due to the uncertainties in the random variables $X_1, \dots, X_n$, can be written
+
+\begin{theorem}[Error Propagation]
+	\label{theorem:error_propagation}
+	\index{Error propagation}
+	Let
+	\begin{equation}
+		X_1:\Omega \to \Omega_{X_1}, \dots, X_n:\Omega \to \Omega_{X_n}
+	\end{equation}
+	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, and let
+	\begin{equation}
+		g:\Omega_{X_1} \times \dots \times \Omega_{X_n} \to \mathbb{R}
+	\end{equation}
+	be a differentiable function of these variables. Denote for shorthand
+	\begin{equation}
+		X = (X_1, \dots, X_n)
+	\end{equation}
+	and
+	\begin{equation}
+		\mathbb{E}_X[X] = (\mathbb{E}_{X_1}[X_1], \dots, \mathbb{E}_{X_n}[X_n]).
+	\end{equation}
+	Then the variance of $g(X)$, which quantifies the uncertainty in $g$ due to the uncertainties in $X_1, \dots, X_n$, satisfies the first-order approximation
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
-			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}[X]}^2\operatorname{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{X=\mathbb{E}[X]} \operatorname{Cov}[X_i, X_j]\\
-			&\quad + \mathcal{O}(\|X - \mathbb{E}[X]\|^3).
+			\operatorname{Var}_X[g(X)] &= \mathbb{E}_X\big[(g(X) - \mathbb{E}_X[g(X)])^2\big] \\
+			&= \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
+			\\&\quad+ \sum_{i \neq j} \frac{\partial g}{\partial X_i}\frac{\partial g}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
+			&\quad+ \mathcal{O}(\|X - \mathbb{E}_X[X]\|^3).
 		\end{split}
 		\label{eq:var_approx}
 	\end{equation}
-\end{definition}
+\end{theorem}
 
 \begin{proof}
-	With the notation $X = (X_1, \dots, X_n)$ and $\mathbb{E}[X] = (\mathbb{E}[X_1], \dots, \mathbb{E}[X_n])$ $g(X)$ can be written as a Taylor expansion around $\mathbb{E}[X]$ viz
+	$g(X)$ can be written as a Taylor expansion\index{Taylor expansion} around $\mathbb{E}_X[X]$ viz
 	\begin{equation}
-		g(X) = g(\mathbb{E}[X]) + \sum_{i=1}^n  \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}[X]} (X_i - \mathbb{E}[X_i]) + \mathcal{O}(\|X - \mathbb{E}[X]\|^2).
+		g(X) = g(\mathbb{E}_X[X]) + \sum_{i=1}^n  \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]} (X_i - \mathbb{E}_{X_i}[X_i]) + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2).
 		\label{e1}
 	\end{equation}
 	Consequently
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[g(X)] &= g(\mathbb{E}[X])+ \sum_{i=1}^n \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}[X]}\, \cancelto{0}{\mathbb{E}[X_i - \mathbb{E}[X_i]]}  + \mathcal{O}(\|X - \mathbb{E}[X]\|^2)\\
-			& = g(\mathbb{E}[X]) + \mathcal{O}(\|X - \mathbb{E}[X]\|^2)\\
+			\mathbb{E}[g(X)] &= g(\mathbb{E}_X[X])+ \sum_{i=1}^n \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]}\, \cancelto{0}{\mathbb{E}_{X_i}[X_i - \mathbb{E}[X_i]]}\\
+			&\quad  + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
+			& = g(\mathbb{E}_X[X]) + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
 		\end{split}
 		\label{e2}
 	\end{equation}
 	meaning the variance of $g$ can be approximated viz
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}[g] &= \mathbb{E}\big[(g - \mathbb{E}[g])^2\big] \\
-			&= \mathbb{E}\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}[X]} + \mathcal{O}(\|X - \mathbb{E}[X]\|^2)\bigg)^2\bigg] \\
-			&= \sum_{i=1}^n  \frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}[X]}^2\operatorname{Var}[X_i] + \sum_{i \neq j} \frac{\partial g}{\partial X_i} \frac{\partial g}{\partial X_j}\bigg|_{X=\mathbb{E}[X]} \operatorname{Cov}[X_i, X_j]\\
-			&\quad + \mathcal{O}(\|X - \mathbb{E}[X]\|^3).
+			\operatorname{Var}_X[g(X)] &= \mathbb{E}_X\big[(g(X) - \mathbb{E}_X[g(X)])^2\big] \\
+			&= \mathbb{E}_X\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}_{X_i}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}_X[X]}\\
+			&\qquad\qquad + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\bigg)^2\bigg] \\
+			&= \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
+			\\&\quad+ \sum_{i \neq j} \frac{\partial g}{\partial X_i}\frac{\partial g}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
+			&\quad+ \mathcal{O}(\|X - \mathbb{E}_X[X]\|^3).
 		\end{split}
 	\end{equation}
 \end{proof}
 
 \begin{remark}[Independent Random Variables]
 	\label{remark:error_prop_independent}
-	If the random variables $X_1, \dots, X_n$ are independent, then $\mathrm{Cov}[X_i, X_j] = 0$ for all \(i \neq j\) (see \thref{theorem:covariance_of_independent_variables}). In this case, \dfref{def:error_propagation} simplifies to
+	Let
 	\begin{equation}
-		\operatorname{Var}[g(X_1, \dots, X_n)] \approx \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\Big|_{X = \mathbb{E}[X]}\right)^2 \operatorname{Var}[X_i].
+		X_1:\Omega \to \Omega_{X_1}, \dots, X_n:\Omega \to \Omega_{X_n}
 	\end{equation}
-	This is the commonly used form of the linear error-propagation formula for independent variables.
+	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to
+	\begin{equation}
+		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\Big|_{X = \mathbb{E}_X[X]}\right)^2 \operatorname{Var}_{X_i}[X_i]
+		\label{eq:error_prop}
+	\end{equation}
+	where 
+	\begin{equation}
+		X = (X_1, \dots, X_n)
+	\end{equation}
+	and
+	\begin{equation}
+		\mathbb{E}_X[X] = (\mathbb{E}_{X_1}[X_1], \dots, \mathbb{E}_{X_n}[X_n]).
+	\end{equation}
+	\EQref{eq:error_prop} is the commonly used form of the linear error-propagation formula for independent variables.
 \end{remark}
+
+\newpage
 
 \begin{example}
 	\index{Example: Error propagation}
-	A company produce square plates. Let the plate dimensions be characterized by two independent random variables\index{Normal distribution} $X\sim \operatorname{Norm}(2m,(0.01m)^2)$ and $Y\sim \operatorname{Norm}(3m,(0.02m)^2)$ and the area given by $XY$. Determine the variance of $XY$. From \dfref{def:error_propagation}, the exact variance is
+	A company produce square plates. Let the plate dimensions be characterized by two independent random variables\index{Normal distribution}\index{Random variable}
+	\begin{equation}
+		X\sim \operatorname{Norm}(2m,(0.01m)^2)
+	\end{equation} 
+	and
+	\begin{equation}
+		Y\sim \operatorname{Norm}(3m,(0.02m)^2)
+	\end{equation} 
+	and the area given by $XY$. Determine the variance of $XY$. From \thref{theorem:error_propagation}, the exact variance is
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
-			\operatorname{Var}[XY]&=\mathbb{E}[(XY)^2]-(\mathbb{E}[XY])^2\\
-			&=\bigg(\operatorname{Var}[X]+\mathbb{E}[X]\bigg)\bigg(\operatorname{Var}[Y]+\mathbb{E}[Y]\bigg)-\mathbb{E}[X]^2\mathbb{E}[Y]^2\\
-			&=\mathbb{E}[Y]^2\operatorname{Var}[X]+\mathbb{E}[X]^2\operatorname{Var}[Y]+\operatorname{Var}[X]\operatorname{Var}[Y]
+			\operatorname{Var}_{X,Y}[XY]&=\mathbb{E}_{X,Y}[(XY)^2]-(\mathbb{E}_{X,Y}[XY])^2\\
+			&=(\operatorname{Var}_X[X]+\mathbb{E}_X[X]\bigg)\bigg(\operatorname{Var}_Y[Y]+\mathbb{E}_Y[Y])-\mathbb{E}_X[X]^2\mathbb{E}_Y[Y]^2\\
+			&=\mathbb{E}_Y[Y]^2\operatorname{Var}_X[X]+\mathbb{E}_X[X]^2\operatorname{Var}_Y[Y]+\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]
 		\end{split}
 	\end{equation}
-	where it has been used that $X$ and $Y$ are independent, such that $\mathbb{E}[(XY)^2]=\mathbb{E}[X^2]\mathbb{E}[Y^2]$.	Via the linear approximation from \rmref{remark:error_prop_independent}
+	where \thref{theorem:expectation_independent} has been applied.	Via the linear approximation from \rmref{remark:error_prop_independent}
 	\begin{equation}
 		\label{eq:var2}
 		\begin{split}
-			\operatorname{Var}[XY]&\approx\sum_{i = X,Y} \bigg( \frac{\partial (XY)}{\partial i}\bigg|_{X = \mathbb{E}[X],Y = \mathbb{E}[Y]}  \bigg)^2\operatorname{Var}[i]\\
-			&=\mathbb{E}[Y]^2\operatorname{Var}[X]+\mathbb{E}[X]^2\operatorname{Var}[Y]
+			\operatorname{Var}_{X,Y}[XY]&\approx\sum_{i = X,Y} \bigg( \frac{\partial (XY)}{\partial i}\bigg|_{X = \mathbb{E}_X[X],Y = \mathbb{E}_Y[Y]}  \bigg)^2\operatorname{Var}_i[i]\\
+			&=\mathbb{E}_Y[Y]^2\operatorname{Var}_X[X]+\mathbb{E}_X[X]^2\operatorname{Var}_Y[Y]
 		\end{split}
 	\end{equation}
 	Comparing \EQref{eq:var1} and \EQref{eq:var2} the relative difference can be written
 	\begin{equation}
 		\begin{split}
-			\frac{\operatorname{Var}[XY]-\operatorname{Var}[XY]|_{\text{linear approximation}}}{\operatorname{Var}[XY]} &= \frac{\operatorname{Var}[X]\operatorname{Var}[Y]}{\operatorname{Var}[XY]}\\
+			\frac{\operatorname{Var}_{X,Y}[XY]-\operatorname{Var}_{X,Y}[XY]|_{\text{linear approximation}}}{\operatorname{Var}_{X,Y}[XY]} &= \frac{\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]}{\operatorname{Var}_{X,Y}[XY]}\\
 			& \simeq 1.6\cdot 10^{-5}.
 		\end{split}
 	\end{equation}
 	
 \end{example}
 
+\newpage
 \begin{example}
 	\index{Example: Father with Amnesia}
 	Consider a thought experiment in which a father with amnesia is told he has two children, but does not know the sex of them. The sample space can be constructed from the sample space\index{Sample space} for each child
@@ -700,7 +770,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 			&= \{(\text{\Gentsroom,\Gentsroom}),(\text{\Gentsroom,\Ladiesroom}),(\text{\Ladiesroom,\Gentsroom}),(\text{\Ladiesroom,\Ladiesroom})\}.
 		\end{split}
 	\end{equation}
-	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables $B: \Omega \to \{0,1,2\}$ and $G: \Omega \to \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$ \index{Random variable}. The probability mass function associated to $B$ and $G$ is given by \dfref{def:pmf}\index{PMF}, such that e.g.
+	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables\index{Random variable} $B: \Omega \to \{0,1,2\}$ and $G: \Omega \to \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$ \index{Random variable}. The probability mass function\index{Probability mass function} associated to $B$ and $G$ is given by \dfref{def:pmf}\index{PMF}, such that e.g.
 	\begin{equation}
 		p(B = 1, G = 1)= \mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\}).
 	\end{equation}
@@ -729,6 +799,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 		\end{equation}
 	\end{enumerate}
 \end{example}
+
 
 
 \begin{example}
@@ -786,14 +857,13 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 \begin{example}
 	\index{Example: Variance of a sum}
-	Show that the variance of a sum is $\operatorname{Var}[X+Y]=\operatorname{Var}[X]+\operatorname{Var}[Y]+2\operatorname{Cov}[X,Y]$.
-	
+	The variance of a sum can be written
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}[X+Y] &= \mathbb{E}_{XY}[(X+Y-\mathbb{E}_{XY}[X+Y])^2]\\
+			\operatorname{Var}_{X,Y}[X+Y] &= \mathbb{E}_{X,Y}[(X+Y-\mathbb{E}_{X,Y}[X+Y])^2]\\
 			&= \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]+\mathbb{E}_Y[(Y-\mathbb{E}_Y[Y])^2]\\
-			&\quad+2\mathbb{E}_{XY}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
-			& = \operatorname{Var}[X]+\operatorname{Var}[Y]+2\operatorname{Cov}[X,Y].
+			&\quad+2\mathbb{E}_{X,Y}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
+			& = \operatorname{Var}_X[X]+\operatorname{Var}_Y[Y]+2\operatorname{Cov}_{X,Y}[X,Y].
 		\end{split}
 	\end{equation}
 \end{example}
@@ -854,7 +924,6 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 	Since $\mathbb{P}(z_2|o_3,c_1)>\mathbb{P}(z_1|o_3,c_1)>\mathbb{P}(z_3|o_3,c_1)$, door number $2$ is the optimal choise. Hence,answer "b)" is correct. The intuition behind the answer is the information the contestant has at the time of making the decision; initially, there is no a priori information and so $\mathbb{P}(z_1|o_3,c_1)=\frac{1}{3}$. At this time, there is $\frac{2}{3}$ probability that the prize is behind doors $2,3$. When the gameshow host open door $3$, this probability converge on door $2$.
 \end{example}
 
-\newpage
 \begin{example}
 	\index{Example: Correlation coefficient}
 	Let $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
@@ -887,7 +956,7 @@ Let $X$ be a non-negative random variable and $a > 0$. Then
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable defined by $p(W=-1)=p(W=1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
+	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable\index{Random variable} defined by $p(W=-1)=p(W=1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
 	\begin{enumerate}
 		\item Show $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$.\newline
 		
