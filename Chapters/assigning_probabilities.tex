@@ -1,10 +1,14 @@
 \chapter{Assigning Probability Functions}
-The axioms and definitions (\axref{ax:non_neg}-\axref{ax:add}, \dfref{eq:cond} and \dfref{eq:ind}) of probability theory can be used to define and relate probability measures, however, they are not sufficient to conduct inference because, ultimately, the probability measure or relevant probability functions (density or mass) needs to be specified. Thus, the rules for manipulating probability functions must be supplemented by rules for assigning probability functions. To assign any probability function, there is ultimately only one way, logical analysis, i.e., non-self-contradictory analysis of the available information. The difficulty is to incorporate only the information one actually possesses without making gratuitous assumptions about things one does not know. A number of procedures have been developed that accomplish this task: Logical analysis may be applied directly to the sum and product rules to yield probability functions~\citep{jaynes_11}. Logical analysis may be used to exploit the group invariances of a problem~\citep{jaynes_16}. Logical analysis may be used to ensure consistency when uninteresting or nuisance parameter are marginalized from probability functions~\citep{jaynes_21}. And last, logical analysis may be applied in the form of the principle of maximum entropy to yield probability functions \cite{zellner_bayesian_inference, jaynes_16,jaynes_19, shore_17,shore_18}. Of these techniques the principle of maximum entropy is probably the most powerful.
+\dfref{def:probability} defines a probability measures, however, the definition is not sufficient to conduct inference because, ultimately, the probability measure or relevant probability functions (density or mass) needs to be specified. Thus, the rules for manipulating probability functions must be supplemented by rules for assigning probability functions. To assign any probability function, there is ultimately only one way, logical analysis, i.e., non-self-contradictory analysis of the available information. The difficulty is to incorporate only the information one actually possesses without making gratuitous assumptions about things one does not know. A number of procedures have been developed that accomplish this task: Logical analysis may be applied directly to the sum and product rules to yield probability functions~\citep{jaynes_11}. Logical analysis may be used to exploit the group invariances of a problem~\citep{jaynes_16}. Logical analysis may be used to ensure consistency when uninteresting or nuisance parameter are marginalized from probability functions~\citep{jaynes_21}. And last, logical analysis may be applied in the form of the principle of maximum entropy to yield probability functions \cite{zellner_bayesian_inference, jaynes_16,jaynes_19, shore_17,shore_18}. Of these techniques the principle of maximum entropy is probably the most powerful.
 
 \section{The Principle of Maximum Entropy}
 \label{sec:maxent}
-The principle of maximum entropy\index{Maximum entropy}, first proposed by \citet{Jaynes1957}, addresses the problem of assigning a probability distribution to a random variable in a way that is maximally noncommittal with respect to missing information. Let $Z$ be a generic random variable describing an abstract experiment. Its probability distribution is denoted by $p(z|\lambda, I)$, parameterized by $\lambda = \{\lambda_0, \dots, \lambda_n\}$. Here, $I$ represents the background information related to the system (\dfref{def:background_information}).
-\newpage
+The principle of maximum entropy\index{Maximum entropy}, first proposed by \citet{Jaynes1957}, addresses the problem of assigning a probability distribution to a random variable in a way that is maximally noncommittal with respect to missing information. Let
+\begin{equation}
+	Z: \Omega \to \Omega_Z
+\end{equation}
+be a generic random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to the probability space $(\Omega_Z,\mathcal{F}_Z, \mathbb{P}_Z)$, where $\mathbb{P}_Z$ is the image measure\index{Image measure} of $\mathbb{P}$. The goal of the maximum entropy principle is to determine the probability measure $\mathbb{P}_Z$ that best represents the current state of knowledge, given background information $I$ and a set of moment constraints. 
+
 \begin{definition}[Background information]
 	\label{def:background_information}
 	Background information\index{Background information}, denoted by $I$, consists of all prior knowledge, assumptions, and constraints that are available before observing the outcome of a random experiment. This includes, but is not limited to:
@@ -17,189 +21,176 @@ The principle of maximum entropy\index{Maximum entropy}, first proposed by \cite
 	Background information formally determines the class of admissible probability distributions and methods considered suitable for representing uncertainty in the system.
 \end{definition}
 
-The maximum entropy principle asserts that the probability distribution $p(z|\lambda, I)$ that best represents the current state of knowledge is the one that maximizes the constrained entropy~\citep{Sivia2006}. Using the method of Lagrange multipliers, the constrained entropy is expressed via the Lagrangian
+To accommodate both discrete and continuous cases, it is convenient to express probabilities in terms of integration with respect to a unifying measure\index{Unifying measure} $\mu$, defined as
 \begin{equation}
-	\mathcal{L} = \int dz F ,
+	\mu = 
+	\begin{cases}
+		\lambda, & \text{for continuous random variables},\\
+		\nu, & \text{for discrete random variables,}
+	\end{cases}
 \end{equation}
-with
+where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} (\dfref{def:lebesgue_measure}) and $\nu$ the counting measure\index{Counting measure}. The image measure\index{Image measure} $\mathbb{P}_Z$ admits a density $f_Z$ with respect to $\mu$, so that for any measurable set $B\in \mathcal{F}_Z$,
 \begin{equation}
-	F = -p(z|\lambda, I) \ln \frac{p(z|\lambda, I)}{m(z)} 
-	- \lambda_0 p(z|\lambda, I) - \sum_{j=1}^n \lambda_j C_j(z).
+	\mathbb{P}_Z(B \mid\gamma,I) = \int_B f_Z(z\mid \gamma,I) d\mu(z),
+	\label{eq:max_ent_probability_measure}
 \end{equation}
-Here, $m(z)$, referred to as the reference measure\index{Reference measure} or Lebesgue measure\index{Lebesgue measure}, ensures that the entropy
+where $f_Z$ is the PMF\index{Probaility mass function} in the discrete case and $f_Z$ is the PDF\index{Probability density function} in the continuous case. The maximum entropy principle asserts that the density $f_Z(z | \gamma, I)$ that best represents the current state of knowledge is the one that maximizes the constrained entropy~\citep{Sivia2006}, where $\gamma$ denotes the parameters of the distribution and $I$ the background information. 
+
+
+Using the unifying measure\index{Unifying measure} $\mu$, the Shannon entropy\index{Shannon entropy} of a probability distribution $f_Z$ can be expressed as
 \begin{equation}
-	- \int dz p(z|\lambda, I) \ln \frac{p(z|\lambda, I)}{m(z)}
+	H[f_Z] = - \int_{\Omega_Z} f_Z(z \mid \gamma, I) 
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} \, d\mu(z),
 \end{equation}
-is invariant under changes of variables. The functions $C_j(z)$ represent additional constraints imposed by the background information $I$ (\dfref{def:background_information}), beyond the normalization constraint. The Lagrangian is maximized by solving the Euler-Lagrange equation
+where $m(z)$ is a reference density\index{Reference measure} that ensures invariance of the entropy under reparameterizations of $z$. 
+
+To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $\gamma_0, \gamma_1, \dots, \gamma_n$ and defines the Lagrangian functional, which represents the **constrained entropy**\index{Constrained entropy}:
 \begin{equation}
-	\frac{\partial F}{\partial p(z|\lambda, I)} - \frac{d}{dz} \frac{\partial F}{\partial p'(z|\lambda, I)} = 0,
+	\mathcal{L}[f_Z] = - \int_{\Omega_Z} 
+	f_Z(z \mid \gamma, I) \Bigg(
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)}
+	+ \gamma_0 + \sum_{j=1}^n \gamma_j C_j(z)
+	\Bigg) d\mu(z),
 \end{equation}
-where $p'(z|\lambda, I) = \partial p(z|\lambda, I)/\partial z$. Since $F$ does not depend on derivatives of $p$, the equation simplifies to
+where each $C_j(z)$ denotes a constraint function. Maximizing $\mathcal{L}[f_Z]$ with respect to $f_Z$ yields the probability distribution of maximum entropy consistent with the given constraints.
+
+
+
+Using the unifying measure\index{Unifying measure} $\mu$, the entropy\index{Shannon entropy} can be expressed as
 \begin{equation}
-	\frac{\partial F}{\partial p(z|\lambda, I)} = 0.
+	H[f_Z] = - \int_{\Omega_Z} f_Z(z \mid \gamma, I) 
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} d\mu(z),
 \end{equation}
-From this, the maximum entropy distribution is obtained as
+where $m(z)$ is a reference measure\index{Reference measure}, ensuring invariance under reparameterizations of $z$. 
+To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $\gamma_0, \gamma_1, \dots, \gamma_n$ and defines the Lagrangian functional, which represents the constrained entropy\index{Constrained entropy}
 \begin{equation}
-	\frac{\partial F}{\partial p(z|\lambda, I)} = - \ln\frac{p(z|\lambda, I)}{m(z)} - 1 - \sum_j \lambda_j C_j(z) = 0,
+	\mathcal{L}[f_Z] =- \int_{\Omega_Z} 
+	f_Z(z \mid \gamma, I)\Big(
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)}
+	+ \gamma_0 + \sum_{j=1}^n \gamma_j C_j(z)
+	\Big) d\mu(z).
 \end{equation}
-leading to
+where each $C_j(z)$ denotes a constraint function. Maximizing $\mathcal{L}[f_Z]$ with respect to $f_Z$ yields the probability distribution of maximum entropy consistent with the given constraints. The maximum of $\mathcal{L}$ with respect to $f_Z$ is defined by the Euler-Lagrange condition
 \begin{equation}
-	p(z|\lambda, I) = m(z) e^{-1 - \sum_j \lambda_j C_j(z)} = \tilde{m}(z) e^{- \sum_j \lambda_j C_j(z)},
+	\frac{\partial}{\partial f_Z} f_Z\Big(\ln \tfrac{f_Z}{m} + \gamma_0 + \sum_j \gamma_j C_j\Big) = 0,
 \end{equation}
-where $\tilde{m}(z) \equiv m(z) e^{-1}$. Enforcing normalization $\int dz p(z|\lambda, I) = 1$ gives
+which simplifies to
 \begin{equation}
-	p(z|\lambda, I) = \frac{\tilde{m}(z) e^{- \sum_j \lambda_j C_j(z)}}{\int dz' \tilde{m}(z') e^{- \sum_j \lambda_j C_j(z')}}.
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} + 1 + \gamma_0 + \sum_j \gamma_j C_j(z) = 0.
 \end{equation}
-The reference measure $m$ is invariant under parameter transformations, and the Lagrange multipliers $\lambda_j$ are determined by the additional constraints, e.g., on the mean or variance of $Z$.
+Hence the maximum-entropy distribution takes the exponential family form
+\begin{equation}
+	\begin{split}
+		f_Z(z \mid \gamma, I)
+		&= m(z)\, e^{-1 - \gamma_0 - \sum_{j=1}^n \gamma_j C_j(z)} \\
+		&= \frac{m(z)\, e^{-\sum_j \gamma_j C_j(z)}}{
+			\int_{\Omega_Z} m(z')\, e^{-\sum_j \gamma_j C_j(z')}\, d\mu(z')}.\\
+	\end{split}
+\end{equation}
+The constants $\gamma_j$ are determined by the imposed constraints. The resulting measure (\EQref{eq:max_ent_probability_measure}) defines the unique maximum-entropy probability measure consistent with the given information.
 
 \begin{example}
 	\index{Example: Maximum entropy normal distribution}
-	Consider a random variable, $Z$, with unlimited support, $z\in [-\infty,\infty]$, assumed to be symmetric around a single peak defined by the mean $\mu$, standard deviation $\sigma$. In this case $\lambda = \{\lambda_0,\lambda_1,\lambda_2\}$, where it will be shown that $\lambda_1,\lambda_2$ are related to $\mu,\sigma$. In this case $F$ can be written\label{ex:gauss}
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z=\mathbb{R}$, assumed to be symmetric around a mean $\mu$ and with variance $\sigma^2$. Taking $\gamma = \{\gamma_0,\gamma_1,\gamma_2\}$ leads to 
+	\begin{equation}
+			f_Z(z \mid \gamma, I)= m(z) e^{-1 - \gamma_0 - \gamma_1z-\gamma_2z^2}.
+	\end{equation}
+	Taking a uniform measure ($m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			F =& -p(z|\lambda,I)\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_0p(z|\lambda,I)\\
-			&-\lambda_1p(z|\lambda,I)z-\lambda_2p(z|\lambda,I)z^2
-		\end{split}
-	\end{equation}
-	with the derivative
-	\begin{equation}
-		\begin{split}
-			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1-\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_1z-\lambda_2z^2\\
-			&=0,
-		\end{split}
-	\end{equation}
-	meaning
-	\begin{equation}
-		p(z|\lambda,I)=m(z)e^{-1-\lambda_0-\lambda_1z-\lambda_2z^2}.
-	\end{equation}
-	Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
-	\begin{equation}
-		\begin{split}
-			\int dz p(z|\lambda,I) &= me^{-1-\lambda_0}\int dz e^{-\lambda_1z-\lambda_2z^2}\\
-			&= me^{-1-\lambda_0}\sqrt{\frac{\pi}{\lambda_2}}e^{\frac{\lambda_1^2}{4\lambda_2}}\\
+			\int_{\Omega_Z} f_Z(z|\gamma,I) dz &= me^{-1-\gamma_0}\int_{\Omega_Z} e^{-\gamma_1z-\gamma_2z^2} dz\\
+			&= me^{-1-\gamma_0}\sqrt{\frac{\pi}{\gamma_2}}e^{\frac{\gamma_1^2}{4\gamma_2}}\\
 			&=1.
 		\end{split}
 	\end{equation}
-	Defining $K^{-1} = me^{-1-\lambda_0}$ yields
+	Defining $K^{-1} = me^{-1-\gamma_0}$ yields
 	\begin{equation}
 		\begin{split}
-			p(z|\lambda,I) &= \frac{e^{-\lambda_1x-\lambda_2x^2}}{K}\\
-			&= \sqrt{\frac{\lambda_2}{\pi}}e^{-\frac{\lambda_1^2}{4\lambda_2}-\lambda_1z-\lambda_2z^2}.\\
+			f_Z(z|\gamma,I) &= \frac{e^{-\gamma_1z-\gamma_2z^2}}{K}\\
+			&= \sqrt{\frac{\gamma_2}{\pi}}e^{-\frac{\gamma_1^2}{4\gamma_2}-\gamma_1z-\gamma_2z^2}.\\
 		\end{split}
 	\end{equation}
 	Now, imposing the mean constraint
 	\begin{equation}
 		\begin{split}
-			\int dz zp(z|\lambda,I) &= \frac{\int dz ze^{-\lambda_1z-\lambda_2z^2}}{K}\\
-			&= -\frac{\lambda_1}{2\lambda_2}\\
+			\int_{\Omega_Z} zf_Z(z|\gamma,I) dz &= \frac{\int_{\Omega_Z} ze^{-\gamma_1z-\gamma_2z^2}dz}{K}\\
+			&= -\frac{\gamma_1}{2\gamma_2}\\
 			&=\mu.
 		\end{split}
 	\end{equation}
 	Hereby
 	\begin{equation}
 		\begin{split}
-			p(z|\lambda,I) &= \sqrt{\frac{\lambda_2}{\pi}}e^{-\mu^2\lambda_2+2\mu \lambda_2z-\lambda_2z^2}\\
+			f_Z(z|\gamma,I) &= \sqrt{\frac{\gamma_2}{\pi}}e^{-\mu^2\gamma_2+2\mu \gamma_2z-\gamma_2z^2}\\
 			&= \frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2}\big(\frac{\mu-z}{\sigma}\big)^2},\\\\
 		\end{split}
+		\label{eq:norm1}
 	\end{equation}
-	where $\sigma\equiv \frac{1}{2\lambda_2}$ has been defined. Hence, it is clear that the normal distribution\index{Normal distribution} can be derived from general constraints via the principle of maximum entropy\index{Maximum entropy}.
+	where $\sigma\equiv \frac{1}{2\gamma_2}$ has been defined. \EQref{eq:norm1} can be identified as the normal distribution\index{Normal distribution}\index{Maximum entropy}.
 \end{example}
 
 \begin{example}
 	\index{Example: Maximum entropy beta distribution}
-	Consider a random variable, $Z$, with limited support, $z\in [0,1]$. In order to impose the limited support, require that $\ln(z)$ and $\ln(1-z)$ be well defined. In this case $F$ can be written\label{ex:beta}
+	Consider a continuous random variable, $Z$, with sample space $\Omega_S =[0,1]$. In order to impose the limited support, require that $\ln(z)$ and $\ln(1-z)$ be well defined. In this case
+	\begin{equation}
+		f_Z(z|\gamma,I)=m(z)e^{-1-\gamma_0-\gamma_1\ln z-\gamma_2\ln(1-z)}.
+	\end{equation}
+	Taking a uniform measure ($m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			F =& -p(z|\lambda,I)\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_0p(z|\lambda,I)\\
-			&-\lambda_1p(z|\lambda,I)\ln(z)-\lambda_2p(z|\lambda,I)\ln(1-z)
-		\end{split}
-	\end{equation}
-	with the derivative
-	\begin{equation}
-		\begin{split}
-			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1-\ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg)-\lambda_1\ln(z)-\lambda_2\ln(1-z)\\
-			&=0,
-		\end{split}
-	\end{equation}
-	meaning
-	\begin{equation}
-		p(z|\lambda,I)=m(z)e^{-1-\lambda_0-\lambda_1\ln(z)-\lambda_2\ln(1-z)}.
-	\end{equation}
-	Taking a unifoirm measure ($m= const$) and imposing the normalization constraint
-	\begin{equation}
-		\begin{split}
-			\int dz p(z|\lambda,I) &= me^{-1-\lambda_0}\int dz z^{-\lambda_1}(1-z)^{-\lambda_2}\\
-			&= me^{-1-\lambda_0}\frac{\Gamma(1-\lambda_1)\Gamma(1-\lambda_2)}{\Gamma(2-\lambda_1-\lambda_2)}\\
+			\int_{\Omega_Z} f_Z(z|\gamma,I) &= me^{-1-\gamma_0}\int_{\Omega_Z} z^{-\gamma_1}(1-z)^{-\gamma_2}dz\\
+			&= me^{-1-\gamma_0}\frac{\Gamma(1-\gamma_1)\Gamma(1-\gamma_2)}{\Gamma(2-\gamma_1-\gamma_2)}\\
 			&=1.
 		\end{split}
 	\end{equation}
-	Now define $\alpha \equiv 1-\lambda_1\wedge \beta \equiv 1-\lambda_2$. Hereby
+	Now define $\alpha \equiv 1-\gamma_1\wedge \beta \equiv 1-\gamma_2$. Hereby
 	\begin{equation}
-		p(z|\alpha,\beta,I) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1},
+		f_Z(z|\alpha,\beta,I) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1},
 	\end{equation}
-	which is the beta distribution\index{Maximum entropy}. 
+	which is the beta distribution\index{Maximum entropy}\index{Beta distribuion}. 
 \end{example}
 
 
 \begin{example}
 	\index{Example: Maximum entropy Gamma distribution}
-	Consider a continuous random variable $Z \in [0,\infty)$ with known mean $\mu$ and known logarithmic mean $\nu$. In this case
-	\begin{equation}
-		F = - p(z|\lambda,I) \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z p(z|\lambda,I) - \lambda_2 \ln(z) p(z|\lambda,I),
-	\end{equation}
-	and derivative
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z= [0,\infty)$, a known mean $\mu$ and a known logarithmic mean $\nu$. In this case
 	\begin{equation}
 		\begin{split}
-			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 - \lambda_1 z - \lambda_2 \ln z\\
-			& = 0
-		\end{split}
-	\end{equation}
-	meaning
-	\begin{equation}
-		\begin{split}
-			p(z|\lambda,I)&= m(z) e^{-1-\lambda_0 - \lambda_1 z - \lambda_2 \ln z}\\
-			& = \tilde{m}(z)  z^{-\lambda_2} e^{-\lambda_1 z}
+			f_Z(z|\gamma,I)&= m(z) e^{-1-\gamma_0 - \gamma_1 z - \gamma_2 \ln z}\\
+			& = \tilde{m}(z)  z^{-\gamma_2} e^{-\gamma_1 z}
 		\end{split}
 		\label{eq:gam1}
 	\end{equation}
-	where $\tilde{m}(z) = m(z) e^{-1-\lambda_0}$. Taking a uniform measure ($m(z) = \text{const}$) and imposing normalization
+	where $\tilde{m}(z) = m(z) e^{-1-\gamma_0}$. Taking a uniform measure ($m(z) = \text{const}$) and imposing normalization
 	\begin{equation}
 		\begin{split}
-			\int_0^\infty dz p(z|\lambda,I) &= \tilde{m} \int_0^\infty dz z^{-\lambda_2} e^{-\lambda_1 z}\\
+			\int_{\Omega_Z} f_Z(z|\gamma,I) dz &= \tilde{m} \int{\Omega_Z} z^{-\gamma_2} e^{-\gamma_1 z} dz\\
 			& = 1.
 		\end{split}
 	\end{equation}
 	The integral is recognized as the Gamma function
 	\begin{equation}
-		\int_0^\infty z^{\alpha-1} dz e^{-\beta z} = \frac{\Gamma(\alpha)}{\beta^\alpha}
+		\int_{\Omega_Z} z^{\alpha-1}  e^{-\beta z} dz = \frac{\Gamma(\alpha)}{\beta^\alpha}
 	\end{equation}
-	with $\alpha = 1 - \lambda_2$ and $\beta = \lambda_1$. Substituting $\tilde{m}$, $\alpha$, $\beta$ back into \EQref{eq:gam1}
+	with $\alpha = 1 - \gamma_2$ and $\beta = \gamma_1$. Substituting $\tilde{m}$, $\alpha$, $\beta$ back into \EQref{eq:gam1}
 	\begin{equation}
-		p(z|\lambda,I) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
+		f_Z(z|\gamma,I) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
 	\end{equation}
 	which is the Gamma distribution\index{Maximum entropy}.
 \end{example}
 
 \begin{example}
 	\index{Example: Maximum entropy Exponential distribution}
-	Consider a continuous random variable $Z \in [0,\infty)$ with known mean $\mu$. In this case
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z = [0,\infty)$ and known mean $\mu$. In this case
 	\begin{equation}
-		F = - p(z|\lambda,I) \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z p(z|\lambda,I),
-	\end{equation}
-	and derivative
-	\begin{equation}
-		\frac{\partial F}{\partial p(z|\lambda,I)} = -1 - \ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 - \lambda_1 z = 0.
-	\end{equation}
-	Solving for $p(z|\lambda,I)$ gives
-	\begin{equation}
-		p(z|\lambda,I) = m(z) e^{-1-\lambda_0 - \lambda_1 z}.
+		f_Z(z|\gamma,I) = m(z) e^{-1-\gamma_0 - \gamma_1 z}.
 		\label{eq:n13}
 	\end{equation}
-	Taking $m(z) = \text{const}$ and imposing normalization constraint
+	Taking $m(z) = \text{const}$ and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			\int_0^\infty dz p(z|\lambda,I) &= m e^{-1-\lambda_0}\int_0^\infty dz e^{- \lambda_1 z}\\
-			& = m e^{-1-\lambda_0} \frac{1}{\lambda_1}\\
+			\int_{\Omega_Z} f_Z(z|\gamma,I) dz &= m e^{-1-\gamma_0}\int_{\Omega_Z} e^{- \gamma_1 z} dz\\
+			& = m e^{-1-\gamma_0} \frac{1}{\gamma_1}\\
 			&= 1\\
 		\end{split}
 		\label{eq:na1}
@@ -207,15 +198,15 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 	and the mean constraint
 	\begin{equation}
 		\begin{split}
-			\int_0^\infty dz z p(z|\lambda,I) &= \int_0^\infty dz z \lambda_1 e^{-\lambda_1 z}\\
-			& = \frac{1}{\lambda_1}\\
+			\int_{\Omega_Z} z p(z|\gamma,I) dz&= \int_{\Omega_Z} z \gamma_1 e^{-\gamma_1 z} dz\\
+			& = \frac{1}{\gamma_1}\\
 			&= \mu.
 		\end{split}
 		\label{eq:na2}
 	\end{equation}
 	Combining \EQref{eq:na1}, \EQref{eq:na2} and \EQref{eq:n13} yields
 	\begin{equation}
-		p(z|\lambda,I) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
+		f_Z(z|\gamma,I) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
 	\end{equation}
 	which is the Gamma distribution\index{Maximum entropy}.
 \end{example}
@@ -224,104 +215,78 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 
 \begin{example}
 	\index{Example: Maximum entropy bernoulli distribution}
-	Consider a random variable $Z\in\{0,1\}$ with mean $\mu$. In this case
+	Consider a discrete random variable, $Z$, with sample space $\Omega_Z= \{0,1\}$ and mean $\mu$. In this case
 	\begin{equation}
-		\mathcal{L} = \sum_{z=0}^1 F
-	\end{equation}
-	 $F$ can be written
-	\begin{equation}
-		F = - p(z|\lambda,I)\ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 zp(z|\lambda,I),
-	\end{equation}
-	with the derivative
-	\begin{equation}
-		\begin{split}
-			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg) - \lambda_0 - \lambda_1 z\\
-			& = 0,
-		\end{split}
-	\end{equation}
-	meaning
-	\begin{equation}
-		p(z|\lambda,I) = m(z) e^{-1-\lambda_0 - \lambda_1 z}.
+		f_Z(z|\gamma,I) = m(z) e^{-1-\gamma_0 - \gamma_1 z}.
 	\end{equation}
 	Taking a uniform measure ($m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			\sum_{z=0}^1 p(z) &=m e^{-1-\lambda_0}\bigg(1+ e^{- \lambda_1}\bigg)\\
+			\sum_{z=0}^1 f_Z(z) &=m e^{-1-\gamma_0}\bigg(1+ e^{- \gamma_1}\bigg)\\
 			&=1
 		\end{split}
 	\end{equation}
 	and mean constraint
 	\begin{equation}
 		\begin{split}
-			\sum_{z=0}^1 zp(z) &=m e^{-1-\lambda_0}e^{- \lambda_1}\\
-			& = \frac{1}{1+ e^{\lambda_1}}\\
+			\sum_{z=0}^1 zf_Z(z) &=m e^{-1-\gamma_0}e^{- \gamma_1}\\
+			& = \frac{1}{1+ e^{\gamma_1}}\\
 			&=\mu
 		\end{split}
 	\end{equation}
 	This means
 	\begin{equation}
 		\begin{split}
-			p(0|\lambda,I) &= m e^{-1-\lambda_0}\\
-			&= \frac{1}{1+ e^{- \lambda_1}}\\
+			f_Z(0|\gamma,I) &= m e^{-1-\gamma_0}\\
+			&= \frac{1}{1+ e^{- \gamma_1}}\\
 			& = 1-\mu
 		\end{split}
 	\end{equation}	
 	and
 	\begin{equation}
 		\begin{split}
-			p(1|\lambda,I) &= m e^{-1-\lambda_0-\lambda_1}\\
+			f_Z(1|\gamma,I) &= m e^{-1-\gamma_0-\gamma_1}\\
 			&=\mu,
 		\end{split}
 	\end{equation}
 	or 
 	\begin{equation}
-		p(z|\lambda,I) = \mu^z (1-\mu)^{1-z}.
+		f_Z(z|\gamma,I) = \mu^z (1-\mu)^{1-z}.
 	\end{equation}
 	which is the Bernoulli distribution\index{Maximum entropy}.
 \end{example}
 
 \begin{example}
 	\index{Example: Maximum entropy Binomial distribution}
-	Consider $Z \in \{0,1,\dots,n\}$ representing the total number of successes in $n$ independent Bernoulli trials with mean $\mu$. Using the principle of maximum entropy, define
+	Consider a discrete random variable, $Z$, with sample space $\Omega_Z = \{0,1,\dots,n\}$ representing the total number of successes in $n$ independent Bernoulli trials with mean $\mu$. In this case
 	\begin{equation}
-		F = - p(z|\lambda,I) \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z\, p(z|\lambda,I),
+		f_Z(z|\gamma,I) = m(z) e^{-\gamma_0 - \gamma_1 z}.
 	\end{equation}
-	with the derivative
+	Taking a uniform measure for the underlying sequences of Bernoulli trials, equivalent to the counting measure\index{Counting measure} $m(z) = \binom{n}{z}$, and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
-			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln \frac{p(z|\lambda,I)}{m(z)} - \lambda_0 - \lambda_1 z\\
-			& = 0,
-		\end{split}
-	\end{equation}
-	which implies
-	\begin{equation}
-		p(z|\lambda,I) = m(z) e^{-\lambda_0 - \lambda_1 z}.
-	\end{equation}
-	Taking a uniform measure for the underlying sequences of Bernoulli trials, equivalent to $m(z) = \binom{n}{z}$, and imposing the normalization constraint
-	\begin{equation}
-		\begin{split}
-			\sum_{z=0}^n p(z|\lambda,I) &= \sum_{z=0}^n \binom{n}{z} e^{-\lambda_0 - \lambda_1 z}\\
+			\sum_{z=0}^n f_Z(z|\gamma,I) &= \sum_{z=0}^n \binom{n}{z} e^{-\gamma_0 - \gamma_1 z}\\
 			& = 1,
 		\end{split}
 	\end{equation}
 	yields
 	\begin{equation}
-		e^{-\lambda_0} = (1 + e^{-\lambda_1})^{-n}.
+		e^{-\gamma_0} = (1 + e^{-\gamma_1})^{-n}.
 	\end{equation}
 	The mean constraint
 	\begin{equation}
 		\begin{split}
-			\sum_{z=0}^n z\, p(z|\lambda,I) &= n \frac{e^{-\lambda_1}}{1 + e^{-\lambda_1}}\\
+			\sum_{z=0}^n z f_Z(z|\gamma,I) &= n \frac{e^{-\gamma_1}}{1 + e^{-\gamma_1}}\\
 			& = n\mu
 		\end{split}
 	\end{equation}
 	gives
 	\begin{equation}
-		e^{-\lambda_1} = \frac{\mu}{1-\mu}.
+		e^{-\gamma_1} = \frac{\mu}{1-\mu}.
 	\end{equation}
-	Finally, substituting $e^{-\lambda_0}$ and $e^{-\lambda_1}$ into $p(z|\lambda,I)$ gives the maximum entropy distribution
+	Finally, substituting $e^{-\gamma_0}$ and $e^{-\gamma_1}$ into $f_Z(z|\gamma,I)$ gives the maximum entropy distribution
 	\begin{equation}
-		p(z|\lambda,I) = \binom{n}{z} \mu^z (1-\mu)^{n-z},
+		f_Z(z|\gamma,I) = \binom{n}{z} \mu^z (1-\mu)^{n-z},
 	\end{equation}
 	which is the Binomial distribution\index{Maximum entropy}.
 \end{example}
@@ -329,60 +294,46 @@ The reference measure $m$ is invariant under parameter transformations, and the 
 
 \begin{example}
 	\index{Example: Maximum entropy Poisson distribution}
-	Consider a random variable $Z \in \{0,1,2,\dots\}$ with a known mean $\mu$. In this case
+	Consider a discrete random variable $Z$ with sample space $\Omega_Z = \mathbb{N}_0$ with a known mean $\mu$. In this case
 	\begin{equation}
-		\mathcal{L} = \sum_{z=0}^\infty F
-	\end{equation}
-	and $F$ can be written
-	\begin{equation}
-		F = -p(z|\lambda,I)\ln\frac{p(z|\lambda,I)}{m(z)} - \lambda_0 p(z|\lambda,I) - \lambda_1 z p(z|\lambda,I),
-	\end{equation}
-	with the derivative
-	\begin{equation}
-		\begin{split}
-			\frac{\partial F}{\partial p(z|\lambda,I)} &= -1 - \ln\bigg(\frac{p(z|\lambda,I)}{m(z)}\bigg) - \lambda_0 - \lambda_1 z \\
-			&= 0,
-		\end{split}
-	\end{equation}
-	meaning
-	\begin{equation}
-		p(z|\lambda,I) = m(z) e^{-1-\lambda_0 - \lambda_1 z}.
+		f_Z(z|\gamma,I) = m(z) e^{-1-\gamma_0 - \gamma_1 z}.
 		\label{eq:qsa}
 	\end{equation}
-	For the Poisson distribution, the measure encodes the counting of configurations for each $z$ and is given by $m(z) = 1/z!$. Imposing this measure and the normalization constraint
+	Take the counting measure\index{Counting measure} $m(z) = 1/z!$ and impose the normalization constraint
 	\begin{equation}
 		\begin{split}
-			\sum_{z=0}^{\infty} p(z|\lambda,I) &= \sum_{z=0}^{\infty} \frac{e^{-1-\lambda_0 - \lambda_1 z}}{z!}\\
-			& = e^{-1-\lambda_0} \sum_{z=0}^{\infty} \frac{e^{-\lambda_1 z}}{z!}\\
+			\sum_{z=0}^{\infty} f_Z(z|\gamma,I) &= \sum_{z=0}^{\infty} \frac{e^{-1-\gamma_0 - \gamma_1 z}}{z!}\\
+			& = e^{-1-\gamma_0} \sum_{z=0}^{\infty} \frac{e^{-\gamma_1 z}}{z!}\\
 			& = 1,
 		\end{split}
 		\label{eq:asd}
 	\end{equation}
 	Identifying the sum with the Taylor expansion
 	\begin{equation}
-		\sum_{z=0}^{\infty} \frac{e^{-\lambda_1 z}}{z!} = e^{e^{-\lambda}}
+		\sum_{z=0}^{\infty} \frac{e^{-\gamma_1 z}}{z!} = e^{e^{-\gamma}}
 	\end{equation}
 	yields
 	\begin{equation}
-		e^{-1-\lambda_0} = e^{-e^{-\lambda_1}} \quad \Rightarrow \quad 1+\lambda_0 = e^{-\lambda_1}.
+		e^{-1-\gamma_0} = e^{-e^{-\gamma_1}} \quad \Rightarrow \quad 1+\gamma_0 = e^{-\gamma_1}.
 		\label{eq:qwe}
 	\end{equation}
 	Imposing the mean constraint
 	\begin{equation}
 		\begin{split}
-			\sum_{z=0}^{\infty} z p(z|\lambda,I)& = e^{-1-\lambda_0} \sum_{z=1}^{\infty} \frac{z e^{-\lambda_1 z}}{z!}\\
-			& = e^{-1-\lambda_0} \sum_{z=1}^{\infty} \frac{e^{-\lambda_1 z}}{(z-1)!}\\
-			& = e^{-\lambda_1} e^{-1-\lambda_0}\sum_{y=0}^{\infty} \frac{e^{-\lambda_1 y}}{y!}\\
-			& = e^{-\lambda_1}\\
+			\sum_{z=0}^{\infty} z f_Z(z|\gamma,I)& = e^{-1-\gamma_0} \sum_{z=1}^{\infty} \frac{z e^{-\gamma_1 z}}{z!}\\
+			& = e^{-1-\gamma_0} \sum_{z=1}^{\infty} \frac{e^{-\gamma_1 z}}{(z-1)!}\\
+			& = e^{-\gamma_1} e^{-1-\gamma_0}\sum_{y=0}^{\infty} \frac{e^{-\gamma_1 y}}{y!}\\
+			& = e^{-\gamma_1}\\
 			& = \mu
 		\end{split}
 		\label{eq:qty}
 	\end{equation}
 	where \EQref{eq:asd} and $y = z-1$ has been used. Combining \EQref{eq:qsa}, \EQref{eq:qwe} and \EQref{eq:qty} yield
 	\begin{equation}
-		p(z|\lambda,I) = \frac{\mu^ze^{-\mu }}{z!} .
+		f_Z(z|\gamma,I) = \frac{\mu^ze^{-\mu }}{z!} .
 	\end{equation}
 	which is the Poisson distribution\index{Maximum entropy}.
 \end{example}
+
 
 
