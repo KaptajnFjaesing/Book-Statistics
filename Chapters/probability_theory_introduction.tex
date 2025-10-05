@@ -149,17 +149,16 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\label{def:independence}
 	Events $E_1$ and $E_2$  in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ are said to be independent iff\index{Independent events}
 	\begin{equation}
-		\mathbb{P}(E_1,E_2) = \mathbb{P}(E_1) \mathbb{P}(E_2),
+		\mathbb{P}(E_1 \cap E_2) = \mathbb{P}(E_1) \mathbb{P}(E_2).
 		\label{eq:ind}
 	\end{equation}
-	where $\mathbb{P}(E_1,E_2)= \mathbb{P}(E_1\cap E_2)$ to ease the notation.
 \end{definition}
 
 \begin{definition}[Conditional Probability]
 	\label{def:conditional_probability}
 	For events $E_1$ and $E_2$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with $\mathbb{P}(E_2) > 0$, the conditional probability\index{Conditional probability} of $E_1$ given $E_2$ is defined viz
 	\begin{equation}
-		\mathbb{P}(E_1|E_2) \equiv \frac{\mathbb{P}(E_1, E_2)}{\mathbb{P}(E_2)}.
+		\mathbb{P}(E_1|E_2) \equiv \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}.
 		\label{eq:cond}
 	\end{equation}
 \end{definition}
@@ -168,7 +167,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \label{def:conditional_independence}
 Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{equation}
-\mathbb{P}(E_1, E_2 | E_3) = \mathbb{P}(E_1|E_3)\mathbb{P}(E_2|E_3).
+\mathbb{P}(E_1 \cap E_2 | E_3) = \mathbb{P}(E_1|E_3)\mathbb{P}(E_2|E_3).
 \end{equation}
 \end{definition}
 
@@ -176,8 +175,8 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\label{theorem:chain_rule}
 	Let $E_1, E_2, \ldots, E_n \in \mathcal{F}$ be events in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then the chain rule\index{Chain rule} states that
 	\begin{equation}
-		\mathbb{P}(E_1, E_2, \cdots ,E_n) 
-		= \mathbb{P}(E_1)\prod_{j=2}^{n}\mathbb{P}(E_j \mid E_1, \cdots ,E_{j-1}).
+		\mathbb{P}(E_1 \cap E_2 \cap \cdots \cap E_n) 
+		= \mathbb{P}(E_1)\prod_{j=2}^{n}\mathbb{P}(E_j \mid E_1 \cap \cdots \cap E_{j-1}).
 		\label{eq:prod}
 	\end{equation}
 \end{theorem}
@@ -185,12 +184,12 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{proof}
 	From the definition of conditional probability in \dfref{def:conditional_probability}
 	\begin{equation}
-		\mathbb{P}(E_1, E_2, \ldots, E_n) = \mathbb{P}(E_1|E_2, \dots, E_n)\mathbb{P}(E_2, \dots, E_n).
+		\mathbb{P}(E_1 \cap E_2 \cap \ldots \cap E_n) = \mathbb{P}(E_1|E_2 \cap \dots \cap E_n)\mathbb{P}(E_2 \cap \dots \cap E_n).
 		\label{eq:p1}
 	\end{equation}
 	Using the definition of conditional probability again
 	\begin{equation}
-		\mathbb{P}(E_2, \ldots, E_n) = \mathbb{P}(E_2| \ldots, E_n)\mathbb{P}(\dots, E_n).
+		\mathbb{P}(E_2 \cap \ldots \cap E_n) = \mathbb{P}(E_2| \ldots \cap E_n)\mathbb{P}(\dots \cap E_n).
 	\end{equation}
 	Continuing in this way, \thref{theorem:chain_rule} follows.
 \end{proof}
@@ -200,9 +199,9 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{theorem}[Bayes theorem]
 	\label{theorem:bayes_theorem}
-	For events $E_1,E_2,E_3 \in \mathcal{F}$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, Bayes theorem\index{Bayes theorem} can be formulated viz
+	For events $E_1,E_2 \in \mathcal{F}$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, Bayes theorem\index{Bayes theorem} can be formulated viz
 	\begin{equation}
-		\mathbb{P}(E_1| E_2,E_3) = \frac{\mathbb{P}(E_2| E_1,E_3)\mathbb{P}(E_1,E_2)}{\mathbb{P}(E_2,E_3)}.
+		\mathbb{P}(E_1| E_2) = \frac{\mathbb{P}(E_2| E_1)\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}.
 		\label{bayes_theorem}
 	\end{equation}
 \end{theorem}
@@ -211,14 +210,14 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	Bayes theorem follows directly from applying \thref{theorem:chain_rule} and applying the concept of symmetry viz
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(E_1,E_2,E_3) &= \mathbb{P}(E_1| E_2,E_3)\mathbb{P}(E_2,E_3) \\
-			& = \mathbb{P}(E_2|E_1,E_3)\mathbb{P}(E_1,E_3)
+			\mathbb{P}(E_1 \cap E_2) &= \mathbb{P}(E_1| E_2)\mathbb{P}(E_2) \\
+			& = \mathbb{P}(E_2|E_1)\mathbb{P}(E_1)
 		\end{split}
 		\label{eq:c2}
 	\end{equation}
 	from which
 	\begin{equation}
-		\mathbb{P}(E_1| E_2,E_3) = \frac{\mathbb{P}(E_2| E_1,E_3)\mathbb{P}(E_1,E_3)}{\mathbb{P}(E_2,E_3)}
+		\mathbb{P}(E_1| E_2) = \frac{\mathbb{P}(E_2| E_1)\mathbb{P}(E_1)}{\mathbb{P}(E_2)}
 	\end{equation}
 	which is \thref{theorem:bayes_theorem}.
 \end{proof}
@@ -235,21 +234,21 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{proof}
 	Consider an event $A\in \mathcal{F}$ and a partition $\{E_1,E_2,\dots E_n\}$ of $\Omega$ such that $\cup_{i}E_i=\Omega$. For mutually exclusive events (which a partition by definition is), finite additivity can be used such that
 	\begin{equation}
-		\sum_{i}\mathbb{P}(A,E_i) = \mathbb{P}\bigg(\bigcup_{i}(A,E_i)\bigg).
+		\sum_{i}\mathbb{P}(A \cap E_i) = \mathbb{P}\bigg(\bigcup_{i}(A \cap E_i)\bigg).
 		\label{eq:qq1}
 	\end{equation} 
-	$\bigcup_{i}(A,E_i)$ is the union of all intersections between $A$ and the $E$'s. However, since the $E$'s form a partition of $\Omega$, they together form $\Omega$ and the intersection between $\Omega$ and $A$ is $A$, meaning
+	$\bigcup_{i}(A \cap E_i)$ is the union of all intersections between $A$ and the $E$'s. However, since the $E$'s form a partition of $\Omega$, they together form $\Omega$ and the intersection between $\Omega$ and $A$ is $A$, meaning
 	\begin{equation}
 		\begin{split}
-			\bigcup_{i}(A,E_i)  &= (A,\bigcup_{i}E_i)\\
-			&= (A,\Omega)\\
+			\bigcup_{i}(A \cap E_i)  &= (A,\bigcup_{i}E_i)\\
+			&= (A \cap \Omega)\\
 			& =A.
 		\end{split}
 		\label{eq:qq2}
 	\end{equation}
 	Combining \EQref{eq:qq1} and \EQref{eq:qq2} then yields
 	\begin{equation}
-		\mathbb{P}(A) = \sum_{i} \mathbb{P}(A, E_i)
+		\mathbb{P}(A) = \sum_{i} \mathbb{P}(A \cap E_i)
 	\end{equation}
 	which is \thref{theorem:law_of_total_probability}.
 \end{proof}
@@ -259,11 +258,11 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	For the roll with the fair die considered in \exref{ex:die1}\index{Die example}, \exref{ex:die1a} and \exref{ex:die2}, the sample space\index{Sample space} is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from \dfref{def:conditional_probability}
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(E_1|E_2) &= \frac{\mathbb{P}(E_1, E_2)}{\mathbb{P}(E_2)}\\
+			\mathbb{P}(E_1|E_2) &= \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}\\
 			& = 1
 		\end{split}
 	\end{equation}
-	where $\mathbb{P}(E_1,E_2)= \frac{1}{6}$ since $E_1,E_2 = E_1\cap E_2 = E_2=\{\epsdice{4}\}$ is one of $6$ possible values and $\mathbb{P}(E_2) = \frac{1}{6}$. Intuitively this makes sense because $E_2$ is a set with one member and since $E_2$ is known, the outcome of the experiment is known with certainty in this case.
+	where $\mathbb{P}(E_1 \cap E_2)= \frac{1}{6}$ since $E_1\cap E_2 = E_2=\{\epsdice{4}\}$ is one of $6$ possible values and $\mathbb{P}(E_2) = \frac{1}{6}$. Intuitively this makes sense because $E_2$ is a set with one member and since $E_2$ is known, the outcome of the experiment is known with certainty in this case.
 \end{example}
 
 \begin{definition}[Random Variable]
@@ -450,7 +449,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation} 
-	be a continuous random variable\index{Random variable} defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. The image measure\index{Image measure} of $X$ is defined by
+	be a continuous random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. The image measure\index{Image measure} of $X$ is defined by
 	\begin{equation}
 		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
@@ -487,7 +486,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$ on $\Omega_X\subseteq \mathbb{R}$. For the interval (event) $[a,b] \subseteq \Omega_X$,
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(a \le X \le b) 
+			\mathbb{P}(X^{-1}([a,b])) 
 			&= \mathbb{P}_X([a,b])\\ 
 			&= \int_{[a,b]} f_X(x) d\lambda(x)\\ 
 			&= \int_a^b f_X(x) dx.
@@ -498,7 +497,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \begin{theorem}[Total expectation]
 	\label{theorem:total_expectation}
 	\index{Total expectation}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Then
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Then\index{Probability density function}
 	\begin{equation}
 		\mathbb{E}_X[X] = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X| Y]],
 	\end{equation}
@@ -518,7 +517,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
 	\index{Independent random variables}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, such that
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, such that\index{Probability density function}
 	\begin{equation}
 	f_{X,Y}(x,y)=f_X(x)f_Y(y),	
 	\end{equation}
@@ -526,6 +525,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \end{theorem}
 
 \begin{proof}
+	\index{Probability density function}
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_{X,Y}[XY] &= \int_{\Omega_X}\int_{\Omega_Y}x y f_{X,Y}(x,y) dy dx\\
@@ -538,7 +538,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \begin{definition}[Covariance]
 	\label{def:covariance}
 	\index{Covariance}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}_{X,Y}[X,Y]$, is defined viz
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}_{X,Y}[X,Y]$, is defined viz
 	\begin{equation}
 		\begin{split}
 			\operatorname{Cov}_{X,Y}[X,Y]&=\mathbb{E}_{X,Y}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
@@ -548,7 +548,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \end{definition}
 \begin{theorem}[Covariance of independent random variables]
 	\label{theorem:covariance_of_independent_variables}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent, then their covariance is
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent, then their covariance is
 	\begin{equation}
 		\operatorname{Cov}_{X,Y}[X,Y] = 0.
 	\end{equation}
@@ -559,8 +559,9 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \end{proof}
 
 \begin{definition}[Correlation]
+	\label{def:correlation}
 	\index{Correlation}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space $(\Omega, \mathcal{F}, \mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
 	\begin{equation}
 		\begin{split}
 			\operatorname{Corr}_{X,Y}[X,Y] &= \frac{\operatorname{Cov}_{X,Y}[X,Y]}{\sqrt{\operatorname{Var}_X[X]  \operatorname{Var}_Y[Y]}} \\
@@ -576,7 +577,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \begin{definition}[Change of Variables for PDFs]
 	\label{def:change_of_variables}
 	\index{Change of variables for PDFs}
-	Let $X: \Omega \to \Omega_X$ be a continuous random variable\index{Random variable} with probability density function\index{Probability density function} (PDF) $f_X$, defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Suppose $Y = g(X)$, where $g$ is a continuous and differentiable function with differentiable inverse $g^{-1}$. Then the PDF of $Y$, denoted $f_Y$, is given by the change of variables formula~\cite{Sivia2006}
+	Let $X: \Omega \to \Omega_X$ be a continuous random variable\index{Random variable} with probability density function\index{Probability density function} (PDF) $f_X$, defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Suppose $Y = g(X)$, where $g$ is a continuous and differentiable function with differentiable inverse $g^{-1}$. Then the PDF of $Y$, denoted $f_Y$, is given by the change of variables formula~\cite{Sivia2006}
 	\begin{equation}
 		f_Y(y) = f_X\bigl(g^{-1}(y)\bigr) \, \left| \frac{d}{dy} g^{-1}(y) \right|, \quad y \in \Omega_Y,
 	\end{equation}
@@ -585,7 +586,20 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 
 \newpage
 \begin{example}
-	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$, and let 
+	\index{Example: Variance of a sum}
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Using \dfref{def:variance} and \dfref{def:covariance}, the variance of a sum can be written
+	\begin{equation}
+		\begin{split}
+			\operatorname{Var}_{X,Y}[X+Y] &= \mathbb{E}_{X,Y}[(X+Y-\mathbb{E}_{X,Y}[X+Y])^2]\\
+			&= \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]+\mathbb{E}_Y[(Y-\mathbb{E}_Y[Y])^2]\\
+			&\quad+2\mathbb{E}_{X,Y}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
+			& = \operatorname{Var}_X[X]+\operatorname{Var}_Y[Y]+2\operatorname{Cov}_{X,Y}[X,Y].
+		\end{split}
+	\end{equation}
+\end{example}
+
+\begin{example}
+	Let $X: \Omega \to \Omega_X$ be a continuous random variable\index{Random variable} with probability density function\index{Probability density function} (PDF) $f_X$, defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Suppose 
 	\begin{equation}
 		\begin{split}
 			Y &= g(X)\\ 
@@ -611,7 +625,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 
 \begin{example}
 	\index{Example: Variable transformation}
-	Let $X$ be a continuous random variable\index{Random variable} with constant PDF $f_X(x) \propto \operatorname{const}$, and define
+	Let $X: \Omega \to \Omega_X$ be a continuous random variable\index{Random variable} with probability density function\index{Probability density function} (PDF) $f_X$, defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Suppose $f_X(x) \propto \operatorname{const}$, and let
 	\begin{equation}
 		\begin{split}
 			Y &= g(X)\\
@@ -655,9 +669,8 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	Then the variance of $g(X)$, which quantifies the uncertainty in $g$ due to the uncertainties in $X_1, \dots, X_n$, satisfies the first-order approximation
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}_X[g(X)] &= \mathbb{E}_X\big[(g(X) - \mathbb{E}_X[g(X)])^2\big] \\
-			&= \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
-			\\&\quad+ \sum_{i \neq j} \frac{\partial g}{\partial X_i}\frac{\partial g}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
+			\operatorname{Var}_X[g(X)] &= \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
+			\\&\quad+ \sum_{i \neq j} \frac{\partial g(X)}{\partial X_i}\frac{\partial g(X)}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
 			&\quad+ \mathcal{O}(\|X - \mathbb{E}_X[X]\|^3).
 		\end{split}
 		\label{eq:var_approx}
@@ -667,13 +680,16 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \begin{proof}
 	$g(X)$ can be written as a Taylor expansion\index{Taylor expansion} around $\mathbb{E}_X[X]$ viz
 	\begin{equation}
-		g(X) = g(\mathbb{E}_X[X]) + \sum_{i=1}^n  \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]} (X_i - \mathbb{E}_{X_i}[X_i]) + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2).
+		\begin{split}
+			g(X) = &g(\mathbb{E}_X[X]) + \sum_{i=1}^n  \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]} (X_i - \mathbb{E}_{X_i}[X_i])\\
+			& + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2).
+		\end{split}
 		\label{e1}
 	\end{equation}
 	Consequently
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[g(X)] &= g(\mathbb{E}_X[X])+ \sum_{i=1}^n \frac{\partial g}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]}\, \cancelto{0}{\mathbb{E}_{X_i}[X_i - \mathbb{E}[X_i]]}\\
+			\mathbb{E}[g(X)] &= g(\mathbb{E}_X[X])+ \sum_{i=1}^n \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]}\, \cancelto{0}{\mathbb{E}_{X_i}[X_i - \mathbb{E}[X_i]]}\\
 			&\quad  + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
 			& = g(\mathbb{E}_X[X]) + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
 		\end{split}
@@ -685,8 +701,8 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 			\operatorname{Var}_X[g(X)] &= \mathbb{E}_X\big[(g(X) - \mathbb{E}_X[g(X)])^2\big] \\
 			&= \mathbb{E}_X\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}_{X_i}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}_X[X]}\\
 			&\qquad\qquad + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\bigg)^2\bigg] \\
-			&= \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
-			\\&\quad+ \sum_{i \neq j} \frac{\partial g}{\partial X_i}\frac{\partial g}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
+			&= \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
+			\\&\quad+ \sum_{i \neq j} \frac{\partial g(X)}{\partial X_i}\frac{\partial g(X)}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
 			&\quad+ \mathcal{O}(\|X - \mathbb{E}_X[X]\|^3).
 		\end{split}
 	\end{equation}
@@ -700,7 +716,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\end{equation}
 	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to
 	\begin{equation}
-		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g}{\partial X_i}\Big|_{X = \mathbb{E}_X[X]}\right)^2 \operatorname{Var}_{X_i}[X_i]
+		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\Big|_{X = \mathbb{E}_X[X]}\right)^2 \operatorname{Var}_{X_i}[X_i]
 		\label{eq:error_prop}
 	\end{equation}
 	where 
@@ -714,19 +730,13 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\EQref{eq:error_prop} is the commonly used form of the linear error-propagation formula for independent variables.
 \end{remark}
 
-\newpage
-
 \begin{example}
 	\index{Example: Error propagation}
-	A company produce square plates. Let the plate dimensions be characterized by two independent random variables\index{Normal distribution}\index{Random variable}
+	A company produces square plates with dimensions characterized by two independent random variables\index{Normal distribution}\index{Random variable}
 	\begin{equation}
-		X\sim \operatorname{Norm}(2m,(0.01m)^2)
+		X\sim \operatorname{Norm}(2m,(0.01m)^2), \quad Y\sim \operatorname{Norm}(3m,(0.02m)^2).
 	\end{equation} 
-	and
-	\begin{equation}
-		Y\sim \operatorname{Norm}(3m,(0.02m)^2)
-	\end{equation} 
-	and the area given by $XY$. Determine the variance of $XY$. From \thref{theorem:error_propagation}, the exact variance is
+	The variance\index{Variance} of the area $XY$ can be determined exactly from \thref{theorem:error_propagation}
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
@@ -735,19 +745,19 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 			&=\mathbb{E}_Y[Y]^2\operatorname{Var}_X[X]+\mathbb{E}_X[X]^2\operatorname{Var}_Y[Y]+\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]
 		\end{split}
 	\end{equation}
-	where \thref{theorem:expectation_independent} has been applied.	Via the linear approximation from \rmref{remark:error_prop_independent}
+	where \thref{theorem:expectation_independent} has been applied.	Via the linear approximation from \rmref{remark:error_prop_independent} the variance of the area can be approximated viz
 	\begin{equation}
 		\label{eq:var2}
 		\begin{split}
-			\operatorname{Var}_{X,Y}[XY]&\approx\sum_{i = X,Y} \bigg( \frac{\partial (XY)}{\partial i}\bigg|_{X = \mathbb{E}_X[X],Y = \mathbb{E}_Y[Y]}  \bigg)^2\operatorname{Var}_i[i]\\
+			\operatorname{Var}_{X,Y}[XY]|_{\text{linear approx.}}&\approx\sum_{i = X,Y} \bigg( \frac{\partial (XY)}{\partial i}\bigg|_{X = \mathbb{E}_X[X],Y = \mathbb{E}_Y[Y]}  \bigg)^2\operatorname{Var}_i[i]\\
 			&=\mathbb{E}_Y[Y]^2\operatorname{Var}_X[X]+\mathbb{E}_X[X]^2\operatorname{Var}_Y[Y]
 		\end{split}
 	\end{equation}
 	Comparing \EQref{eq:var1} and \EQref{eq:var2} the relative difference can be written
 	\begin{equation}
 		\begin{split}
-			\frac{\operatorname{Var}_{X,Y}[XY]-\operatorname{Var}_{X,Y}[XY]|_{\text{linear approximation}}}{\operatorname{Var}_{X,Y}[XY]} &= \frac{\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]}{\operatorname{Var}_{X,Y}[XY]}\\
-			& \simeq 1.6\cdot 10^{-5}.
+			\frac{\operatorname{Var}_{X,Y}[XY]|_{\text{linear approx.}}-\operatorname{Var}_{X,Y}[XY]}{\operatorname{Var}_{X,Y}[XY]} &= -\frac{\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]}{\operatorname{Var}_{X,Y}[XY]}\\
+			& \simeq -1.6\cdot 10^{-5}.
 		\end{split}
 	\end{equation}
 	
@@ -755,50 +765,69 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 
 \newpage
 \begin{example}
-	\index{Example: Father with Amnesia}
-	Consider a thought experiment in which a father with amnesia is told he has two children, but does not know the sex of them. The sample space can be constructed from the sample space\index{Sample space} for each child
+	Consider a probability space\index{Probability space} describing two children with unknown sexes. Let
 	\begin{equation}
-		\begin{split}
-			\Omega_{\text{child 1}} &= \{\text{\Gentsroom,\Ladiesroom}\},\\
-			\Omega_{\text{child2}} &= \{\text{\Gentsroom,\Ladiesroom}\}\\
-		\end{split}
+		\Omega_{\text{child 1}} = \{\text{\Gentsroom}, \text{\Ladiesroom}\}, \quad
+		\Omega_{\text{child 2}} = \{\text{\Gentsroom}, \text{\Ladiesroom}\},
 	\end{equation}
-	such that
+	and define
 	\begin{equation}
-		\begin{split}
-			\Omega &= \Omega_{\text{child 1}}\times \Omega_{\text{child 2}}\\
-			&= \{(\text{\Gentsroom,\Gentsroom}),(\text{\Gentsroom,\Ladiesroom}),(\text{\Ladiesroom,\Gentsroom}),(\text{\Ladiesroom,\Ladiesroom})\}.
-		\end{split}
-	\end{equation}
-	Assuming the sex of a child is like a coin\index{Coin experiment} flip, it is most likely, a priori, that the father has one boy and one girl with probability $\frac{1}{2}$, i.e.  $\mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\})=\frac{1}{2}$. The other possibilities (two boys or two girls) have probability $\frac{1}{4}$, meaning $\mathbb{P}(\{(\text{\Gentsroom,\Gentsroom})\})=\frac{1}{4}$ and $\mathbb{P}(\{(\text{\Ladiesroom,\Ladiesroom})\})=\frac{1}{4}$. In order to simplify the formalism, define the random variables\index{Random variable} $B: \Omega \to \{0,1,2\}$ and $G: \Omega \to \{0,1,2\}$ that maps the events in $\mathcal{F}$ to a number of boys $B(E)\forall E\in \mathcal{F}$ and girls $G(E)\forall E\in \mathcal{F}$ \index{Random variable}. The probability mass function\index{Probability mass function} associated to $B$ and $G$ is given by \dfref{def:pmf}\index{PMF}, such that e.g.
+		\Omega = \Omega_{\text{child 1}} \times \Omega_{\text{child 2}} = 
+		\{(\text{\Gentsroom},\text{\Gentsroom}), (\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom}), (\text{\Ladiesroom},\text{\Ladiesroom})\}.
+	\end{equation}	
+	Define the random variables\index{Random variable}
 	\begin{equation}
-		p(B = 1, G = 1)= \mathbb{P}(\{(\text{\Gentsroom,\Ladiesroom})\}).
+		B : \Omega \to \{0,1,2\}, \quad G : \Omega \to \{0,1,2\},
 	\end{equation}
-
-	\begin{enumerate}
-		\item Suppose the father ask his wife whether he has any boys, and she says yes. What is the probability that one child is a girl?
-		
-		The exact framing of the question is important here; "any boys" means "at least one boy"
-		\begin{equation}
-			p(G=1,B\geq 1) = \frac{p(B\geq1|G=1)p(G=1)}{p(B\geq 1)}.
-		\end{equation}
-		Given the father has two children, if he has exactly one girl, then the other must be a boy, so $p(B\geq 1|G=1)=1$. $p(G=1)=\frac{1}{2}$ since it is a priori assumed to be equally likely to be a boy or girl. 
-		\begin{equation}
-			p(B\geq 1)=1-p(G=2,B=0)=\frac{3}{4},
-		\end{equation}
-		so
-		\begin{equation}
-			p(G=1|B\geq 1) = \frac{2}{3}.
-		\end{equation}
-		
-		\item Suppose instead the father meets one of his children and it is a boy.What is the probability that the other is a girl?
-		
-		Since one child is known to be a boy, what is asked about is
-		\begin{equation}
-			p(G=1|B=1)=\frac{1}{2}.
-		\end{equation}
-	\end{enumerate}
+	where $B(\omega)$ and $G(\omega)$ denote the number of boys and girls in outcome $\omega \in \Omega$.  
+	The joint probability mass function of $(B,G)$ is, by Definition~\ref{def:pmf},
+	\begin{equation}
+		p_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}) = \mathbb{P}(\{\omega \in \Omega | B(\omega) = b,\, G(\omega) = g\}).
+	\end{equation}
+	For instance,
+	\begin{equation}
+		p_{B,G}(1,1) = \mathbb{P}(\{(\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom})\}) = \frac{1}{2}.
+	\end{equation}
+	Let $A \subseteq \Omega_B \times \Omega_G$ denote the event ``at least one boy'':
+	\begin{equation}
+		A = \{(b,g) \in \Omega_B \times \Omega_G \mid b \ge 1\}.
+	\end{equation}
+	Using \dfref{def:conditional_probability} the conditional probability of exactly one girl given at least one boy is (see \rmref{remark:pmf_vs_measure})
+	\begin{equation}
+		\mathbb{P}_{B,G}(\{(1,1)\} \mid A) = \frac{\mathbb{P}_{B,G}(\{(1,1)\} \cap A)}{\mathbb{P}_{B,G}(A)}.
+	\end{equation}
+	From the PMF,
+	\begin{equation}
+		\mathbb{P}_{B,G}(\{(1,1)\} \cap A) = p_{B,G}(1,1) = \frac{1}{2},
+	\end{equation}
+	and from \thref{theorem:law_of_total_probability}
+	\begin{equation}
+		\mathbb{P}_{B,G}(A) = \sum_{g} \sum_{b \ge 1} p_{B,G}(b,g) = p_{B,G}(1,1) + p_{B,G}(2,0) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}.
+	\end{equation}
+	Hence,
+	\begin{equation}
+		\mathbb{P}_{B,G}(\{(1,1)\} \mid A) = \frac{2}{3}.
+	\end{equation}
 \end{example}
+
+
+\begin{remark}[PMF vs. image measure on events]
+	\label{remark:pmf_vs_measure}
+	Let $B$ and $G$ be discrete random variables with joint PMF\index{Probability mass function} $p_{B,G}$ and image measure\index{Image measure} $\mathbb{P}_{B,G}$. From \dfref{def:pmf}, the PMF is defined only for single points $(b,g) \in \Omega_B \times \Omega_G$:
+	\begin{equation}
+		p_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}).
+	\end{equation}
+	The image measure $\mathbb{P}_{B,G}$, however, is defined on all measurable subsets in the event space\index{Event space} $A \in \mathcal{F}_B\otimes\mathcal{F}_G$. Hence, expressions of the form
+	\begin{equation}
+		\mathbb{P}_{B,G}(\{(b,g)\} \cap A)
+	\end{equation}
+	are valid, since $\{(b,g)\} \cap A$ is an element of $\mathcal{F}_B\otimes\mathcal{F}_G$. In contrast, writing
+	\begin{equation}
+		p_{B,G}(b,g \cap A)
+	\end{equation}
+	(or similarly) is not valid, because $p_{B,G}$ is defined only on individual points $(b,g)$, not on sets or intersections. The PMF cannot take an event as its argument; only the image measure $\mathbb{P}_{B,G}$ can.
+\end{remark}
+
 
 
 
@@ -809,8 +838,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 		\mathbb{P}(E) = 0.01.
 		\label{eq:proseca}
 	\end{equation}
-	
-	The prosecutor claims: ``There is a $1\%$ chance that the defendant would have the crime blood type if he were innocent. Thus, there is a $99\%$ chance that he is guilty.'' This is known as the prosecutor's fallacy. What is wrong with this argument?\newline
+	The prosecutor claims: ``There is a $1\%$ chance that the defendant would have the blood type found at the crime scene if he were innocent. Thus, there is a $99\%$ chance that he is guilty.'' This is known as the prosecutor's fallacy. What is wrong with this argument?\newline
 	
 	The prosecutor's claim can be written as
 	\begin{equation}
@@ -818,10 +846,10 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 		\label{eq:prosec1}
 	\end{equation}		
 	
-	To investigate this claim, note that from \dfref{def:conditional_probability}, 
+	To investigate this claim, use \thref{theorem:bayes_theorem} to write
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(E \mid \operatorname{innocent}) &= \frac{\mathbb{P}(E, \operatorname{innocent})}{\mathbb{P}(\operatorname{innocent})} \\
+			\mathbb{P}(E \mid \operatorname{innocent}) &= \frac{\mathbb{P}(E \cap \operatorname{innocent})}{\mathbb{P}(\operatorname{innocent})} \\
 			&= \frac{\mathbb{P}(\operatorname{innocent} \mid E)}{\mathbb{P}(\operatorname{innocent})} \mathbb{P}(E).
 		\end{split}
 	\end{equation}
@@ -832,11 +860,11 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	which approaches $1$ in the limit $N \rightarrow \infty$. Hence, $\mathbb{P}(E \mid \operatorname{innocent}) \simeq \mathbb{P}(E)$ can be a good approximation, but it is not an exact relation.\newline 
 	Assuming $\mathbb{P}(E \mid \operatorname{innocent}) = 0.01$, the prosecutor's claim can be further analyzed using \dfref{def:conditional_probability}, viz.
 	\begin{equation}
-		\mathbb{P}(\operatorname{guilty} \mid E) + \mathbb{P}(\operatorname{innocent} \mid E) = \frac{\mathbb{P}(\operatorname{guilty}, E) + \mathbb{P}(\operatorname{innocent}, E)}{\mathbb{P}(E)}.
+		\mathbb{P}(\operatorname{guilty} \mid E) + \mathbb{P}(\operatorname{innocent} \mid E) = \frac{\mathbb{P}(\operatorname{guilty} \cap E) + \mathbb{P}(\operatorname{innocent} \cap E)}{\mathbb{P}(E)}.
 	\end{equation}
 	Innocent and guilty are complementary events that form a partition of the sample space, meaning (\thref{theorem:law_of_total_probability})
 	\begin{equation}
-		\mathbb{P}(\operatorname{guilty}, E) + \mathbb{P}(\operatorname{innocent}, E) = \mathbb{P}(E),
+		\mathbb{P}(\operatorname{guilty} \cap E) + \mathbb{P}(\operatorname{innocent} \cap E) = \mathbb{P}(E),
 	\end{equation}
 	and thereby
 	\begin{equation}
@@ -854,25 +882,11 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	and so even if $\mathbb{P}(E \mid \operatorname{innocent}) = 0.01$, the prosecutor's claim (\EQref{eq:prosec1}) is not true.
 \end{example}
 
-
-\begin{example}
-	\index{Example: Variance of a sum}
-	The variance of a sum can be written
-	\begin{equation}
-		\begin{split}
-			\operatorname{Var}_{X,Y}[X+Y] &= \mathbb{E}_{X,Y}[(X+Y-\mathbb{E}_{X,Y}[X+Y])^2]\\
-			&= \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]+\mathbb{E}_Y[(Y-\mathbb{E}_Y[Y])^2]\\
-			&\quad+2\mathbb{E}_{X,Y}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
-			& = \operatorname{Var}_X[X]+\operatorname{Var}_Y[Y]+2\operatorname{Cov}_{X,Y}[X,Y].
-		\end{split}
-	\end{equation}
-\end{example}
-
 \begin{example}
 	\index{Example: Bad news from the doctor}
 	After your yearly checkup, the doctor has bad news and good news. The bad news is that you tested positive for a serious disease, and that the test is $99\%$ accurate (i.e. the probability of testing positive given that you have the disease is $99\%$, as is the probability of testing negative given that you don't have the disease). The good news is that this is a rare disease, striking only one in $10\,000$ people. What are the chances that you actually have the disease?\newline
 	
-	Let "s" denote the event of being sick, "h" the event of being healthy, "p" the event of a positive test and "n" the event of a negative test, then  
+	Let "s" denote the event of being sick, "h" the event of being healthy, "p" the event of a positive test and "n" the event of a negative test. Using \thref{theorem:bayes_theorem} and \thref{theorem:law_of_total_probability}
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(\text{s}|\text{p}) &= \frac{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p})}\\
@@ -892,53 +906,63 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	
 	Let $z_i$ denote the prize being behind the $i$'th door, $o_i$ the action of opening the $i$'th door and $c_i$ the action of choosing the $i$'th door. The door with the largest probability of containing the prize should be picked, meaning
 	\begin{equation}
-		z^*=\argmax_z(\mathbb{P}(z|o_3,c_1)).
+		z^*=\argmax_z(\mathbb{P}(z|o_3 \cap c_1)).
 	\end{equation}
-	Since the host cannot open the door containing the prize, $\mathbb{P}(z_3|o_3,c_1)=0$ and only $\mathbb{P}(z_1|o_3,c_1)$ and $\mathbb{P}(z_2|o_3,c_1)$ will have to be considered. For $z_1$
+	Since the host cannot open the door containing the prize, 
 	\begin{equation}
-		\mathbb{P}(z_1|o_3,c_1) = \frac{\mathbb{P}(o_3|c_1,z_1)\mathbb{P}(c_1,z_1)}{\mathbb{P}(o_3,c_1)}
+		\mathbb{P}(z_3|o_3 \cap c_1)=0
 	\end{equation}
-	with
+	 and only $\mathbb{P}(z_1|o_3 \cap c_1)$ and $\mathbb{P}(z_2|o_3 \cap c_1)$ will have to be considered. Using \thref{theorem:bayes_theorem}
+	\begin{equation}
+		\mathbb{P}(z_1|o_3 \cap c_1) = \frac{\mathbb{P}(o_3|c_1 \cap z_1)\mathbb{P}(c_1 \cap z_1)}{\mathbb{P}(o_3 \cap c_1)}
+	\end{equation}
+	where from \thref{theorem:law_of_total_probability}
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(o_3,c_1)&=\sum_i\mathbb{P}(o_3,c_1,z_i)\\
-			&=\mathbb{P}(o_3,c_1,z_1)+\mathbb{P}(o_3,c_1,z_2)+\mathbb{P}(o_3,c_1,z_3)\\
-			&= \mathbb{P}(o_3|c_1,z_1)\mathbb{P}(c_1,z_1)+\mathbb{P}(o_3|c_1,z_2)\mathbb{P}(c_1,z_2)\\
-			&\quad+\mathbb{P}(o_3|c_1,z_3)\mathbb{P}(c_1,z_3).
+			\mathbb{P}(o_3 \cap c_1)&=\sum_i\mathbb{P}(o_3 \cap c_1 \cap z_i)\\
+			&=\mathbb{P}(o_3 \cap c_1 \cap z_1)+\mathbb{P}(o_3 \cap c_1 \cap z_2)+\mathbb{P}(o_3 \cap c_1 \cap z_3)\\
+			&= \mathbb{P}(o_3|c_1 \cap z_1)\mathbb{P}(c_1 \cap z_1)+\mathbb{P}(o_3|c_1 \cap z_2)\mathbb{P}(c_1 \cap z_2)\\
+			&\quad+\mathbb{P}(o_3|c_1 \cap z_3)\mathbb{P}(c_1 \cap z_3).
 		\end{split}
 	\end{equation}
-	$\mathbb{P}(o_3|c_1,z_3)=0$ since the host will not open the door with the prize. $p(o_3|c_1,z_2)=1$ since the host has no other option in this case. $\mathbb{P}(o_3|c_1,z_1)=\frac{1}{2}$ since the host has two options in this case. There is no connection between the choice of door and position of the prize, so $\mathbb{P}(c_1, z_j)=\mathbb{P}(c_1)\mathbb{P}(z_j)$ and initially $\mathbb{P}(z_j)=\mathbb{P}(z_k)$ $\forall j,k\in \{1,2,3\}$. Hence
+	$\mathbb{P}(o_3|c_1 \cap z_3)=0$ since the host will not open the door with the prize. $p(o_3|c_1 \cap z_2)=1$ since the host has no other option in this case. $\mathbb{P}(o_3|c_1 \cap z_1)=\frac{1}{2}$ since the host has two options in this case. There is no connection between the choice of door and position of the prize, so $\mathbb{P}(c_1 \cap z_j)=\mathbb{P}(c_1)\mathbb{P}(z_j)$ and initially $\mathbb{P}(z_j)=\mathbb{P}(z_k)$ $\forall j,k\in \{1,2,3\}$. Hence
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(z_1|o_3,c_1) &= \frac{\mathbb{P}(o_3|c_1,z_1)}{\sum_i\mathbb{P}(o_3|c_1,z_i)}\\
+			\mathbb{P}(z_1|o_3 \cap c_1) &= \frac{\mathbb{P}(o_3|c_1 \cap z_1)}{\sum_i\mathbb{P}(o_3|c_1 \cap z_i)}\\
 			&=\frac{1}{3}.
 		\end{split}
 	\end{equation}
 	Similarly
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(z_2|o_3,c_1) &= \frac{\mathbb{P}(o_3|c_1,z_2)}{\sum_i\mathbb{P}(o_3|c_1,z_i)}\\
+			\mathbb{P}(z_2|o_3 \cap c_1) &= \frac{\mathbb{P}(o_3|c_1 \cap z_2)}{\sum_i\mathbb{P}(o_3|c_1 \cap z_i)}\\
 			&=\frac{2}{3}.
 		\end{split}
 	\end{equation}
-	Since $\mathbb{P}(z_2|o_3,c_1)>\mathbb{P}(z_1|o_3,c_1)>\mathbb{P}(z_3|o_3,c_1)$, door number $2$ is the optimal choise. Hence,answer "b)" is correct. The intuition behind the answer is the information the contestant has at the time of making the decision; initially, there is no a priori information and so $\mathbb{P}(z_1|o_3,c_1)=\frac{1}{3}$. At this time, there is $\frac{2}{3}$ probability that the prize is behind doors $2,3$. When the gameshow host open door $3$, this probability converge on door $2$.
+	Since $\mathbb{P}(z_2|o_3 \cap c_1)>\mathbb{P}(z_1|o_3 \cap c_1)>\mathbb{P}(z_3|o_3 \cap c_1)$, door number $2$ is the optimal choise. Hence,answer "b)" is correct. The intuition behind the answer is the information the contestant has at the time of making the decision; initially, there is no a priori information and so $\mathbb{P}(z_1|o_3 \cap c_1)=\frac{1}{3}$. At this time, there is $\frac{2}{3}$ probability that the prize is behind doors $2,3$. When the gameshow host open door $3$, this probability converge on door $2$.
 \end{example}
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). However, show that $\operatorname{Corr}[X,Y]=0$.
+	\index{Probability density function}
+	Let $X:\Omega \to \Omega_X$ and $Y:\Omega\to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$ and suppose $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). Show that $\operatorname{Corr}_{X,Y}[X,Y]=0$.\newline
 	
+	Since $Y=X^2$ is uniquely determined by $X$,\index{Expected value}\index{Correlation}\index{Covariance}\index{Variance}
+	\begin{equation}
+		\operatorname{Corr}_{X,Y}[X,Y] = \operatorname{Corr}_{X}[X,X^2].
+	\end{equation}
+	Using \dfref{def:correlation} and \dfref{def:covariance}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Corr}[X,Y] & = \frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}\\
-			& = \frac{\mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}\\
+			\operatorname{Corr}_{X}[X,X^2] & = \frac{\operatorname{Cov}_{X}[X,X^2]}{\sqrt{\operatorname{Var}_X[X]\operatorname{Var}_X[X^2]}}\\
+			& = \frac{\mathbb{E}_{X}[X^3]-\mathbb{E}_X[X]\mathbb{E}_X[X^2]}{\sqrt{\operatorname{Var}_X[X]\operatorname{Var}_X[X^2]}}\\
 		\end{split}
 	\end{equation}
-	In this case for the nominator
+	In this case for the nominator\index{Covariance}\index{Expected value}\index{Variance}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Cov}[X,Y] &= \int dx x^3 p(x)-\int dx' x'p(x')\int dx'' x''^2p(x'')\\
-			&= \frac{1}{b-a}\int_{a}^{b}x^3dx-\frac{1}{(b-a)^2}\int_{a}^{b}dx' x'\int_{a}^{b}dx'' x''^2\\
+			\operatorname{Cov}_{X}[X,X^2] &= \int_{\Omega_X} x^3 f_X(x) dx-\int_{\Omega_X} x'f_X(x') dx'\int_{\Omega_X} x''^2f_X(x'') dx''\\
+			&= \frac{1}{b-a}\int_{a}^{b}x^3dx-\frac{1}{(b-a)^2}\int_{a}^{b} x' dx'\int_{a}^{b} x''^2 dx''\\
 			&= \frac{1}{12}(a-b)^2(a+b)\\
 			&=0
 		\end{split}
@@ -946,24 +970,24 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	where the last equality comes from the fact that $a+b = 0$ in this case. However, we need to make sure the denominator does not diverge
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}[X]\operatorname{Var}[X^2] & =\big(\mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2\big) \big(\mathbb{E}_X[X^4]-\mathbb{E}_X[X^2]^2\big)\\
+			\operatorname{Var}_X[X]\operatorname{Var}_X[X^2] & =\big(\mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2\big) \big(\mathbb{E}_X[X^4]-\mathbb{E}_X[X^2]^2\big)\\
 			& = \frac{1}{540}(b-a)^4(4a^2+7ab+4b^2)\\
 			&\neq 0.
 		\end{split}
 	\end{equation}
-	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\operatorname{Corr}[X,X^2]=0$.
+	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\operatorname{Corr}_{X}[X,X^2]=0$.
 \end{example}
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable\index{Random variable} defined by $p(W=-1)=p(W=1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
+	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable\index{Random variable} defined by the PMF\index{Probability mass function} $p_W(-1)=p_W(1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
 	\begin{enumerate}
 		\item Show $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$.\newline
 		
-		To show that $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$, show that Y has zero mean and unity variance.
+		To show that $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$, show that Y has zero mean and unity variance.\index{Variance}\index{Expected value}
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}_Y[Y] &= \mathbb{E}_{WX}[WX]\\
+				\mathbb{E}_Y[Y] &= \mathbb{E}_{W,X}[WX]\\
 				&=\mathbb{E}_W[W]\cancelto{0}{\mathbb{E}_X[X]}\\
 				&=0.
 			\end{split}
@@ -971,29 +995,29 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 		The variance
 		\begin{equation}
 			\begin{split}
-				\operatorname{Var}[Y] &= \mathbb{E}_Y[Y^2]-\cancelto{0}{\mathbb{E}_Y[Y]^2}\\
-				& = \mathbb{E}_{WX}[W^2X^2]\\
+				\operatorname{Var}_Y[Y] &= \mathbb{E}_Y[Y^2]-\cancelto{0}{\mathbb{E}_Y[Y]^2}\\
+				& = \mathbb{E}_{W,X}[W^2X^2]\\
 				&= \mathbb{E}_W[W^2]\mathbb{E}_X[X^2]\\
-				& = \mathbb{E}_W[W^2]\operatorname{Var}[X]
+				& = \mathbb{E}_W[W^2]\operatorname{Var}_X[X]
 			\end{split}
 		\end{equation}
-		since $\operatorname{Var}[X]=\mathbb{E}_X[X^2]-\cancelto{0}{\mathbb{E}_X[X]^2}=1$. Now
+		since $\operatorname{Var}_X[X]=\mathbb{E}_X[X^2]-\cancelto{0}{\mathbb{E}_X[X]^2}=1$. Now
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}_W[W^2]&= \frac{1}{n}\sum_{i=1}^nw_i^2p(W = w_i)\\
+				\mathbb{E}_W[W^2]&= \frac{1}{n}\sum_{i=1}^nw_i^2p_W(w_i)\\
 				&= \frac{1}{2}[(-1)^2\frac{1}{2}+1^2\frac{1}{2}]\\
 				&= 1
 			\end{split}
 		\end{equation}
-		so $\operatorname{Var}[Y] =1$.
-		\item Show $\operatorname{Cov}[X,Y]=0$. Thus X and Y are uncorrelated but dependent, even though they are Gaussian.
+		so $\operatorname{Var}_Y[Y] =1$.
+		\item Show $\operatorname{Cov}_{X,Y}[X,Y]=0$. Thus X and Y are uncorrelated but dependent, even though they are Gaussian.\index{Covariance}\index{Expected value}
 		
 		\begin{equation}
 			\begin{split}
-				\operatorname{Cov}[X,Y] &= \operatorname{Cov}[X,WX] \\
-				&= \mathbb{E}_{WX}[WX^2]-\mathbb{E}_X[X]\mathbb{E}_{WX}[WX]\\
+				\operatorname{Cov}_{X,Y}[X,Y] &= \operatorname{Cov}_{X,W}[X,WX] \\
+				&= \mathbb{E}_{X,W}[WX^2]-\mathbb{E}_X[X]\mathbb{E}_{X,W}[WX]\\
 				&= \mathbb{E}_W[W]\mathbb{E}_X[X^2]-\mathbb{E}_W[W]\mathbb{E}_X[X]^2\\
-				&= \mathbb{E}_W[W]\operatorname{Var}[X]\\
+				&= \mathbb{E}_W[W]\operatorname{Var}_X[X]\\
 				& = 0
 			\end{split}
 		\end{equation}
@@ -1001,7 +1025,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 		\begin{equation}
 			\begin{split}
 				\begin{split}
-					\mathbb{E}_W[W]&= \frac{1}{n}\sum_{i=1}^nw_ip(W = w_i)\\
+					\mathbb{E}_W[W]&= \frac{1}{n}\sum_{i=1}^nw_ip_W(w_i)\\
 					&= \frac{1}{2}[(-1)\frac{1}{2}+1\frac{1}{2}]\\
 					&= 0
 				\end{split}
@@ -1012,55 +1036,58 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	
 \end{example}
 
+\newpage
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Prove that $-1\leq \operatorname{Corr}[X,Y]\leq 1$.\newline
+	Prove that $-1\leq \operatorname{Corr}_{X,Y}[X,Y]\leq 1$.\newline
 	
-	Since the variance is defined as positive definite
+	According to \dfref{def:variance} the variance\index{Variance}\index{Correlation} is defined as positive definite. This means
 	\begin{equation}
 		\label{eq:corr_deriv}
 		\begin{split}
-			0\leq& \operatorname{Var}\bigg[\frac{X}{\sigma_X}\pm\frac{Y}{\sigma_Y}\bigg]\\
-			& = \frac{\operatorname{Var}[X]}{\sigma_X^2}+\frac{\operatorname{Var}[Y]}{\sigma_Y^2}\pm \frac{2}{\sigma_X\sigma_Y}\operatorname{Cov}[X,Y]\\
-			& = \frac{\operatorname{Var}[X]}{\sigma_X^2}+\frac{\operatorname{Var}[Y]}{\sigma_Y^2}\pm 2\operatorname{Corr}[X,Y]\\
-			& = 2\pm 2\operatorname{Corr}[X,Y]
+			0\leq& \operatorname{Var}_{X,Y}\bigg[\frac{X}{\sqrt{\operatorname{Var}_{X}[X]}}\pm\frac{Y}{\sqrt{\operatorname{Var}_{Y}[Y]}}\bigg]\\
+			& = \frac{\operatorname{Var}_X[X]}{\operatorname{Var}_{X}[X]}+\frac{\operatorname{Var}_Y[Y]}{\operatorname{Var}_{Y}[Y]}\pm \frac{2}{\sqrt{\operatorname{Var}_{X}[X]\operatorname{Var}_{Y}[Y]}}\operatorname{Cov}_{X,Y}[X,Y]\\
+			& = 2\pm 2\operatorname{Corr}_{X,Y}[X,Y].
 		\end{split}
 	\end{equation}
-	where for the last equality it has been used that $\sigma_i^2=\operatorname{Var}[i]$. From equation \eqref{eq:corr_deriv} the result follows
+	 From equation \eqref{eq:corr_deriv} the result follows
 	\begin{equation}
-		-1\leq \operatorname{Corr}[X,Y]\leq 1.
+		-1\leq \operatorname{Corr}_{X,Y}[X,Y]\leq 1.
 	\end{equation}	
 \end{example}
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Show that if $Y=aX+b$ for some parameters $a>0$ and $b$, then $\operatorname{Corr}[X,Y]=1$. Similarly show that if $a<0$, then $\operatorname{Corr}[X,Y]=-1$.
+	Show that if $Y=aX+b$ given parameters $a>0$ and $b$, then $\operatorname{Corr}_{X,Y}[X,Y]=1$. Similarly show that if $a<0$, then $\operatorname{Corr}_{X,Y}[X,Y]=-1$.\newline
 	
+	Since $Y=X^2$ is uniquely determined by $X$,
 	\begin{equation}
-		\operatorname{Corr}[X,Y] = \frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}[X]\operatorname{Var}[Y]}}
+		\operatorname{Corr}_{X,Y}[X,Y] = \operatorname{Corr}_{X}[X,aX+b].
+	\end{equation}
+	Using \dfref{def:correlation} and \dfref{def:covariance}\index{Variance}\index{Covariance}\index{Expected value}
+	\begin{equation}
+		\operatorname{Corr}_{X}[X,aX+b] = \frac{\operatorname{Cov}_{X}[X,aX+b]}{\sqrt{\operatorname{Var}_X[X]\operatorname{Var}_X[aX+b]}}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Cov}[X,Y] & = \mathbb{E}_{XY}[XY]-\mathbb{E}_X[X]\mathbb{E}_Y[Y]\\
-			&= \mathbb{E}_X[X(aX+b)]-\mathbb{E}_X[X]\mathbb{E}_X[aX+b]\\
+			\operatorname{Cov}_{X}[X,aX+b] & = \mathbb{E}_{X}[X(aX+b)]-\mathbb{E}_X[X]\mathbb{E}_X[aX+b]\\
 			&= a\mathbb{E}_X[X^2]+b\mathbb{E}_X[X]-a\mathbb{E}_X[X]^2-b\mathbb{E}_X[X]\\
-			&=a\operatorname{Var}[X]
+			&=a\operatorname{Var}_X[X]
 		\end{split}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}[Y] &= \operatorname{Var}[aX+b]\\
-			&= a^2\operatorname{Var}[X]+\cancelto{0}{\operatorname{Var}[b]}+2\cancelto{0}{\operatorname{Cov}[aX,b]}\\
-			& = a^2\operatorname{Var}[X]
+			\operatorname{Var}_X[aX+b] &= a^2\operatorname{Var}_X[X]+\cancelto{0}{\operatorname{Var}_X[b]}+2\cancelto{0}{\operatorname{Cov}_{X,X}[aX,b]}\\
+			& = a^2\operatorname{Var}_X[X]
 		\end{split}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Corr}[X,Y] &= \frac{a\operatorname{Var}[X]}{\sqrt{a^2\operatorname{Var}[X]\operatorname{Var}[X]}}\\
+			\operatorname{Corr}_{X}[X,aX+b] &= \frac{a\operatorname{Var}_X[X]}{\sqrt{a^2\operatorname{Var}_X[X]\operatorname{Var}_X[X]}}\\
 			&=\frac{a}{|a|}		
 		\end{split}
 	\end{equation}
-	Hence, the sign of "$a$" determine if $\operatorname{Corr}[X,Y]=\pm 1$ for the particular $Y$ of this example.
+	Hence, the sign of "$a$" determine if $\operatorname{Corr}_{X,Y}[X,Y]=\pm 1$ for the particular $Y$ of this example.
 \end{example}
 
 \begin{example}
