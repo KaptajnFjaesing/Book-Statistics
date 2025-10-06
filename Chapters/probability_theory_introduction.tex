@@ -86,6 +86,17 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\end{equation}
 \end{axiom}
 
+\begin{definition}[$\sigma$-finite Measure]
+	\label{def:sigma_finite_measure}
+	\index{$\sigma$-finite measure}
+	Let $(\Omega, \mathcal{F})$ be a measurable space, where $\Omega$ is the sample space\index{Sample space} and $\mathcal{F}$ is the event space. A measure $\mu$ on $(\Omega, \mathcal{F})$ is called $\sigma$-finite if there exists a countable collection of sets $\{A_i\}_{i\in\mathbb{N}} \subseteq \mathcal{F}$ such that 
+	\begin{equation}
+		\Omega = \bigcup_{i=1}^\infty A_i
+		\quad\text{and}\quad 
+		\mu(A_i) < \infty \;\; \forall i\in\mathbb{N}.
+	\end{equation}
+\end{definition}
+
 \begin{definition}[Measurable Function]
 	\label{def:measurable_function}
 	\index{Measurable function}
@@ -113,6 +124,17 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\end{equation}
 	In higher dimensions, $\lambda$ generalizes to $\mathbb{R}^n$, where it coincides with the usual notions of length, area, and volume.
 \end{definition}
+
+\begin{definition}[Counting Measure]
+	\label{def:counting_measure}
+	\index{Counting measure}
+	Let $(\Omega, \mathcal{F})$ be a discrete measurable space, where $\Omega$ is the sample space\index{Sample space} and $\mathcal{F}$ is the event space. The counting measure $\nu$ is a measure, in the sense of \dfref{def:measure}, defined on $\mathcal{F}$ such that for every event $E \in \mathcal{F}$,
+	\begin{equation}
+		\nu(E) = |E|,
+	\end{equation}
+	where $|E|$ denotes the cardinality of $E$ (finite or countably infinite). In particular, for finite sets $E$, $\nu(E)$ equals the number of elements in $E$, and for countably infinite sets, $\nu(E) = \infty$.
+\end{definition}
+
 
 \begin{definition}[Probability Measure]
 	\label{def:probability}
@@ -402,80 +424,70 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\end{equation}
 \end{proof}
 
-\begin{definition}[Probability Mass Function]
-	\label{def:pmf}
+\newpage
+\begin{definition}[Probability Density with Respect to a Measure]
+	\label{def:prob_density_general}
+	\index{Probability density}
 	Let
-	\index{Probability mass function}
 	\begin{equation}
 		X : \Omega \to \Omega_X
 	\end{equation}
-	be a discrete random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, where $(\Omega_X, \mathcal{F}_X)$ is a measurable space\index{Measurable space}. The image measure\index{Image measure} of $X$ is defined as
+	be a random variable\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to the measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. Let $\mu$ be a $\sigma$-finite measure\index{$\sigma$-finite measure} on $(\Omega_X, \mathcal{F}_X)$, in the sense of \dfref{def:sigma_finite_measure}. If the image measure\index{Image measure} $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$ is absolutely continuous with respect to $\mu$, then by the Radon-Nikodym theorem~\cite{Navratil1981} there exists a measurable function
 	\begin{equation}
-		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
+		f_X = \frac{d\mathbb{P}_X}{d\mu},
 	\end{equation}
-	If $\Omega_X$ is countable, then $\mathbb{P}_X$ admits a probability mass function (PMF) 
+	called the probability density of $X$ with respect to $\mu$, such that
 	\begin{equation}
-		p_X : \Omega_X \to [0,1]
-	\end{equation} 
-	defined by
-	\begin{equation}
-		\begin{split}
-			p_X(x) &\equiv \mathbb{P}_X(\{x\}) \quad \forall x \in \Omega_X.
-		\end{split}
+		\mathbb{P}_X(B) = \int_B f_X(x) d\mu(x), \quad \forall B \in \mathcal{F}_X.
 	\end{equation}
-	The PMF satisfies
+	Moreover, since $\mathbb{P}_X$ is a probability measure, the density satisfies
 	\begin{equation}
-		p_X(x) \ge 0, \quad \forall x \in \Omega_X, 
-		\qquad 
-		\sum_{x \in \Omega_X} p_X(x) = 1.
+		f_X(x) \ge 0, \quad \text{and} \quad
+		\int_{\Omega_X} f_X(x) d\mu(x) = 1.
 	\end{equation}
 \end{definition}
 
+\begin{remark}[Probability Density Function]
+	\label{remark:pdf}
+	If $\mu = \lambda$ is the Lebesgue measure (\dfref{def:lebesgue_measure}) on $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$, then the probability density $f_X$ is called the probability density function\index{Probability density function} (PDF). For $\mu = \lambda$, \dfref{def:prob_density_general} gives
+	\begin{equation}
+		\mathbb{P}_X(B) = \int_B f_X(x) d\lambda(x),
+		\quad \forall B \in \mathcal{B}(\mathbb{R}).
+	\end{equation}
+\end{remark}
+
+\begin{remark}[Probability Mass Function]
+	\label{remark:pmf}
+	If $\mu = \nu$ is the counting measure\index{Counting measure} (\dfref{def:counting_measure}) on $\Omega_X$, then the probability density $f_X$ is called the probability mass function (PMF). For $\mu= \nu$, \dfref{def:prob_density_general} gives
+	\begin{equation}
+		\begin{split}
+			\mathbb{P}_X(B) &= \int_B f_X(x) d\nu(x)\\ 
+			&= \sum_{x \in B} f_X(x).
+		\end{split}
+	\end{equation}
+	In particular, for a singleton $B = \{x\}$,
+	\begin{equation}
+		\mathbb{P}_X(\{x\}) = f_X(x).
+	\end{equation}
+\end{remark}
 
 \begin{remark}[Expected value of a discrete random variable]
 	\label{rem:expected_value_discrete}
-	If $X$ is a discrete random variable with probability mass function\index{Probability mass function} $p$, then the expected value reduces to
+	If $X$ is a discrete random variable with probability mass function\index{Probability mass function} $f_X$, then the expected value reduces to
 	\begin{equation}
-		\mathbb{E}_X[X]=\sum_{x\in \Omega_X} x p_X(x).
+		\mathbb{E}_X[X]=\sum_{x\in \Omega_X} x f_X(x).
 		\label{eq:discrete_exp}
 	\end{equation}
 	\EQref{eq:discrete_exp} follows directly from \dfref{def:expectation_image}, since the image measure $\mathbb{P}_X$ is concentrated on singletons $\{x\}$ in the discrete case.
 \end{remark}
 
-\begin{definition}[Probability Density Function]
-	\label{def:pdf}
-	\index{Probability density function}
-	Let 
-	\begin{equation}
-		X: \Omega \to \Omega_X
-	\end{equation} 
-	be a continuous random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, and let $(\Omega_X, \mathcal{F}_X)$ be a measurable space. The image measure\index{Image measure} of $X$ is defined by
-	\begin{equation}
-		\mathbb{P}_X(B) \equiv \mathbb{P}(X^{-1}(B)), \quad \forall B \in \mathcal{F}_X.
-	\end{equation}
-	If there exists a non-negative measurable function
-	\begin{equation}
-		f_X: \Omega_X \to \mathbb{R}_{\ge 0}
-	\end{equation} 
-	such that
-	\begin{equation}
-		\mathbb{P}_X(B) = \int_B f_X(x) d\lambda(x), \quad \forall B \in \mathcal{B}(\Omega_X),
-	\end{equation}
-	where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} on $\mathbb{R}$ (\dfref{def:lebesgue_measure}) and $\mathcal{B}(\Omega_X)$ is the Borel $\sigma$-algebra (\dfref{def:sigma_algebra}) on $\Omega_X$, then $f_X$ is called the probability density function (PDF) of $X$. The PDF satisfies
-	\begin{equation}
-		f_X(x) \ge 0 \quad \forall x \in \Omega_X, \qquad 
-		\int_{\Omega_X} f_X(x) d\lambda(x) = 1.
-	\end{equation}
-\end{definition}
-
 \begin{remark}[Expected value of a continuous random variable]
 	\label{remark:expectation_continuous}
-	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$ on $\Omega_X \subseteq \mathbb{R}$. From \dfref{def:expectation_image} and \dfref{def:pdf}	
+	Let $X$ be a continuous random variable\index{Random variable} with PDF\index{Probability density function} $f_X$ on $\Omega_X \subseteq \mathbb{R}$. From \dfref{def:expectation_image} and \dfref{def:prob_density_general}	
 	\begin{equation}
 		\mathbb{E}_X[X] = \int_{\Omega_X} x f_X(x) d\lambda(x),
 	\end{equation}
-	where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} on $\mathbb{R}$. 
-	In practice, it is customary to write $d\lambda(x)$ simply as $dx$, so that
+	where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} on $\mathbb{R}$. In practice, it is customary to write $d\lambda(x)$ simply as $dx$, so that
 	\begin{equation}
 		\mathbb{E}_X[X] = \int_{\Omega_X} x f_X(x) dx.
 	\end{equation}
@@ -780,13 +792,13 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 		B : \Omega \to \{0,1,2\}, \quad G : \Omega \to \{0,1,2\},
 	\end{equation}
 	where $B(\omega)$ and $G(\omega)$ denote the number of boys and girls in outcome $\omega \in \Omega$.  
-	The joint probability mass function of $(B,G)$ is, by Definition~\ref{def:pmf},
+	The joint probability mass function of $(B,G)$ is, by \dfref{def:prob_density_general},
 	\begin{equation}
-		p_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}) = \mathbb{P}(\{\omega \in \Omega | B(\omega) = b,\, G(\omega) = g\}).
+		f_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}) = \mathbb{P}(\{\omega \in \Omega | B(\omega) = b,\, G(\omega) = g\}).
 	\end{equation}
 	For instance,
 	\begin{equation}
-		p_{B,G}(1,1) = \mathbb{P}(\{(\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom})\}) = \frac{1}{2}.
+		f_{B,G}(1,1) = \mathbb{P}(\{(\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom})\}) = \frac{1}{2}.
 	\end{equation}
 	Let $A \subseteq \Omega_B \times \Omega_G$ denote the event ``at least one boy'':
 	\begin{equation}
@@ -798,11 +810,11 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\end{equation}
 	From the PMF,
 	\begin{equation}
-		\mathbb{P}_{B,G}(\{(1,1)\} \cap A) = p_{B,G}(1,1) = \frac{1}{2},
+		\mathbb{P}_{B,G}(\{(1,1)\} \cap A) = f_{B,G}(1,1) = \frac{1}{2},
 	\end{equation}
 	and from \thref{theorem:law_of_total_probability}
 	\begin{equation}
-		\mathbb{P}_{B,G}(A) = \sum_{g} \sum_{b \ge 1} p_{B,G}(b,g) = p_{B,G}(1,1) + p_{B,G}(2,0) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}.
+		\mathbb{P}_{B,G}(A) = \sum_{g} \sum_{b \ge 1} f_{B,G}(b,g) = f_{B,G}(1,1) + f_{B,G}(2,0) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}.
 	\end{equation}
 	Hence,
 	\begin{equation}
@@ -813,9 +825,9 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 
 \begin{remark}[PMF vs. image measure on events]
 	\label{remark:pmf_vs_measure}
-	Let $B$ and $G$ be discrete random variables with joint PMF\index{Probability mass function} $p_{B,G}$ and image measure\index{Image measure} $\mathbb{P}_{B,G}$. From \dfref{def:pmf}, the PMF is defined only for single points $(b,g) \in \Omega_B \times \Omega_G$:
+	Let $B$ and $G$ be discrete random variables with joint PMF\index{Probability mass function} $f_{B,G}$ and image measure\index{Image measure} $\mathbb{P}_{B,G}$. From \dfref{def:prob_density_general}, the PMF is defined only for single points $(b,g) \in \Omega_B \times \Omega_G$:
 	\begin{equation}
-		p_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}).
+		f_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}).
 	\end{equation}
 	The image measure $\mathbb{P}_{B,G}$, however, is defined on all measurable subsets in the event space\index{Event space} $A \in \mathcal{F}_B\otimes\mathcal{F}_G$. Hence, expressions of the form
 	\begin{equation}
@@ -823,7 +835,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\end{equation}
 	are valid, since $\{(b,g)\} \cap A$ is an element of $\mathcal{F}_B\otimes\mathcal{F}_G$. In contrast, writing
 	\begin{equation}
-		p_{B,G}(b,g \cap A)
+		f_{B,G}(b,g \cap A)
 	\end{equation}
 	(or similarly) is not valid, because $p_{B,G}$ is defined only on individual points $(b,g)$, not on sets or intersections. The PMF cannot take an event as its argument; only the image measure $\mathbb{P}_{B,G}$ can.
 \end{remark}

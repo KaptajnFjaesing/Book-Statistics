@@ -1,5 +1,9 @@
 \chapter{Assigning Probability Functions}
-\dfref{def:probability} defines a probability measures, however, the definition is not sufficient to conduct inference because, ultimately, the probability measure or relevant probability functions (density or mass) needs to be specified. Thus, the rules for manipulating probability functions must be supplemented by rules for assigning probability functions. To assign any probability function, there is ultimately only one way, logical analysis, i.e., non-self-contradictory analysis of the available information. The difficulty is to incorporate only the information one actually possesses without making gratuitous assumptions about things one does not know. A number of procedures have been developed that accomplish this task: Logical analysis may be applied directly to the sum and product rules to yield probability functions~\citep{jaynes_11}. Logical analysis may be used to exploit the group invariances of a problem~\citep{jaynes_16}. Logical analysis may be used to ensure consistency when uninteresting or nuisance parameter are marginalized from probability functions~\citep{jaynes_21}. And last, logical analysis may be applied in the form of the principle of maximum entropy to yield probability functions \cite{zellner_bayesian_inference, jaynes_16,jaynes_19, shore_17,shore_18}. Of these techniques the principle of maximum entropy is probably the most powerful.
+While \chref{chp:probaiblity_theory} provides the formal definition of probability measures and their manipulation, it is not sufficient on its own to conduct inference. In practice, one must also specify the probability measure or, equivalently, the probability density or mass functions. Assigning these functions requires a principled method to convert available information into a probability distribution.
+
+The central challenge is to incorporate only the information that is actually known, without introducing unwarranted assumptions about unknown quantities. Logical analysis provides the framework for this task: it ensures that probability assignments are internally consistent and make full use of the information at hand. Several approaches implement this principle. Logical analysis can be applied directly to the sum and product rules to construct probability functions~\citep{jaynes_11}; it can exploit group invariances inherent in the problem~\citep{jaynes_16}; and it can ensure consistent marginalization of nuisance parameters~\citep{jaynes_21}.
+
+Among these methods, the principle of maximum entropy stands out for its generality and power. By selecting the probability distribution that maximizes entropy subject to the known constraints, it provides a systematic, non-arbitrary means of assigning probabilities while remaining maximally noncommittal about unknown information~\cite{zellner_bayesian_inference, jaynes_16, jaynes_19, shore_17, shore_18}. The remainder of this chapter develops the maximum entropy principle and illustrates how it can be applied to derive probability distributions from partial knowledge.
 
 \section{The Principle of Maximum Entropy}
 \label{sec:maxent}
@@ -21,26 +25,17 @@ be a generic random variable\index{Random variable} from the probability space\i
 	Background information formally determines the class of admissible probability distributions and methods considered suitable for representing uncertainty in the system.
 \end{definition}
 
-To accommodate both discrete and continuous cases, it is convenient to express probabilities in terms of integration with respect to a unifying measure\index{Unifying measure} $\mu$, defined as
-\begin{equation}
-	\mu = 
-	\begin{cases}
-		\lambda, & \text{for continuous random variables},\\
-		\nu, & \text{for discrete random variables,}
-	\end{cases}
-\end{equation}
-where $\lambda$ denotes the Lebesgue measure\index{Lebesgue measure} (\dfref{def:lebesgue_measure}) and $\nu$ the counting measure\index{Counting measure}. The image measure\index{Image measure} $\mathbb{P}_Z$ admits a density $f_Z$ with respect to $\mu$, so that for any measurable set $B\in \mathcal{F}_Z$,
+From definition \dfref{def:prob_density_general}, the image measure\index{Image measure} $\mathbb{P}_Z$ admits a density $f_Z$ with respect to $\mu$, so that for any measurable set $B\in \mathcal{F}_Z$,
 \begin{equation}
 	\mathbb{P}_Z(B \mid\gamma,I) = \int_B f_Z(z\mid \gamma,I) d\mu(z),
 	\label{eq:max_ent_probability_measure}
 \end{equation}
-where $f_Z$ is the PMF\index{Probaility mass function} in the discrete case and $f_Z$ is the PDF\index{Probability density function} in the continuous case. The maximum entropy principle asserts that the density $f_Z(z | \gamma, I)$ that best represents the current state of knowledge is the one that maximizes the constrained entropy~\citep{Sivia2006}, where $\gamma$ denotes the parameters of the distribution and $I$ the background information. 
+where $f_Z$ is the PMF\index{Probaility mass function} for a discrete sample space and the PDF\index{Probability density function} for a continuous sample space. The maximum entropy principle asserts that the density $f_Z(z | \gamma, I)$ that best represents the current state of knowledge is the one that maximizes the constrained entropy~\citep{Sivia2006}, where $\gamma$ denotes the parameters of the distribution and $I$ the background information. 
 
-
-Using the unifying measure\index{Unifying measure} $\mu$, the Shannon entropy\index{Shannon entropy} of a probability distribution $f_Z$ can be expressed as
+The Shannon entropy\index{Shannon entropy} of a probability density $f_Z$ can be expressed as
 \begin{equation}
 	H[f_Z] = - \int_{\Omega_Z} f_Z(z \mid \gamma, I) 
-	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} \, d\mu(z),
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)}  d\mu(z),
 \end{equation}
 where $m(z)$ is a reference density\index{Reference measure} that ensures invariance of the entropy under reparameterizations of $z$. 
 
@@ -53,8 +48,6 @@ To incorporate known constraints, such as moment conditions or normalization, on
 	\Bigg) d\mu(z),
 \end{equation}
 where each $C_j(z)$ denotes a constraint function. Maximizing $\mathcal{L}[f_Z]$ with respect to $f_Z$ yields the probability distribution of maximum entropy consistent with the given constraints.
-
-
 
 Using the unifying measure\index{Unifying measure} $\mu$, the entropy\index{Shannon entropy} can be expressed as
 \begin{equation}
@@ -89,6 +82,7 @@ Hence the maximum-entropy distribution takes the exponential family form
 \end{equation}
 The constants $\gamma_j$ are determined by the imposed constraints. The resulting measure (\EQref{eq:max_ent_probability_measure}) defines the unique maximum-entropy probability measure consistent with the given information.
 
+\newpage
 \begin{example}
 	\index{Example: Maximum entropy normal distribution}
 	Consider a continuous random variable, $Z$, with sample space $\Omega_Z=\mathbb{R}$, assumed to be symmetric around a mean $\mu$ and with variance $\sigma^2$. Taking $\gamma = \{\gamma_0,\gamma_1,\gamma_2\}$ leads to 
