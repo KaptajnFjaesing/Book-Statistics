@@ -26,7 +26,7 @@ where $\hat{w}^*(D)$ denotes the optimal parameter decision rule, obtained from 
 \label{chp:frequentist_regression}
 In the Frequentist paradigm, regression involves the Robot constructing a model,
 \begin{equation}
-	f: \Omega_W \times \Omega_X \mapsto \mathbb{R},
+	f: \Omega_W \times \Omega_X \to \mathbb{R},
 \end{equation}
 parameterized by $w \in \Omega_W$, to approximate Nature's actions $s\in \Omega_S$ based on observed data $x\in \Omega_X$. As in Bayesian regression (\secref{chp:regression}), the output of $f$ is real-valued, so that $S$ is assumed continuous. The model $f$ serves as the Robot's surrogate for Nature's mechanism, providing predictions of Nature's action given observed data $x \in \Omega_X$. \newline
 
@@ -51,7 +51,7 @@ where $I$ denotes the background information (\dfref{def:background_information}
 \label{chp:frequentist_classification}
 In the Frequentist paradigm, classification involves the Robot constructing a model
 \begin{equation}
-	f: \Omega_W \times \Omega_X \mapsto \Delta^K,
+	f: \Omega_W \times \Omega_X \to \Delta^K,
 \end{equation}
 parameterized by $w \in \Omega_W$, where $\Delta^K$ is the $K$-dimensional probability simplex and $\Omega_S \in \{1,\dots,K\}$ represents Nature's discrete action (class label). The model predicts the conditional probability of each class given the input $x \in \Omega_X$
 \begin{equation}

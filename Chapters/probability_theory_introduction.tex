@@ -309,7 +309,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
-	be a random variable from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
+	be a random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. Then~\cite{drewitz2019introduction}
 	\begin{equation}
 		\mathbb{P}\circ X^{-1}: \mathcal{F}_X\to [0,1]
 	\end{equation}
@@ -317,20 +317,25 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{definition}
 
 \begin{remark}
-	\thref{theorem:law_of_total_probability} extends naturally from the case of a finite or countable partition to a situations where the partition of the sample space\index{Sample space}\index{Law of Total Probability} is induced by the values of a real-valued random variable\index{Random variable} $X$. In this case, instead of summing over disjoint events $\{E_i\}$, one integrates over the possible values of $X$. Formally, let 
+	\thref{theorem:law_of_total_probability} extends naturally from a finite or countable partition of the sample space\index{Sample space}\index{Law of Total Probability} to the case where the partition is induced by a random variable\index{Random variable} $X$. Let
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
-	be a random variable from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. \thref{theorem:law_of_total_probability} extends viz
+	be a random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. Then, for any event $A \in \mathcal{F}$, \thref{theorem:law_of_total_probability} can be written rigorously in terms of the image measure\index{Image measure} $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$ as
 	\begin{equation}
-		\mathbb{P}(A) = \int \mathbb{P}(A | x) d\mathbb{P}_X(x),
+		\mathbb{P}(A) = \int_{\Omega_X} \mathbb{P}(A \mid X^{-1}(\{x\})) \, d\mathbb{P}_X(x),
 	\end{equation}
-	where $\mathbb{P}_X$ is the image measure\index{Image measure} of $X$. 
+	where $\mathbb{P}(A \mid X^{-1}(\{x\}))$ is the conditional probability of $A$ given the event $X^{-1}(\{x\}) \subseteq \Omega$. 
 \end{remark}
+
 
 \begin{definition}[Expected value]
 	\label{def:expectation_image}
-	Let $X$ be a real-valued random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F},\mathbb{P})$, and let
+	Let 
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	be a random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$, and let
 	\begin{equation}
 		\mathbb{P}_X = \mathbb{P} \circ X^{-1}
 	\end{equation} 
@@ -342,7 +347,11 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{definition}
 
 \begin{theorem}[Non-negativity of expected value]
-	If $X\geq 0$ for a random variable\index{Random variable} $X$, then $\mathbb{E}_X[X]\geq 0$.
+	Let 
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	be a random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. $X\geq 0 \Rightarrow \mathbb{E}_X[X]\geq 0$.
 \end{theorem}
 \begin{proof}
 	From \dfref{def:expectation_image} 
@@ -354,14 +363,18 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{theorem}[Linearity of expected value]
 	\label{theorem:exp_linear}
-	The expected value\index{Expected value} is a linear operator meaning $\mathbb{E}_X[a+X] = a+\mathbb{E}_X[X]$ and $\mathbb{E}_X[aX] = a\mathbb{E}_X[X]$ for any constant $a$.
+	Let 
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	be a random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. The expected value\index{Expected value} is a linear operator meaning $\mathbb{E}_X[a+X] = a+\mathbb{E}_X[X]$ and $\mathbb{E}_X[aX] = a\mathbb{E}_X[X]$ for any constant $a$.
 \end{theorem}
 \begin{proof}
 	From \dfref{def:expectation_image} 
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}_X[a + X] &= \int_{\Omega_X}(a + x) d\mathbb{P}_X(x) \\ 
-			&= \int_{\Omega_X} a d\mathbb{P}_X(x) + \int_{\Omega_X} x d\mathbb{P}_X(x)\\
+			&= a\int_{\Omega_X} d\mathbb{P}_X(x) + \int_{\Omega_X} x d\mathbb{P}_X(x)\\
 			&= a + \mathbb{E}_X[X],
 		\end{split}
 	\end{equation}
@@ -377,7 +390,11 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{remark}[Law of the Unconscious Statistician]
 	\label{th:lotus}
-	Let $X$ be a random variable\index{Random variable}\index{Law of the Unconscious Statistician} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, and let 
+	Let 
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	be a random variable\index{Random variable} from the probability space\index{Probability space}\index{Law of the Unconscious Statistician} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$, and let 
 	\begin{equation}
 		g: \Omega_X \to \mathbb{R}
 	\end{equation} 
@@ -390,7 +407,11 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{definition}[Variance]
 	\label{def:variance}
-	Let $X$ be a real-valued random variable\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F},\mathbb{P})$, then the variance\index{Variance} of $X$, denoted by $\operatorname{Var}_X[X]$, is defined viz\index{Variance}
+	Let 
+	\begin{equation}
+		X: \Omega \to \Omega_X
+	\end{equation}
+	be a real-valued random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. The variance\index{Variance} of $X$, denoted by $\operatorname{Var}_X[X]$, is defined viz\index{Variance}
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}_X[X]&\equiv \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]\\
@@ -400,37 +421,48 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{definition}
 
 \begin{theorem}[Markov's Inequality]
-Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Then
-\begin{equation}
-\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}_X[X]}{a}.
-\end{equation}
+	\label{thm:markov}
+	Let 
+	\[
+	X: \Omega \to \Omega_X
+	\]
+	be a non-negative random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$, and let $a > 0$. Then
+	\begin{equation}
+		\mathbb{P}_X([a, \infty)) \le \frac{\mathbb{E}_X[X]}{a}.
+	\end{equation}
 \end{theorem}
+
 \begin{proof}
-	Let $1_{\{X\ge a\}}$ denote the indicator of the event $\{X\ge a\}$. Since $X$ is non-negative and $a>0$
+	Let $1_{[a,\infty)}$ denote the indicator of the event $\{x \in \Omega_X | x \ge a\}$.  
+	Since $X(\omega)\ge 0$ and $a>0$,
 	\begin{equation}
-		a1_{\{X\ge a\}} \le X.
+		a\,1_{[a,\infty)}(X(\omega)) \le X(\omega), \quad \forall \omega \in \Omega.
 	\end{equation}
-	Taking the expected values and using \thref{theorem:exp_linear}
+	Taking expectations with respect to $\mathbb{P}_X$ and using linearity,
 	\begin{equation}
-		a\,\mathbb{E}_X\big[1_{\{X\ge a\}}\big] \le \mathbb{E}_X[X].
+		a\,\mathbb{E}_X[1_{[a,\infty)}] \le \mathbb{E}_X[X].
 	\end{equation}
-	But $\mathbb{E}_X[1_{\{X\ge a\}}]=\mathbb{P}(X\ge a)$, so
+	By definition of the image measure,
 	\begin{equation}
-		a\,\mathbb{P}(X\ge a) \le \mathbb{E}_X[X],
+		\begin{split}
+			\mathbb{E}_X[1_{[a,\infty)}] &= \int 1_{[a,\infty)}(x) d\mathbb{P}_X(x)\\
+			& = \mathbb{P}_X([a,\infty)).
+		\end{split}
 	\end{equation}
-	and rearranging yields Markov's inequality
+	Hence,
 	\begin{equation}
-		\mathbb{P}(X\ge a) \le \frac{\mathbb{E}_X[X]}{a}.
+		a \mathbb{P}_X([a,\infty)) \leq \mathbb{E}_X[X],
 	\end{equation}
+	and dividing both sides by $a$ yields the inequality.
 \end{proof}
 
-\newpage
+
 \begin{definition}[Probability Density with Respect to a Measure]
 	\label{def:prob_density_general}
 	\index{Probability density}
 	Let
 	\begin{equation}
-		X : \Omega \to \Omega_X
+		X: \Omega \to \Omega_X
 	\end{equation}
 	be a random variable\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to the measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. Let $\mu$ be a $\sigma$-finite measure\index{$\sigma$-finite measure} on $(\Omega_X, \mathcal{F}_X)$, in the sense of \dfref{def:sigma_finite_measure}. If the image measure\index{Image measure} $\mathbb{P}_X = \mathbb{P} \circ X^{-1}$ is absolutely continuous with respect to $\mu$, then by the Radon-Nikodym theorem~\cite{Navratil1981} there exists a measurable function
 	\begin{equation}
@@ -506,22 +538,73 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\end{equation}
 \end{example}
 
-\begin{theorem}[Total expectation]
-	\label{theorem:total_expectation}
-	\index{Total expectation}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Then\index{Probability density function}
+\begin{definition}[Joint Probability Measure]
+	\label{def:joint}
+	\index{Joint probability measure}
+	Let
 	\begin{equation}
-		\mathbb{E}_X[X] = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X| Y]],
+		X: \Omega \to \Omega_X, \quad Y: \Omega \to \Omega_Y
 	\end{equation}
-	where the subscript denotes the probability distribution the expectation is taken with respect to.
+	be random variables\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to measurable spaces\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$ and $(\Omega_Y, \mathcal{F}_Y)$.	The joint probability measure of $X$ and $Y$ is the image measure
+	\begin{equation}
+		\mathbb{P}_{X,Y} = \mathbb{P}\circ(X,Y)^{-1}
+	\end{equation}
+	defined on the measurable space 
+	\begin{equation}
+		(\Omega_{X_1}\times\Omega_{Y}, \mathcal{F}_{X}\otimes\mathcal{F}_{Y}).
+	\end{equation}	
+	All probability measures\index{Probability measure} related to the random variables can be derived from the joint probability measure via \thref{theorem:law_of_total_probability}.
+\end{definition}
+
+\begin{remark}
+	Let
+	\begin{equation}
+		X: \Omega \to \Omega_X, \quad Y: \Omega \to \Omega_Y
+	\end{equation}
+	be random variables\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to measurable spaces\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$ and $(\Omega_Y, \mathcal{F}_Y)$. Suppose $A\in \mathcal{F}_X$ and let $\mathbb{P}_{X,Y}$ denote the joint probability measure on the measurable space $(\Omega_{X_1}\times\Omega_{Y}, \mathcal{F}_{X}\otimes\mathcal{F}_{Y})$, then from \thref{theorem:law_of_total_probability}
+	\begin{equation}
+			\mathbb{P}_{X}(A) = \mathbb{P}_{X,Y}(A \times \Omega_Y).
+	\end{equation}
+\end{remark}
+
+
+\begin{theorem}[Law of total expectation]
+	\label{theorem:total_expectation}
+	\index{Law of total expectation}
+	Let
+	\begin{equation}
+		X: \Omega \to \Omega_X, \quad Y: \Omega \to \Omega_Y
+	\end{equation}
+	be random variables\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to measurable spaces\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$ and $(\Omega_Y, \mathcal{F}_Y)$. Let $\mathbb{P}_{X,Y}$ denote the joint probability measure on the measurable space $(\Omega_X \times \Omega_Y, \mathcal{F}_X \otimes \mathcal{F}_Y)$. Then
+	\begin{equation}
+		\mathbb{E}_X[X] = \mathbb{E}_Y\big[\mathbb{E}_{X|Y}[X \mid Y]\big].
+	\end{equation}
 \end{theorem}
+
+
 \begin{proof}
+	Let
+	\begin{equation}
+		X: \Omega \to \Omega_X, \quad Y: \Omega \to \Omega_Y
+	\end{equation}
+	be random variables\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to measurable spaces\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$ and $(\Omega_Y, \mathcal{F}_Y)$. Let $\mathbb{P}_{X,Y}$ denote the joint probability measure on the measurable space $(\Omega_X \times \Omega_Y, \mathcal{F}_X \otimes \mathcal{F}_Y)$. By Fubini's theorem and \dfref{def:conditional_probability},
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}_X[X] &= \int_{\Omega_X} x f_X(x) dx\\
-			& = \int_{\Omega_Y} \int_{\Omega_X} x f_{X,Y}(x,y) dx dy\\
-			& =  \int_{\Omega_Y} f_Y(y) \underbrace{\int_{\Omega_X}x f_{X|Y}(x|y) dx}_{= \mathbb{E}_{X|Y}[X|Y]}dy\\
-			& = \mathbb{E}_Y[\mathbb{E}_{X|Y}[X|Y]].
+			\mathbb{E}_X[X] 
+			&= \int_{\Omega_X} x d\mathbb{P}_X(x)\\
+			&= \int_{\Omega_X}\int_{\Omega_Y} x d\mathbb{P}_{X,Y}(x,y)\\
+			&= \int_{\Omega_Y}\int_{\Omega_X} x d\mathbb{P}_{X|Y}(x)d\mathbb{P}_Y(y)\\
+			&= \mathbb{E}_Y[\mathbb{E}_{X|Y}[X\mid Y]].
+		\end{split}
+	\end{equation}
+	or equivalently in terms of the probability densities
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}_X[X] 
+			&= \int_{\Omega_X} x f_X(x) d\mu_X(x)\\
+			&= \int_{\Omega_Y} \int_{\Omega_X} x f_{X,Y}(x,y) d\mu_X(x) d\mu_Y(y)\\
+			&= \int_{\Omega_Y} f_Y(y) \left( \int_{\Omega_X} x f_{X|Y}(x\mid y) d\mu_X(x) \right) d\mu_Y(y)\\
+			&= \mathbb{E}_Y[\mathbb{E}_{X|Y}[X\mid Y]].
 		\end{split}
 	\end{equation}
 \end{proof}
@@ -529,20 +612,24 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
 	\index{Independent random variables}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, such that\index{Probability density function}
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If the random variables are independent the expectation can be written
 	\begin{equation}
-	f_{X,Y}(x,y)=f_X(x)f_Y(y),	
+		\mathbb{E}_{X,Y}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y].
 	\end{equation}
-	then $\mathbb{E}_{X,Y}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y]$.
 \end{theorem}
 
 \begin{proof}
 	\index{Probability density function}
+	If the random variables are independent, then according to \dfref{def:independence}
+	\begin{equation}
+		\mathbb{P}_{X,Y}(\{x,y\})=\mathbb{P}_{X}(\{x\})\mathbb{P}_{Y}(\{y\})
+	\end{equation}
+	meaning
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}_{X,Y}[XY] &= \int_{\Omega_X}\int_{\Omega_Y}x y f_{X,Y}(x,y) dy dx\\
-			&= \int_{\Omega_X} x f_X(x) dx\int_{\Omega_Y} yf_Y(y) dy\\
-			&= \mathbb{E}_X[X]\mathbb{E}_Y[Y]\\
+			\mathbb{E}_{X,Y}[XY] &= \int_{\Omega_X}\int_{\Omega_Y}xyd\mathbb{P}_{X,Y}(x,y)\\
+			&= \int_{\Omega_X}xd\mathbb{P}_X(x)\int_{\Omega_Y}yd\mathbb{P}_Y(y)\\
+			&= \mathbb{E}_X[X]\mathbb{E}_Y[Y].\\
 		\end{split}
 	\end{equation}
 \end{proof}
@@ -596,7 +683,6 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	where $\Omega_Y = g(\Omega_X)$ is the codomain of $Y$.
 \end{definition}
 
-\newpage
 \begin{example}
 	\index{Example: Variance of a sum}
 	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Using \dfref{def:variance} and \dfref{def:covariance}, the variance of a sum can be written
@@ -701,7 +787,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	Consequently
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[g(X)] &= g(\mathbb{E}_X[X])+ \sum_{i=1}^n \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]}\, \cancelto{0}{\mathbb{E}_{X_i}[X_i - \mathbb{E}[X_i]]}\\
+			\mathbb{E}_X[g(X)] &= g(\mathbb{E}_X[X])+ \sum_{i=1}^n \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]}\, \cancelto{0}{\mathbb{E}_{X_i}[X_i - \mathbb{E}_{X_i}[X_i]]}\\
 			&\quad  + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
 			& = g(\mathbb{E}_X[X]) + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
 		\end{split}
@@ -720,7 +806,7 @@ Let $X$ be a non-negative random variable\index{Random variable} and $a > 0$. Th
 	\end{equation}
 \end{proof}
 
-\begin{remark}[Independent Random Variables]
+\begin{remark}[Error propagation for independent Random Variables]
 	\label{remark:error_prop_independent}
 	Let
 	\begin{equation}

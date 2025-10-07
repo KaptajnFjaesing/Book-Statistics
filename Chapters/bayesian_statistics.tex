@@ -40,7 +40,7 @@ $p(w|I)$ is the Robot's prior belief about $w$. $p(D_s|w,D_x,I)$ is the likeliho
 \label{chp:regression}
 Regression involves the Robot building a model,
 \begin{equation}
-	f: \Omega_W\times \Omega_X\mapsto\mathbb{R},
+	f: \Omega_W\times \Omega_X\to\mathbb{R},
 \end{equation} 
 with associated parameters $w\in \Omega_W$, that estimates Nature's actions $s\in \Omega_S=\mathbb{R}$ based on observed data $x\in \Omega_X$. Note that the output of $f$ is $\mathbb{R}$ implying that $S$ is assumed continuous. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function from \dfref{def:quadratic_cost} will be considered to review the subject. From \thref{theorem:expectation_decision_rule} the best action for the Robot can be written
 \begin{equation}

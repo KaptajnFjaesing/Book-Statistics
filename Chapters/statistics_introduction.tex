@@ -1,6 +1,6 @@
 \chapter{Introduction to Statistics}
 \label{chp:statistics_introduction}
-Let the observed outcome of a statistical experiment be described by the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ (see \chref{chp:probaiblity_theory}), where as opposed to the case in probability theory, $\mathbb{P}$ is now unknown. A generic number of random variables are defined on the sample space viz~\cite{orbanz2009functional,tausk2023basic, drewitz2019introduction,chan2021introduction}
+Let the observed outcome of a statistical experiment be described by the probability space $(\Omega, \mathcal{F}, \mathbb{P})$, where as opposed to the case in probability theory, $\mathbb{P}$ is now unknown. A generic number of random variables are defined on the sample space viz~\cite{orbanz2009functional,tausk2023basic, drewitz2019introduction,chan2021introduction}
 \begin{equation}
 	X_i: \Omega \mapsto \Omega_{X_i},
 \end{equation} 
@@ -8,25 +8,22 @@ where $\Omega_{X_i}$ is part of the probability space $(\Omega_{X_i},\mathcal{F}
 \begin{equation}
 	\mathbb{P}_{X_i} = \mathbb{P}\circ X_i^{-1}
 \end{equation}
-is the image measure (see \dfref{def:image_measure}\index{Image measure}) of $\mathbb{P}$ with respect to $X_i$. 
-\begin{definition}[The Joint Probability Measure]
-	The joint probability measure is the image measure
-	\begin{equation}
-		\mathbb{P}_{X_1,\dots X_n} = \mathbb{P}\circ(X_1,\dots X_n)^{-1}.
-	\end{equation}
-	on the measurable space 
-	\begin{equation}
-		(\Omega_{X_1}\times \dots\times \Omega_{X_n}, \mathcal{F}_{X_1}\otimes \dots \otimes \mathcal{F}_{X_n})
-	\end{equation}
-	which for brevity will be written $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. Depending on the discrete or continuous nature of the different random variables, there are discrete (PMF, see \dfref{def:pmf}) or continuous probability distributions (PDF, see \dfref{def:pdf}) associated to the joint probability measure. All probability distributions related to the random variables can be derived from the joint probability distribution via \thref{theorem:law_of_total_probability}.
-\end{definition}
+is the image measure of $\mathbb{P}$ with respect to $X_i$. The joint image measure
+\begin{equation}
+	\mathbb{P}_{X_1,\dots X_n} = \mathbb{P}\circ(X_1,\dots X_n)^{-1}
+\end{equation}
+is defined on the measurable space 
+\begin{equation}
+	(\Omega_{X_1}\times \dots\times \Omega_{X_n}, \mathcal{F}_{X_1}\otimes \dots \otimes \mathcal{F}_{X_n}),
+\end{equation}
+which for brevity will be written $\mathbb{P}_{X_1,\dots X_n}$ and $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$, respectively.
 
 \begin{definition}[Set of All Probability Measures]
 	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$.
 \end{definition}
 
 \begin{definition}[Parametric Subset of Probability Measures]
-	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. It is assumed, often based on prior information, that the joint probability measure $\mathbb{P}_{X_{1:n}}$ belongs to a parametric subset
+	Let $\mathcal{P}$ be the set of all probability measures on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$. It is assumed, often justified by prior knowledge or domain considerations, that the joint probability measure $\mathbb{P}_{X_{1:n}}$ belongs to a parametric subset
 	\begin{equation}
 		\mathcal{P}' = \{\, \mathbb{P}_{X_{1:n}}(w) \mid w \in \Omega_W \,\} \subseteq \mathcal{P},
 	\end{equation}
@@ -35,13 +32,13 @@ is the image measure (see \dfref{def:image_measure}\index{Image measure}) of $\m
 
 \begin{definition}[Parameter Space]
 	\label{def:parameter_space}
-	The parameter space $\Omega_W$ is the set of all values $w$ that index the distributions $\mathbb{P}_{X_1,\dots,X_n}(w)\in \mathcal{P}'$\index{Parameter space}.
+	The parameter space $\Omega_W$ is the set of all values $w$ that index the distributions $\mathbb{P}_{X_{1:n}}(w)\in \mathcal{P}'$\index{Parameter space}.
 \end{definition}
 
 \begin{definition}[Identifiable Statistical Model]
 	A statistical model is identifiable if the mapping 
 	\begin{equation}
-		w \in \Omega_W \mapsto \mathbb{P}_{X_1,\dots,X_n}(w) \in \mathcal{P}'
+		w \in \Omega_W \mapsto \mathbb{P}_{X_{1:n}}(w) \in \mathcal{P}'
 	\end{equation}
 	is injective (i.e., distinct parameter values correspond to distinct distributions).
 \end{definition}
@@ -55,11 +52,11 @@ The parameters $w\in \Omega_W$ can either be viewed as fixed constants or the re
 	\label{ax:parameter_variable}
 	The parameter $w\in \Omega_W$ is treated as a realization of a random variable. In this case, the parameter space must be endowed with a $\sigma$-algebra ($\mathcal{F}_W$) and a probability measure ($\mathbb{P}_W$) that must be the result of another image measure (see \dfref{def:image_measure} \index{Image measure}) with respect to the random variable $W$. This means
 	\begin{equation}
-		W: \Omega \mapsto \Omega_W
+		W: \Omega \to \Omega_W
 	\end{equation}
 	is defined as a random variable that maps from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to the probability space $(\Omega_W,\mathcal{F}_W,\mathbb{P}_W)$, and where
 	\begin{equation}
-		\mathbb{P}_W: \mathcal{F}_W \mapsto [0,1],
+		\mathbb{P}_W: \mathcal{F}_W \to [0,1],
 	\end{equation}
 	is called the prior measure, which is the image measure of $\mathbb{P}$ with respect to $W$, i.e.
 	\begin{equation}
@@ -88,10 +85,13 @@ Although probability measures\index{Probability measure interpretation} are well
 	define the probability measure as the limit of a relative frequency.
 \end{definition}
 
-\newpage
 \begin{definition}[Sugeno Measure]
 	\label{def:sugeno_measure}
-	Let $(\Omega, \mathcal{F})$ be a measurable space (\dfref{def:measurable_space}) and $\operatorname{Bel}: \mathcal{F} \to [0, 1]$ a Sugeno measure\index{Sugeno measure} iff~\cite{shafer1987}
+	Let $(\Omega, \mathcal{F})$ be a measurable space. A set function
+	\begin{equation}
+		\operatorname{Bel}: \mathcal{F} \to [0, 1]
+	\end{equation}
+	is called a Sugeno measure\index{Sugeno measure} if it satisfies~\cite{shafer1987}:
 	\begin{enumerate}
 		\item \textbf{Non-negativity}: $\operatorname{Bel}(\emptyset) = 0$,
 		\item \textbf{Normalization}: $\operatorname{Bel}(\Omega) = 1$,
@@ -101,7 +101,7 @@ Although probability measures\index{Probability measure interpretation} are well
 
 \begin{definition}[Subjective Probability Measure]
 	\label{def:subjective_probability}
-	A subjective probability measure is a numerical representation of rational beliefs\index{Rational beliefs}. Formally, it is a probability measure (\dfref{def:probability}) $\mathbb{P}$ on a measurable space $(\Omega, \mathcal{F})$ that fulfills the definition of a Sugeno measure (\dfref{def:sugeno_measure}) ~\cite{shafer1987,hoff2009first}.
+	A subjective probability measure is a numerical representation of rational beliefs\index{Rational beliefs}. Formally, it is a probability measure $\mathbb{P}$ on a measurable space $(\Omega, \mathcal{F})$ that fulfills \dfref{def:sugeno_measure} ~\cite{shafer1987,hoff2009first}.
 \end{definition}
 
 \begin{theorem}
