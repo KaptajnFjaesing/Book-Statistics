@@ -67,7 +67,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		\mu: \mathcal{F} \to [0,\infty]
 	\end{equation}
-	that satisfies \axref{ax:non_neg} and \axref{ax:add}.
+	that satisfies \axref{ax:non_neg} (non-negativity) and \axref{ax:add} (additivity).
 \end{definition}
 
 \begin{axiom}[Non-negativity]
@@ -139,7 +139,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{definition}[Probability Measure]
 	\label{def:probability}
 	\index{Probability Measure}
-	Loosely speaking, probability can be regarded~\cite{chan2021introduction} as a measure of the size of an event relative to the sample space\index{Sample space}. Formally, a probability measure\index{Probability Measure} $\mathbb{P}$ is a measure, in accordance with \dfref{def:measure}, defined on a measurable space $(\Omega, \mathcal{F})$ that, in addition to satisfying \axref{ax:non_neg} and \axref{ax:add}, obeys the normalization property
+	Loosely speaking, probability can be regarded~\cite{chan2021introduction} as a measure of the size of an event relative to the sample space\index{Sample space}. Formally, a probability measure\index{Probability Measure} $\mathbb{P}$ is a measure, in accordance with \dfref{def:measure} (measure), defined on a measurable space $(\Omega, \mathcal{F})$ that, in addition to satisfying \axref{ax:non_neg} (non-negativity) and \axref{ax:add} (additivity), obeys the normalization property
 	\begin{equation}
 		\mathbb{P}(\Omega) = 1.
 	\end{equation}
@@ -178,7 +178,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 
 \begin{definition}[Conditional Probability]
 	\label{def:conditional_probability}
-	For events $E_1$ and $E_2$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with $\mathbb{P}(E_2) > 0$, the conditional probability\index{Conditional probability} of $E_1$ given $E_2$ is defined viz
+	For events $E_1$ and $E_2$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with $\mathbb{P}(E_2) > 0$, the conditional probability\index{Conditional probability} of $E_1$ given $E_2$ is defined as follows
 	\begin{equation}
 		\mathbb{P}(E_1|E_2) \equiv \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}.
 		\label{eq:cond}
@@ -221,7 +221,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{theorem}[Bayes theorem]
 	\label{theorem:bayes_theorem}
-	For events $E_1,E_2 \in \mathcal{F}$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, Bayes theorem\index{Bayes theorem} can be formulated viz
+	For events $E_1,E_2 \in \mathcal{F}$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, Bayes theorem\index{Bayes theorem} can be formulated as follows
 	\begin{equation}
 		\mathbb{P}(E_1| E_2) = \frac{\mathbb{P}(E_2| E_1)\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}.
 		\label{bayes_theorem}
@@ -229,7 +229,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{theorem}
 
 \begin{proof}
-	Bayes theorem follows directly from applying \thref{theorem:chain_rule} and applying the concept of symmetry viz
+	Bayes theorem follows directly from applying \thref{theorem:chain_rule} and applying the concept of symmetry as follows
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(E_1 \cap E_2) &= \mathbb{P}(E_1| E_2)\mathbb{P}(E_2) \\
@@ -317,6 +317,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{definition}
 
 \begin{remark}
+	\label{remark:marginalization}
 	\thref{theorem:law_of_total_probability} extends naturally from a finite or countable partition of the sample space\index{Sample space}\index{Law of Total Probability} to the case where the partition is induced by a random variable\index{Random variable} $X$. Let
 	\begin{equation}
 		X: \Omega \to \Omega_X
@@ -339,7 +340,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		\mathbb{P}_X = \mathbb{P} \circ X^{-1}
 	\end{equation} 
-	be the image measure\index{Image measure} of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value\index{Expected value} of $X$, denoted by $\mathbb{E}_X[X]$, is defined viz
+	be the image measure\index{Image measure} of $X$ on $(\Omega_X, \mathcal{F}_X)$. The expected value\index{Expected value} of $X$, denoted by $\mathbb{E}_X[X]$, is defined as follows
 	\begin{equation}
 		\mathbb{E}_X[X] \equiv \int_{\Omega_X} x d\mathbb{P}_X(x).
 		\label{eq:expected_value_image}
@@ -411,7 +412,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		X: \Omega \to \Omega_X
 	\end{equation}
-	be a real-valued random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. The variance\index{Variance} of $X$, denoted by $\operatorname{Var}_X[X]$, is defined viz\index{Variance}
+	be a real-valued random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$. The variance\index{Variance} of $X$, denoted by $\operatorname{Var}_X[X]$, is defined as follows\index{Variance}
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}_X[X]&\equiv \mathbb{E}_X[(X-\mathbb{E}_X[X])^2]\\
@@ -637,7 +638,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \begin{definition}[Covariance]
 	\label{def:covariance}
 	\index{Covariance}
-	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}_{X,Y}[X,Y]$, is defined viz
+	Let $X: \Omega \to \Omega_X$ and $Y: \Omega \to \Omega_Y$ be continuous random variables defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, then the covariance of $X$ and $Y$, denoted by $\operatorname{Cov}_{X,Y}[X,Y]$, is defined as follows
 	\begin{equation}
 		\begin{split}
 			\operatorname{Cov}_{X,Y}[X,Y]&=\mathbb{E}_{X,Y}[(X-\mathbb{E}_X[X])(Y-\mathbb{E}_Y[Y])]\\
@@ -776,7 +777,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 \end{theorem}
 
 \begin{proof}
-	$g(X)$ can be written as a Taylor expansion\index{Taylor expansion} around $\mathbb{E}_X[X]$ viz
+	$g(X)$ can be written as a Taylor expansion\index{Taylor expansion} around $\mathbb{E}_X[X]$ as follows
 	\begin{equation}
 		\begin{split}
 			g(X) = &g(\mathbb{E}_X[X]) + \sum_{i=1}^n  \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]} (X_i - \mathbb{E}_{X_i}[X_i])\\
@@ -793,7 +794,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 		\end{split}
 		\label{e2}
 	\end{equation}
-	meaning the variance of $g$ can be approximated viz
+	meaning the variance of $g$ can be approximated as follows
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}_X[g(X)] &= \mathbb{E}_X\big[(g(X) - \mathbb{E}_X[g(X)])^2\big] \\
@@ -843,7 +844,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 			&=\mathbb{E}_Y[Y]^2\operatorname{Var}_X[X]+\mathbb{E}_X[X]^2\operatorname{Var}_Y[Y]+\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]
 		\end{split}
 	\end{equation}
-	where \thref{theorem:expectation_independent} has been applied.	Via the linear approximation from \rmref{remark:error_prop_independent} the variance of the area can be approximated viz
+	where \thref{theorem:expectation_independent} has been applied.	Via the linear approximation from \rmref{remark:error_prop_independent} the variance of the area can be approximated as follows
 	\begin{equation}
 		\label{eq:var2}
 		\begin{split}
@@ -923,7 +924,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		f_{B,G}(b,g \cap A)
 	\end{equation}
-	(or similarly) is not valid, because $p_{B,G}$ is defined only on individual points $(b,g)$, not on sets or intersections. The PMF cannot take an event as its argument; only the image measure $\mathbb{P}_{B,G}$ can.
+	(or similarly) is not valid, because $f_{B,G}$ is defined only on individual points $(b,g)$, not on sets or intersections. The PMF cannot take an event as its argument; only the image measure $\mathbb{P}_{B,G}$ can.
 \end{remark}
 
 
@@ -955,8 +956,8 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 	\begin{equation}
 		\frac{\mathbb{P}(\operatorname{innocent} \mid E)}{\mathbb{P}(\operatorname{innocent})} = \frac{\frac{M-1}{M}}{\frac{N-1}{N}},
 	\end{equation}
-	which approaches $1$ in the limit $N \rightarrow \infty$. Hence, $\mathbb{P}(E \mid \operatorname{innocent}) \simeq \mathbb{P}(E)$ can be a good approximation, but it is not an exact relation.\newline 
-	Assuming $\mathbb{P}(E \mid \operatorname{innocent}) = 0.01$, the prosecutor's claim can be further analyzed using \dfref{def:conditional_probability}, viz.
+	which approaches $1$ in the limit $N,M \rightarrow \infty$. Hence, $\mathbb{P}(E \mid \operatorname{innocent}) \simeq \mathbb{P}(E)$ can be a good approximation, but it is not an exact relation.\newline 
+	Assuming $\mathbb{P}(E \mid \operatorname{innocent}) = 0.01$, the prosecutor's claim can be further analyzed using \dfref{def:conditional_probability}, as follows
 	\begin{equation}
 		\mathbb{P}(\operatorname{guilty} \mid E) + \mathbb{P}(\operatorname{innocent} \mid E) = \frac{\mathbb{P}(\operatorname{guilty} \cap E) + \mathbb{P}(\operatorname{innocent} \cap E)}{\mathbb{P}(E)}.
 	\end{equation}
@@ -1078,7 +1079,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 
 \begin{example}
 	\index{Example: Correlation coefficient}
-	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable\index{Random variable} defined by the PMF\index{Probability mass function} $p_W(-1)=p_W(1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
+	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable\index{Random variable} defined by the PMF\index{Probability mass function} $f_W(-1)=f_W(1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
 	\begin{enumerate}
 		\item Show $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$.\newline
 		
@@ -1102,7 +1103,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 		since $\operatorname{Var}_X[X]=\mathbb{E}_X[X^2]-\cancelto{0}{\mathbb{E}_X[X]^2}=1$. Now
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}_W[W^2]&= \frac{1}{n}\sum_{i=1}^nw_i^2p_W(w_i)\\
+				\mathbb{E}_W[W^2]&= \frac{1}{n}\sum_{i=1}^nw_i^2f_W(w_i)\\
 				&= \frac{1}{2}[(-1)^2\frac{1}{2}+1^2\frac{1}{2}]\\
 				&= 1
 			\end{split}
@@ -1123,7 +1124,7 @@ Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
 		\begin{equation}
 			\begin{split}
 				\begin{split}
-					\mathbb{E}_W[W]&= \frac{1}{n}\sum_{i=1}^nw_ip_W(w_i)\\
+					\mathbb{E}_W[W]&= \frac{1}{n}\sum_{i=1}^nw_if_W(w_i)\\
 					&= \frac{1}{2}[(-1)\frac{1}{2}+1\frac{1}{2}]\\
 					&= 0
 				\end{split}

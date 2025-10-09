@@ -3,7 +3,7 @@ While \chref{chp:probaiblity_theory} provides the formal definition of probabili
 
 The central challenge is to incorporate only the information that is actually known, without introducing unwarranted assumptions about unknown quantities. Logical analysis provides the framework for this task: it ensures that probability assignments are internally consistent and make full use of the information at hand. Several approaches implement this principle. Logical analysis can be applied directly to the sum and product rules to construct probability functions~\citep{jaynes_11}; it can exploit group invariances inherent in the problem~\citep{jaynes_16}; and it can ensure consistent marginalization of nuisance parameters~\citep{jaynes_21}.
 
-Among these methods, the principle of maximum entropy stands out for its generality and power. By selecting the probability distribution that maximizes entropy subject to the known constraints, it provides a systematic, non-arbitrary means of assigning probabilities while remaining maximally noncommittal about unknown information~\cite{zellner_bayesian_inference, jaynes_16, jaynes_19, shore_17, shore_18}. The remainder of this chapter develops the maximum entropy principle and illustrates how it can be applied to derive probability distributions from partial knowledge.
+Among these methods, the principle of maximum entropy\citep{Jaynes1957} stands out for its generality and power. By selecting the probability distribution that maximizes entropy subject to the known constraints, it provides a systematic, non-arbitrary means of assigning probabilities while remaining maximally noncommittal about unknown information~\cite{zellner_bayesian_inference, jaynes_16, jaynes_19, shore_17, shore_18}. The remainder of this chapter develops the maximum entropy principle and illustrates how it can be applied to derive probability distributions from partial knowledge.
 
 \section{The Principle of Maximum Entropy}
 \label{sec:maxent}
@@ -25,21 +25,17 @@ be a generic random variable\index{Random variable} from the probability space\i
 	Background information formally determines the class of admissible probability distributions and methods considered suitable for representing uncertainty in the system.
 \end{definition}
 
-From definition \dfref{def:prob_density_general}, the image measure\index{Image measure} $\mathbb{P}_Z$ admits a density $f_Z$ with respect to $\mu$, so that for any measurable set $B\in \mathcal{F}_Z$,
+From definition \dfref{def:prob_density_general}, the image measure\index{Image measure} $\mathbb{P}_Z$ admits a density $f_Z$ with respect to the measure $\mu$, so that for any event $B\in \mathcal{F}_Z$,
 \begin{equation}
 	\mathbb{P}_Z(B \mid\gamma,I) = \int_B f_Z(z\mid \gamma,I) d\mu(z),
 	\label{eq:max_ent_probability_measure}
 \end{equation}
-where $f_Z$ is the PMF\index{Probaility mass function} for a discrete sample space and the PDF\index{Probability density function} for a continuous sample space. The maximum entropy principle asserts that the density $f_Z(z | \gamma, I)$ that best represents the current state of knowledge is the one that maximizes the constrained entropy~\citep{Sivia2006}, where $\gamma$ denotes the parameters of the distribution and $I$ the background information. 
-
-The Shannon entropy\index{Shannon entropy} of a probability density $f_Z$ can be expressed as
+where $f_Z$ is the PMF\index{Probaility mass function} for a discrete sample space and the PDF\index{Probability density function} for a continuous sample space. The maximum entropy principle asserts that the density $f_Z(z | \gamma, I)$ that best represents the current state of knowledge is the one that maximizes the constrained Shannon entropy~\citep{Sivia2006}, where $\gamma$ denotes the parameters of the distribution and $I$ the background information. The Shannon entropy\index{Shannon entropy} of a probability density $f_Z$ can be written
 \begin{equation}
 	H[f_Z] = - \int_{\Omega_Z} f_Z(z \mid \gamma, I) 
 	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)}  d\mu(z),
 \end{equation}
-where $m(z)$ is a reference density\index{Reference measure} that ensures invariance of the entropy under reparameterizations of $z$. 
-
-To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $\gamma_0, \gamma_1, \dots, \gamma_n$ and defines the Lagrangian functional, which represents the **constrained entropy**\index{Constrained entropy}:
+where $m(z)$ is a reference measure\index{Reference measure} that ensures invariance of the entropy under reparameterizations of $z$. To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $\gamma_0, \gamma_1, \dots, \gamma_n$ and defines the Lagrangian functional, which represents the constrained entropy\index{Constrained entropy}:
 \begin{equation}
 	\mathcal{L}[f_Z] = - \int_{\Omega_Z} 
 	f_Z(z \mid \gamma, I) \Bigg(
@@ -47,45 +43,29 @@ To incorporate known constraints, such as moment conditions or normalization, on
 	+ \gamma_0 + \sum_{j=1}^n \gamma_j C_j(z)
 	\Bigg) d\mu(z),
 \end{equation}
-where each $C_j(z)$ denotes a constraint function. Maximizing $\mathcal{L}[f_Z]$ with respect to $f_Z$ yields the probability distribution of maximum entropy consistent with the given constraints.
-
-Using the unifying measure\index{Unifying measure} $\mu$, the entropy\index{Shannon entropy} can be expressed as
-\begin{equation}
-	H[f_Z] = - \int_{\Omega_Z} f_Z(z \mid \gamma, I) 
-	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} d\mu(z),
-\end{equation}
-where $m(z)$ is a reference measure\index{Reference measure}, ensuring invariance under reparameterizations of $z$. 
-To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $\gamma_0, \gamma_1, \dots, \gamma_n$ and defines the Lagrangian functional, which represents the constrained entropy\index{Constrained entropy}
-\begin{equation}
-	\mathcal{L}[f_Z] =- \int_{\Omega_Z} 
-	f_Z(z \mid \gamma, I)\Big(
-	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)}
-	+ \gamma_0 + \sum_{j=1}^n \gamma_j C_j(z)
-	\Big) d\mu(z).
-\end{equation}
 where each $C_j(z)$ denotes a constraint function. Maximizing $\mathcal{L}[f_Z]$ with respect to $f_Z$ yields the probability distribution of maximum entropy consistent with the given constraints. The maximum of $\mathcal{L}$ with respect to $f_Z$ is defined by the Euler-Lagrange condition
 \begin{equation}
-	\frac{\partial}{\partial f_Z} f_Z\Big(\ln \tfrac{f_Z}{m} + \gamma_0 + \sum_j \gamma_j C_j\Big) = 0,
+	\frac{\partial}{\partial f_Z} f_Z\Big(\ln \tfrac{f_Z}{m} + \gamma_0 + \sum_{j=1}^n \gamma_j C_j\Big) = 0,
 \end{equation}
 which simplifies to
 \begin{equation}
-	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} + 1 + \gamma_0 + \sum_j \gamma_j C_j(z) = 0.
+	\ln \frac{f_Z(z \mid \gamma, I)}{m(z)} + 1 + \gamma_0 + \sum_{j=1}^n \gamma_j C_j(z) = 0.
 \end{equation}
 Hence the maximum-entropy distribution takes the exponential family form
 \begin{equation}
 	\begin{split}
 		f_Z(z \mid \gamma, I)
-		&= m(z)\, e^{-1 - \gamma_0 - \sum_{j=1}^n \gamma_j C_j(z)} \\
-		&= \frac{m(z)\, e^{-\sum_j \gamma_j C_j(z)}}{
-			\int_{\Omega_Z} m(z')\, e^{-\sum_j \gamma_j C_j(z')}\, d\mu(z')}.\\
+		&= m(z) e^{-1 - \gamma_0 - \sum_{j=1}^n \gamma_j C_j(z)} \\
+		&= \frac{m(z) e^{-\sum_{j=1}^n \gamma_j C_j(z)}}{
+			\int_{\Omega_Z} m(z') e^{-\sum_{j=1}^n \gamma_j C_j(z')} d\mu(z')}.\\
 	\end{split}
 \end{equation}
-The constants $\gamma_j$ are determined by the imposed constraints. The resulting measure (\EQref{eq:max_ent_probability_measure}) defines the unique maximum-entropy probability measure consistent with the given information.
+The constants $\gamma_j$ are determined by the imposed constraints. The resulting probability measure (\EQref{eq:max_ent_probability_measure}) defines the unique maximum-entropy probability measure consistent with the given information.
 
 \newpage
 \begin{example}
 	\index{Example: Maximum entropy normal distribution}
-	Consider a continuous random variable, $Z$, with sample space $\Omega_Z=\mathbb{R}$, assumed to be symmetric around a mean $\mu$ and with variance $\sigma^2$. Taking $\gamma = \{\gamma_0,\gamma_1,\gamma_2\}$ leads to 
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z=\mathbb{R}$, assumed to be symmetric around a mean $\mu$ and with variance $\sigma^2$. In this case
 	\begin{equation}
 			f_Z(z \mid \gamma, I)= m(z) e^{-1 - \gamma_0 - \gamma_1z-\gamma_2z^2}.
 	\end{equation}

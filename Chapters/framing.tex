@@ -4,12 +4,12 @@ In this book, statistics is framed as a game against Nature, following conventio
 
 \begin{definition}[Robot]
 	\label{def:robot}
-	The Robot is the primary decision maker in the statistical game.\index{Robot}
+	The Robot is the primary decision maker in the statistical game.\index{Decision maker Robot}
 \end{definition}
 
 \begin{definition}[Nature]
 	\label{def:nature}	
-	Nature is an unpredictable decision maker that can interfere with the Robot's outcomes. It models uncertainty in the decision-making process.\index{Nature}
+	Nature is an unpredictable decision maker that can interfere with the Robot's outcomes. It models uncertainty in the decision-making process.\index{Decision maker Nature}
 \end{definition}
 
 \begin{remark}[Statistical game setup]
@@ -37,6 +37,7 @@ the Robot's objective is to formulate a decision rule that minimize the expected
 	where $\Omega_U$ is the action space of the Robot.
 \end{definition}
 
+\newpage
 \begin{example}
 	\label{ex:rain}
 	Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
@@ -50,7 +51,21 @@ the Robot's objective is to formulate a decision rule that minimize the expected
 	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not. The Robot's decision rule, denoted as $U$, maps the available information $X=x$ (possibly $X=$ weather forecasts, current weather conditions, etc.) to one of its possible actions. For instance, $U(\text{weather forecast}, D)$ might map to the action "\text{bring umbrella}" if rain is predicted and "\text{don't bring umbrella}" otherwise.
 \end{example}
 
-The random variable $X: \Omega \to \Omega_X$ represent the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S: \Omega \to \Omega_S$ represent the different possible decisions of Nature. $\Omega_X$ and $\Omega_S$ have associated $\sigma$-algebras and probability measures, however, such details are assumed to be understood in the practical application of statistics. Given the observation $X=x$, as well as data $D$, the objective of the Robot is to minimize the expected cost associated with its decisions\cite{murphy2023probabilistic}
+The random variable\index{Random variable} $X: \Omega \to \Omega_X$ represent the information available (the information may be missing or null) to the Robot regarding the decision Nature will make, while $S: \Omega \to \Omega_S$ represent the different possible decisions of Nature. $\Omega_X$ and $\Omega_S$ have associated $\sigma$-algebras\index{$\sigma$-algebra} and probability measures\index{Probability measure}, however, such details are assumed to be understood in the practical application of statistics. 
+
+\begin{remark}[Relaxation of Notation]
+	\label{sec:notation}
+	The formal measure-theoretic details introduced so far provide the foundation for statistical reasoning. In practice, however, many of these technicalities can be safely abstracted to facilitate computations and exposition.
+	Accordingly, in the remainder of this book, the notation around probability spaces, $\sigma$-algebras, and probability measures will be \emph{relaxed}. Specifically:
+	\begin{itemize}
+		\item The symbol $p$ will be used informally to denote probability distributions, densities, mass functions, or measures.
+		\item The probability of a random variable taking a specific value, $p(X=x)$, will usually be written as $p(x)$ for brevity.
+	\end{itemize}
+	
+	This simplification allows advanced manipulation of probabilities without cumbersome formalism. Nevertheless, familiarity with the formal definitions provided here remains beneficial for a rigorous understanding.
+\end{remark}
+
+Given the observation $X=x$, as well as data $D$, the objective of the Robot is to minimize the expected cost associated with its decisions\cite{murphy2023probabilistic}
 \begin{equation}
 	\begin{split}
 		\mathbb{E}[C(U, S)|I] &= \int dD dx ds  C(U(x,D),s) p(X=x,S=s,D|I)\\
