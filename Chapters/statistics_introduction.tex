@@ -1,154 +1,491 @@
-\chapter{Introduction to Statistics}
-\label{chp:statistics_introduction}
-Let the observed outcome of a statistical experiment be described by the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Unlike in probability theory, where $\mathbb{P}$ is assumed known, in statistics the data-generating measure is typically unknown and must be inferred from observations. Let~\cite{orbanz2009functional,tausk2023basic,drewitz2019introduction,chan2021introduction}
-\begin{equation}
-	X_i: \Omega \to \Omega_{X_i}
-\end{equation}
-be a generic random variable\index{Random variable} from the probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$ to the measurable space $(\Omega_{X_i},\mathcal{F}_{X_i})$, with the image measure\index{Image measure}
-\begin{equation}
-	\mathbb{P}_{X_i} = \mathbb{P} \circ X_i^{-1}.
-\end{equation}
-The joint image measure of $n$ such random variables,
-\begin{equation}
-	\mathbb{P}_{X_1,\dots,X_n} = \mathbb{P} \circ (X_1,\dots,X_n)^{-1},
-\end{equation}
-is defined on the product measurable space\index{Measurable space}
-\begin{equation}
-	\bigl(\Omega_{X_1}\times \cdots \times \Omega_{X_n}, \mathcal{F}_{X_1}\otimes \cdots \otimes \mathcal{F}_{X_n}\bigr),
-\end{equation}
-which for brevity will be written as $\mathbb{P}_{X_{1:n}}$ and $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$, respectively.
+\chapter{Framing of Statistics}
+In this book, statistics is framed as a game against Nature, following conventions from decision theory~\cite{lavalle2006planning}. 
+In this game, two players interact under uncertainty: the Robot, who seeks to make optimal decisions, and Nature, who determines the state of the world.
 
-\begin{definition}[Set of All Probability Measures]
-	Let $\mathcal{P}$ be the set of all probability measures\index{Probability measure} on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$.
+\begin{definition}[Robot]
+	\label{def:robot}
+	The Robot is the primary decision maker in the statistical game.\index{Decision maker Robot}
+	It selects actions or decisions based on available information with the aim of achieving an optimal outcome under uncertainty.
 \end{definition}
 
-\begin{definition}[Parametric Family of Probability Measures]
-	\label{def:parametric_family}
-	A parametric family (or parametric subset) of probability measures is a set of the form
-	\begin{equation}
-		\mathcal{P}' = \{ \mathbb{P}^w_{X_{1:n}} \mid w \in \Omega_W \} \subseteq \mathcal{P},
-	\end{equation}
-	where $\Omega_W$ is the parameter space. For each fixed $w$, $\mathbb{P}^w_{X_{1:n}}$ is a probability measure\index{Probability measure}\index{Image measure} on $(\Omega_{X_{1:n}},\mathcal{F}_{X_{1:n}})$.
+\begin{definition}[Nature]
+	\label{def:nature}
+	Nature is an opposing and unpredictable player that determines the true state of the world and thereby influences the outcomes of the statistical experiment\index{Decision maker Nature}. It represents the inherent uncertainty of the environment and the data-generating process.
 \end{definition}
 
-\begin{definition}[Parameter Space]
-	\label{def:parameter_space}
-	The parameter space\index{Parameter space} $\Omega_W$ is the set of all values $w$ that index the probability measures $\mathbb{P}^w_{X_{1:n}} \in \mathcal{P}'$.
+\begin{definition}[Statistical Game]
+	\label{def:statistical_game}
+	The interaction between the Robot and Nature is formalized as a statistical game under uncertainty. Let
+	\begin{equation}
+		(\Omega, \mathcal{F}, \mathbb{P})
+	\end{equation}
+	be a probability space. Consider $n+1$ pairs of random variables\index{Random variable}
+	\begin{equation}
+		(X_1, Y_1), \dots, (X_n, Y_n), (X_{n+1}, Y_{n+1}) \colon \Omega \to \Omega_X \times \Omega_Y,
+	\end{equation}
+	where $(X_i,Y_i)$ for $i=1,\dots,n$ correspond to past observations collected as data, and $(X_{n+1},Y_{n+1})$ corresponds to a new observation $X_{n+1}$ with unknown outcome $Y_{n+1}$ to be predicted. Define the dataset\index{Dataset} as the collection of past realizations
+	\begin{equation}
+		D = \{(x_i, y_i)\}_{i=1}^n \in (\Omega_X \times \Omega_Y)^n,
+	\end{equation}
+	where $x_i \in \Omega_X$ and $y_i \in \Omega_Y$ are realizations of $X_i$ and $Y_i$, respectively. Each pair $(x_i, y_i)$ corresponds to one past round of the game. The image measures of the random variables are
+	\begin{equation}
+		\begin{split}
+			\mathbb{P}_{X_{1:n+1}} &= \mathbb{P} \circ (X_1,\dots,X_{n+1})^{-1},\\
+			\mathbb{P}_{Y_{1:n+1}} &= \mathbb{P} \circ (Y_1,\dots,Y_{n+1})^{-1},\\
+			\mathbb{P}_{(X,Y)_{1:n+1}} &= \mathbb{P} \circ ((X_1,Y_1),\dots,(X_{n+1},Y_{n+1}))^{-1},
+		\end{split}
+	\end{equation}
+	defined on the measurable spaces
+	\begin{equation}
+		(\Omega_X^{n+1},\mathcal{F}_X^{n+1}), \quad(\Omega_Y^{n+1},\mathcal{F}_Y^{n+1}), \quad ((\Omega_X \times \Omega_Y)^{n+1}, (\mathcal{F}_X \otimes \mathcal{F}_Y)^{n+1}).
+	\end{equation}
+	Suppose that the joint image measure $\mathbb{P}_{(X,Y)_{1:n+1}}$ depends on an unknown parameter $w \in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}. Let
+	\begin{equation}
+		\mathcal{P}' = \{ \mathbb{P}^w_{(X,Y)_{1:n+1}} \mid w \in \Omega_W \},
+	\end{equation}
+	denote a parametric family of joint image measures\index{Parametric family of image measures} on $(\Omega_X \times \Omega_Y)^{n+1}$. The statistical model\index{Statistical model} of the game is then defined as the triple
+	\begin{equation}
+		((\Omega_X \times \Omega_Y)^{n+1}, (\mathcal{F}_X \otimes \mathcal{F}_Y)^{n+1}, \mathcal{P}').
+	\end{equation}
+	In the game, the Robot selects an action $u_{n+1} \in \Omega_U$ according to a decision rule\index{Decision rule}
+	\begin{equation}
+		U \colon \Omega_X \times (\Omega_X \times \Omega_Y)^n \to \Omega_U,
+	\end{equation}
+	mapping the new observation $x_{n+1}$ and past dataset $D$ to an action. The Robot incurs a penalty determined by a cost function\index{Cost function}
+	\begin{equation}
+		C \colon \Omega_U \times \Omega_Y \to \mathbb{R},
+	\end{equation}
+	which assigns a numerical loss to each pair $(u,y) \in \Omega_U \times \Omega_Y$. The Robot's goal is to minimize the expected cost~\cite{murphy2023probabilistic}
+	\begin{equation}
+		\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}[C(U(x_{n+1},D), Y_{n+1})].
+		\label{eq:expcost}
+	\end{equation}
+	The superscript $\mathcal{P}'$, denotes the object is taken with respect to a member or mixture of the parametric family. It creates a unified notation for different statistical paradigms (see \rmref{rem:notation} and \rmref{rem:frequentist_bayesian_expected_cost}).
 \end{definition}
 
-\begin{definition}[Identifiable Statistical Model]
-	A parametric family $\mathcal{P}' = \{ \mathbb{P}^w_{X_{1:n}} \mid w \in \Omega_W \}$ is identifiable if the mapping
-	\begin{equation}
-		w \in \Omega_W \mapsto \mathbb{P}^w_{X_{1:n}} \in \mathcal{P}'
-	\end{equation}
-	is injective; i.e., distinct parameter values induce distinct probability measures.
-\end{definition}
-
-The parameters $w \in \Omega_W$ may be interpreted in two different ways in practice: either as fixed but unknown constants or as realizations of a random variable.
-
-\begin{axiom}[Parameter Fixedness]
-	\label{ax:parameter_fixed}
-	The parameter $w \in \Omega_W$ is treated as a fixed but unknown constant. In this setting the image measure\index{Image measure} $\mathbb{P}_{X_{1:n}}$ is assumed to equal $\mathbb{P}^{w^*}_{X_{1:n}}$ for some (unknown) $w^* \in \Omega_W$.
-\end{axiom}
-
-\begin{axiom}[Parameter as a Random Variable]
-	\label{ax:parameter_variable}
-	The parameter $w \in \Omega_W$ is treated as the realization of a random variable\index{Random variable}
-	\begin{equation}
-		W:\Omega \to \Omega_W
-	\end{equation}
-	from the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space\index{Measurable space} $(\Omega_W, \mathcal{F}_W)$, with the image (prior) measure\index{Image measure}\index{Prior measure}
-	\begin{equation}
-		\mathbb{P}_W = \mathbb{P} \circ W^{-1}.
-	\end{equation}
- 	The joint image measure $\mathbb{P}_{W,X_{1:n}}$ is defined on 
-	\begin{equation}
-		(\Omega_W \times \Omega_{X_{1:n}}, \mathcal{F}_W \otimes \mathcal{F}_{X_{1:n}}).
-	\end{equation}
-\end{axiom}
-
-\begin{remark}[Parameter interpretation]
-	For both \axref{ax:parameter_fixed} and \axref{ax:parameter_variable}, the value of a parameter is considered fixed. \axref{ax:parameter_variable} introduces a random variable\index{Random variable} $W$ not to add randomness to the parameter $w$ but to model uncertainty or variability about the fixed but unknown parameter value.
-\end{remark}
-
-\newpage
-\section{Interpretation of Probability Measures} 
-Although probability measures\index{Probability measure interpretation} are defined according to \dfref{def:probability}, their interpretation is not defined beyond this definition. For this reason there are two broadly accepted interpretations of probability; objective and subjective. 
-
-\begin{definition}[Objective Probability Measure]
-	\label{def:objective_probability}
-	Let $\mathbb{P}$ denote a generic probability measure\index{Probability measure} defined on the generic probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$. The "objective probability measure"\index{Objective probability measure}-interpretation define $\mathbb{P}$ as the long-run or limiting frequency of an event, $E$. That is, let $m$ be the number of occurrences of $E$, and let $n$ be the number of experiments, then~\cite{Leamer1978}
-	\begin{equation}
-		\mathbb{P}(E) \equiv \lim_{{n \to \infty}} \bigg(\frac{m}{n}\bigg)
-	\end{equation}
-	define the probability measure as the limit of a relative frequency.
-\end{definition}
-
-\begin{definition}[Sugeno Measure]
-	\label{def:sugeno_measure}
-	Let $(\Omega, \mathcal{F})$ be a measurable space\index{Sugeno measure}\index{Measurable space}. A set function\index{Belief function}
-	\begin{equation}
-		\operatorname{Bel}: \mathcal{F} \to [0,1]
-	\end{equation}
-	is called a Sugeno measure~\cite{shafer1987} if it satisfies the following properties:
-	\begin{enumerate}
-		\item \axref{ax:non_neg} (non-negativity),
-		\item $\operatorname{Bel}(\Omega) = 1$ (normalization),
-		\item $\operatorname{Bel}(A) \le \operatorname{Bel}(B)$ for all $A, B \in \mathcal{F}$ with $A \subseteq B$ (monotonicity).
-	\end{enumerate}
-\end{definition}
-
-\begin{definition}[Subjective Probability Measure]
-	\label{def:subjective_probability}
-	A subjective probability measure\index{Subjective probability measure} is a numerical representation of rational beliefs\index{Rational beliefs}. Formally, it is a probability measure\index{Probability measure} $\mathbb{P}$, according to \dfref{def:probability}, on a measurable space\index{Measurable space} $(\Omega, \mathcal{F})$ that fulfills \dfref{def:sugeno_measure} ~\cite{shafer1987,hoff2009first}.
-\end{definition}
-
-\begin{theorem}[Probability vs.\ Sugeno Measures]
-	Any probability measure $\mathbb{P}$ on $(\Omega, \mathcal{F})$ is a Sugeno measure.
-\end{theorem}
-\begin{proof}
-	Let $\mathbb{P}$ be a probability measure on $(\Omega, \mathcal{F})$. By definition, $\mathbb{P}$ satisfies:
-	\begin{enumerate}
-		\item $\mathbb{P}(\emptyset) = 0$ and $\mathbb{P}(\Omega) = 1$ (Boundary Conditions).
-		\item If $A, B \in \mathcal{F}$ and $A \subseteq B$, then $\mathbb{P}(A) \leq \mathbb{P}(B)$ (Monotonicity).
-	\end{enumerate}
-	Thus, $\mathbb{P}$ is a Sugeno measure.
-\end{proof}
-
-\begin{remark}
-	Since a probability measure $\mathbb{P}$ satisfies the axioms of a Sugeno measure\index{Sugeno measure}, it can be interpreted as a belief function\index{Belief function}.
+\begin{remark}[Superscript notation]
+	\label{rem:superscript_w}
+	The superscript $w$ in $\mathbb{P}_Z^w$ serves as an index identifying a particular member of a family of probability measures or densities. It indicates dependence on an underlying parameter without specifying whether this parameter is fixed, unknown, or random. This convention provides a generic notation that remains valid across different interpretations of statistical models.
 \end{remark}
 
 
-\begin{definition}[Frequentist Statistics]
-	\label{def:frequentist_statistics}
-	Frequentist statistics\index{Frequentist statistics definition} is a	paradigm that adopts \axref{ax:parameter_fixed} and \dfref{def:objective_probability} of probability. 
-\end{definition}
-
-\begin{definition}[Bayesian Statistics]
-	\label{def:bayesian_statistics}
-	Bayesian statistics\index{Bayesian statistics definition} is a paradigm that adopts \axref{ax:parameter_variable} and definition \dfref{def:subjective_probability} of probability. 
-\end{definition}
-
-
-\begin{remark}[Frequentist vs.\ Bayesian Interpretation]
-	\label{rem:frequentist_statistics}
-	In the Frequentist framework, parameters are fixed but unknown, and probability statements concern the variability of estimators across hypothetical repeated samples. For instance, a $95\%$ confidence interval means that if the experiment were repeated many times, approximately $95\%$ of the constructed intervals would contain the true parameter value. \newline
-	
-	In the Bayesian framework, parameters are treated as random variables with a posterior distribution given the observed data. A $95\%$ credible interval therefore means that, conditional on the data and prior information, there is a $95\%$ probability that the true parameter lies within the interval.\newline
-	
-	Thus, in the Frequentist view, the interval varies across repeated experiments while the parameter remains fixed, whereas in the Bayesian view, the interval is fixed (given the data) and the parameter is uncertain.
+\begin{remark}[Notation of Statistics]
+	\label{rem:notation}
+	In accordance with \dfref{def:statistical_game}, the expected cost (\EQref{eq:expcost}) can be written as follows
+	\begin{equation}
+		\begin{split}
+			&\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}\big[C(U(x_{n+1},D),Y_{n+1})\big] \\
+			&\quad= \int_{(\Omega_X\times\Omega_Y)^{n+1}}
+			C\big(U(x_{n+1},D),y_{n+1}\big)\;
+			\mathrm{d}\mathbb{P}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}(D,x_{n+1},y_{n+1}).
+		\end{split}
+		\label{eq:expcost2}
+	\end{equation}
+	\EQref{eq:expcost2} can be further decomposed by specifying the cost function or decomposition of the joint image measure via \thref{theorem:chain_rule}, \thref{theorem:bayes_theorem} or \thref{theorem:law_of_total_probability}. In this case, the notation of probability theory becomes cumbersome and for this reason, statistical notation is typically relaxed -- when the context is reasonably clear -- by omitting distribution subscripts, superscripts and integral domains. In this notation, \EQref{eq:expcost2} becomes
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}\big[\,C(U(x_{n+1},D) ,Y_{n+1})\big] &= \int C\big(U(x_{n+1},D),y_{n+1}\big) \mathrm{d}\mathbb{P}(D,x_{n+1},y_{n+1})\\
+			&= \int C\big(U(\tilde{D}),y_{n+1}\big) \mathrm{d}\mathbb{P}(\tilde{D},y_{n+1}),
+		\end{split}
+		\label{eq:expcost3}
+	\end{equation}	
+	where $\tilde{D}= \{x_{n+1},D\}$ is used to further compress the notation.
 \end{remark}
 
 \begin{example}
-	\label{ex:bayesian_model}
-	Consider a Bayesian statistical model in which the observed data are generated from a combination of a Normal distribution with parameters $\mu,\sigma$ and a Beta distribution with parameters $a,b$. Define the parameter random vector
+	\label{ex:rain}
+	Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
 	\begin{equation}
-		W = 
-		\begin{pmatrix}
-			W_\mu \\ W_\sigma \\ W_a \\ W_b
-		\end{pmatrix} : \Omega \to \Omega_W,
+		\Omega_U = \{"\text{bring umbrella}", "\text{don't bring umbrella}"\}.
 	\end{equation}
-	where each component $W_\mu, W_\sigma, W_a, W_b$ is a random variable from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_i, \mathcal{F}_i)$ with an image (prior) measure $\mathbb{P}_i$ $\forall i\in\{\mu,\sigma,a,b\}$.
+	Nature have already picked whether or not it will rain later, i.e.
+	\begin{equation}
+		\Omega_Y = \{"\text{rain}", "\text{no rain}"\},
+	\end{equation}
+	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not.
 \end{example}
 
+\begin{theorem}[Optimal Decision Rule]
+	\label{theorem:opt_decision_rule}
+	In accordance with \dfref{def:statistical_game}, the optimal decision rule for the Robot is
+	\begin{equation}
+		\begin{split}
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]\\
+			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}.
+		\end{split}
+		\label{eq:decision_rule3}
+	\end{equation}
+	
+\end{theorem}
+\begin{proof}
+	From \dfref{def:statistical_game}
+	\begin{equation}
+		U^*(\tilde{D}) = \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|I],
+		\label{eq:decision_rule_x}
+	\end{equation}	
+	where the expected cost (\EQref{eq:expcost}) can be written
+	\begin{equation}
+			\mathbb{E}\big[\,C(U(\tilde{D}) ,Y_{n+1})\big]= \int C\big(U(\tilde{D}),y_{n+1}\big) \mathrm{d}\mathbb{P}(\tilde{D},y_{n+1}).
+		\label{eq:conditional_expected_cost}
+	\end{equation}
+	From \thref{theorem:total_expectation}
+	\begin{equation}
+		\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|I] = \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]].
+		\label{eq:total2}
+	\end{equation}
+	Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
+	\begin{equation}
+		\begin{split}
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D}) } \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]]\\
+			&= \argmin_{U(\tilde{D})} \int p(\tilde{D}|I) \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] \mathrm{d}\tilde{D}.
+		\end{split}
+		\label{eq:decision_rule2}
+	\end{equation}
+	Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
+	\begin{equation}
+		\begin{split}
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]\\
+			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}.
+		\end{split}
+	\end{equation}
+\end{proof}
+
+\begin{example}
+	In general the random variables $X_i$ represent the observations the Robot has available that are related to the decision Nature is going to make. However, this information may not be given, in which case $\{x_{n+1},D_x\}=\emptyset$ and consequently
+	\begin{equation}
+		\begin{split}
+			\tilde{D} &=\{y_i\}_{i=1}^n\\
+			&\equiv D_y.
+		\end{split}
+	\end{equation}
+	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From \EQref{eq:decision_rule3} the optimal action for the Robot can be written
+	\begin{equation}
+		U^*(D_y) = \argmin_{U(D_y)} \mathbb{E}[C(U(D_y), Y_{n+1})|D_y,I]
+		\label{eq:best_decision1}
+	\end{equation}
+\end{example}
+
+\section{Assigning a Cost Function}
+\label{sec:assing_cost}
+The cost function (\dfref{def:statistical_game}) associates a numerical penalty to the Robot's action and thus the details of it determine the decisions made by the Robot. Under certain conditions, a cost function can be shown to exist~\cite{lavalle2006planning}, however, there is no systematic way of producing or deriving the cost function beyond applied logic. In general, the topic can be split into considering a continuous and discrete action space, $\Omega_U$. 	
+
+\subsection{Continuous Action Space}
+In case of a continuous action space, the cost function is typically picked from a set of standard choices.	
+\begin{definition}[Linear Cost Function]
+	\label{def:linear_cost_function}
+	The linear cost function is defined as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1}) \equiv |U(\tilde{D})-y_{n+1}|.
+	\end{equation}	
+\end{definition}
+
+\begin{theorem}[Median Decision Rule]
+	\label{theorem:median_decision_rule}
+	The cost function of \dfref{def:linear_cost_function} leads to the median decision rule
+	\begin{equation}
+		\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1} = \frac{1}{2}.
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	The expected cost used in \thref{theorem:opt_decision_rule}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] &= \int_{-\infty}^{\infty} |U(\tilde{D})-y_{n+1}| p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
+			&= \int_{-\infty}^{U(\tilde{D})} (y_{n+1}-U(\tilde{D}))p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
+			&\quad+\int_{U(\tilde{D})}^\infty  (U(\tilde{D})-y_{n+1})p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}.\\
+		\end{split}
+	\end{equation}
+	The decision rule that minimize the cost can be found via
+	\begin{equation}
+		\begin{split}
+			0 &=\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)+\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
+			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)-\int_{U^*(\tilde{D})}^\infty  p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}.
+		\end{split}
+	\end{equation}
+	This leads to
+	\begin{equation}
+		\begin{split}
+			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1} &= \int_{U^*(\tilde{D})}^\infty p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
+			&= 1- \int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
+			&\Downarrow\\
+			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}& = \frac{1}{2}.
+		\end{split}
+	\end{equation}	
+\end{proof}
+
+\begin{definition}[Quadratic Cost Function]
+	\label{def:quadratic_cost}
+	The quadratic cost function is defined as
+	\begin{equation}
+		C(U(\tilde{D}),s) \equiv (U(\tilde{D})-s)^2.
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[Expectation Decision Rule]
+	\label{theorem:expectation_decision_rule}
+	The cost function of \dfref{def:quadratic_cost} leads to the expectation decision rule
+	\begin{equation}
+		U^*(\tilde{D}) = \mathbb{E}[Y_{n+1}|\tilde{D},I].
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	From \thref{theorem:opt_decision_rule}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] &= \int (U(\tilde{D})-y_{n+1})^2 p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
+			&\Downarrow\\
+			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int y_{n+1}p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
+			&=0\\
+			&\Downarrow\\
+			U^*(\tilde{D})& = \int y_{n+1}p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
+			&= \mathbb{E}[Y_{n+1}|\tilde{D},I].
+		\end{split}
+	\end{equation}
+\end{proof}
+
+\begin{definition}[0-1 Cost Function]
+	\label{def:0_1_cost_function}
+	The 0-1 cost function is defined as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1}) \equiv 1-\delta(U(\tilde{D})-y_{n+1}).
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[MAP Decision Rule]
+	\label{theorem:MAP}
+	The cost function of \dfref{def:0_1_cost_function} leads to the maximum a posteriori (MAP) decision rule
+	\begin{equation}
+		\frac{\partial p_{Y_{n+1}|X_{n+1},(X,Y)_{1\colon n},I}(U(\tilde{D})|\tilde{D},I)}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}=0,
+	\end{equation}
+	where the distribution subscript has been included since it is not obvious from the context.
+\end{theorem}
+
+\begin{proof}
+	From \thref{theorem:opt_decision_rule}
+	\begin{equation}
+		\mathbb{E}[C((\tilde{D}), Y_{n+1})|\tilde{D},I] = 1-\int \delta(U(\tilde{D})-y_{n+1}) p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{\partial p(U(\tilde{D})|\tilde{D},I)}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			&=0.\\
+		\end{split}
+	\end{equation}
+\end{proof}
+
+
+\begin{example}
+	The median decision rule is symmetric with respect to
+	\begin{equation}
+		z(\tilde{D},y_{n+1}) \equiv U(\tilde{D})-y_{n+1},
+	\end{equation}
+	meaning underestimation ($z<0$) and overestimation ($z>0$) is penalized equally. This decision rule can be generalized by adopting the cost function
+	\begin{equation}
+		C(U(\tilde{D}), y_{n+1}) = \alpha\cdot \operatorname{swish}(z(\tilde{D},y_{n+1}),\beta)
+		+(1-\alpha)\cdot \operatorname{swish}(-z(\tilde{D},y_{n+1}),\beta),
+	\end{equation}
+	where
+	\begin{equation}
+		\operatorname{swish}(z,\beta) = \frac{z}{1+e^{-\beta z}}.
+	\end{equation}
+	Taking $\alpha \ll 1$ means $z<0$ will be penalized relatively more than $z>0$. The expected cost is
+	\begin{equation}
+		\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] = \int C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}.
+	\end{equation}
+	The derivative of the cost function with respect to the decision rule can be approximated as follows
+	\begin{equation}
+		\begin{split}
+			\frac{dC}{dU} & = \frac{dC}{dz}\frac{dz}{dU}\\
+			& = \bigg(\frac{\alpha}{1+e^{-\beta z}}-\frac{1-\alpha}{1+e^{\beta z}}\\
+			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU}\\
+			&= \frac{\beta z e^{\beta z}-e^{\beta z}-1}{(1+e^{\beta z})^2}+\alpha+\mathcal{O}(\alpha^2)\\
+			&\approx  \alpha -\frac{1}{(1+e^{\beta z})^2}
+		\end{split}
+	\end{equation}
+	leading to the derivative of the expected cost
+	\begin{equation}
+		\begin{split}
+			\frac{d\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{dU(\tilde{D})} &\approx \int \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}\bigg)p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
+			& = \alpha -\int \frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}p(y_{n+1}|\tilde{D},I) \mathrm{d} y_{n+1}.\\
+		\end{split}
+	\end{equation}
+	For large $\beta$, $\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}$ approaches the indicator $\mathbb{1}\{y_{n+1}>U(\tilde{D})\}$. Hence,
+	\begin{equation}
+		\int_{-\infty}^{\infty} p(y_{n+1}|\tilde{D},I)\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2} \mathrm{d}y_{n+1} \approx \int_{U(\tilde{D})}^{\infty} p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}
+	\end{equation}
+	This means the optimal decision rule can be written as follows
+	\begin{equation}
+		\alpha \approx \int_{U^*(\tilde{D})}^{\infty} p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}.
+		\label{eq:quantile_decision_rule}
+	\end{equation}
+	The optimal decision $U^*(\tilde{D})$ is the $\alpha$-quantile of the conditional distribution $p(y_{n+1}|\tilde{D},I)$. This rule is known as the quantile decision rule.
+\end{example}
+
+\subsection{Discrete Action Space}
+In case of a continuous action space, the conditional expected loss used in \thref{theorem:opt_decision_rule} can be written
+\begin{equation}
+	\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D},I),
+	\label{eq:conditional_cost_discrete}
+\end{equation}
+where the cost function is typically represented in matrix form as follows
+\begin{center}
+	\begin{tabular}{ c  c  c  c  c  }
+		&& $Y_{n+1}$& & \\
+		&& $y^{(1)}$ & \dots & $y^{(\text{dim}(\Omega_Y))}$ \\
+		\cline{3-5}
+		$U(\tilde{D})$ & $u^{(1)}$& \multicolumn{1}{|l}{$C(u^{(1)}, y^{(1)})$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u^{(1)}, y^{(\text{dim}(\Omega_Y))})$} \\
+		& \vdots & \multicolumn{1}{|l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l|}{\vdots} \\
+		& $u^{(\text{dim}(\Omega_U))}$ & \multicolumn{1}{|l}{$C(u^{(\text{dim}(\Omega_U))}, y^{(1)})$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l|}{$C(u^{(\text{dim}(\Omega_U))}, y^{(\text{dim}(\Omega_Y)}))$} \\
+		\cline{3-5}
+	\end{tabular}
+\end{center}
+Note that the upper index represent realized values of $s$ whereas a lower index represent datapoints.
+
+\begin{example}
+	With reference to \exref{ex:rain}, the possible states of Nature are $y^{(1)} = "\text{rain}"$ and $y^{(2)} = "\text{no rain}"$, whereas each observed outcome $y_i$ in the dataset 
+	\begin{equation}
+		D = \{(x_1,y_1),(x_2,y_2),(x_3,y_3)\}
+	\end{equation}
+	takes a value in $\{y^{(1)},y^{(2)}\}$. For instance, one possible dataset realization could be $y_1=y^{(1)}$, $y_2=y^{(1)}$, and $y_3=y^{(2)}$.
+\end{example}
+
+\begin{example}
+	\label{ex:confusion}
+	Consider a binary classification problem with action space $\Omega_U = \{u^{(1)},u^{(2)}\}$ and Nature's state space $\Omega_Y = \{y^{(1)}, y^{(2)}\}$, where $u^{(1)}$ corresponds to predicting class $y^{(1)}$ and $u^{(2)}$ to predicting class $y^{(2)}$. Let
+	\begin{equation}
+		D = \{(x_i,y_i)\}_{i=1}^n
+	\end{equation}
+	denote the data, where $y_i \in \Omega_Y$ are observed realizations of Nature's states. Let $U(x_{n+1},D)$ be a classifier based on the probability 
+	\begin{equation}
+		p_{Y_{n+1}\mid X_{n+1}, (X,Y)_{1\colon n}}(y_{n+1} | x_{n+1}, D).
+	\end{equation}
+	Define a threshold $k\in[0,1]$ and the decision rule
+	\begin{equation}
+		U_k(x_{n+1},D) =
+		\begin{cases}
+			u^{(1)}, & p_{Y_{n+1}\mid X_{n+1}, (X,Y)_{1\colon n}}(y^{(2)} | x_{n+1}, D) < k,\\
+			u^{(2)}, & p_{Y_{n+1}\mid X_{n+1}, (X,Y)_{1\colon n}}(y^{(2)} | x_{n+1}, D) \ge k.
+		\end{cases}
+		\label{eq:decision_rule31}
+	\end{equation}
+	For a fixed threshold $k$, classifier performance is summarized in the confusion matrix
+	\begin{center}
+		\begin{tabular}{ c  c  c c}
+			&& $Y_{n+1}$ &  \\
+			&& $y^{(1)}$ & $y^{(2)}$ \\
+			\cline{3-4}
+			$U_k(x_{n+1},D)$ & $u^{(1)}$& \multicolumn{1}{|l}{TP(k)} & \multicolumn{1}{l|}{FP(k)}\\
+			& $u^{(2)}$& \multicolumn{1}{|l}{FN(k)} & \multicolumn{1}{l|}{TN(k)}\\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	and standard performance measures are defined as
+	\begin{align}
+		\operatorname{TPR(k)} &= \frac{\operatorname{TP(k)}}{\operatorname{TP(k)} + \operatorname{FN(k)}},\\
+		\operatorname{FPR(k)} &= \frac{\operatorname{FP(k)}}{\operatorname{FP(k)} + \operatorname{TN(k)}},\\
+		\operatorname{Accuracy(k)} &= \frac{\operatorname{TP(k)} + \operatorname{TN(k)}}{\operatorname{TP(k)} + \operatorname{TN(k)} + \operatorname{FP(k)} + \operatorname{FN(k)}}.
+	\end{align}
+\end{example}
+\newpage
+\begin{example}
+	Consider a binary classification problem with action space $\Omega_U = \{u^{(1)},u^{(2)}\}$ and Nature's state space $\Omega_Y = \{y^{(1)}, y^{(2)}\}$, where $u^{(1)}$ corresponds to predicting class $y^{(1)}$ and $u^{(2)}$ to predicting class $y^{(2)}$. Let
+	\begin{equation}
+		D = \{(x_i,y_i)\}_{i=1}^n
+	\end{equation}
+	denote the data, where $y_i \in \Omega_Y$ are observed realizations of Nature's states and let the cost function be defined by the matrix
+	\begin{center}
+		\begin{tabular}{ c  c  c  c }
+			&& $Y_{n+1}$& \\
+			&& $y^{(1)}$ & $y^{(2)}$  \\
+			\cline{3-4}
+			$U(\tilde{D})$ & $u^{(1)}$& \multicolumn{1}{|l}{$0$} &\multicolumn{1}{l|}{$\lambda_{12}$}  \\
+			& $u^{(2)}$& \multicolumn{1}{|l}{$\lambda_{21}$} & \multicolumn{1}{l|}{$0$} \\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	where $\lambda_{12}$ denotes the cost of predicting $y^{(1)}$ when the true state is $y^{(2)}$, and $\lambda_{21}$ the cost of the reverse error.  The decision $U(\tilde{D})$ is determined by minimizing the conditional expected cost (\EQref{eq:conditional_cost_discrete})
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] & = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D},I)\\
+			& = C(U(\tilde{D}),y^{(1)})p(y^{(1)}|\tilde{D},I)\\
+			& \quad+C(U(\tilde{D}),y^{(2)})p(y^{(2)}|\tilde{D},I).\\
+		\end{split}
+	\end{equation}
+	For the different possible actions
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(u^{(1)}, Y_{n+1})|\tilde{D},I] &= \lambda_{12}p(y^{(2)}|\tilde{D},I),\\
+			\mathbb{E}[C(u^{(2)}, Y_{n+1})|\tilde{D},I] &= \lambda_{21}p(y^{(1)}|\tilde{D},I),\\
+		\end{split}
+	\end{equation}
+	$U(\tilde{D})=u_1$ iff
+	\begin{equation}
+		\mathbb{E}[C(u^{(1)},Y_{n+1})|\tilde{D},I]<\mathbb{E}[C(u^{(1)},Y_{n+1})|\tilde{D},I])
+	\end{equation}
+	meaning
+	\begin{equation}
+		\begin{split}
+			\lambda_{12}p(y^{(2)}|\tilde{D},I)&<\lambda_{21}p(y^{(1)}|\tilde{D},I)\\
+			&=\lambda_{21}(1-p(y^{(2)}|\tilde{D},I))
+		\end{split}
+	\end{equation}
+	meaning $U(\tilde{D}) = u_1$ iff
+	\begin{equation}
+		p(y^{(2)}|\tilde{D},I)<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k.
+		\label{eq:threshold31}
+	\end{equation}
+	\EQref{eq:threshold31} is equivalent to \EQref{eq:decision_rule31} from \exref{ex:confusion}. The difference between the two is that if $\lambda_{12}$ and $\lambda_{21}$ are specified, $k$ is specified. In \exref{ex:confusion} $k$ was left as a free parameter.
+\end{example}
+
+
+\begin{example}
+	In many classification problems the Robot has the option of assigning $x_{n+1}$ to class $k\in K$ or, if the Robot is too uncertain, choosing a reject option. If the cost for rejection is less than the cost of falsely classifying the object, it may be the optimal action. Define the cost function as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1})=\begin{cases}
+			0 & \text{if correct classification ($U(\tilde{D})=y_{n+1}$)}\\
+			\lambda_r & \text{if reject option ($U(\tilde{D})=\operatorname{reject}$)}\\
+			\lambda_s & \text{if wrong classification ($U(\tilde{D})\neq y_{n+1}$)}\\
+		\end{cases}.
+	\end{equation}
+	The conditional expected cost if the Robot does not pick the reject option, meaning $U(\tilde{D})\in \Omega_U\setminus\operatorname{reject}$, is
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] & = \sum_{y_{n+1}\in \Omega_Y} C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D},I)\\
+			&= \lambda_s(1-p(U(\tilde{D})|\tilde{D},I)),
+		\end{split}
+		\label{eq:cost1a}
+	\end{equation}
+	where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $y_{n+1}=U(\tilde{D})$ does not enter the sum. For the third equality it has been used that summing over all but $y_{n+1} =U(\tilde{D})$ is equal to $1-p(U(\tilde{D})|\tilde{D},I)$. The larger $p(U(\tilde{D})|\tilde{D},I)$, the smaller the loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the Robot picks the reject option is
+	\begin{equation}
+		\mathbb{E}[C(\operatorname{reject}, Y_{n+1})|\tilde{D},I]=\lambda_r,
+		\label{eq:cost2a}
+	\end{equation}
+	and from \EQref{eq:cost1a} and \EQref{eq:cost2a} it follows that picking 
+	\begin{equation}
+		\argmax_{U(\tilde{D})\in \Omega_U\setminus \operatorname{reject}} p(U(\tilde{D})|\tilde{D},I)
+	\end{equation}
+	is the best option among classes $U(\tilde{D})\neq \operatorname{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using \EQref{eq:cost1a} and \EQref{eq:cost2a} yields
+	\begin{equation}
+		(1-p(U(\tilde{D})|\tilde{D},I))\lambda_s< \lambda_r,
+	\end{equation}
+	meaning
+	\begin{equation}
+		p(U(\tilde{D})|\tilde{D},I)\geq 1-\frac{\lambda_r}{\lambda_s}.
+	\end{equation}
+	Qualitatively, as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$, the behavior of the Robot changes smoothly. When
+	\begin{equation}
+		\frac{\lambda_r}{\lambda_s}=0,
+	\end{equation}
+	rejection is rated as a successful classification -- i.e., there is no cost associated with it -- and thus becomes the best option unless
+	\begin{equation}
+		p(U(\tilde{D})|\tilde{D},I)=1,
+	\end{equation}
+	corresponding to knowing the correct class with absolute certainty. In other words, in this limit rejection is optimal unless the Robot is completely certain of the correct class. Conversely, when
+	\begin{equation}
+		\frac{\lambda_r}{\lambda_s}=1,
+	\end{equation}
+	rejection is rated as a misclassification -- i.e., $\lambda_r=\lambda_s$ -- and thus always incurs a cost. In this case, rejection is never chosen. For values of $\frac{\lambda_r}{\lambda_s}$ between these limits, an interpolation of interpretations applies, where rejection is preferred only when the Robot's uncertainty exceeds the corresponding threshold.
+\end{example}

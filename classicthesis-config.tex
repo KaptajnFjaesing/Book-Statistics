@@ -2,9 +2,7 @@
 %	CHARACTER ENCODING
 %----------------------------------------------------------------------------------------
 
-\PassOptionsToPackage{utf8}{inputenc} % Set the encoding of your files. UTF-8 is the only sensible encoding nowadays. If you can't read äöüßáéçèê∂åëæƒÏ€ then change the encoding setting in your editor, not the line below. If your editor does not support utf8 use another editor!
-\usepackage{inputenc}
-\usepackage{tabularx}
+\usepackage[utf8]{inputenc} % (if you use pdfLaTeX)
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT VARIABLES
@@ -16,26 +14,12 @@
 \PassOptionsToPackage{listings, pdfspacing, subfig,beramono,parts}{classicthesis}
 % Available options: drafting parts nochapters linedheaders eulerchapternumbers beramono eulermath pdfspacing minionprospacing tocaligned dottedtoc manychapters listings floatperchapter subfig
 
-\newcommand{\myTitle}{A Classic Thesis Style\xspace}
-\newcommand{\mySubtitle}{An Homage to The Elements of Typographic Style\xspace}
-\newcommand{\myDegree}{Doktor-Ingenieur (Dr.-Ing.)\xspace}
-\newcommand{\myName}{André Miede\xspace}
-\newcommand{\myProf}{Put name here\xspace}
-\newcommand{\myOtherProf}{Put name here\xspace}
-\newcommand{\myFaculty}{Put data here\xspace}
-\newcommand{\myDepartment}{Put data here\xspace}
-\newcommand{\myUni}{Put data here\xspace}
-\newcommand{\myLocation}{Saarbrücken\xspace}
-\newcommand{\myTime}{September 2015\xspace}
-\newcommand{\myVersion}{version 4.2\xspace}
-
 %----------------------------------------------------------------------------------------
 %	PACKAGES
 %----------------------------------------------------------------------------------------
 
 \usepackage{babel}
 
-\usepackage{lmodern} % text font
 %------------------------------------------------			
 \usepackage{makeidx}
 \makeindex
@@ -93,10 +77,6 @@
 \usepackage{mparhack} % To get marginpar right
 
 %------------------------------------------------
-
-\usepackage{fixltx2e} % Fixes some LaTeX stuff 
-
-%------------------------------------------------
 \usepackage{cancel} % for cancels to
 
 %------------------------------------------------
@@ -107,7 +87,6 @@
 \PassOptionsToPackage{smaller}{acronym} % Include printonlyused in the first bracket to only show acronyms used in the text
 \usepackage{acronym} % Nice macros for handling all acronyms in the thesis
 
-%\renewcommand*{\acsfont}[1]{\textssc{#1}} % For MinionPro
 \renewcommand*{\aclabelfont}[1]{\acsfont{#1}}
 
 
@@ -120,11 +99,11 @@
 %	ENVIRONMENTS
 %----------------------------------------------------------------------------------------
 
-\newtheorem{axiom}{Axiom}
-\newtheorem{definition}{Definition}
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{remark}{Remark}
+\newtheorem{axiom}{Axiom}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{remark}{Remark}[chapter]
 \newtheorem{exinn}{Example}[chapter]
 \newenvironment{example}
 {\clubpenalty=10000
@@ -166,9 +145,6 @@
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage{pythonhighlight}
-
-
 
 %----------------------------------------------------------------------------------------
 %	HYPERREFERENCES
@@ -180,39 +156,11 @@
 \pdfadjustspacing=1
 
 \hypersetup{
-	% Uncomment the line below to remove all links (to references, figures, tables, etc), useful for b/w printouts
-	%draft, 
-	colorlinks=False,
-	linktocpage=true,
-	pdfstartpage=3,
-	pdfstartview=FitV,
-	% Uncomment the line below if you want to have black links (e.g. for printing black and white)
-	%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV, 
-	breaklinks=true,
-	pdfpagemode=UseNone,
-	pageanchor=true,
-	pdfpagemode=UseOutlines,%
-	plainpages=false,
-	bookmarksnumbered,
-	bookmarksopen=true,
-	bookmarksopenlevel=1,%
-	hypertexnames=true,
-	pdfhighlight=/O,%nesting=true,%frenchlinks,%
-	urlcolor=webbrown,
-	linkcolor=RoyalBlue,
-	citecolor=webgreen,
-	%pagecolor=RoyalBlue,%
-	%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
-	%------------------------------------------------
-	% PDF file meta-information
-	pdftitle={\myTitle},
-	pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
-	pdfsubject={},
-	pdfkeywords={},
-	pdfcreator={pdfLaTeX},
-	pdfproducer={LaTeX with hyperref and classicthesis}
-	%------------------------------------------------
+	colorlinks=false,
+	linktocpage=false,
+	pdfborder={0 0 0},
 }
+
 
 %----------------------------------------------------------------------------------------
 %	AUTOREFERENCES SETUP
@@ -273,16 +221,10 @@ footskip=12mm
 %----------------------------------------------------------------------------------------
 %	USING DIFFERENT FONTS
 %----------------------------------------------------------------------------------------
-%\usepackage[oldstylenums]{kpfonts} % oldstyle notextcomp
+%\usepackage[oldstylenums]{kpfonts
 %\usepackage[osf]{libertine}
-%\usepackage[light,condensed,math]{iwona}
-%\renewcommand{\sfdefault}{iwona}
-%\usepackage{lmodern} % <-- no osf support :-(
 \usepackage{cfr-lm} % 
-%\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
-%\usepackage[default,osfigures]{opensans} % scale=0.95 
 %\usepackage[sfdefault]{FiraSans}
-
 
 
 %----------------------------------------------------------------------------------------
@@ -336,3 +278,5 @@ footskip=12mm
 \ihead{\headmark}
 \ohead{\pagemark}
 \renewcommand*{\chapterpagestyle}{empty}
+
+\numberwithin{equation}{chapter}
