@@ -26,7 +26,7 @@
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'} & = \mathbb{P}_{(X,Y)_{1:n+1},W} \\
-			&= \mathbb{P}_{(X,Y)_{1:n+1}|W}\mathbb{P}_{W}
+			&= \mathbb{P}_{(X,Y)_{1:n+1}|W}\mathbb{P}_{W},
 		\end{split}
 	\end{equation}
 	where $\mathbb{P}_{(X,Y)_{1:n+1}|W}=\mathbb{P}_{(X,Y)_{1:n+1}}^w$, is defined on 
@@ -37,17 +37,17 @@
 
 \begin{definition}[Frequentist Statistics Paradigm]
 	\label{def:frequentist_statistics}
-	Frequentist statistics\index{Frequentist statistics paradigm} is a paradigm within the statistical game framework (\dfref{def:statistical_game}) that adopts \axref{ax:parameter_fixed} and \dfref{def:objective_probability} as its foundational assumptions.
+	Frequentist statistics\index{Frequentist statistics paradigm} is a paradigm within the statistical game framework (\dfref{def:statistical_game}) that treats parameters as fixed (\axref{ax:parameter_fixed}) and assumes an objective probability measure (\dfref{def:objective_probability}).
 \end{definition}
 
 \begin{definition}[Bayesian Statistics Paradigm]
 	\label{def:bayesian_statistics}
-	Bayesian statistics\index{Bayesian statistics paradigm} is a paradigm within the statistical game framework (\dfref{def:statistical_game}) that adopts \axref{ax:parameter_variable} and \dfref{def:subjective_probability} as its foundational assumptions.
+	Bayesian statistics\index{Bayesian statistics paradigm} is a paradigm within the statistical game framework (\dfref{def:statistical_game}) that treats parameters as realizations of a random variable (\axref{ax:parameter_variable}) and assumes a subjective probability measure (\dfref{def:subjective_probability}).
 \end{definition}
 
+
 \begin{remark}[Inference]
-	For both the frequentist and Bayesian paradigms, inference represents the Robot's response to uncertainty imposed by Nature. 
-	The distinction lies not in the mathematics of probability, but in the interpretation of what probability and parameters represent.
+	The distinction between Bayesian and frequentist statistics lies not in the mathematics of probability, but in the interpretation of what probability and parameters represent.
 \end{remark}
 
 \begin{remark}[Frequentist and Bayesian Forms of the Expected Cost]

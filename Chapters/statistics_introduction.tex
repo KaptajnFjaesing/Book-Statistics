@@ -120,7 +120,7 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 \begin{proof}
 	From \dfref{def:statistical_game}
 	\begin{equation}
-		U^*(\tilde{D}) = \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|I],
+		U^*(\tilde{D}) = \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})],
 		\label{eq:decision_rule_x}
 	\end{equation}	
 	where the expected cost (\EQref{eq:expcost}) can be written
@@ -130,18 +130,18 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\end{equation}
 	From \thref{theorem:total_expectation}
 	\begin{equation}
-		\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|I] = \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]].
+		\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})] = \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]].
 		\label{eq:total2}
 	\end{equation}
 	Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
 	\begin{equation}
 		\begin{split}
 			U^*(\tilde{D}) &= \argmin_{U(\tilde{D}) } \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]]\\
-			&= \argmin_{U(\tilde{D})} \int p(\tilde{D}|I) \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] \mathrm{d}\tilde{D}.
+			&= \argmin_{U(\tilde{D})} \int p(\tilde{D}) \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] \mathrm{d}\tilde{D}.
 		\end{split}
 		\label{eq:decision_rule2}
 	\end{equation}
-	Since $p(\tilde{D}|I)$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
+	Since $p(\tilde{D})$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
 	\begin{equation}
 		\begin{split}
 			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]\\

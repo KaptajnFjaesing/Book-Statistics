@@ -1,6 +1,6 @@
 \section{Bayesian Statistics}
 The Bayesian paradigm (\dfref{def:bayesian_statistics}) originally come from the work of \citet{Bayes:63,laplace_thorie_1812} with much of the modern discussions and formalism created later by \citet{Finetti1937LaP,Jeffreys1940,Savage1954}.\newline
-In the Bayesian paradigm, it is assumed that Nature's decisions can be captured by a statistical model with parameters that are modeled as realizations of random variables. This means that the probability density for Nature's actions, used to determine the optimal decision rule in \thref{theorem:opt_decision_rule}, can be written
+In the Bayesian paradigm, it is assumed that Nature's decisions can be captured by a statistical model with parameters that are modeled as realizations of random variables and assumes a subjective probability measure. This means that the density for Nature's actions, used to determine the optimal decision rule in \thref{theorem:opt_decision_rule}, can be written
 \begin{equation}
 	\begin{split}
 		p(y_{n+1}\mid \tilde{D}) &= \int p(w,y_{n+1}\mid \tilde{D}) \mathrm{d}w\\
@@ -8,7 +8,7 @@ In the Bayesian paradigm, it is assumed that Nature's decisions can be captured 
 	\end{split}
 	\label{eq:hest1}
 \end{equation}
-To evaluate $p(w|\tilde{D})$ a combination of the chain rule (\thref{theorem:chain_rule}), Bayes' theorem (\thref{theorem:bayes_theorem}) and marginalization (\thref{theorem:law_of_total_probability}) can be employed viz
+Using \thref{theorem:chain_rule}-\thref{theorem:law_of_total_probability}
 \begin{equation}
 	\begin{split}
 		p(w|\tilde{D}) &= p(w|D)\\
@@ -16,7 +16,7 @@ To evaluate $p(w|\tilde{D})$ a combination of the chain rule (\thref{theorem:cha
 	\end{split}
 	\label{eq:pa2}
 \end{equation}
-where $D_y= \{y_i\}_{i=1}^n$, $D_x = \{x_i\}_{i=1}^n$ and $p(D_y|D_x)$ can be expanded via marginalization and \axref{ax:observation_relevance} has been used for the first and second equality.
+where $D_y= \{y_i\}_{i=1}^n$, $D_x = \{x_i\}_{i=1}^n$, \axref{ax:observation_relevance} has been used for the first and second equality and $p(D_y|D_x)$ can be expanded via marginalization.
 
 \begin{axiom}[Relevance of Observations]
 	\label{ax:observation_relevance}
@@ -29,39 +29,39 @@ $p(w)$ is the Robot's prior belief\index{Prior measure} about $w$. $p(D_s|w,D_x)
 \label{chp:regression}
 Regression involves the Robot building a model,
 \begin{equation}
-	f: \Omega_W\times \Omega_X\to\Omega_Y,
+	f: \Omega_\theta\times \Omega_X\to\Omega_Y,
 \end{equation} 
-with associated parameters $w\in \Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y=\mathbb{R}$ based on observed data $x_{n+1}\in \Omega_X$. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function from \dfref{def:quadratic_cost} will be considered to review the subject. According to \thref{theorem:expectation_decision_rule} the best action for the Robot can be written
+with associated parameters $\theta\in \Omega_\Theta\subseteq\Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y=\mathbb{R}$ based on observed data $x_{n+1}\in \Omega_X$. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function from \dfref{def:quadratic_cost} will be considered to review the subject. According to \thref{theorem:expectation_decision_rule} the best action for the Robot can be written
 \begin{equation}
-	U^*(x_{n+1},D) = \int y_{n+1} p(y_{n+1}|x,D) \mathrm{d}y_{n+1}.
+	U^*(x_{n+1},D) = \int y_{n+1} p(y_{n+1}|x_{n+1},D) \mathrm{d}y_{n+1}.
 	\label{eq:q1}
 \end{equation}
 Assuming the actions of Nature follow a normal distribution\index{Normal distribution} with the function $f$ as mean and an unknown precision, $\xi\in \Omega_W$
 \begin{equation}
-	p(y_{n+1}|x_{n+1},w,\xi)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(w,x_{n+1})-y_{n+1})^2}.
+	p(y_{n+1}|x_{n+1},w)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(\theta,x_{n+1})-y_{n+1})^2},
 	\label{f_dist}
 \end{equation}
-Using \EQref{f_dist} and marginalizing\index{Marginalization} (\thref{remark:marginalization} and \rmref{remark:marginalization}) over $\xi,w$
+where $w = \{\theta, \xi,\dots\}$ denotes the collection of parameters. Using \EQref{f_dist} and marginalizing\index{Marginalization} (\thref{remark:marginalization} and \rmref{remark:marginalization}) over $\xi,\theta$
 \begin{equation}
 	\begin{split}
-		p(y_{n+1}|x_{n+1},D) &= \int  p(y_{n+1},w,\xi|x_{n+1},D) \mathrm{d}w \mathrm{d}\xi\\
-		& = \int  p(y_{n+1}|x_{n+1},w,\xi,D)  p(w,\xi|x_{n+1},D)\mathrm{d}w \mathrm{d}\xi\\
-		& = \int  p(y_{n+1}|x_{n+1},w,\xi)  p(w,\xi|D) \mathrm{d}w \mathrm{d}\xi,\\
+		p(y_{n+1}|x_{n+1},D) &= \int  p(y_{n+1},\theta,\xi|x_{n+1},D) \mathrm{d}\theta \mathrm{d}\xi\\
+		& = \int  p(y_{n+1}|x_{n+1},\theta,\xi,D)  p(\theta,\xi|x_{n+1},D)\mathrm{d}\theta \mathrm{d}\xi\\
+		& = \int  p(y_{n+1}|x_{n+1},\theta,\xi)  p(\theta,\xi|D) \mathrm{d}\theta \mathrm{d}\xi,\\
 	\end{split}
 	\label{eq:q2}
 \end{equation}
 where it has been used that 
 \begin{equation}
-	p(y_{n+1}|w,\xi,x_{n+1},D) = p(y_{n+1}|w,\xi,x_{n+1})
+	p(y_{n+1}|\theta,\xi,x_{n+1},D) = p(y_{n+1}|\theta,\xi,x_{n+1})
 \end{equation}
 since by definition $f$ produce a $1-1$ map of the input $x_{n+1}$ (\EQref{f_dist}) and 
 \begin{equation}
-	p(w,\xi|x_{n+1},D) = p(w,\xi|D)
+	p(\theta,\xi|x_{n+1},D) = p(\theta,\xi|D)
 \end{equation} 
 from \axref{ax:observation_relevance}. Using \EQref{eq:q2} in \EQref{eq:q1}\footnote{Note that a function of a random variable is itself a random variable, so $f$ is a random variable.}
 \begin{equation}
 	\begin{split}
-		U^*(x_{n+1},D) & = \int f(w,x_{n+1})  p(w,\xi|D) \mathrm{d}w \mathrm{d}\xi,\\
+		U^*(x_{n+1},D) & = \int f(\theta,x_{n+1})  p(\theta,\xi|D) \mathrm{d}\theta \mathrm{d}\xi,\\
 		& = \mathbb{E}[f|x_{n+1},D]
 	\end{split}
 	\label{eq:q3}
@@ -69,43 +69,43 @@ from \axref{ax:observation_relevance}. Using \EQref{eq:q2} in \EQref{eq:q1}\foot
 where it has been used that
 \begin{equation}
 	\begin{split}
-		\mathbb{E}[Y_{n+1}|x_{n+1},w,\xi] &= \int y_{n+1} p(y_{n+1}|x_{n+1},w,\xi) \mathrm{d}y_{n+1} \\
-		&= f(w,x_{n+1})
+		\mathbb{E}[Y_{n+1}|x_{n+1},\theta,\xi] &= \int y_{n+1} p(y_{n+1}|x_{n+1},\theta,\xi) \mathrm{d}y_{n+1} \\
+		&= f(\theta,x_{n+1})
 	\end{split}
 \end{equation}
 according to \EQref{f_dist}. Using Bayes theorem\index{Bayes theorem} (\thref{theorem:bayes_theorem})
 \begin{equation}
-	p(w,\xi|D) = \frac{p(D_y|D_x,w,\xi)p(w,\xi|D_x)}{p(D_y|D_x)}
+	p(\theta,\xi|D) = \frac{p(D_y|D_x,\theta,\xi)p(\theta,\xi|D_x)}{p(D_y|D_x)}
 	\label{eq:bayes2}
 \end{equation}
 where from marginalization\index{Marginalization} (\thref{theorem:law_of_total_probability})
 \begin{equation}
-	p(D_y|D_x) = \int p(D_y|D_x,w,\xi)p(w,\xi|D_x) \mathrm{d}w \mathrm{d}\xi.
+	p(D_y|D_x) = \int p(D_y|D_x,\theta,\xi)p(\theta,\xi|D_x) \mathrm{d}\theta \mathrm{d}\xi.
 \end{equation}
 Assuming the past actions of Nature are independent and identically distributed (IID)\index{IID}, the likelihood\index{Likelihood} can be written (using equation \EQref{f_dist})
 \begin{equation}
-	p(D_y|D_x,w,\xi) = \bigg(\frac{\xi}{2\pi}\bigg)^\frac{n}{2}\prod_{i=1}^n e^{-\frac{\xi}{2}(f(w,x_i)-y_i)^2}
+	p(D_y|D_x,\theta,\xi) = \bigg(\frac{\xi}{2\pi}\bigg)^\frac{n}{2}\prod_{i=1}^n e^{-\frac{\xi}{2}(f(\theta,x_i)-y_i)^2}
 	\label{reg:likelihood}
 \end{equation}
 From the chain rule\index{Chain rule} (see \thref{theorem:chain_rule}) and \thref{ax:observation_relevance}
 \begin{equation}
-	p(w,\xi|D_x) = p(w|\xi)p(\xi).
+	p(\theta,\xi|D_x) = p(\theta|\xi)p(\xi).
 \end{equation}
-Assuming the distributions of the $w$'s are i) independent of $\xi$ and ii) normally distributed\footnote{The normally distributed prior is closely related to weight decay~\citep{Plaut1986}, a principle conventionally used in Frequentist statistics to avoid the issue of overfitting.} with zero mean and a precision described by a hyperparameter, $\lambda$. 	 
+Assuming the distributions of the $\theta$'s are i) independent of $\xi$ and ii) normally distributed\footnote{The normally distributed prior is closely related to weight decay~\citep{Plaut1986}, a principle conventionally used in Frequentist statistics to avoid the issue of overfitting.} with zero mean and a precision described by a hyperparameter, $\lambda$. 	 
 \begin{equation}
 	\begin{split}
-		p(w|\xi) & = p(w)\\
-		& = \int d\lambda p(w|\lambda)p(\lambda)
+		p(\theta|\xi) & = p(\theta)\\
+		& = \int p(\theta|\lambda)p(\lambda) \mathrm{d}\lambda
 	\end{split}
 	\label{eq:prior1}
 \end{equation}
 The precision is constructed as a wide gamma distribution\index{Gamma distribution} so as to approximate an objective prior
 \begin{equation}
-	p(w|\lambda)p(\lambda)
-	= \prod_{q=1}^{\tilde{n}} \frac{\lambda_q^\frac{n_q}{2}}{(2\pi)^\frac{n_q}{2}}e^{-\frac{\lambda_q}{2}\sum_{l=1}^{n_q}w_l^2}\frac{\beta_q^{\alpha_q}}{\Gamma(\alpha_q)}\lambda_q^{\alpha_q-1}e^{-\beta_q \lambda_q}
+	p(\theta|\lambda)p(\lambda)
+	= \prod_{q=1}^{\tilde{n}} \frac{\lambda_q^\frac{n_q}{2}}{(2\pi)^\frac{n_q}{2}}e^{-\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2}\frac{\beta_q^{\alpha_q}}{\Gamma(\alpha_q)}\lambda_q^{\alpha_q-1}e^{-\beta_q \lambda_q}
 	\label{eq:prior}
 \end{equation}
-where $\alpha_q,\beta_q$ are prior parameters (a part of the background information, \dfref{def:background_information}) and $\tilde{n}$ is the number of hyper parameters. In the completely general case $\tilde{n}$ would equal the number of parameters $w$, such that each parameter has an independent precision. In practice, the Robot may consider assigning some parameters the same precision, e.g. for parameters in the same layer in a neural network. Since $p(\xi)$ is analogous to $p(\lambda)$ -- in that both are prior distributions for precision parameters -- $p(\xi)$ is assumed to be a wide gamma distribution, then
+where $\alpha_q,\beta_q$ are prior parameters and $\tilde{n}$ is the number of hyper parameters. In the completely general case $\tilde{n}$ would equal the number of parameters $\theta$, such that each parameter has an independent precision. In practice, the Robot may consider assigning some parameters the same precision, e.g. for parameters in the same layer in a neural network. Since $p(\xi)$ is analogous to $p(\lambda)$ -- in that both are prior distributions for precision parameters -- $p(\xi)$ is assumed to be a wide gamma distribution, then
 \begin{equation}
 	\begin{split}
 		p(\xi) & = \text{Ga}(\xi|\tilde{\alpha},\tilde{\beta})\\
@@ -113,23 +113,23 @@ where $\alpha_q,\beta_q$ are prior parameters (a part of the background informat
 	\end{split}
 	\label{p7}
 \end{equation}
-At this point equation \EQref{eq:q1} is fully specified (the parameters $\alpha,\beta,\tilde{\alpha},\tilde{\beta}$ and the functional form of $f(w,x_{n+1})$ are assumed specified as part of the background information, \dfref{def:background_information}) and can be approximated by obtaining samples from $p(w,\xi,\lambda|D)$ via Hamiltonian Monte Carlo (HMC)~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012} (see \appref{app:HMC} for a review of HMC). The centerpiece in the HMC algorithm is the Hamiltonian defined as follows~\citep{Neal:1996,Neal2012}
+At this point equation \EQref{eq:q1} is fully specified and can be approximated by obtaining samples from $p(\theta,\xi,\lambda|D)$ via Hamiltonian Monte Carlo (HMC)~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012} (see \appref{app:HMC} for a review of HMC). The centerpiece in the HMC algorithm is the Hamiltonian defined as follows~\citep{Neal:1996,Neal2012}
 \begin{equation}
-	H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln[p(w,\xi,\lambda|D)]+const,
+	H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\xi,\lambda|D)+const,
 	\label{eqh}
 \end{equation}
 where 
 \begin{equation}
-	p(w,\xi|D) = \int d\lambda p(w,\xi,\lambda|D).
+	p(\theta,\xi|D) = \int p(\theta,\xi,\lambda|D) \mathrm{d}\lambda.
 	\label{eq:ss}
 \end{equation}
 Besides its function in the HMC algorithm, the Hamiltonian represent the details of the Bayesian model well and should be a familiar sight for people used to the more commonly applied frequentist paradigm\footnote{Since, in this case, it is in form similar to a cost function comprised of a sum of squared errors, weight decay on the coefficients and further penalty terms~\citep{hastie_09,murphy2013machine,Goodfellow2016}}. Using \EQref{eq:bayes2}-\EQref{eq:ss} yields
 \begin{equation}
 	\begin{split}
-		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln(\xi)] +\frac{\xi}{2}\sum_{i=1}^{n}(f(w,x_i)-y_i)^2\\
-		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
-		&\qquad\qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}w_l^2\bigg)\\
-		&\quad+\ln(\Gamma(\tilde{\alpha}))-\tilde{\alpha}\ln(\tilde{\beta})+(1-\tilde{\alpha})\ln(\xi)+\tilde{\beta}\xi+const.
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln\xi] +\frac{\xi}{2}\sum_{i=1}^{n}(f(\theta,x_i)-y_i)^2\\
+		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln\Gamma(\alpha_q)-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln\lambda_q+\beta_q\lambda_q\\
+		&\qquad\qquad+\frac{n_q}{2}(\ln(2\pi)-\ln\lambda_q)+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
+		&\quad+\ln\Gamma(\tilde{\alpha})-\tilde{\alpha}\ln\tilde{\beta}+(1-\tilde{\alpha})\ln\xi+\tilde{\beta}\xi+const.
 	\end{split}
 	\label{eqh2}
 \end{equation}
@@ -137,9 +137,9 @@ Besides its function in the HMC algorithm, the Hamiltonian represent the details
 
 \begin{example}
 	\index{Example: HMC Hamiltonian variable change}
-	Let $\xi \equiv e^\zeta$, such that $\zeta\in [-\infty,\infty]$ maps to $\xi\in[0,\infty]$ and $\xi$ is ensured to be positive definite regardless of the value of $\zeta$. Using the differential $d\xi =  \xi d\zeta$ in \EQref{eq:q3} means $p(\theta,\xi,\lambda|D)$ is multiplied with $\xi$. Hence, when taking $-\ln(p(\theta,\xi,\lambda|D))$ according to \EQref{eqh}, a $-\ln(\xi)$ is added to the Hamiltonian. In practice this means
+	Let $\xi \equiv e^\zeta$, such that $\zeta\in [-\infty,\infty]$ maps to $\xi\in[0,\infty]$ and $\xi$ is ensured to be positive definite regardless of the value of $\zeta$. Using the differential $d\xi =  \xi d\zeta$ in \EQref{eq:q3} means $p(\theta,\xi,\lambda|D)$ is multiplied with $\xi$. Hence, when taking $-\ln p(\theta,\xi,\lambda|D)$ according to \EQref{eqh}, a $-\ln\xi$ is added to the Hamiltonian. In practice this means
 	\begin{equation}
-		(1-\tilde{\alpha})\ln(\xi)\in H\Rightarrow -\tilde{\alpha}\ln(\xi).
+		(1-\tilde{\alpha})\ln\xi\in H\Rightarrow -\tilde{\alpha}\ln\xi.
 	\end{equation} 	
 \end{example}
 
@@ -147,21 +147,21 @@ Besides its function in the HMC algorithm, the Hamiltonian represent the details
 \label{chp:baycl}
 Classification involves the Robot building a model,
 \begin{equation}
-	f: \Omega_W \times \Omega_X \to \Delta^K,
+	f: \Omega_\Theta \times \Omega_X \to \Delta^K,
 \end{equation}
-with associated parameters $w \in \Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y= \{1,\dots,K\}$ based on observed data $x_{n+1}\in \Omega_X$. Here
+with associated parameters $\theta \in \Omega_\Theta\subseteq\Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y= \{1,\dots,K\}$ based on observed data $x_{n+1}\in \Omega_X$. Here
 \begin{equation}
-	\Delta^K = \{p \in \mathbb{R}^K \mid p_s \geq 0,\; \sum_{s=1}^K p_s = 1\}
+	\Delta^K = \bigg\{p \in \mathbb{R}^K \bigg|\, p_{y_{n+1}} \geq 0,\; \sum_{y_{n+1}=1}^K p_{y_{n+1}} = 1\bigg\}
 \end{equation} 
-denotes the $K$-dimensional probability simplex, so that for each input $x_{n+1} \in \Omega_X$ the model output $f(w,x)$ is a probability vector representing the conditional distribution of the class label $y_{n+1} \in \Omega_Y$. In particular, the probability of observing class $y_{n+1}$ given $x_{n+1}$ and parameters $w$ is 
+denotes the $K$-dimensional probability simplex, so that for $x_{n+1} \in \Omega_X$ the model output $f(\theta,x_{n+1})$ is a probability vector representing the conditional distribution of the class label $y_{n+1} \in \Omega_Y$. In particular, the probability of observing class $y_{n+1}$ given $x_{n+1}$ and parameters $\theta$ is 
 \begin{equation}
-	p(y_{n+1} \mid x_{n+1}, w) = f_{y_{n+1}}(w,x_{n+1}),
+	p(y_{n+1} \mid x_{n+1}, \theta) = f_{y_{n+1}}(\theta,x_{n+1}),
 	\label{f_dist2}
 \end{equation}
-where $f_{y_{n+1}}(w,x_{n+1})$ denotes the $y_{n+1}$-th component of $f(w,x_{n+1})$. 
+where $f_{y_{n+1}}(\theta,x_{n+1})$ denotes the $y_{n+1}$-th component of $f(\theta,x_{n+1})$. 
 By construction, these probabilities satisfy
 \begin{equation}
-	\sum_{y_{n+1} \in \Omega_Y} p(y_{n+1} \mid x_{n+1}, w) = 1.
+	\sum_{y_{n+1} \in \Omega_Y} p(y_{n+1} \mid x_{n+1}, \theta) = 1.
 \end{equation}
 In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\Omega_U=\Omega_Y\cup \{\operatorname{reject}\}$. To review this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function (\dfref{def:0_1_cost_function}), with the addition of a reject option at cost $\lambda$. This means
 \begin{equation}
@@ -176,62 +176,62 @@ The optimal decision rule for the robot can the be written (\EQref{eq:conditiona
 	\end{split}
 	\label{eq:expected_cost1}
 \end{equation}
-In absence of the reject option, the optimal decision rule is to pick the MAP, similar to \thref{theorem:MAP}. Using \EQref{f_dist2} and marginalizing over $w$
+In absence of the reject option, the optimal decision rule is to pick the MAP, similar to \thref{theorem:MAP}. Using \EQref{f_dist2} and marginalizing over $\theta$
 \begin{equation}
 	\begin{split}
-		p(U(\tilde{D})|\tilde{D}) &= \int p(U(\tilde{D}),w|\tilde{D}) \mathrm{d}w \\
-		& = \int p(U(\tilde{D})|w,\tilde{D})  p(w|\tilde{D})\mathrm{d}w \\
-		& = \int p(U(\tilde{D})|x_{n+1},w)  p(w|D)\mathrm{d}w \\
-		& = \int f_{U(\tilde{D})}(w,x_{n+1})  p(w|D)\mathrm{d}w \\
-		& = \mathbb{E}[f_{U(\tilde{D})}(w,x_{n+1})|D]\mathrm{d}w,\\
+		p(U(\tilde{D})|\tilde{D}) &= \int p(U(\tilde{D}),\theta \mid\tilde{D}) \mathrm{d}\theta \\
+		& = \int p(U(\tilde{D})\mid \theta,\tilde{D})  p(\theta \mid\tilde{D})\mathrm{d}\theta \\
+		& = \int p(U(\tilde{D})\mid x_{n+1},\theta)  p(\theta\mid D)\mathrm{d}\theta \\
+		& = \int f_{U(\tilde{D})}(\theta,x_{n+1})  p(\theta \mid D)\mathrm{d}\theta \\
+		& = \mathbb{E}[f_{U(\tilde{D})}(\theta,x_{n+1})\mid D],\\
 	\end{split}
 	\label{eq:q5}
 \end{equation}
 where for the second to last equality it has been assumed that
 \begin{equation}
-	p(U(\tilde{D})|w,\tilde{D}) = p(U(\tilde{D})|w,x_{n+1})
+	p(U(\tilde{D})\mid \theta,\tilde{D}) = p(U(\tilde{D})\mid \theta,x_{n+1})
 \end{equation}
-since by definition $f$ (see \EQref{f_dist2}) produce a $1-1$ map of the input $x_{x+1}$ and $p(w|\tilde{D}) = p(w|D)$ from \axref{ax:observation_relevance}. From Bayes theorem
+since by definition $f$ (see \EQref{f_dist2}) produce a $1-1$ map of the input $x_{x+1}$ and $p(\theta \mid\tilde{D}) = p(\theta \mid D)$ from \axref{ax:observation_relevance}. From Bayes theorem\index{Bayes theorem}
 \begin{equation}
-	p(w|D) =\frac{p(D_y|D_x,w)p(w|D_x)}{p(D_y|D_x)},
+	p(w|D) =\frac{p(D_y|D_x,\theta)p(\theta\mid D_x)}{p(D_y\mid D_x)},
 \end{equation}
-where from \axref{ax:observation_relevance} $p(w|D_x) = p(w)$. Assuming the distribution over $w$ is normally distributed with zero mean and a precision described by a hyperparameter, $\lambda$, 
+where from \axref{ax:observation_relevance} $p(\theta\mid D_x) = p(\theta)$. Assuming the distribution over $\theta$ is normally distributed with zero mean and a precision described by a hyperparameter, $\lambda$, 
 \begin{equation}
-	p(w) = \int d\lambda p(w|\lambda)p(\lambda).
+	p(\theta) = \int p(\theta\mid\lambda)p(\lambda) \mathrm{d}\lambda.
 \end{equation}
-where $p(w|\lambda)p(\lambda)$ is given by \EQref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
+where $p(\theta|\lambda)p(\lambda)$ is given by \EQref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
 \begin{equation}
 	\begin{split}
-		p(D_y|D_x,w) &=\prod_{i=1}^{n}p(y_i|x_i,w)\\
-		&=\prod_{i=1}^{n}f_{y_i}(w,x_i)\\
-	\end{split}.
+		p(D_y|D_x,\theta) &=\prod_{i=1}^{n}p(y_i|x_i,\theta)\\
+		&=\prod_{i=1}^{n}f_{y_i}(\theta,x_i).\\
+	\end{split}
 	\label{lik}
 \end{equation}
 At this point \EQref{eq:expected_cost1} is fully specified and can be approximated by HMC similarly to the regression case (see \appref{app:HMC} for a review of HMC). In this case, the model can be represented by the Hamiltonian 
 \begin{equation}
-	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln(p(w,\lambda|D))+const
+	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\lambda|D)+const
 	\label{ham3}
 \end{equation}
 where
 \begin{equation}
-	p(w|D) = \int d\lambda p(w,\lambda|D).
+	p(\theta|D) = \int p(\theta,\lambda|D) \mathrm{d} \lambda.
 \end{equation}
 Using \EQref{eq:q5}-\EQref{lik} in equation \eqref{ham3} yields the Hamiltonian
 \begin{equation}
 	\begin{split}
-		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln(f_{y_i}(w,x_i))+\text{const}\\
-		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln(\Gamma(\alpha_q))-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln(\lambda_q)+\beta_q\lambda_q\\
-		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln(\lambda_q))+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}w_l^2\bigg)\\
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln f_{y_i}(\theta,x_i)+\text{const}\\
+		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln\Gamma(\alpha_q)-\alpha_q\ln\beta_q+(1-\alpha_q)\ln\lambda_q+\beta_q\lambda_q\\
+		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln\lambda_q)+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
 	\end{split}.
 	\label{ham2}
 \end{equation}
-Sampling \EQref{ham2} yields a set of coefficients which can be used to compute $\mathbb{E}[f_{y_{n+1}}(w,x_{n+1})|D]$ which in turn (see \EQref{eq:expected_cost1}) can be used to compute $U^*(\tilde{D})$.
+Sampling \EQref{ham2} yields a set of coefficients which can be used to compute $\mathbb{E}[f_{y_{n+1}}(\theta,x_{n+1})\mid D]$ which in turn (see \EQref{eq:q5} and \EQref{eq:expected_cost1}) can be used to compute $U^*(\tilde{D})$.
 
 
 \subsection{Making Inference About the Model of Nature}
 In some instances, the robot is interested in inference related to the model of Nature. The observation $x_{n+1}\in \Omega_X$ by definition does not have an associated known action of Nature and thus by \axref{ax:observation_relevance} is disregarded in this context. From \EQref{eq:decision_rule3}
 \begin{equation}
-	U^*(D) = \arg\min_{U(D)} \mathbb{E}_{Y_{n+1}\mid D}[C(U(D), Y_{n+1})|D]
+	U^*(D) = \arg\min_{U(D)} \mathbb{E}_{Y_{n+1}\mid D}[C(U(D), Y_{n+1})\mid D]
 	\label{eq:best_decision}
 \end{equation}
 where $y_{n+1} \in \Omega_Y$ is interpreted as an action related to the model of Nature, e.g. Nature picking a given systematic that generates data.
@@ -239,22 +239,22 @@ where $y_{n+1} \in \Omega_Y$ is interpreted as an action related to the model of
 
 \subsubsection{Selecting the Robot's Model}
 \label{sec:model_selection}
-Suppose the Robot must choose between two competing models, aiming to select the one that best represents Nature's true model. The two competing models could e.g. be two different functions $f$ in regression or two different probability distribution assignments. In this case the Robot has actions $u_1$ and $u_2$ representing picking either model and Nature has two actions $s_1$ and $s_2$ which represent which model that in truth fit Nature's true model best. From \EQref{eq:best_decision}
+Suppose the Robot must choose between two competing models, aiming to select the one that best represents Nature's true model. The two competing models could e.g. be two different functions $f$ in regression or two different probability distribution assignments. In this case the Robot has actions $u_1$ and $u_2$ representing picking either model and Nature has two actions $y^{(1)}$ and $y^{(2)}$ which represent which model that in truth fit Nature's true model best. From \EQref{eq:best_decision}
 \begin{equation}
 	\begin{split}
 		\mathbb{E}_{Y_{n+1}\mid D}[C(u_1, Y_{n+1})|D] =&  \sum_{y_{n+1} = y^{(1)},y^{(2)}}C(u_1,y_{n+1})p(y_{n+1}|D),\\
-		\mathbb{E}_{Y_{n+1}\mid D}[C(u_2, Y_{n+1})|D] =&  \sum_{y_{n+1} = y^{(1)},y^{(2)}}C(u_2,y_{n+1})p(y_{n+1}|D),
+		\mathbb{E}_{Y_{n+1}\mid D}[C(u_2, Y_{n+1})|D] =&  \sum_{y_{n+1} = y^{(1)},y^{(2)}}C(u_2,y_{n+1})p(y_{n+1}|D).
 	\end{split}
 \end{equation}
-where in this case $u_i=y_i\quad \forall (u_i,y_i)\in \Omega_U\times\Omega_Y$ but the notational distinction is kept to avoid confusion. Since there is no input $x_{n+1}$ in this case, the decision rule $U$ is fixed (i.e. it does not depend on $x_{n+1}$). $U = u_1$ is picked iff 
+Since there is no input $x_{n+1}$ in this case, the decision rule $U$ is fixed (i.e. it does not depend on $x_{n+1}$) given data $D$. $U^*(D) = u_1$ is picked iff 
 \begin{equation}
-	\mathbb{E}_{Y_{n+1}\mid D}[C(U = u_1, Y_{n+1})|D]<\mathbb{E}_{Y_{n+1}\mid D}[C(U = u_2, Y_{n+1})|D],
+	\mathbb{E}_{Y_{n+1}\mid D}[C(u_1, Y_{n+1})|D]<\mathbb{E}_{Y_{n+1}\mid D}[C(u_2, Y_{n+1})|D],
 \end{equation}
 meaning
 \begin{equation}
 	\frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}>\frac{C(u_1,y^{(2)})-C(u_2,y^{(2)})}{C(u_2,y^{(1)})-C(u_1,y^{(1)})}.
 \end{equation}
-The ratio $\frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written viz
+The ratio $\frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written as follows
 \begin{equation}
 	\begin{split}
 		\text{posterior ratio} &= \frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}\\
@@ -315,7 +315,7 @@ $p(w|D)$ in \EQref{eq:hest2} can be expanded as shown in \EQref{eq:pa2}.
 	\begin{equation}
 		p(w_i|D_i)=\frac{w_i^{\alpha_i-1}(1-w_i)^{\beta_i-1}}{B(\alpha_i,\beta_i)},
 	\end{equation}
-	where $\alpha_i\equiv \alpha+s_i$, $\beta_i\equiv \beta+f_i$ and $s_i/f_i$ denotes the successes/failure, respectively, registered in the two sets of costumers. Evaluating \EQref{e1} yields
+	where $\alpha_i\equiv \alpha+y_i$, $\beta_i\equiv \beta+f_i$ and $y_i/f_i$ denotes the successes/failure, respectively, registered in the two sets of costumers. Evaluating \EQref{e1} yields
 	\begin{equation}
 		p(w_B > w_A|D)= \sum_{j=0}^{\alpha_B-1}\frac{B(\alpha_A+j,\beta_A+\beta_B)}{(\beta_B+j)B(1+j,\beta_B)B(\alpha_A,\beta_A)}.
 	\end{equation}
