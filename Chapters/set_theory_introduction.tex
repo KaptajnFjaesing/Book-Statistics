@@ -2,11 +2,6 @@
 \label{chp:set_theory}
 Set theory is a foundational branch of mathematics that provides the language and structure underlying much of modern mathematics, including probability theory. At its core, it studies sets---collections of distinct objects or elements---and the relationships between them. This chapter reviews the essential properties and operations of sets, laying the groundwork for the axiomatic development of probability theory and, ultimately, statistics.
 
-\begin{definition}[Membership]
-	\label{def:membership}
-	Given an object $o$ and a set $A$, the notation $o \in A$ denotes that $o$ is an element (or member) of $A$. If $o \notin A$, then $o$ is not an element of $A$.
-\end{definition}
-
 \begin{definition}[Set]
 	\label{def:set}
 	A set\index{Set} is a collection of distinct objects, called elements, considered as a single entity. Sets are typically denoted using curly braces $\{\}$ and can be described in two primary ways:
@@ -29,6 +24,11 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{figure}
 \end{definition}
 
+\begin{definition}[Membership]
+	\label{def:membership}
+	Given an object $o$ and a set $A$, the notation $o \in A$ denotes that $o$ is an element (or member) of $A$. If $o \notin A$, then $o$ is not an element of $A$.
+\end{definition}
+
 \begin{definition}[Cartesian Product]
 	\label{def:cartesian_product}
 	The Cartesian product of sets $A$ and $B$, denoted by $A \times B$, is defined as the set containing all ordered pairs $(a, b)$, where $a$ is in $A$ and $b$ is in $B$.
@@ -38,14 +38,19 @@ Set theory is a foundational branch of mathematics that provides the language an
 	Let $A = \{a_1, a_2\}$ and $B = \{b_1, b_2, b_3\}$ then
 	\begin{equation}
 		\begin{split}
-			A\times B = \{(a_1,b_1),(a_1,b_2),(a_1,b_3),(a_2,b_1),(a_2,b_2),(a_2,b_3)\}.
+			A\times B = \{&(a_1,b_1),(a_1,b_2),(a_1,b_3),\\
+			&(a_2,b_1),(a_2,b_2),(a_2,b_3)\}.
 		\end{split}
 	\end{equation}
 \end{example}
 
 \begin{definition}[Subset]
 	\label{def:subset}
-	The set $A$ is called a subset\index{Subset} of the set $B$, denoted $A \subseteq B$, if every element of $A$ is also an element of $B$. Formally, $A\subseteq B$ if $\forall x \in A, x \in B$. By this definition, a set is always a subset of itself.
+	The set $A$ is called a subset\index{Subset} of the set $B$, denoted $A \subseteq B$, if every element of $A$ is also an element of $B$. Formally, 
+	\begin{equation}
+		A\subseteq B \quad \Longleftrightarrow \quad\forall x \in A \colon x\in B.
+	\end{equation}
+	By this definition, a set is always a subset of itself.
 \end{definition}
 
 \begin{definition}[Proper Subset]
@@ -59,8 +64,9 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{figure}
 \end{definition}
 
+\newpage
 \begin{example}
-	$\twemoji{banana}$, $\twemoji{apple}$, and $\twemoji{eggplant}$ are members (elements) of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, but are not subsets of it; in turn, the subsets, such as $\{\twemoji{banana}\}$, are not members of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$.
+	$\twemoji{banana}$, $\twemoji{apple}$, and $\twemoji{eggplant}$ are members (elements) of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, but are not subsets of it; in turn, the subsets, such as $\{\twemoji{banana},\twemoji{apple}\}$, are not members of the set $\{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$.
 \end{example}
 
 \begin{example}
@@ -81,19 +87,37 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\begin{equation}
 		\begin{split}
 			2^A = \{&\emptyset, \{a_1\}, \{a_2\}, \{a_3\}, \{a_1, a_2\},\\
-			& \{a_1, a_3\}, \{a_2, a_3\}, \{a_1, a_2, a_3\}\}.
+			& \{a_1, a_3\}, \{a_2, a_3\}, A\}.
 		\end{split}
 	\end{equation}
 \end{example}
 
 \begin{definition}[Universal Set]
+	\label{def:universal_set}
 	The universal set\index{Universal set}, denoted by $\Omega$, is the set that contains all the objects or elements under consideration in a particular discussion or problem. It is the largest set in the context of a given study.
 \end{definition}
 
 \begin{definition}[Closure]
-	The set $A$ is said to be closed under a certain operation if, for every pair of elements $x$ and $y$ in $A$, the result of applying the operation to $x$ and $y$ is also in $A$.
+	The set $A$ is said to be closed under a certain operation if, for every pair of elements $x,y\in A$, the result of applying the operation to $x$ $y$ is also in $A$.
 \end{definition}
 
+\begin{definition}[Closure]
+	A set $A$ is said to be \emph{closed under an operation} $\ast$ if, for all $x, y \in A$, the result of applying $\ast$ to $x$ and $y$ is also an element of $A$; that is,
+	\begin{equation}
+		x, y \in A \;\Rightarrow\; x \ast y \in A.
+	\end{equation}
+\end{definition}
+
+\begin{example}
+	Let $\mathcal{E} = \{ 2k \mid k \in \mathbb{Z} \}$ denote the set of even integers.
+	Then $\mathcal{E}$ is closed under addition, since for any $x, y \in \mathcal{E}$,
+	\begin{equation}
+		x + y \in \mathcal{E}.
+	\end{equation}
+	In contrast, the set of odd integers $\mathbb{O} = \{ 2k + 1 \mid k \in \mathbb{Z} \}$ is not closed under addition, because $x + y$ is even when $x, y \in \mathbb{O}$.
+\end{example}
+
+\newpage
 \begin{definition}[Union]
 	The union of sets $A$ and $B$, denoted by $A \cup B$, is defined as the set containing all elements that are in $A$ or $B$ (or both). \figref{fig:set_union} provides a graphical representation of $A \cup B$.
 	\begin{figure}[h]
@@ -105,7 +129,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 \end{definition}
 
 \begin{definition}[Finite and Infinite Unions]
-	For a collection $\{A_i\}$, the union is denoted by $\bigcup_{i} A_i$ and is defined as the set containing all elements that are in at least one of the sets $A_i$.
+	For a collection of sets $\{A_i\}$, the union is denoted by $\bigcup_{i} A_i$ and is defined as the set containing all elements that are in at least one of the sets $A_i$.
 \end{definition}
 
 \begin{definition}[Intersection]
@@ -119,7 +143,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 \end{definition}
 
 \begin{definition}[Finite and Infinite Intersections]
-	For a collection $\{A_i\}$, the intersection is denoted by $\bigcap_{i} A_i$ and is defined as the set containing all elements that are common to all sets $A_i$.
+	For a collection of sets $\{A_i\}$, the intersection is denoted by $\bigcap_{i} A_i$ and is defined as the set containing all elements that are common to all sets $A_i$.
 \end{definition}
 
 \begin{definition}[Disjoint]
@@ -154,7 +178,6 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{figure}
 \end{definition}
 
-\newpage
 \begin{definition}[Symmetric Difference]
 	The symmetric difference of sets $A$ and $B$, denoted by $A \Delta B$, is defined as the set containing all elements that are in either $A$ or $B$ but not in both, meaning $A \Delta B = (A \cap B)^c$. \figref{fig:set_complementation} shows the symmetric difference between sets $A$ and $B$.
 \end{definition}
@@ -173,7 +196,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\begin{figure}[h]
 		\centering
 		\includegraphics[]{figures/set_partition.pdf}
-		\caption{The graphical representation of $A=\{A_1,A_2,A_3\}$, where $A_j$ are partitions.}
+		\caption{A graphical representation of $A = \{A_1, A_2, A_3\}$, where the $A_j$ are the disjoint subsets forming a partition of $A$.}
 		\label{fig:set_partition}
 	\end{figure}
 \end{definition}
