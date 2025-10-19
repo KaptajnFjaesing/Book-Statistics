@@ -110,8 +110,8 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	In accordance with \dfref{def:statistical_game}, the optimal decision rule for the Robot is
 	\begin{equation}
 		\begin{split}
-			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]\\
-			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}.
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]\\
+			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}.
 		\end{split}
 		\label{eq:decision_rule3}
 	\end{equation}
@@ -130,22 +130,22 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\end{equation}
 	From \thref{theorem:total_expectation}
 	\begin{equation}
-		\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})] = \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]].
+		\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})] = \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D}]].
 		\label{eq:total2}
 	\end{equation}
 	Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
 	\begin{equation}
 		\begin{split}
-			U^*(\tilde{D}) &= \argmin_{U(\tilde{D}) } \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D},I]]\\
-			&= \argmin_{U(\tilde{D})} \int p(\tilde{D}) \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] \mathrm{d}\tilde{D}.
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D}) } \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})|\tilde{D}]]\\
+			&= \argmin_{U(\tilde{D})} \int p(\tilde{D}) \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] \mathrm{d}\tilde{D}.
 		\end{split}
 		\label{eq:decision_rule2}
 	\end{equation}
 	Since $p(\tilde{D})$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
 	\begin{equation}
 		\begin{split}
-			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]\\
-			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}.
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]\\
+			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}.
 		\end{split}
 	\end{equation}
 \end{proof}
@@ -160,7 +160,7 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\end{equation}
 	In this case, the Robot is forced to model the decisions of Nature with a probability distribution with associated parameters without observations. From \EQref{eq:decision_rule3} the optimal action for the Robot can be written
 	\begin{equation}
-		U^*(D_y) = \argmin_{U(D_y)} \mathbb{E}[C(U(D_y), Y_{n+1})|D_y,I]
+		U^*(D_y) = \argmin_{U(D_y)} \mathbb{E}[C(U(D_y), Y_{n+1})|D_y]
 		\label{eq:best_decision1}
 	\end{equation}
 \end{example}
@@ -183,7 +183,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\label{theorem:median_decision_rule}
 	The cost function of \dfref{def:linear_cost_function} leads to the median decision rule
 	\begin{equation}
-		\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1} = \frac{1}{2}.
+		\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1} = \frac{1}{2}.
 	\end{equation}
 \end{theorem}
 
@@ -191,26 +191,26 @@ In case of a continuous action space, the cost function is typically picked from
 	The expected cost used in \thref{theorem:opt_decision_rule}
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] &= \int_{-\infty}^{\infty} |U(\tilde{D})-y_{n+1}| p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
-			&= \int_{-\infty}^{U(\tilde{D})} (y_{n+1}-U(\tilde{D}))p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
-			&\quad+\int_{U(\tilde{D})}^\infty  (U(\tilde{D})-y_{n+1})p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}.\\
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] &= \int_{-\infty}^{\infty} |U(\tilde{D})-y_{n+1}| p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}\\
+			&= \int_{-\infty}^{U(\tilde{D})} (y_{n+1}-U(\tilde{D}))p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}\\
+			&\quad+\int_{U(\tilde{D})}^\infty  (U(\tilde{D})-y_{n+1})p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}.\\
 		\end{split}
 	\end{equation}
 	The decision rule that minimize the cost can be found via
 	\begin{equation}
 		\begin{split}
-			0 &=\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
-			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)+\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
-			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D},I)-\int_{U^*(\tilde{D})}^\infty  p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}.
+			0 &=\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D})+\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}\\
+			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})|\tilde{D})-\int_{U^*(\tilde{D})}^\infty  p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}.
 		\end{split}
 	\end{equation}
 	This leads to
 	\begin{equation}
 		\begin{split}
-			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1} &= \int_{U^*(\tilde{D})}^\infty p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
-			&= 1- \int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
+			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1} &= \int_{U^*(\tilde{D})}^\infty p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}\\
+			&= 1- \int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}\\
 			&\Downarrow\\
-			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}& = \frac{1}{2}.
+			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}& = \frac{1}{2}.
 		\end{split}
 	\end{equation}	
 \end{proof}
@@ -227,7 +227,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\label{theorem:expectation_decision_rule}
 	The cost function of \dfref{def:quadratic_cost} leads to the expectation decision rule
 	\begin{equation}
-		U^*(\tilde{D}) = \mathbb{E}[Y_{n+1}|\tilde{D},I].
+		U^*(\tilde{D}) = \mathbb{E}[Y_{n+1}|\tilde{D}].
 	\end{equation}
 \end{theorem}
 
@@ -235,13 +235,13 @@ In case of a continuous action space, the cost function is typically picked from
 	From \thref{theorem:opt_decision_rule}
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] &= \int (U(\tilde{D})-y_{n+1})^2 p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] &= \int (U(\tilde{D})-y_{n+1})^2 p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}\\
 			&\Downarrow\\
-			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int y_{n+1}p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
+			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int y_{n+1}p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}\\
 			&=0\\
 			&\Downarrow\\
-			U^*(\tilde{D})& = \int y_{n+1}p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}\\
-			&= \mathbb{E}[Y_{n+1}|\tilde{D},I].
+			U^*(\tilde{D})& = \int y_{n+1}p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}\\
+			&= \mathbb{E}[Y_{n+1}|\tilde{D}].
 		\end{split}
 	\end{equation}
 \end{proof}
@@ -258,7 +258,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\label{theorem:MAP}
 	The cost function of \dfref{def:0_1_cost_function} leads to the maximum a posteriori (MAP) decision rule
 	\begin{equation}
-		\frac{\partial p_{Y_{n+1}|X_{n+1},(X,Y)_{1\colon n},I}(U(\tilde{D})|\tilde{D},I)}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}=0,
+		\frac{\partial p_{Y_{n+1}|X_{n+1},(X,Y)_{1\colon n}}(U(\tilde{D})|\tilde{D})}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}=0,
 	\end{equation}
 	where the distribution subscript has been included since it is not obvious from the context.
 \end{theorem}
@@ -266,11 +266,11 @@ In case of a continuous action space, the cost function is typically picked from
 \begin{proof}
 	From \thref{theorem:opt_decision_rule}
 	\begin{equation}
-		\mathbb{E}[C((\tilde{D}), Y_{n+1})|\tilde{D},I] = 1-\int \delta(U(\tilde{D})-y_{n+1}) p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}
+		\mathbb{E}[C((\tilde{D}), Y_{n+1})|\tilde{D}] = 1-\int \delta(U(\tilde{D})-y_{n+1}) p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}
 	\end{equation}
 	\begin{equation}
 		\begin{split}
-			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{\partial p(U(\tilde{D})|\tilde{D},I)}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{\partial p(U(\tilde{D})|\tilde{D})}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
 			&=0.\\
 		\end{split}
 	\end{equation}
@@ -293,7 +293,7 @@ In case of a continuous action space, the cost function is typically picked from
 	\end{equation}
 	Taking $\alpha \ll 1$ means $z<0$ will be penalized relatively more than $z>0$. The expected cost is
 	\begin{equation}
-		\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] = \int C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D},I)\mathrm{d}y_{n+1}.
+		\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] = \int C(U(\tilde{D}),y_{n+1}) p(y_{n+1}|\tilde{D})\mathrm{d}y_{n+1}.
 	\end{equation}
 	The derivative of the cost function with respect to the decision rule can be approximated as follows
 	\begin{equation}
@@ -308,26 +308,26 @@ In case of a continuous action space, the cost function is typically picked from
 	leading to the derivative of the expected cost
 	\begin{equation}
 		\begin{split}
-			\frac{d\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I]}{dU(\tilde{D})} &\approx \int \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}\bigg)p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}\\
-			& = \alpha -\int \frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}p(y_{n+1}|\tilde{D},I) \mathrm{d} y_{n+1}.\\
+			\frac{d\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]}{dU(\tilde{D})} &\approx \int \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}\bigg)p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}\\
+			& = \alpha -\int \frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}p(y_{n+1}|\tilde{D}) \mathrm{d} y_{n+1}.\\
 		\end{split}
 	\end{equation}
 	For large $\beta$, $\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}$ approaches the indicator $\mathbb{1}\{y_{n+1}>U(\tilde{D})\}$. Hence,
 	\begin{equation}
-		\int_{-\infty}^{\infty} p(y_{n+1}|\tilde{D},I)\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2} \mathrm{d}y_{n+1} \approx \int_{U(\tilde{D})}^{\infty} p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}
+		\int_{-\infty}^{\infty} p(y_{n+1}|\tilde{D})\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2} \mathrm{d}y_{n+1} \approx \int_{U(\tilde{D})}^{\infty} p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}
 	\end{equation}
 	This means the optimal decision rule can be written as follows
 	\begin{equation}
-		\alpha \approx \int_{U^*(\tilde{D})}^{\infty} p(y_{n+1}|\tilde{D},I) \mathrm{d}y_{n+1}.
+		\alpha \approx \int_{U^*(\tilde{D})}^{\infty} p(y_{n+1}|\tilde{D}) \mathrm{d}y_{n+1}.
 		\label{eq:quantile_decision_rule}
 	\end{equation}
-	The optimal decision $U^*(\tilde{D})$ is the $\alpha$-quantile of the conditional distribution $p(y_{n+1}|\tilde{D},I)$. This rule is known as the quantile decision rule.
+	The optimal decision $U^*(\tilde{D})$ is the $\alpha$-quantile of the conditional distribution $p(y_{n+1}|\tilde{D})$. This rule is known as the quantile decision rule.
 \end{example}
 
 \subsection{Discrete Action Space}
 In case of a continuous action space, the conditional expected loss used in \thref{theorem:opt_decision_rule} can be written
 \begin{equation}
-	\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D},I),
+	\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D}),
 	\label{eq:conditional_cost_discrete}
 \end{equation}
 where the cost function is typically represented in matrix form as follows
@@ -409,32 +409,32 @@ Note that the upper index represent realized values of $s$ whereas a lower index
 	where $\lambda_{12}$ denotes the cost of predicting $y^{(1)}$ when the true state is $y^{(2)}$, and $\lambda_{21}$ the cost of the reverse error.  The decision $U(\tilde{D})$ is determined by minimizing the conditional expected cost (\EQref{eq:conditional_cost_discrete})
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] & = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D},I)\\
-			& = C(U(\tilde{D}),y^{(1)})p(y^{(1)}|\tilde{D},I)\\
-			& \quad+C(U(\tilde{D}),y^{(2)})p(y^{(2)}|\tilde{D},I).\\
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] & = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D})\\
+			& = C(U(\tilde{D}),y^{(1)})p(y^{(1)}|\tilde{D})\\
+			& \quad+C(U(\tilde{D}),y^{(2)})p(y^{(2)}|\tilde{D}).\\
 		\end{split}
 	\end{equation}
 	For the different possible actions
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(u^{(1)}, Y_{n+1})|\tilde{D},I] &= \lambda_{12}p(y^{(2)}|\tilde{D},I),\\
-			\mathbb{E}[C(u^{(2)}, Y_{n+1})|\tilde{D},I] &= \lambda_{21}p(y^{(1)}|\tilde{D},I),\\
+			\mathbb{E}[C(u^{(1)}, Y_{n+1})|\tilde{D}] &= \lambda_{12}p(y^{(2)}|\tilde{D}),\\
+			\mathbb{E}[C(u^{(2)}, Y_{n+1})|\tilde{D}] &= \lambda_{21}p(y^{(1)}|\tilde{D}),\\
 		\end{split}
 	\end{equation}
 	$U(\tilde{D})=u_1$ iff
 	\begin{equation}
-		\mathbb{E}[C(u^{(1)},Y_{n+1})|\tilde{D},I]<\mathbb{E}[C(u^{(1)},Y_{n+1})|\tilde{D},I])
+		\mathbb{E}[C(u^{(1)},Y_{n+1})|\tilde{D}]<\mathbb{E}[C(u^{(1)},Y_{n+1})|\tilde{D}])
 	\end{equation}
 	meaning
 	\begin{equation}
 		\begin{split}
-			\lambda_{12}p(y^{(2)}|\tilde{D},I)&<\lambda_{21}p(y^{(1)}|\tilde{D},I)\\
-			&=\lambda_{21}(1-p(y^{(2)}|\tilde{D},I))
+			\lambda_{12}p(y^{(2)}|\tilde{D})&<\lambda_{21}p(y^{(1)}|\tilde{D})\\
+			&=\lambda_{21}(1-p(y^{(2)}|\tilde{D}))
 		\end{split}
 	\end{equation}
 	meaning $U(\tilde{D}) = u_1$ iff
 	\begin{equation}
-		p(y^{(2)}|\tilde{D},I)<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k.
+		p(y^{(2)}|\tilde{D})<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=k.
 		\label{eq:threshold31}
 	\end{equation}
 	\EQref{eq:threshold31} is equivalent to \EQref{eq:decision_rule31} from \exref{ex:confusion}. The difference between the two is that if $\lambda_{12}$ and $\lambda_{21}$ are specified, $k$ is specified. In \exref{ex:confusion} $k$ was left as a free parameter.
@@ -453,27 +453,27 @@ Note that the upper index represent realized values of $s$ whereas a lower index
 	The conditional expected cost if the Robot does not pick the reject option, meaning $U(\tilde{D})\in \Omega_U\setminus\operatorname{reject}$, is
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D},I] & = \sum_{y_{n+1}\in \Omega_Y} C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D},I)\\
-			&= \lambda_s(1-p(U(\tilde{D})|\tilde{D},I)),
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}] & = \sum_{y_{n+1}\in \Omega_Y} C(U(\tilde{D}),y_{n+1})p(y_{n+1}|\tilde{D})\\
+			&= \lambda_s(1-p(U(\tilde{D})|\tilde{D})),
 		\end{split}
 		\label{eq:cost1a}
 	\end{equation}
-	where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $y_{n+1}=U(\tilde{D})$ does not enter the sum. For the third equality it has been used that summing over all but $y_{n+1} =U(\tilde{D})$ is equal to $1-p(U(\tilde{D})|\tilde{D},I)$. The larger $p(U(\tilde{D})|\tilde{D},I)$, the smaller the loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the Robot picks the reject option is
+	where for the second equality it has been used that the cost of a correct classification is $0$, so the case of $y_{n+1}=U(\tilde{D})$ does not enter the sum. For the third equality it has been used that summing over all but $y_{n+1} =U(\tilde{D})$ is equal to $1-p(U(\tilde{D})|\tilde{D})$. The larger $p(U(\tilde{D})|\tilde{D})$, the smaller the loss (for $\lambda_s>0$), meaning the loss is minimized for the largest probability. The conditional expected loss if the Robot picks the reject option is
 	\begin{equation}
-		\mathbb{E}[C(\operatorname{reject}, Y_{n+1})|\tilde{D},I]=\lambda_r,
+		\mathbb{E}[C(\operatorname{reject}, Y_{n+1})|\tilde{D}]=\lambda_r,
 		\label{eq:cost2a}
 	\end{equation}
 	and from \EQref{eq:cost1a} and \EQref{eq:cost2a} it follows that picking 
 	\begin{equation}
-		\argmax_{U(\tilde{D})\in \Omega_U\setminus \operatorname{reject}} p(U(\tilde{D})|\tilde{D},I)
+		\argmax_{U(\tilde{D})\in \Omega_U\setminus \operatorname{reject}} p(U(\tilde{D})|\tilde{D})
 	\end{equation}
 	is the best option among classes $U(\tilde{D})\neq \operatorname{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using \EQref{eq:cost1a} and \EQref{eq:cost2a} yields
 	\begin{equation}
-		(1-p(U(\tilde{D})|\tilde{D},I))\lambda_s< \lambda_r,
+		(1-p(U(\tilde{D})|\tilde{D}))\lambda_s< \lambda_r,
 	\end{equation}
 	meaning
 	\begin{equation}
-		p(U(\tilde{D})|\tilde{D},I)\geq 1-\frac{\lambda_r}{\lambda_s}.
+		p(U(\tilde{D})|\tilde{D})\geq 1-\frac{\lambda_r}{\lambda_s}.
 	\end{equation}
 	Qualitatively, as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$, the behavior of the Robot changes smoothly. When
 	\begin{equation}
@@ -481,7 +481,7 @@ Note that the upper index represent realized values of $s$ whereas a lower index
 	\end{equation}
 	rejection is rated as a successful classification -- i.e., there is no cost associated with it -- and thus becomes the best option unless
 	\begin{equation}
-		p(U(\tilde{D})|\tilde{D},I)=1,
+		p(U(\tilde{D})|\tilde{D})=1,
 	\end{equation}
 	corresponding to knowing the correct class with absolute certainty. In other words, in this limit rejection is optimal unless the Robot is completely certain of the correct class. Conversely, when
 	\begin{equation}
