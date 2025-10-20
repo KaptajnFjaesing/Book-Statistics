@@ -11,15 +11,15 @@ Probability theory is a foundational branch of mathematics that provides the for
 	An event\index{Event}, $E$, is a subset of the sample space\index{Sample space}, denoted by $E \subseteq \Omega$, that corresponds to a specific collection of possible outcomes in a random experiment. Events may consist of single or multiple outcomes and are defined by the occurrence or non-occurrence of particular conditions.
 \end{definition}
 
-\begin{example}
-	\label{ex:die1}
-	Consider the roll of a fair six-sided die\index{Die example}. The sample space\index{Sample space} for this experiment is given by $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. $E = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$, is the event of rolling an even number. 
-\end{example}
-
 \begin{definition}[$\sigma$-algebra]
 	\label{def:sigma_algebra}
 	A $\sigma$-algebra\index{$\sigma$-algebra} over a sample space\index{Sample space} $\Omega$ is a collection of subsets $\mathcal{G}$ of $\Omega$ that contains both $\emptyset$ and $\Omega$, is closed under complementation (that is, if $E \in \mathcal{G}$ then $E^c \in \mathcal{G}$), and is closed under countable unions (and therefore also under countable intersections).
 \end{definition}
+
+\begin{example}
+	\label{ex:die1}
+	Consider the roll of a fair six-sided die\index{Die example}. The sample space\index{Sample space} for this experiment is given by $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. $E = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$, is the event of rolling an even number. 
+\end{example}
 
 \begin{example}
 	\label{ex:die1a}
@@ -145,53 +145,21 @@ Probability theory is a foundational branch of mathematics that provides the for
 	Probability can be interpreted as assigning a number between $0$ and $1$ to each event in a mathematically consistent way~\cite{chan2021introduction}.
 \end{definition}
 
-\begin{definition}[Probability Space]
-	\label{def:probability_space}
-	A probability space\index{Probability space} is a triple $(\Omega, \mathcal{F}, \mathbb{P})$, where $\Omega$ is the sample space\index{Sample space},	$\mathcal{F}$ is the event space and $\mathbb{P}$ is a probability measure on the measurable space $(\Omega, \mathcal{F})$.
-\end{definition}
 
 \begin{definition}[Objective Probability Measure]
 	\label{def:objective_probability}
-	Let $\mathbb{P}$ denote a generic probability measure\index{Probability measure} defined on the measurable space\index{Measurable space} $(\Omega, \mathcal{F})$.	The objective probability measure\index{Objective probability measure} interprets $\mathbb{P}(E)$ as the long-run relative frequency of the event $E$ in repeated independent trials. Formally, if $m$ is the number of occurrences of $E$ in $n$ trials, then~\cite{Leamer1978}
-	\begin{equation}
-		\mathbb{P}(E) \equiv \lim_{{n \to \infty}} \bigg(\frac{m}{n}\bigg)
-	\end{equation}
-	defines the probability measure as the limit of a relative frequency.
-\end{definition}
-
-\begin{definition}[Sugeno Measure]
-	\label{def:sugeno_measure}
-	Let $(\Omega, \mathcal{F})$ be a measurable space\index{Sugeno measure}\index{Measurable space}. 
-	A set function\index{Belief function}
-	\begin{equation}
-		\operatorname{Bel}\colon \mathcal{F} \to [0,1]
-	\end{equation}
-	is called a Sugeno measure~\cite{shafer1987} if it satisfies the following properties:
-	\begin{enumerate}
-		\item \axref{ax:non_neg} (non-negativity),
-		\item $\operatorname{Bel}(\Omega) = 1$ (normalization),
-		\item $\operatorname{Bel}(A) \le \operatorname{Bel}(B)$ for all $A, B \in \mathcal{F}$ with $A \subseteq B$ (monotonicity).
-	\end{enumerate}
+	Let $\mathbb{P}$ denote a probability measure\index{Probability measure} defined on the measurable space\index{Measurable space} $(\Omega, \mathcal{F})$. Interpreting the probability measure as an objective probability measure\index{Objective probability measure}~\cite{Leamer1978,freedman2007} consists in viewing $\mathbb{P}(E)$ as the long-run relative frequency of the event $E\in\mathcal{F}$ over repeated independent trials, provided that the limit exists.
 \end{definition}
 
 \begin{definition}[Subjective Probability Measure]
 	\label{def:subjective_probability}
-	A subjective probability measure is a probability measure\index{Probability measure} defined on a measurable space $(\Omega, \mathcal{F})$ that satisfies the axioms of a Sugeno measure\index{Sugeno measure}~\cite{shafer1987,hoff2009first}. It may be interpreted as a \emph{belief function}\index{Belief function}, representing a coherent assignment of degrees of belief to events.
+	Let $\mathbb{P}$ denote a probability measure\index{Probability measure} defined on the measurable space\index{Measurable space} $(\Omega, \mathcal{F})$. Interpreting the probability measure as a subjective probability measure\index{Subjective probability measure}~\cite{shafer1987,hoff2009first} consists in assigning values to events based on rational degrees of belief\index{Rational belief} derived from prior knowledge, constraints, or partial information, in a way that avoids internal inconsistencies (i.e., satisfies Dutch-book coherence~\cite{vineberg2011}).
 \end{definition}
 
-\newpage
-\begin{theorem}[Probability vs.\ Sugeno Measures]
-	Any probability measure $\mathbb{P}$ on $(\Omega, \mathcal{F})$ is a Sugeno measure.
-\end{theorem}
-\begin{proof}
-	Let $\mathbb{P}$ be a probability measure on $(\Omega, \mathcal{F})$. By definition, $\mathbb{P}$ satisfies:
-	\begin{enumerate}
-		\item $\mathbb{P}(\emptyset) = 0$ and $\mathbb{P}(\Omega) = 1$ (Boundary Conditions).
-		\item If $A, B \in \mathcal{F}$ and $A \subseteq B$, then $\mathbb{P}(A) \leq \mathbb{P}(B)$ (Monotonicity).
-	\end{enumerate}
-	Thus, $\mathbb{P}$ is a Sugeno measure.
-\end{proof}
-
+\begin{definition}[Probability Space]
+	\label{def:probability_space}
+	A probability space\index{Probability space} is a triple $(\Omega, \mathcal{F}, \mathbb{P})$, where $\Omega$ is the sample space\index{Sample space},	$\mathcal{F}$ is the event space and $\mathbb{P}$ is a probability measure on the measurable space $(\Omega, \mathcal{F})$.
+\end{definition}
 
 \begin{remark}[Events for Continuous Sample Spaces]
 	In continuous sample spaces\index{Sample space}, individual outcomes (single real numbers) have probability zero. Therefore, events are nontrivial subsets of the sample space, typically intervals or more general Borel sets\index{Borel set}. For example, the event 
@@ -201,51 +169,50 @@ Probability theory is a foundational branch of mathematics that provides the for
 	represents the outcome that the randomly chosen number lies between $0.2$ and $0.5$.
 \end{remark}
 
+
 \begin{remark}[Reason for Borel $\sigma$-algebra]
-	The restriction to Borel sets\index{Borel set} in case of a continuous sample space\index{Sample space} (rather than all subsets of $\mathbb{R}$) is not arbitrary: it avoids paradoxical constructions such as non-measurable sets (e.g. the Vitali set), which cannot be consistently assigned a probability. This ensures that the probability measure is well defined for all events in $\mathcal{F}$.
+	The restriction to Borel sets\index{Borel set} in continuous sample spaces\index{Sample space} avoids paradoxical constructions such as non-measurable sets (e.g., the Vitali set~\cite{vitali1905sui}), which cannot be consistently assigned a probability~\cite{fremlin2000measure}, ensuring that the probability measure is well defined on all events in $\mathcal{F}$~\cite{billingsley1995probability}.
 \end{remark}
 
 \begin{example}
-	Consider choosing a real number uniformly at random from the interval $[0,1]$. Here the sample space\index{Sample space} is $\Omega = [0,1]$. Unlike the discrete case, the event space\index{Event space} $\mathcal{F}$ cannot simply be the power set of $[0,1]$, since not all subsets admit a well-defined probability measure. Instead, the event space is chosen as the Borel $\sigma$-algebra $\mathcal{B}([0,1])$, which includes sets such as open intervals $(0.2, 0.5)$, closed intervals $[0, 0.1]$, and countable unions and intersections thereof.
+	Consider choosing a real number uniformly at random from the interval $[0,1]$. Here the sample space\index{Sample space} is $\Omega = [0,1]$. The event space\index{Event space} $\mathcal{F}$ cannot be the power set of $[0,1]$, since not all subsets admit a well-defined probability measure. Instead, the event space is chosen as the Borel $\sigma$-algebra $\mathcal{B}([0,1])$, which includes sets such as open intervals $(0.2, 0.5)$, closed intervals $[0, 0.1]$, and countable unions and intersections thereof.
 \end{example}
 
 
 \begin{definition}[Independence]
 	\label{def:independence}
-	Events $E_1$ and $E_2$  in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ are said to be independent iff\index{Independent events}
+	Two events $E_1, E_2 \in \mathcal{F}$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ are said to be independent\index{Independent events} if and only if
 	\begin{equation}
 		\mathbb{P}(E_1 \cap E_2) = \mathbb{P}(E_1) \mathbb{P}(E_2).
-		\label{eq:ind}
 	\end{equation}
 \end{definition}
 
 \begin{definition}[Conditional Probability]
 	\label{def:conditional_probability}
-	For events $E_1$ and $E_2$ in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with $\mathbb{P}(E_2) > 0$, the conditional probability\index{Conditional probability} of $E_1$ given $E_2$ is defined as follows
+	Let $E_1, E_2 \in \mathcal{F}$ be events in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with $\mathbb{P}(E_2) > 0$. 
+	The conditional probability\index{Conditional probability} of $E_1$ given $E_2$ is defined by
 	\begin{equation}
-		\mathbb{P}(E_1|E_2) \equiv \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}.
-		\label{eq:cond}
+		\mathbb{P}(E_1 \mid E_2) = \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}.
 	\end{equation}
 \end{definition}
 
 \begin{definition}[Conditional Independence]
-\label{def:conditional_independence}
-Events $E_1$ and $E_2$ are conditionally independent given $E_3$ if
-\begin{equation}
-\mathbb{P}(E_1 \cap E_2 | E_3) = \mathbb{P}(E_1|E_3)\mathbb{P}(E_2|E_3).
-\end{equation}
+	\label{def:conditional_independence}
+	Events $E_1$ and $E_2$ are conditionally independent\index{Conditional independent} given $E_3 \in \mathcal{F}$ if
+	\begin{equation}
+		\mathbb{P}(E_1 \cap E_2 \mid E_3) = \mathbb{P}(E_1 \mid E_3)\,\mathbb{P}(E_2 \mid E_3),
+	\end{equation}
+	provided $\mathbb{P}(E_3) > 0$.
 \end{definition}
 
 \begin{theorem}[Chain Rule]
 	\label{theorem:chain_rule}
-	Let $E_1, E_2, E_3 \in \mathcal{F}$ be events in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. The chain rule\index{Chain rule} states that
+	Let $E_1, E_2, E_3 \in \mathcal{F}$ be events in a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ with $\mathbb{P}(E_3) > 0$. Then the chain rule\index{Chain rule} states that
 	\begin{equation}
 		\mathbb{P}(E_1 \cap E_2 \cap E_3) 
-		=\mathbb{P}(E_1 \mid E_2 \cap E_3)\mathbb{P}(E_2 \mid E_3)\mathbb{P}(E_3).
-		\label{eq:prod}
+		= \mathbb{P}(E_1 \mid E_2 \cap E_3)\,\mathbb{P}(E_2 \mid E_3)\,\mathbb{P}(E_3).
 	\end{equation}
 \end{theorem}
-
 \begin{proof}
 	From the definition of conditional probability in \dfref{def:conditional_probability}
 	\begin{equation}
