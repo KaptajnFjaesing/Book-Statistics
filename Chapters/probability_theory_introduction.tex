@@ -507,7 +507,8 @@ Probability theory is a foundational branch of mathematics that provides the for
 	All probability measures\index{Probability measure} related to the random variables can be derived from the joint probability measure via \thref{theorem:law_of_total_probability}.
 \end{definition}
 
-\begin{remark}[Marginalization from a Joint Measure]
+\begin{remark}[Marginalization over a Joint Measure]
+	\label{remark:marginalization}
 	Let
 	\begin{equation}
 		X\colon \Omega \to \Omega_X, \quad Y\colon \Omega \to \Omega_Y
@@ -562,7 +563,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
 	\index{Independent random variables}
-	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If the random variables are independent the expectation can be written
+	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If the random variables are independent\index{Independen random variables} the expectation can be written
 	\begin{equation}
 		\mathbb{E}_{X,Y}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y].
 	\end{equation}
@@ -597,7 +598,11 @@ Probability theory is a foundational branch of mathematics that provides the for
 \end{definition}
 \begin{theorem}[Covariance of independent random variables]
 	\label{theorem:covariance_of_independent_variables}
-	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent, then their covariance is
+	Let 
+	\begin{equation}
+		X\colon \Omega \to \Omega_X \quad \text{and}\quad Y\colon \Omega \to \Omega_Y
+	\end{equation}
+	 be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent\index{Independen random variables}, then their covariance is
 	\begin{equation}
 		\operatorname{Cov}_{X,Y}[X,Y] = 0.
 	\end{equation}
@@ -609,7 +614,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{definition}[Correlation]
 	\label{def:correlation}
 	\index{Correlation}
-	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}[X,Y]$, is defined as
+	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. The correlation between $X$ and $Y$, denoted by $\operatorname{Corr}_{X,Y}[X,Y]$, is defined as
 	\begin{equation}
 		\begin{split}
 			\operatorname{Corr}_{X,Y}[X,Y] &= \frac{\operatorname{Cov}_{X,Y}[X,Y]}{\sqrt{\operatorname{Var}_X[X]  \operatorname{Var}_Y[Y]}} \\
@@ -619,17 +624,32 @@ Probability theory is a foundational branch of mathematics that provides the for
 \end{definition}
 
 \begin{remark}[Correlation vs. Covariance]
-	Correlation and covariance are both measures of the relationship between two random variables\index{Random variable}. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables. In particular, the correlation between two variables, denoted by $\operatorname{Corr}_{X,Y}[X, Y]$, is the covariance of $X$ and $Y$ divided by the product of their standard deviations. This normalization makes correlation a unitless quantity that ranges between -1 and 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 indicates no linear relationship. In essence, correlation provides a more interpretable measure of the strength and direction of the linear association between two variables compared to covariance.
+	Correlation and covariance are both measures of the relationship between two random variables\index{Random variable}. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables.
 \end{remark}
 
 \begin{definition}[Change of Variables for PDFs]
 	\label{def:change_of_variables}
 	\index{Change of variables for PDFs}
-	Let $X\colon \Omega \to \Omega_X$ be a continuous random variable\index{Random variable} with probability density function\index{Probability density function} (PDF) $p_X$, defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Suppose $Y = g(X)$, where $g$ is a continuous and differentiable function with differentiable inverse $g^{-1}$. Then the PDF of $Y$, denoted $p_Y$, is given by the change of variables formula~\cite{Sivia2006}
+	Let
 	\begin{equation}
-		p_Y(y) = p_X\bigl(g^{-1}(y)\bigr) \, \left| \frac{d}{dy} g^{-1}(y) \right|, \quad y \in \Omega_Y,
+		X\colon \Omega \to \Omega_X
 	\end{equation}
-	where $\Omega_Y = g(\Omega_X)$ is the codomain of $Y$.
+	be a random variables\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to the measurable space\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$, and let 
+	\begin{equation}
+		\mathbb{P}_X(B) = \int_B p_X(x)\mathrm{d}\lambda_X(x), \quad \forall B\in \mathcal{F}_X.
+	\end{equation}
+	Let
+	\begin{equation}
+		g\colon \Omega_X\to \Omega_Y
+	\end{equation}
+	be a continuous differentiable bijection with continuous differentiable inverse $g^{-1}$, and define
+	\begin{equation}
+		Y= g(X).
+	\end{equation}
+	Then $Y$ admits a PDF $p_Y$ with respect to the Lebesgue measure on $\Omega_Y = g(\Omega_X)$, given by~\cite{Sivia2006}
+	\begin{equation}
+		p_Y(y) = p_X\bigl(g^{-1}(y)\bigr), \left| \frac{d}{dy} g^{-1}(y) \right|, \quad y \in \Omega_Y.
+	\end{equation}
 \end{definition}
 
 \begin{example}
@@ -761,7 +781,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		X_1\colon\Omega \to \Omega_{X_1}, \dots, X_n\colon\Omega \to \Omega_{X_n}
 	\end{equation}
-	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to
+	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent\index{Independen random variables}, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to
 	\begin{equation}
 		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\Big|_{X = \mathbb{E}_X[X]}\right)^2 \operatorname{Var}_{X_i}[X_i]
 		\label{eq:error_prop}
@@ -774,16 +794,15 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		\mathbb{E}_X[X] = (\mathbb{E}_{X_1}[X_1], \dots, \mathbb{E}_{X_n}[X_n]).
 	\end{equation}
-	\EQref{eq:error_prop} is the commonly used form of the linear error-propagation formula for independent variables.
 \end{remark}
 
 \begin{example}
 	\index{Example: Error propagation}
-	A company produces square plates with dimensions characterized by two independent random variables\index{Normal distribution}\index{Random variable}
+	A company produces square plates with dimensions characterized by two independent\index{Independen random variables} random variables\index{Normal distribution}\index{Random variable}
 	\begin{equation}
 		X\sim \operatorname{Norm}(2m,(0.01m)^2), \quad Y\sim \operatorname{Norm}(3m,(0.02m)^2).
 	\end{equation} 
-	The variance\index{Variance} of the area $XY$ can be determined exactly from \thref{theorem:error_propagation}
+	The variance\index{Variance} of the area $XY$ can be determined exactly as follows
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
@@ -811,55 +830,87 @@ Probability theory is a foundational branch of mathematics that provides the for
 \end{example}
 
 \begin{example}
-	Consider a probability space\index{Probability space} describing two children with unknown sexes. Let
+	Consider a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ describing two children with unknown sexes. Let
 	\begin{equation}
 		\Omega_{\text{child 1}} = \{\text{\Gentsroom}, \text{\Ladiesroom}\}, \quad
 		\Omega_{\text{child 2}} = \{\text{\Gentsroom}, \text{\Ladiesroom}\},
 	\end{equation}
-	and define
+	and define the sample space as the Cartesian product
 	\begin{equation}
-		\Omega = \Omega_{\text{child 1}} \times \Omega_{\text{child 2}} = 
+		\Omega = \Omega_{\text{child 1}} \times \Omega_{\text{child 2}} =
 		\{(\text{\Gentsroom},\text{\Gentsroom}), (\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom}), (\text{\Ladiesroom},\text{\Ladiesroom})\}.
-	\end{equation}	
+	\end{equation}
+	The associated algebra of subsets is denoted $\mathcal{F} = 2^{\Omega}$, and the probability measure $\mathbb{P}$ assigns equal mass to each outcome, that is,
+	\begin{equation}
+		\mathbb{P}(\{\omega\}) = \frac{1}{4}, \quad \omega \in \Omega.
+	\end{equation}
 	Define the random variables\index{Random variable}
 	\begin{equation}
-		B \colon \Omega \to \{0,1,2\}, \quad G \colon \Omega \to \{0,1,2\},
+		B \colon \Omega \to \Omega_B, \quad G \colon \Omega \to \Omega_G,
 	\end{equation}
-	where $B(\omega)$ and $G(\omega)$ denote the number of boys and girls in outcome $\omega \in \Omega$.  
-	The joint probability mass function of $(B,G)$ is, by \dfref{def:prob_density_general},
+	where $B(\omega)$ and $G(\omega)$ denote the number of boys and girls, respectively, in outcome $\omega \in \Omega$, and where
 	\begin{equation}
-		p_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}) = \mathbb{P}(\{\omega \in \Omega | B(\omega) = b,\, G(\omega) = g\}).
+		\Omega_B = \Omega_G = \{0,1,2\}.
+	\end{equation}
+	Let $\mathcal{F}_B = 2^{\Omega_B}$ and $\mathcal{F}_G = 2^{\Omega_G}$ denote the corresponding algebras. The pair $(B,G)$ defines a measurable mapping
+	\begin{equation}
+		(B,G)\colon (\Omega, \mathcal{F}) \to (\Omega_B \times \Omega_G, \mathcal{F}_B \otimes \mathcal{F}_G),
+	\end{equation}
+	where $(\Omega_B \times \Omega_G, \mathcal{F}_B \otimes \mathcal{F}_G)$ is the product measurable space\index{Product measurable space}.	The joint probability measure\index{Joint probability measure} of $(B,G)$ is the image measure
+	\begin{equation}
+		\mathbb{P}_{B,G} = \mathbb{P} \circ (B,G)^{-1},
+	\end{equation}
+	defined on $(\Omega_B \times \Omega_G, \mathcal{F}_B \otimes \mathcal{F}_G)$.
+	Its corresponding probability mass function (PMF)\index{Probability mass function} $p_{B,G}$ is the Radon–Nikodym derivative of $\mathbb{P}_{B,G}$ with respect to the counting measure\index{Counting measure} $\nu_{B,G} = \nu_B \otimes \nu_G$, i.e.,
+	\begin{equation}
+		\begin{split}
+			p_{B,G}(b,g) &= \frac{\mathrm{d}\mathbb{P}_{B,G}}{\mathrm{d}\nu_{B,G}}(b,g)\\
+			& = \mathbb{P}_{B,G}(\{(b,g)\})\\
+			& = \mathbb{P}(\{\omega \in \Omega \colon B(\omega)=b,\, G(\omega)=g\}).
+		\end{split}
 	\end{equation}
 	For instance,
 	\begin{equation}
-		p_{B,G}(1,1) = \mathbb{P}(\{(\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom})\}) = \frac{1}{2}.
+		p_{B,G}(1,1)
+		= \mathbb{P}(\{(\text{\Gentsroom},\text{\Ladiesroom}), (\text{\Ladiesroom},\text{\Gentsroom})\})
+		= \frac{1}{2}.
 	\end{equation}
 	Let $A \subseteq \Omega_B \times \Omega_G$ denote the event ``at least one boy'':
 	\begin{equation}
-		A = \{(b,g) \in \Omega_B \times \Omega_G \mid b \ge 1\}.
+		A = \{(b,g) \in \Omega_B \times \Omega_G \colon b \ge 1\}.
 	\end{equation}
-	Using \dfref{def:conditional_probability} the conditional probability of exactly one girl given at least one boy is (see \rmref{remark:pmf_vs_measure})
+	Using \dfref{def:conditional_probability}, the conditional probability of exactly one girl given at least one boy is (see \rmref{remark:pmf_vs_measure})
 	\begin{equation}
-		\mathbb{P}_{B,G}(\{(1,1)\} \mid A) = \frac{\mathbb{P}_{B,G}(\{(1,1)\} \cap A)}{\mathbb{P}_{B,G}(A)}.
+		\mathbb{P}_{B,G}(\{(1,1)\} \mid A)
+		= \frac{\mathbb{P}_{B,G}(\{(1,1)\} \cap A)}{\mathbb{P}_{B,G}(A)}.
 	\end{equation}
 	From the PMF,
 	\begin{equation}
-		\mathbb{P}_{B,G}(\{(1,1)\} \cap A) = p_{B,G}(1,1) = \frac{1}{2},
+		\mathbb{P}_{B,G}(\{(1,1)\} \cap A)
+		= p_{B,G}(1,1)
+		= \frac{1}{2},
 	\end{equation}
-	and from \thref{theorem:law_of_total_probability}
+	and by the law of total probability (\thref{theorem:law_of_total_probability}),
 	\begin{equation}
-		\mathbb{P}_{B,G}(A) = \sum_{g} \sum_{b \ge 1} p_{B,G}(b,g) = p_{B,G}(1,1) + p_{B,G}(2,0) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}.
+		\mathbb{P}_{B,G}(A)
+		= \sum_{g} \sum_{b \ge 1} p_{B,G}(b,g)
+		= p_{B,G}(1,1) + p_{B,G}(2,0)
+		= \frac{1}{2} + \frac{1}{4}
+		= \frac{3}{4}.
 	\end{equation}
 	Hence,
 	\begin{equation}
-		\mathbb{P}_{B,G}(\{(1,1)\} \mid A) = \frac{2}{3}.
+		\mathbb{P}_{B,G}(\{(1,1)\} \mid A)
+		= \frac{2}{3}.
 	\end{equation}
 \end{example}
 
 
+
+
 \begin{remark}[PMF vs. image measure on events]
 	\label{remark:pmf_vs_measure}
-	Let $B$ and $G$ be discrete random variables with joint PMF\index{Probability mass function} $p_{B,G}$ and image measure\index{Image measure} $\mathbb{P}_{B,G}$. From \dfref{def:prob_density_general}, the PMF is defined only for single points $(b,g) \in \Omega_B \times \Omega_G$:
+	Let $B$ and $G$ be discrete random variables\index{Random variable} with joint PMF\index{Probability mass function} $p_{B,G}$ and image measure\index{Image measure} $\mathbb{P}_{B,G}$. From \dfref{def:prob_density_general}, the PMF\index{Probability mass function} is defined only for single points $(b,g) \in \Omega_B \times \Omega_G$:
 	\begin{equation}
 		p_{B,G}(b,g) = \mathbb{P}_{B,G}(\{(b,g)\}).
 	\end{equation}
@@ -948,7 +999,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{example}
 	\index{Example: Gameshow}
 	On a game show, a contestant is told the rules as follows: There are $3$ doors labeled $1,2,3$. A single prize has been hidden behind one of them. You get to select one door. Initially your chosen door will not be opened, instead, the gameshow host will open one of the other two doors in such a way as not to reveal the prize. For example, if you first choose door $1$, the gameshow host will open one of doors $2$ and $3$, and it is guaranteed that he will choose which one to open so that the prize will not be revealed. At this point you will be given a fresh choice of door: You can either stick with your first choice, or you can switch to the other closed door. All the doors will then be opened and you will receive whatever is behind your final choice of door.\newline
-	Imagine that the contestant chooses first door $1$; then the gameshow host opens door $3$, revealing nothing. Should the contestant a) stick with door $1$, b) switch to door $2$ or c) it does not matter? You may assume that initially, the prize is equally likely to be behind any of the $3$ doors. \newline
+	Imagine that the contestant chooses first door $1$; then the gameshow host opens door $3$, revealing nothing. Should the contestant a) stick with door $1$, b) switch to door $2$ or c) it does not matter? Assume that initially, the prize is equally likely to be behind any of the $3$ doors. \newline
 	
 	Let $z_i$ denote the prize being behind the $i$'th door, $o_i$ the action of opening the $i$'th door and $c_i$ the action of choosing the $i$'th door. The door with the largest probability of containing the prize should be picked, meaning
 	\begin{equation}
@@ -991,9 +1042,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{example}
 	\index{Example: Correlation coefficient}
 	\index{Probability density function}
-	Let $X\colon\Omega \to \Omega_X$ and $Y\colon\Omega\to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$ and suppose $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. Clearly $Y$ is dependent on X (in fact Y is uniquely determined by X). Show that $\operatorname{Corr}_{X,Y}[X,Y]=0$.\newline
-	
-	Since $Y=X^2$ is uniquely determined by $X$,\index{Expected value}\index{Correlation}\index{Covariance}\index{Variance}
+	Let $X\colon\Omega \to \Omega_X$ and $Y\colon\Omega\to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$ and suppose $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. In this case \index{Expected value}\index{Correlation}\index{Covariance}\index{Variance}
 	\begin{equation}
 		\operatorname{Corr}_{X,Y}[X,Y] = \operatorname{Corr}_{X}[X,X^2].
 	\end{equation}
@@ -1007,8 +1056,8 @@ Probability theory is a foundational branch of mathematics that provides the for
 	In this case for the nominator\index{Covariance}\index{Expected value}\index{Variance}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Cov}_{X}[X,X^2] &= \int_{\Omega_X} x^3 p_X(x) \mathrm{d}x-\int_{\Omega_X} x'p_X(x') \mathrm{d}x'\int_{\Omega_X} x''^2p_X(x'') \mathrm{d}x''\\
-			&= \frac{1}{b-a}\int_{a}^{b}x^3\mathrm{d}x-\frac{1}{(b-a)^2}\int_{a}^{b} x' \mathrm{d}x'\int_{a}^{b} x''^2 \mathrm{d}x''\\
+			\operatorname{Cov}_{X}[X,X^2] &= \int_{\Omega_X} x^3 p_X(x) \mathrm{d}x-\int_{\Omega_X} xp_X(x) \mathrm{d}x\int_{\Omega_X} x^2p_X(x) \mathrm{d}x\\
+			&= \frac{1}{b-a}\int_{a}^{b}x^3\mathrm{d}x-\frac{1}{(b-a)^2}\int_{a}^{b} x \mathrm{d}x\int_{a}^{b} x^2 \mathrm{d}x\\
 			&= \frac{1}{12}(a-b)^2(a+b)\\
 			&=0
 		\end{split}
@@ -1022,64 +1071,6 @@ Probability theory is a foundational branch of mathematics that provides the for
 		\end{split}
 	\end{equation}
 	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\operatorname{Corr}_{X}[X,X^2]=0$.
-\end{example}
-
-\begin{example}
-	\index{Example: Correlation coefficient}
-	Let $X\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$ and $Y = WX$, where W is a discrete random variable\index{Random variable} defined by the PMF\index{Probability mass function} $p_W(-1)=p_W(1)=\frac{1}{2}$. It is clear that X and Y are not independent, since Y is a function of X.
-	\begin{enumerate}
-		\item Show $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$.\newline
-		
-		To show that $Y\sim \operatorname{Norm}(\mu =0, \sigma^2 = 1)$, show that Y has zero mean and unity variance.\index{Variance}\index{Expected value}
-		\begin{equation}
-			\begin{split}
-				\mathbb{E}_Y[Y] &= \mathbb{E}_{W,X}[WX]\\
-				&=\mathbb{E}_W[W]\cancelto{0}{\mathbb{E}_X[X]}\\
-				&=0.
-			\end{split}
-		\end{equation}
-		The variance
-		\begin{equation}
-			\begin{split}
-				\operatorname{Var}_Y[Y] &= \mathbb{E}_Y[Y^2]-\cancelto{0}{\mathbb{E}_Y[Y]^2}\\
-				& = \mathbb{E}_{W,X}[W^2X^2]\\
-				&= \mathbb{E}_W[W^2]\mathbb{E}_X[X^2]\\
-				& = \mathbb{E}_W[W^2]\operatorname{Var}_X[X]
-			\end{split}
-		\end{equation}
-		since $\operatorname{Var}_X[X]=\mathbb{E}_X[X^2]-\cancelto{0}{\mathbb{E}_X[X]^2}=1$. Now
-		\begin{equation}
-			\begin{split}
-				\mathbb{E}_W[W^2]&= \frac{1}{n}\sum_{i=1}^nw_i^2p_W(w_i)\\
-				&= \frac{1}{2}[(-1)^2\frac{1}{2}+1^2\frac{1}{2}]\\
-				&= 1
-			\end{split}
-		\end{equation}
-		so $\operatorname{Var}_Y[Y] =1$.
-		\item Show $\operatorname{Cov}_{X,Y}[X,Y]=0$. Thus X and Y are uncorrelated but dependent, even though they are Gaussian.\index{Covariance}\index{Expected value}
-		
-		\begin{equation}
-			\begin{split}
-				\operatorname{Cov}_{X,Y}[X,Y] &= \operatorname{Cov}_{X,W}[X,WX] \\
-				&= \mathbb{E}_{X,W}[WX^2]-\mathbb{E}_X[X]\mathbb{E}_{X,W}[WX]\\
-				&= \mathbb{E}_W[W]\mathbb{E}_X[X^2]-\mathbb{E}_W[W]\mathbb{E}_X[X]^2\\
-				&= \mathbb{E}_W[W]\operatorname{Var}_X[X]\\
-				& = 0
-			\end{split}
-		\end{equation}
-		where for the last equality it has been used that
-		\begin{equation}
-			\begin{split}
-				\begin{split}
-					\mathbb{E}_W[W]&= \frac{1}{n}\sum_{i=1}^nw_ip_W(w_i)\\
-					&= \frac{1}{2}[(-1)\frac{1}{2}+1\frac{1}{2}]\\
-					&= 0
-				\end{split}
-			\end{split}
-		\end{equation}
-		
-	\end{enumerate}
-	
 \end{example}
 
 \begin{example}

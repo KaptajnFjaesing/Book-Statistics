@@ -4,14 +4,16 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 
 \begin{definition}[Robot]
 	\label{def:robot}
-	The Robot is the primary decision maker in the statistical game.\index{Decision maker Robot}
+	The Robot is the decision maker in the statistical game.\index{Decision maker Robot}
 	It selects actions or decisions based on available information with the aim of achieving an optimal outcome under uncertainty.
 \end{definition}
 
 \begin{definition}[Nature]
 	\label{def:nature}
-	Nature is an opposing and unpredictable player that determines the true state of the world and thereby influences the outcomes of the statistical experiment\index{Decision maker Nature}. It represents the inherent uncertainty of the environment and the data-generating process.
+	Nature represents the inherent uncertainty in the environment and the data-generating process\index{Nature}.
+	It determines the true state of the world, which influences the outcomes of the statistical experiment, but it does not act strategically or make decisions in the usual sense.
 \end{definition}
+
 
 \begin{definition}[Statistical Game]
 	\label{def:statistical_game}
@@ -41,7 +43,7 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\end{equation}
 	Suppose that the joint image measure $\mathbb{P}_{(X,Y)_{1:n+1}}$ depends on an unknown parameter $w \in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}. Let
 	\begin{equation}
-		\mathcal{P}' = \{ \mathbb{P}^w_{(X,Y)_{1:n+1}} \mid w \in \Omega_W \},
+		\mathcal{P}' = \{ \mathbb{P}^w_{(X,Y)_{1:n+1}} \colon w \in \Omega_W \},
 	\end{equation}
 	denote a parametric family of joint image measures\index{Parametric family of image measures} on $(\Omega_X \times \Omega_Y)^{n+1}$. The statistical model\index{Statistical model} of the game is then defined as the triple
 	\begin{equation}
@@ -55,23 +57,25 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\begin{equation}
 		C \colon \Omega_U \times \Omega_Y \to \mathbb{R},
 	\end{equation}
-	which assigns a numerical loss to each pair $(u,y) \in \Omega_U \times \Omega_Y$. The Robot's goal is to minimize the expected cost~\cite{murphy2023probabilistic}
+	which assigns a numerical cost to each pair $(u,y) \in \Omega_U \times \Omega_Y$. The Robot's goal is to minimize the expected cost~\cite{murphy2023probabilistic}
 	\begin{equation}
 		\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}[C(U(x_{n+1},D), Y_{n+1})].
 		\label{eq:expcost}
 	\end{equation}
-	The superscript $\mathcal{P}'$, denotes the object is taken with respect to a member or mixture of the parametric family. It creates a unified notation for different statistical paradigms (see \rmref{rem:notation} and \rmref{rem:frequentist_bayesian_expected_cost}).
 \end{definition}
 
-\begin{remark}[Superscript notation]
+\begin{remark}[Superscript Notation]
 	\label{rem:superscript_w}
-	The superscript $w$ in $\mathbb{P}_Z^w$ serves as an index identifying a particular member of a family of probability measures or densities. It indicates dependence on an underlying parameter without specifying whether this parameter is fixed, unknown, or random. This convention provides a generic notation that remains valid across different interpretations of statistical models.
+	The superscript $w$ in $\mathbb{P}_Z^w$ serves as an index identifying a particular member of a family of probability measures or densities. It reflects dependence on an underlying parameter $w \in \Omega_W$ without specifying whether $w$ is fixed, unknown, or random.
+
+	The superscript $\mathcal{P}'$ indicates that the object is taken with respect to a member or mixture of the parametric family. The superscript notation provides a unified notation across different statistical paradigms (see \rmref{rem:notation} and \rmref{rem:frequentist_bayesian_expected_cost}).
 \end{remark}
 
 
+\newpage
 \begin{remark}[Notation of Statistics]
 	\label{rem:notation}
-	In accordance with \dfref{def:statistical_game}, the expected cost (\EQref{eq:expcost}) can be written as follows
+	The expected cost of \dfref{def:statistical_game} (\EQref{eq:expcost}) can be written as follows
 	\begin{equation}
 		\begin{split}
 			&\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}\big[C(U(x_{n+1},D),Y_{n+1})\big] \\
@@ -81,7 +85,7 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 		\end{split}
 		\label{eq:expcost2}
 	\end{equation}
-	\EQref{eq:expcost2} can be further decomposed by specifying the cost function or decomposition of the joint image measure via \thref{theorem:chain_rule}, \thref{theorem:bayes_theorem} or \thref{theorem:law_of_total_probability}. In this case, the notation of probability theory becomes cumbersome and for this reason, statistical notation is typically relaxed -- when the context is reasonably clear -- by omitting distribution subscripts, superscripts and integral domains. In this notation, \EQref{eq:expcost2} becomes
+	\EQref{eq:expcost2} can be further decomposed by specifying the cost function or by factorizing the joint image measure using \thref{theorem:chain_rule}, \thref{theorem:bayes_theorem}, or \thref{theorem:law_of_total_probability}. In such cases, the notation of probability theory can become cumbersome. Therefore, when the context is sufficiently clear, statistical notation is often relaxed by omitting distributional subscripts, superscripts, and explicit integral domains. In this notation, \EQref{eq:expcost2} becomes
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}\big[\,C(U(x_{n+1},D) ,Y_{n+1})\big] &= \int C\big(U(x_{n+1},D),y_{n+1}\big) \mathrm{d}\mathbb{P}(D,x_{n+1},y_{n+1})\\
@@ -92,22 +96,9 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	where $\tilde{D}= \{x_{n+1},D\}$ is used to further compress the notation.
 \end{remark}
 
-\begin{example}
-	\label{ex:rain}
-	Suppose the Robot has an umbrella and considers if it should bring it on a trip outside, i.e.
-	\begin{equation}
-		\Omega_U = \{"\text{bring umbrella}", "\text{don't bring umbrella}"\}.
-	\end{equation}
-	Nature have already picked whether or not it will rain later, i.e.
-	\begin{equation}
-		\Omega_Y = \{"\text{rain}", "\text{no rain}"\},
-	\end{equation}
-	so the Robot's task is to estimate Nature's decision regarding rain later and either bring the umbrella or not.
-\end{example}
-
 \begin{theorem}[Optimal Decision Rule]
 	\label{theorem:opt_decision_rule}
-	In accordance with \dfref{def:statistical_game}, the optimal decision rule for the Robot is
+	Following \dfref{def:statistical_game}, the optimal decision rule for the Robot is
 	\begin{equation}
 		\begin{split}
 			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]\\

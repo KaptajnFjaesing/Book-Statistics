@@ -41,7 +41,7 @@ Assuming the actions of Nature follow a normal distribution\index{Normal distrib
 	p(y_{n+1}|x_{n+1},w)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(\theta,x_{n+1})-y_{n+1})^2},
 	\label{f_dist}
 \end{equation}
-where $w = \{\theta, \xi,\dots\}$ denotes the collection of parameters. Using \EQref{f_dist} and marginalizing\index{Marginalization} (\thref{remark:marginalization} and \rmref{remark:marginalization}) over $\xi,\theta$
+where $w = \{\theta, \xi,\dots\}$ denotes the collection of parameters. Using \EQref{f_dist} and marginalizing\index{Marginalization} (\rmref{remark:marginalization}) over $\xi,\theta$
 \begin{equation}
 	\begin{split}
 		p(y_{n+1}|x_{n+1},D) &= \int  p(y_{n+1},\theta,\xi|x_{n+1},D) \mathrm{d}\theta \mathrm{d}\xi\\
