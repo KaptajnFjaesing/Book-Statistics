@@ -15,50 +15,49 @@ be a generic random variable\index{Random variable} from the probability space\i
 \begin{equation}
 	\mathcal{P}' = \{ \mathbb{P}^w_{Z} \colon w \in \Omega_W\},
 \end{equation}
-where $\Omega_W$ is the parameter space. The goal of the maximum entropy principle is to determine the probability measure $\mathbb{P}_{Z}^w$ that best represents the current state of knowledge, given a set of moment constraints. From definition \dfref{def:prob_density_general}, the image measure\index{Image measure} $\mathbb{P}_{Z}^w$ admits a density $p_{Z}^w$ with respect to the measure $\mu$, so that for any event $B\in \mathcal{F}_Z$,
+where $\Omega_W$ is the parameter space. The goal of the maximum entropy principle is to determine the probability measure $\mathbb{P}_{Z}^w$ that best represents the current state of knowledge, given a set of moment constraints. From \dfref{def:prob_density_general}, the image measure\index{Image measure} $\mathbb{P}_{Z}^w$ admits a density $p_{Z}^w$ with respect to the measure $\mu_Z$, so that
 \begin{equation}
-	\mathbb{P}_{Z}^w(B\mid w) = \int_B p_{Z}^w(z\mid w) \mathrm{d}\mu(z).
+	\mathbb{P}_{Z}^w(B\mid w) = \int_B p_{Z}^w(z\mid w) \mathrm{d}\mu_Z(z)\quad \forall B\in \mathcal{F}_Z.
 	\label{eq:max_ent_probability_measure}
 \end{equation}
-The maximum entropy principle asserts that the density $p_{Z}^w(z \mid w)$ that best represents the current state of knowledge is the one that maximizes the constrained Shannon entropy~\citep{Sivia2006}, where $w$ denotes the parameters of the distribution. The Shannon entropy\index{Shannon entropy} of a probability density $p_{Z\mid w}$ can be written
+The maximum entropy principle asserts that the density $p_{Z}^w(z \mid w)$ that best represents the current state of knowledge is the one that maximizes the constrained Shannon entropy~\citep{Sivia2006}. The Shannon entropy\index{Shannon entropy} of a probability density $p_{Z}^w$ can be written
 \begin{equation}
 	H[p^w_{Z}] = - \int_{\Omega_Z} p^w_{Z}(z \mid w) 
-	\ln \frac{p_{Z}^w(z \mid w)}{m(z)}  \mathrm{d}\mu(z),
+	\ln \frac{p_{Z}^w(z \mid w)}{m_Z(z)}  \mathrm{d}\mu_Z(z),
 \end{equation}
-where $m(z)$ is a reference measure\index{Reference measure} that ensures invariance of the entropy under reparameterizations of $z$. To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $w_0, w_1, \dots, w_n$ and defines the Lagrangian functional, which represents the constrained entropy\index{Constrained entropy}:
+where $m_Z(z)$ is a reference measure\index{Reference measure} that ensures invariance of the entropy under reparameterizations of $z$. To incorporate known constraints, such as moment conditions or normalization, one introduces Lagrange multipliers $w_0, w_1, \dots, w_n$ and defines the Lagrangian functional, which represents the constrained entropy\index{Constrained entropy}:
 \begin{equation}
 	\mathcal{L}[p_{Z}^w] = - \int_{\Omega_Z} 
 	p_{Z}^w(z \mid w) \Bigg(
-	\ln \frac{p_{Z\mid I}^w(z \mid w)}{m(z)}
+	\ln \frac{p_{Z\mid I}^w(z \mid w)}{m_Z(z)}
 	+ w_0 + \sum_{j=1}^n w_j C_j(z)
-	\Bigg) \mathrm{d}\mu(z),
+	\Bigg) \mathrm{d}\mu_Z(z),
 \end{equation}
 where each $C_j(z)$ denotes a constraint function. Maximizing $\mathcal{L}[p_{Z}^w]$ with respect to $p_{Z}^w$ yields the probability distribution of maximum entropy consistent with the given constraints. The maximum of $\mathcal{L}$ with respect to $p_{Z}^w$ is defined by the Euler-Lagrange condition
 \begin{equation}
-	\frac{\partial}{\partial p_{Z}^w(z \mid w)} p_{Z}^w(z \mid w)\Big(\ln \frac{p_{Z}^w(z \mid w)}{m} + w_0 + \sum_{j=1}^n w_j C_j\Big) = 0,
+	\frac{\partial}{\partial p_{Z}^w(z \mid w)} p_{Z}^w(z \mid w)\Big(\ln \frac{p_{Z}^w(z \mid w)}{m_Z(z)} + w_0 + \sum_{j=1}^n w_j C_j\Big) = 0,
 \end{equation}
 which simplifies to
 \begin{equation}
-	\ln \frac{p_{Z}^w(z \mid w)}{m(z)} + 1 + w_0 + \sum_{j=1}^n w_j C_j(z) = 0.
+	\ln \frac{p_{Z}^w(z \mid w)}{m_Z(z)} + 1 + w_0 + \sum_{j=1}^n w_j C_j(z) = 0.
 \end{equation}
 Hence the maximum-entropy distribution takes the exponential family form
 \begin{equation}
 	\begin{split}
 		p_{Z}^w(z \mid w)
-		&= m(z) e^{-1 - w_0 - \sum_{j=1}^n w_j C_j(z)} \\
-		&= \frac{m(z) e^{-\sum_{j=1}^n w_j C_j(z)}}{
-			\int_{\Omega_Z} m(z') e^{-\sum_{j=1}^n w_j C_j(z')} \mathrm{d}\mu(z')}.\\
+		&= m_Z(z) e^{-1 - w_0 - \sum_{j=1}^n w_j C_j(z)} \\
+		&= \frac{m_Z(z) e^{-\sum_{j=1}^n w_j C_j(z)}}{
+			\int_{\Omega_Z} m_Z(z') e^{-\sum_{j=1}^n w_j C_j(z')} \mathrm{d}\mu_Z(z')}.\\
 	\end{split}
 \end{equation}
 The constants $w_j$ are determined by the imposed constraints. The resulting probability measure (\EQref{eq:max_ent_probability_measure}) defines the unique maximum-entropy probability measure consistent with the given information.
 
 \begin{example}
-	\index{Example: Maximum entropy normal distribution}
-	Consider a continuous random variable, $Z$, with sample space $\Omega_Z=\mathbb{R}$, assumed to be symmetric around a mean $\mu$ and with variance $\sigma^2$. In this case
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z=\mathbb{R}$, assumed to be symmetric around $\mathbb{E}[Z]=\eta$ and with $\operatorname{Var}[Z] = \sigma^2$. In this case
 	\begin{equation}
-			p_{Z}^w(z \mid w)= m(z) e^{-1 - w_0 - w_1z-w_2z^2}.
+			p_{Z}^w(z \mid w)= m_Z(z) e^{-1 - w_0 - w_1z-w_2z^2}.
 	\end{equation}
-	Taking a uniform measure ($m= const$) and imposing the normalization constraint
+	Taking a uniform measure ($m_Z= m=\operatorname{const}$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
 			\int_{\Omega_Z} p_{Z}^w(z\mid w) \mathrm{d}z &= me^{-1-w_0}\int_{\Omega_Z} e^{-w_1z-w_2z^2} \mathrm{d}z\\
@@ -78,27 +77,26 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 		\begin{split}
 			\int_{\Omega_Z} p_{Z}^w(z\mid w) \mathrm{d}z &= \frac{\int_{\Omega_Z} ze^{-w_1z-w_2z^2}\mathrm{d}z}{K}\\
 			&= -\frac{w_1}{2w_2}\\
-			&=\mu.
+			&\equiv\eta.
 		\end{split}
 	\end{equation}
 	Hereby
 	\begin{equation}
 		\begin{split}
-			p_{Z}^w(z\mid w) &= \sqrt{\frac{w_2}{\pi}}e^{-\mu^2w_2+2\mu w_2z-w_2z^2}\\
-			&= \frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2}\big(\frac{\mu-z}{\sigma}\big)^2},\\\\
+			p_{Z}^w(z\mid w) &= \sqrt{\frac{w_2}{\pi}}e^{-\eta^2w_2+2\eta w_2z-w_2z^2}\\
+			&= \frac{1}{\sqrt{2\pi\sigma}}e^{-\frac{1}{2}\big(\frac{\eta-z}{\sigma}\big)^2},\\\\
 		\end{split}
 		\label{eq:norm1}
 	\end{equation}
-	where $\sigma\equiv \frac{1}{2w_2}$ has been defined. \EQref{eq:norm1} can be identified as the normal distribution\index{Normal distribution}\index{Maximum entropy}.
+	where $\sigma\equiv \frac{1}{2w_2}$ has been defined. \EQref{eq:norm1} can be identified as the normal distribution\index{Normal distribution}\index{Maximum entropy}\index{Normal distribution}.
 \end{example}
 
 \begin{example}
-	\index{Example: Maximum entropy beta distribution}
 	Consider a continuous random variable, $Z$, with sample space $\Omega_Y =[0,1]$. In order to impose the limited support, require that $\ln(z)$ and $\ln(1-z)$ be well defined. In this case
 	\begin{equation}
-		p_{Z}^w(z\mid w)=m(z)e^{-1-w_0-w_1\ln z-w_2\ln(1-z)}.
+		p_{Z}^w(z\mid w)=m_Z(z)e^{-1-w_0-w_1\ln z-w_2\ln(1-z)}.
 	\end{equation}
-	Taking a uniform measure ($m= const$) and imposing the normalization constraint
+	Taking a uniform measure ($m_Z=m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
 			\int_{\Omega_Z} p_{Z}^w(z\mid w) \mathrm{d}z &= me^{-1-w_0}\int_{\Omega_Z} z^{-w_1}(1-z)^{-w_2}\mathrm{d}z\\
@@ -115,16 +113,16 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 
 
 \begin{example}
-	\index{Example: Maximum entropy Gamma distribution}
-	Consider a continuous random variable, $Z$, with sample space $\Omega_Z= [0,\infty)$, a known mean $\mu$ and a known logarithmic mean $\nu$. In this case
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z= [0,\infty)$, a known mean $\eta$ and a known logarithmic mean $\nu$. In this case
 	\begin{equation}
-		\begin{split}
-			p_{Z}^w(z \mid w)&= m(z) e^{-1-w_0 - w_1 z - w_2 \ln z}\\
-			& = \tilde{m}(z)  z^{-w_2} e^{-w_1 z}
-		\end{split}
+			p_{Z}^w(z \mid w)= m_Z(z) e^{-1-w_0 - w_1 z - w_2 \ln z}.
 		\label{eq:gam1}
 	\end{equation}
-	where $\tilde{m}(z) = m(z) e^{-1-w_0}$. Taking a uniform measure ($m(z) = \text{const}$) and imposing normalization
+	Taking a uniform measure ($m_Z(z) = m= \text{const}$) and defining $\tilde{m} = m e^{-1-w_0}$
+	\begin{equation}
+				p_{Z}^w(z \mid w) = \tilde{m} z^{-w_2} e^{-w_1 z}.
+	\end{equation}
+	Imposing normalization
 	\begin{equation}
 		\begin{split}
 			\int_{\Omega_Z} p_{Z}^w(z \mid w) \mathrm{d}z &= \tilde{m} \int_{\Omega_Z} z^{-w_2} e^{-w_1 z} \mathrm{d}z\\
@@ -133,23 +131,22 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 	\end{equation}
 	The integral is recognized as the Gamma function
 	\begin{equation}
-		\int_{\Omega_Z} z^{\alpha-1}  e^{-\beta z} \mathrm{d}z = \frac{w(\alpha)}{\beta^\alpha}
+		\int_{\Omega_Z} z^{\alpha-1}  e^{-\beta z} \mathrm{d}z = \frac{\Gamma(\alpha)}{\beta^\alpha}
 	\end{equation}
 	with $\alpha = 1 - w_2$ and $\beta = w_1$. Substituting $\tilde{m}$, $\alpha$, $\beta$ back into \EQref{eq:gam1}
 	\begin{equation}
-		p_{Z}^w(z \mid w) = \frac{\beta^\alpha}{w(\alpha)} z^{\alpha-1} e^{-\beta z},
+		p_{Z}^w(z \mid w) = \frac{\beta^\alpha}{\Gamma(\alpha)} z^{\alpha-1} e^{-\beta z},
 	\end{equation}
-	which is the Gamma distribution\index{Maximum entropy}.
+	which is the Gamma distribution\index{Maximum entropy}\index{Gamma distribution}.
 \end{example}
 
 \begin{example}
-	\index{Example: Maximum entropy Exponential distribution}
-	Consider a continuous random variable, $Z$, with sample space $\Omega_Z = [0,\infty)$ and known mean $\mu$. In this case
+	Consider a continuous random variable, $Z$, with sample space $\Omega_Z = [0,\infty)$ and known mean $\eta$. In this case
 	\begin{equation}
-		p_{Z}^w(z \mid w) = m(z) e^{-1-w_0 - w_1 z}.
+		p_{Z}^w(z \mid w) = m_Z(z) e^{-1-w_0 - w_1 z}.
 		\label{eq:n13}
 	\end{equation}
-	Taking $m(z) = \text{const}$ and imposing the normalization constraint
+	Taking $m_Z =m = \text{const}$ and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
 			\int_{\Omega_Z} p_{Z}^w(z \mid w) \mathrm{d}z &= m e^{-1-w_0}\int_{\Omega_Z} e^{- w_1 z} \mathrm{d}z\\
@@ -163,26 +160,23 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 		\begin{split}
 			\int_{\Omega_Z} z p(z \mid w) \mathrm{d}z&= \int_{\Omega_Z} z w_1 e^{-w_1 z} \mathrm{d}z\\
 			& = \frac{1}{w_1}\\
-			&= \mu.
+			&\equiv \eta.
 		\end{split}
 		\label{eq:na2}
 	\end{equation}
 	Combining \EQref{eq:na1}, \EQref{eq:na2} and \EQref{eq:n13} yields
 	\begin{equation}
-		p_{Z}^w(z \mid w) = \frac{\beta^\alpha}{w(\alpha)} z^{\alpha-1} e^{-\beta z},
+		p_{Z}^w(z \mid w) = \frac{e^{- \frac{z}{\eta}}}{\eta}.
 	\end{equation}
-	which is the Gamma distribution\index{Maximum entropy}.
+	which is the exponential distribution\index{Maximum entropy}\index{Exponential distribution}.
 \end{example}
 
-
-
 \begin{example}
-	\index{Example: Maximum entropy bernoulli distribution}
-	Consider a discrete random variable, $Z$, with sample space $\Omega_Z= \{0,1\}$ and mean $\mu$. In this case
+	Consider a discrete random variable, $Z$, with sample space $\Omega_Z= \{0,1\}$ and mean $\eta$. In this case
 	\begin{equation}
-		p_{Z}^w(z \mid w) = m(z) e^{-1-w_0 - w_1 z}.
+		p_{Z}^w(z \mid w) = m_Z(z) e^{-1-w_0 - w_1 z}.
 	\end{equation}
-	Taking a uniform measure ($m= const$) and imposing the normalization constraint
+	Taking a uniform measure ($m_Z = m= const$) and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
 			\sum_{z=0}^1 p_{Z}^w(z\mid w) &=m e^{-1-w_0}\bigg(1+ e^{- w_1}\bigg)\\
@@ -194,7 +188,7 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 		\begin{split}
 			\sum_{z=0}^1 zp_{Z}^w(z \mid w) &=m e^{-1-w_0}e^{- w_1}\\
 			& = \frac{1}{1+ e^{w_1}}\\
-			&=\mu
+			&\equiv \eta
 		\end{split}
 	\end{equation}
 	This means
@@ -202,30 +196,29 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 		\begin{split}
 			p_{Z}^w(0|w) &= m e^{-1-w_0}\\
 			&= \frac{1}{1+ e^{- w_1}}\\
-			& = 1-\mu
+			& = 1-\eta
 		\end{split}
 	\end{equation}	
 	and
 	\begin{equation}
 		\begin{split}
 			p_{Z}^w(1\mid w) &= m e^{-1-w_0-w_1}\\
-			&=\mu,
+			&=\eta,
 		\end{split}
 	\end{equation}
 	or 
 	\begin{equation}
-		p_{Z}^w(z\mid w) = \mu^z (1-\mu)^{1-z}.
+		p_{Z}^w(z\mid w) = \eta^z (1-\eta)^{1-z}.
 	\end{equation}
-	which is the Bernoulli distribution\index{Maximum entropy}.
+	which is the Bernoulli distribution\index{Maximum entropy}\index{Bernoulli distribution}.
 \end{example}
 
 \begin{example}
-	\index{Example: Maximum entropy Binomial distribution}
-	Consider a discrete random variable, $Z$, with sample space $\Omega_Z = \{0,1,\dots,n\}$ representing the total number of successes in $n$ independent Bernoulli trials with mean $\mu$. In this case
+	Consider a discrete random variable, $Z$, with sample space $\Omega_Z = \{0,1,\dots,n\}$ representing the total number of successes in $n$ independent Bernoulli trials with mean $\eta$. In this case
 	\begin{equation}
-		p_{Z}^w(z \mid w) = m(z) e^{-w_0 - w_1 z}.
+		p_{Z}^w(z \mid w) = m_Z(z) e^{-w_0 - w_1 z}.
 	\end{equation}
-	Taking a uniform measure for the underlying sequences of Bernoulli trials, equivalent to the counting measure\index{Counting measure} $m(z) = \binom{n}{z}$, and imposing the normalization constraint
+	Taking a uniform reference measure for the underlying sequences of Bernoulli trials, equivalent to the counting measure\index{Counting measure} $m_Z(z) = \binom{n}{z}$, and imposing the normalization constraint
 	\begin{equation}
 		\begin{split}
 			\sum_{z=0}^n p_{Z}^w(z \mid w) &= \sum_{z=0}^n \binom{n}{z} e^{-w_0 - w_1 z}\\
@@ -240,29 +233,28 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 	\begin{equation}
 		\begin{split}
 			\sum_{z=0}^n z p_{Z}^w(z \mid w) &= n \frac{e^{-w_1}}{1 + e^{-w_1}}\\
-			& = n\mu
+			& = n\eta
 		\end{split}
 	\end{equation}
 	gives
 	\begin{equation}
-		e^{-w_1} = \frac{\mu}{1-\mu}.
+		e^{-w_1} = \frac{\eta}{1-\eta}.
 	\end{equation}
 	Finally, substituting $e^{-w_0}$ and $e^{-w_1}$ into $p_{Z}^w(z \mid w)$ gives the maximum entropy distribution
 	\begin{equation}
-		p_{Z}^w(z|w) = \binom{n}{z} \mu^z (1-\mu)^{n-z},
+		p_{Z}^w(z|w) = \binom{n}{z} \eta^z (1-\eta)^{n-z},
 	\end{equation}
-	which is the Binomial distribution\index{Maximum entropy}.
+	which is the Binomial distribution\index{Maximum entropy}\index{Binomial distribution}.
 \end{example}
 
 
 \begin{example}
-	\index{Example: Maximum entropy Poisson distribution}
-	Consider a discrete random variable $Z$ with sample space $\Omega_Z = \mathbb{N}_0$ with a known mean $\mu$. In this case
+	Consider a discrete random variable $Z$ with sample space $\Omega_Z = \mathbb{N}_0$ with a known mean $\eta$. In this case
 	\begin{equation}
-		p_{Z}^w(z|w) = m(z) e^{-1-w_0 - w_1 z}.
+		p_{Z}^w(z|w) = m_Z(z) e^{-1-w_0 - w_1 z}.
 		\label{eq:qsa}
 	\end{equation}
-	Take the counting measure\index{Counting measure} $m(z) = 1/z!$ and impose the normalization constraint
+	Take the counting measure\index{Counting measure} $m_Z(z) = 1/z!$ and impose the normalization constraint
 	\begin{equation}
 		\begin{split}
 			\sum_{z=0}^{\infty} p_{Z}^w(z \mid w) &= \sum_{z=0}^{\infty} \frac{e^{-1-w_0 - w_1 z}}{z!}\\
@@ -287,15 +279,15 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 			& = e^{-1-w_0} \sum_{z=1}^{\infty} \frac{e^{-w_1 z}}{(z-1)!}\\
 			& = e^{-w_1} e^{-1-w_0}\sum_{y=0}^{\infty} \frac{e^{-w_1 y}}{y!}\\
 			& = e^{-w_1}\\
-			& = \mu
+			& \equiv \eta
 		\end{split}
 		\label{eq:qty}
 	\end{equation}
 	where \EQref{eq:asd} and $y = z-1$ has been used. Combining \EQref{eq:qsa}, \EQref{eq:qwe} and \EQref{eq:qty} yield
 	\begin{equation}
-		p_{Z}^w(z\mid w) = \frac{\mu^ze^{-\mu }}{z!} .
+		p_{Z}^w(z\mid w) = \frac{\eta^ze^{-\eta }}{z!} .
 	\end{equation}
-	which is the Poisson distribution\index{Maximum entropy}.
+	which is the Poisson distribution\index{Maximum entropy}\index{Poisson distribution}.
 \end{example}
 
 
