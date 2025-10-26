@@ -54,7 +54,7 @@ Let $\hat{w}^*(D)$ denote the optimal Frequentist estimator of the model paramet
 	\begin{split}
 		U^*(x_{n+1}, \hat{w}^*(D)) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1}) \mid x_{n+1}, \hat{w}(D)] \\
 		&= \argmin_{U(\tilde{D})} \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|x_{n+1}, \hat{w}(D)) \\
-		&= \argmin_{U(\tilde{D})} \Big(1 - f_{U(\tilde{D})}(\hat{w}^*(D), x_{n+1}) + (\lambda-1)\delta_{u, \operatorname{reject}}\Big).
+		&= \argmin_{U(\tilde{D})} \Big(1 - f_{U(\tilde{D})}(\hat{\theta}^*(D), x_{n+1}) + (\lambda-1)\delta_{u, \operatorname{reject}}\Big).
 	\end{split}
 	\label{freq:decision_classification}
 \end{equation}
@@ -69,7 +69,7 @@ From \EQref{freq:decision_classification}, it follows that within the Frequentis
 			\toprule
 			\textbf{Paradigm} & \textbf{Predictive model} \\
 			\midrule
-			Frequentist & $f(\hat{w}^*(D), x_{n+1})$ \\[3pt]
+			Frequentist & $f(\hat{\theta}^*(D), x_{n+1})$ \\[3pt]
 			Bayesian    & $\mathbb{E}[f(\theta, x_{n+1}) \mid D]$ \\[3pt]
 			\bottomrule
 			\label{tab:comare}
