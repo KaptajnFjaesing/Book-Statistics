@@ -230,85 +230,88 @@ Sampling \EQref{ham2} yields a set of coefficients which can be used to compute 
 \subsection{Bayesian Parameter Estimation}
 In the special case of parameter estimation, Nature’s action is identified with the unknown parameter $W \in \Omega_W$ that governs the statistical model $f$. The Robot’s goal is to infer the value of $W$ from the observed dataset $D = \{(x_i, y_i)\}_{i=1}^n$. Hence, the Robot’s action corresponds to producing an estimate of $W$, denoted by $U(D) \in \Omega_U = \Omega_W$. By \thref{theorem:opt_decision_rule}, the optimal decision rule can be written
 \begin{equation}
-	U^*(D)=\arg\min_{U(D)}\mathbb{E}_{W|D}[C(U(D), W)|D],
+	U^*(D)=\argmin_{U(D)}\mathbb{E}_{W\mid D}[C(U(D), W)\mid D],
+	\label{eq:param_decision}
 \end{equation}
 with
 \begin{equation}
-	\mathbb{E}_{W|D}[C(U(D), W)|D] = \int C(U(D),w)p(w|D) \mathrm{d}w.
+	\mathbb{E}_{W\mid D}[C(U(D), W)\mid D] = \int C(U(D),w)p(w\mid D) \mathrm{d}w.
 \end{equation}
-At this point, the Robot can select a cost function like in \secref{sec:assing_cost} and proceed by expanding $p(w|D)$ similarly to \EQref{eq:pa2}.
+At this point, the Robot can select a cost function like in \secref{sec:assing_cost} and proceed by expanding $p(w\mid D)$ similarly to \EQref{eq:pa2}.
+
 
 \begin{example}
-	Consider the scenario where two sets of costumers are subjected to two different products, $A$ and $B$. After exposure to the product, the costumer will be asked whether or not they are satisfied and they will be able to answer "yes" or "no" to this. Denote the probability of a costumer liking product $A/B$ by $w_A/w_B$, respectively. In this context, the probabilities $w_A/w_B$ are parameters of Natures model (similar to how the probability is a parameters for a binomial distribution). What will be of interest is the integral of the joint probability distribution where $w_B>w_A$, meaning
+	\label{ex:heteroscedastic_bayes}
+	\index{Example: Heteroscedastic Normal model}
+	Consider two sensors that produce noisy measurements
 	\begin{equation}
-		p(w_B > w_A|D)= \int_0^1\int_{w_A}^1p(w_A,w_B|D)\mathrm{d}w_A\mathrm{d}w_B.
-		\label{e1}
+		D = \{ y_i^{(1)} \}_{i=1}^{N^{(1)}} \cup \{ y_j^{(2)} \}_{j=1}^{N^{(2)}}.
 	\end{equation}
-	Assuming the costumer sets are independent
+	of a common but unknown physical quantity. Let the parameter of interest be represented by the random variable
+	\begin{equation}
+		W\colon \Omega \to \Omega_W,
+	\end{equation}
+	interpreted as Nature’s true mean value, from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_W,\mathcal{F}_W)$. The two sensors produce conditionally independent observations with known but distinct noise variances $\nu_1, \nu_2 > 0$, where $\nu_1 \neq \nu_2$. By \EQref{eq:param_decision} with a quadratic cost function yields the optimal decision rule 
 	\begin{equation}
 		\begin{split}
-			p(w_A,w_B|D) &= p(w_B|w_A,D)p(w_A|D)\\
-			& = p(w_B|D_A)p(w_A|D_A),
+			U^*(D) &=\argmin_{U(D)}\mathbb{E}_{W|D}[C(U(D), W)|D]\\
+			&= \argmin_{U(D)}\int (U(D) - w)^2p(w\mid D) \mathrm{d}w \\
+			&= \int w p(w\mid D) \mathrm{d}w
+		\end{split}
+		\label{eq:deci}
+	\end{equation}
+	where by \thref{theorem:bayes_theorem}
+	\begin{equation}
+		p(w \mid D)
+		= \frac{p(D \mid w)p(w)}
+		{p(D)}.
+		\label{eq:hetero_posterior}
+	\end{equation}
+	Assuming a non-informative (uniform) prior 
+	\begin{equation}
+		p(w) = \operatorname{Unif}(a,b),
+	\end{equation}
+	the posterior is proportional to the likelihood
+	\begin{equation}
+		\begin{split}
+			p(D \mid w)
+			&= \prod_{i=1}^{N^{(1)}} p(y_i^{(1)}\mid w)
+			\prod_{j=1}^{N^{(2)}} p(y_j^{(2)}\mid w).
 		\end{split}
 	\end{equation}
-	with
+	Taking 
 	\begin{equation}
-		p(w_i|D_i)=\frac{p(D_i|w_i)p(w_i)}{p(D_i)}.
+		p(y_i^{(1)}\mid w) = \frac{1}{\sqrt{2\pi\nu_1}}
+		e^{-\frac{(y_i^{(1)} - w)^2}{2\nu_1}},
+		\qquad
+		p(y_j^{(2)}\mid w) = \frac{1}{\sqrt{2\pi\nu_2}}
+		e^{-\frac{(y_j^{(2)} - w)^2}{2\nu_2}},
 	\end{equation}
-	Assuming a beta prior and a binomial likelihood yields (since the binomial and beta distributions are conjugate)
+	yields
 	\begin{equation}
-		p(w_i|D_i)=\frac{w_i^{\alpha_i-1}(1-w_i)^{\beta_i-1}}{B(\alpha_i,\beta_i)},
+		p(w \mid D) =\frac{1}{\sqrt{2\pi\tilde{\nu}}} e^{-\frac{1}{2\tilde{\nu}}(w - \tilde{w})^2}
+		\label{eq:posterior1}
 	\end{equation}
-	where $\alpha_i\equiv \alpha+y_i$, $\beta_i\equiv \beta+f_i$ and $y_i/f_i$ denotes the successes/failure, respectively, registered in the two sets of costumers. Evaluating \EQref{e1} yields
+	where the posterior variance \(\tilde{\nu}\) and mean \(\tilde{\mu}\) are given by
 	\begin{equation}
-		p(w_B > w_A|D)= \sum_{j=0}^{\alpha_B-1}\frac{B(\alpha_A+j,\beta_A+\beta_B)}{(\beta_B+j)B(1+j,\beta_B)B(\alpha_A,\beta_A)}.
+		\tilde{\nu}
+		= \left(\frac{N^{(1)}}{\nu_1} + \frac{N^{(2)}}{\nu_2}\right)^{-1},
+		\qquad
+		\tilde{w}
+		= \tilde{\nu}\left(\frac{N^{(1)}\bar{y}^{(1)}}{\nu_1} + \frac{N^{(2)}\bar{y}^{(2)}}{\nu_2}\right),
 	\end{equation}
-	
+	with sample means
+	\begin{equation}
+		\bar{y}^{(1)} = \frac{1}{N^{(1)}}\sum_{i=1}^{N^{(1)}} y_i^{(1)},
+		\qquad
+		\bar{y}^{(2)} = \frac{1}{N^{(2)}}\sum_{j=1}^{N^{(2)}} y_j^{(2)}.
+	\end{equation}
+	Using \EQref{eq:posterior1} in \EQref{eq:deci} means
+	\begin{equation}
+		\begin{split}
+			U^*(D) = \tilde{w}.
+		\end{split}
+	\end{equation}
+	Hence, the Robot’s optimal action is to report the weighted average of the two sample means, where each weight is inversely proportional to the corresponding sensor variance.
 \end{example}
 
-
-\subsection{Bayesian Model Selection}
-\label{sec:model_selection}
-In Bayesian model selection, the goal of the Robot is to identify which of several competing models best represents Nature’s true data-generating process. Each model corresponds to a distinct probabilistic hypothesis about how the data were generated, characterized by its own parameters and likelihood function. Let 
-\begin{equation}
-	M \colon \Omega \to \Omega_M = \{1, \dots, K\}
-\end{equation}
-be a random variable representing Nature’s choice of model, where each $m \in \Omega_M$ indexes a candidate model $\mathcal{M}_m $. The Robot’s action space is $\Omega_U = \Omega_M$, meaning it must choose a model index $u \in \{1, \dots, K\}$. Given the observed dataset $D = \{(x_i, y_i)\}_{i=1}^n$, the Robot aims to minimize the expected cost (similar to \thref{theorem:opt_decision_rule})
-\begin{equation}
-	U^*(D) = \argmin_{U(D) \in \Omega_M} \mathbb{E}_{M|D}[C(U(D), M) \mid D],
-	\label{eq:model_selection_expected_cost}
-\end{equation}
-where $C(u, m)$ denotes the cost (or loss) incurred by selecting model $u$ when Nature’s true model is $m$. Expanding~\eqref{eq:model_selection_expected_cost} gives
-\begin{equation}
-	\mathbb{E}_{M|D}[C(U(D), M) \mid D]
-	= \sum_{m=1}^{K} C(U(D), m)\, p(m \mid D),
-	\label{eq:model_selection_cost_expanded}
-\end{equation}
-where $p(m \mid D)$ denotes the posterior probability that model $m$ is the true model given data $D$. Typically, $K=2$, in which case $U^*(D) = u^{(1)}$ is picked iff 
-\begin{equation} 
-	\mathbb{E}_{M\mid D}[C(u^{(1)}, M)|D]<\mathbb{E}_{M\mid D}[C(u^{(2)}, M)|D], 
-\end{equation} 
-meaning 
-\begin{equation} 
-	\frac{p(m^{(1)}|D)}{p(m^{(2)}|D)}>\frac{C(u^{(1)},m^{(1)})-C(u^{(2)},m^{(2)})}{C(u^{(2)},m^{(1)})-C(u^{(1)},m^{(1)})}. 
-\end{equation} 
-The ratio $\frac{p(m^{(1)}|D)}{p(m^{(2)}|D)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written as follows 
-\begin{equation} 
-	\begin{split} 
-		\text{posterior ratio} &= \frac{p(m^{(1)}|D)}{p(m^{(2)}|D)}\\ & = \frac{p(D_y|m^{(1)},D_x)p(m^{(1)})}{p(D_s|m^{(2)},D_x)p(m^{(2)})}, 
-	\end{split}
-\end{equation} 
-where for the second equality it has been used that the normalization $p(D)$ cancels out between the denominator and nominator and \axref{ax:observation_relevance} has been employed. Given there is no a priori bias towards any model, 
-\begin{equation} 
-	p(m^{(1)}) = p(m^{(2)}) 
-\end{equation} 
-meaning 
-\begin{equation} 
-	\text{posterior ratio} = \frac{p(D_y|m^{(1)},D_x)}{p(D_y|m^{(2)},D_x)}. 
-	\label{eq:bayes_factor} 
-\end{equation} 
-$p(D_y|m^{(1)},D_x)$ and $p(D_y|m^{(2)},D_x)$ can then be expanded via marginalization, the chain rule and Bayes theorem until they can be evaluated either analytically or numerically. \EQref{eq:bayes_factor} is referred to as Bayes factor\index{Bayes factor} and as a rule of thumb 
-
-\begin{definition}[Bayes Factor Interpretation Rule of Thumb] 
-	If the probability of either of two models being the model of Nature is more than 3 times likely than the other, the likelier model is accepted. Otherwise the result does not significantly favor either model. 
-\end{definition}
