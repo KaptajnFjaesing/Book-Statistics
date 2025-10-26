@@ -1,14 +1,14 @@
 \section{Bayesian Statistics}
 The Bayesian paradigm (\dfref{def:bayesian_statistics}) originally come from the work of \citet{Bayes:63,laplace_thorie_1812} with much of the modern discussions and formalism created later by \citet{Finetti1937LaP,Jeffreys1940,Savage1954}.\newline
-In the Bayesian paradigm, it is assumed that Nature's decisions can be captured by a statistical model\index{Statistical model} with parameters that are modeled as realizations of random variables and a subjective probability measure. This means that the density for Nature's actions, used to determine the optimal decision rule in \thref{theorem:opt_decision_rule}, can be written
+In the Bayesian paradigm, it is assumed that Nature's decisions can be captured by a statistical model\index{Statistical model} with parameters that are modeled as realizations of random variables and a subjective probability measure. This means that the probability density for Nature's actions, used to determine the optimal decision rule in \thref{theorem:opt_decision_rule}, can be written
 \begin{equation}
 	\begin{split}
 		p(y_{n+1}\mid \tilde{D}) &= \int p(w,y_{n+1}\mid \tilde{D}) \mathrm{d}w\\
-		& = \int p(y_{n+1}\mid w,\tilde{D})p(w\mid \tilde{D}) \mathrm{d}w.
+		& = \int p(y_{n+1}\mid w,\tilde{D})p(w\mid \tilde{D}) \mathrm{d}w,
 	\end{split}
 	\label{eq:hest1}
 \end{equation}
-Using \thref{theorem:chain_rule}-\thref{theorem:law_of_total_probability}
+where the relaxation of the notation described in \rmref{rem:notation} has been used. Using \thref{theorem:bayes_theorem}
 \begin{equation}
 	\begin{split}
 		p(w|\tilde{D}) &= p(w|D)\\
@@ -16,22 +16,22 @@ Using \thref{theorem:chain_rule}-\thref{theorem:law_of_total_probability}
 	\end{split}
 	\label{eq:pa2}
 \end{equation}
-where $D_y= \{y_i\}_{i=1}^n$, $D_x = \{x_i\}_{i=1}^n$, \axref{ax:observation_relevance} has been used for the first and second equality and $p(D_y|D_x)$ can be expanded via marginalization.
+where $D_y= \{y_i\}_{i=1}^n$, $D_x = \{x_i\}_{i=1}^n$, \axref{ax:observation_relevance} has been used for the first and second equality and $p(D_y|D_x)$ can be expanded via marginalization (\rmref{remark:marginalization}).
 
 \begin{axiom}[Relevance of Observations]
 	\label{ax:observation_relevance}
 	The Robot's observations are relevant for estimating Nature's model only when they map to known actions of Nature.
 \end{axiom}
 
-$p(w)$ is the Robot's prior belief\index{Prior measure} about $w$. $p(D_s|w,D_x)$ is the likelihood\index{Likelihood} of the past observations of Nature's actions, and $p(w|D)$ called the posterior\index{Posterior} distribution represent the belief of the Robot after seeing data. The prior depends on parameters that must be specified and cannot be learned from data since it reflects the Robot's belief before observing data.
+$p(w)$ is the Robot's prior belief\index{Prior measure} about $w$. $p(D_s|w,D_x)$ is the likelihood\index{Likelihood} of the past observations of Nature's actions, and $p(w|D)$, called the posterior\index{Posterior}, represents the Robot's belief after observing data. The prior depends on parameters that must be specified and cannot be learned from data, as it reflects the Robot's belief before any observations are made.
 
 \subsection{Bayesian Regression}
 \label{chp:regression}
 Regression involves the Robot building a model,
 \begin{equation}
-	f: \Omega_\theta\times \Omega_X\to\Omega_Y,
+	f: \Omega_\Theta\times \Omega_X\to\Omega_Y,
 \end{equation} 
-with associated parameters $\theta\in \Omega_\Theta\subseteq\Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y=\mathbb{R}$ based on observed data $x_{n+1}\in \Omega_X$. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function from \dfref{def:quadratic_cost} will be considered to review the subject. According to \thref{theorem:expectation_decision_rule} the best action for the Robot can be written
+with associated parameters $\theta\in\Omega_\Theta \subseteq\Omega_W$, that estimates Nature's action $y\in \Omega_Y=\mathbb{R}$ based on observed data $x\in \Omega_X$. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function from \dfref{def:quadratic_cost} will be considered to review the subject. According to \thref{theorem:expectation_decision_rule} the best action for the Robot can be written
 \begin{equation}
 	U^*(x_{n+1},D) = \int y_{n+1} p(y_{n+1}|x_{n+1},D) \mathrm{d}y_{n+1}.
 	\label{eq:q1}
@@ -54,7 +54,7 @@ where it has been used that
 \begin{equation}
 	p(y_{n+1}|\theta,\xi,x_{n+1},D) = p(y_{n+1}|\theta,\xi,x_{n+1})
 \end{equation}
-since by definition $f$ produce a $1-1$ map of the input $x_{n+1}$ (\EQref{f_dist}) and 
+since, by definition, $f$ deterministically maps each input $x_{n+1}$ (given $\theta,\xi$) to a conditional distribution over $y_{n+1}$ (\EQref{f_dist}), and
 \begin{equation}
 	p(\theta,\xi|x_{n+1},D) = p(\theta,\xi|D)
 \end{equation} 
@@ -78,7 +78,7 @@ according to \EQref{f_dist}. Using Bayes theorem\index{Bayes theorem} (\thref{th
 	p(\theta,\xi|D) = \frac{p(D_y|D_x,\theta,\xi)p(\theta,\xi|D_x)}{p(D_y|D_x)}
 	\label{eq:bayes2}
 \end{equation}
-where from marginalization\index{Marginalization} (\thref{theorem:law_of_total_probability})
+where from marginalization\index{Marginalization} (\rmref{remark:marginalization})
 \begin{equation}
 	p(D_y|D_x) = \int p(D_y|D_x,\theta,\xi)p(\theta,\xi|D_x) \mathrm{d}\theta \mathrm{d}\xi.
 \end{equation}
@@ -87,7 +87,7 @@ Assuming the past actions of Nature are independent and identically distributed 
 	p(D_y|D_x,\theta,\xi) = \bigg(\frac{\xi}{2\pi}\bigg)^\frac{n}{2}\prod_{i=1}^n e^{-\frac{\xi}{2}(f(\theta,x_i)-y_i)^2}
 	\label{reg:likelihood}
 \end{equation}
-From the chain rule\index{Chain rule} (see \thref{theorem:chain_rule}) and \thref{ax:observation_relevance}
+From the chain rule\index{Chain rule} (\thref{theorem:chain_rule}) and \axref{ax:observation_relevance}
 \begin{equation}
 	p(\theta,\xi|D_x) = p(\theta|\xi)p(\xi).
 \end{equation}
@@ -115,7 +115,7 @@ where $\alpha_q,\beta_q$ are prior parameters and $\tilde{n}$ is the number of h
 \end{equation}
 At this point equation \EQref{eq:q1} is fully specified and can be approximated by obtaining samples from $p(\theta,\xi,\lambda|D)$ via Hamiltonian Monte Carlo (HMC)~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012} (see \appref{app:HMC} for a review of HMC). The centerpiece in the HMC algorithm is the Hamiltonian defined as follows~\citep{Neal:1996,Neal2012}
 \begin{equation}
-	H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\xi,\lambda|D)+const,
+	H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\xi,\lambda|D)+\operatorname{const},
 	\label{eqh}
 \end{equation}
 where 
@@ -123,17 +123,16 @@ where
 	p(\theta,\xi|D) = \int p(\theta,\xi,\lambda|D) \mathrm{d}\lambda.
 	\label{eq:ss}
 \end{equation}
-Besides its function in the HMC algorithm, the Hamiltonian represent the details of the Bayesian model well and should be a familiar sight for people used to the more commonly applied frequentist paradigm\footnote{Since, in this case, it is in form similar to a cost function comprised of a sum of squared errors, weight decay on the coefficients and further penalty terms~\citep{hastie_09,murphy2013machine,Goodfellow2016}}. Using \EQref{eq:bayes2}-\EQref{eq:ss} yields
+Besides its function in the HMC algorithm, the Hamiltonian presents the details of the Bayesian model well. Using \EQref{eq:bayes2}-\EQref{eq:ss} yields
 \begin{equation}
 	\begin{split}
 		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}+\frac{n}{2}[\ln(2\pi)-\ln\xi] +\frac{\xi}{2}\sum_{i=1}^{n}(f(\theta,x_i)-y_i)^2\\
-		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln\Gamma(\alpha_q)-\alpha_q\ln(\beta_q)+(1-\alpha_q)\ln\lambda_q+\beta_q\lambda_q\\
+		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln\Gamma(\alpha_q)-\alpha_q\ln\beta_q+(1-\alpha_q)\ln\lambda_q+\beta_q\lambda_q\\
 		&\qquad\qquad+\frac{n_q}{2}(\ln(2\pi)-\ln\lambda_q)+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
-		&\quad+\ln\Gamma(\tilde{\alpha})-\tilde{\alpha}\ln\tilde{\beta}+(1-\tilde{\alpha})\ln\xi+\tilde{\beta}\xi+const.
+		&\quad+\ln\Gamma(\tilde{\alpha})-\tilde{\alpha}\ln\tilde{\beta}+(1-\tilde{\alpha})\ln\xi+\tilde{\beta}\xi+\operatorname{const}.
 	\end{split}
 	\label{eqh2}
 \end{equation}
-
 
 \begin{example}
 	\index{Example: HMC Hamiltonian variable change}
@@ -149,11 +148,11 @@ Classification involves the Robot building a model,
 \begin{equation}
 	f: \Omega_\Theta \times \Omega_X \to \Delta^K,
 \end{equation}
-with associated parameters $\theta \in \Omega_\Theta\subseteq\Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y= \{1,\dots,K\}$ based on observed data $x_{n+1}\in \Omega_X$. Here
+with associated parameters $\theta \in \Omega_\Theta\subseteq\Omega_W$, that estimates Nature's actions $y\in \Omega_Y= \{1,\dots,K\}$ based on observed data $x\in \Omega_X$. Here
 \begin{equation}
 	\Delta^K = \bigg\{p \in \mathbb{R}^K \bigg|\, p_{y_{n+1}} \geq 0,\; \sum_{y_{n+1}=1}^K p_{y_{n+1}} = 1\bigg\}
 \end{equation} 
-denotes the $K$-dimensional probability simplex, so that for $x_{n+1} \in \Omega_X$ the model output $f(\theta,x_{n+1})$ is a probability vector representing the conditional distribution of the class label $y_{n+1} \in \Omega_Y$. In particular, the probability of observing class $y_{n+1}$ given $x_{n+1}$ and parameters $\theta$ is 
+denotes the $K$-dimensional probability simplex, so that for $x_i \in \Omega_X$ the model output $f(\theta,x_i)$ is a probability vector representing the conditional distribution of the class label $y_i \in \Omega_Y$. In particular, the probability of observing class $y_{n+1}$ given $x_{n+1}$ and parameters $\theta$ is 
 \begin{equation}
 	p(y_{n+1} \mid x_{n+1}, \theta) = f_{y_{n+1}}(\theta,x_{n+1}),
 	\label{f_dist2}
@@ -163,20 +162,20 @@ By construction, these probabilities satisfy
 \begin{equation}
 	\sum_{y_{n+1} \in \Omega_Y} p(y_{n+1} \mid x_{n+1}, \theta) = 1.
 \end{equation}
-In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\Omega_U=\Omega_Y\cup \{\operatorname{reject}\}$. To review this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function (\dfref{def:0_1_cost_function}), with the addition of a reject option at cost $\lambda$. This means
+In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\Omega_U=\Omega_Y\cup \{\operatorname{reject}\}$. To review this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function (\dfref{def:0_1_cost_function}), with the addition of a reject option at cost $\psi$. This means
 \begin{equation}
-	C(U(\tilde{D}),y_{n+1}) = 1- \delta_{U(\tilde{D}),y_{n+1}}+(\lambda-1)\delta_{U(\tilde{D}),\operatorname{reject}}.
+	C(U(\tilde{D}),y_{n+1}) = 1- \delta_{U(\tilde{D}),y_{n+1}}+(\psi-1)\delta_{U(\tilde{D}),\operatorname{reject}}.
 \end{equation}
 The optimal decision rule for the robot can the be written (\EQref{eq:conditional_cost_discrete})
 \begin{equation}
 	\begin{split}
 		U^*(\tilde{D}) & = \argmin_{U(\tilde{D})}\mathbb{E}[C(U(\tilde{D}), Y_{n+1})|\tilde{D}]\\
-		&= \argmin_{U(\tilde{D})}\bigg(\sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}\mid\tilde{D})+(\lambda-1)\delta_{U(\tilde{D}),\operatorname{reject}}\bigg)\\
-		& = \argmin_{U(\tilde{D})}\bigg(1- p(U(\tilde{D})|\tilde{D})+(\lambda-1)\delta_{U(\tilde{D}),\operatorname{reject}}\bigg).
+		&= \argmin_{U(\tilde{D})}\bigg(\sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}\mid\tilde{D})+(\psi-1)\delta_{U(\tilde{D}),\operatorname{reject}}\bigg)\\
+		& = \argmin_{U(\tilde{D})}\bigg(1- p(U(\tilde{D})|\tilde{D})+(\psi-1)\delta_{U(\tilde{D}),\operatorname{reject}}\bigg).
 	\end{split}
 	\label{eq:expected_cost1}
 \end{equation}
-In absence of the reject option, the optimal decision rule is to pick the MAP, similar to \thref{theorem:MAP}. Using \EQref{f_dist2} and marginalizing over $\theta$
+In absence of the reject option, the optimal decision rule is to pick the MAP, as shown in \thref{theorem:MAP}. Using \EQref{f_dist2} and marginalizing over $\theta$
 \begin{equation}
 	\begin{split}
 		p(U(\tilde{D})|\tilde{D}) &= \int p(U(\tilde{D}),\theta \mid\tilde{D}) \mathrm{d}\theta \\
@@ -191,7 +190,7 @@ where for the second to last equality it has been assumed that
 \begin{equation}
 	p(U(\tilde{D})\mid \theta,\tilde{D}) = p(U(\tilde{D})\mid \theta,x_{n+1})
 \end{equation}
-since by definition $f$ (see \EQref{f_dist2}) produce a $1-1$ map of the input $x_{x+1}$ and $p(\theta \mid\tilde{D}) = p(\theta \mid D)$ from \axref{ax:observation_relevance}. From Bayes theorem\index{Bayes theorem}
+since, by definition, $f$ deterministically maps each input $x_{x+1}$ to a probability vector(\EQref{f_dist2}), and $p(\theta \mid\tilde{D}) = p(\theta \mid D)$ from \axref{ax:observation_relevance}. From Bayes theorem\index{Bayes theorem}
 \begin{equation}
 	p(w|D) =\frac{p(D_y|D_x,\theta)p(\theta\mid D_x)}{p(D_y\mid D_x)},
 \end{equation}
@@ -199,7 +198,7 @@ where from \axref{ax:observation_relevance} $p(\theta\mid D_x) = p(\theta)$. Ass
 \begin{equation}
 	p(\theta) = \int p(\theta\mid\lambda)p(\lambda) \mathrm{d}\lambda.
 \end{equation}
-where $p(\theta|\lambda)p(\lambda)$ is given by \EQref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed, the likelihood can be written~\citep{Fischer1999} 
+where $p(\theta|\lambda)p(\lambda)$ is given by \EQref{eq:prior}. Assuming the past actions of Nature are independent and identically distributed (IID) \index{IID}, the likelihood can be written~\citep{Fischer1999} 
 \begin{equation}
 	\begin{split}
 		p(D_y|D_x,\theta) &=\prod_{i=1}^{n}p(y_i|x_i,\theta)\\
@@ -209,75 +208,27 @@ where $p(\theta|\lambda)p(\lambda)$ is given by \EQref{eq:prior}. Assuming the p
 \end{equation}
 At this point \EQref{eq:expected_cost1} is fully specified and can be approximated by HMC similarly to the regression case (see \appref{app:HMC} for a review of HMC). In this case, the model can be represented by the Hamiltonian 
 \begin{equation}
-	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\lambda|D)+const
+	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\lambda|D)+\operatorname{const}
 	\label{ham3}
 \end{equation}
 where
 \begin{equation}
 	p(\theta|D) = \int p(\theta,\lambda|D) \mathrm{d} \lambda.
 \end{equation}
-Using \EQref{eq:q5}-\EQref{lik} in equation \eqref{ham3} yields the Hamiltonian
+Using \EQref{eq:q5}-\EQref{lik} in \EQref{ham3} yields the Hamiltonian
 \begin{equation}
 	\begin{split}
-		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln f_{y_i}(\theta,x_i)+\text{const}\\
+		H&=\sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\sum_{i=1}^{n}\ln f_{y_i}(\theta,x_i)\\
 		&\quad+\sum_{q=1}^{\tilde{n}}\bigg(\ln\Gamma(\alpha_q)-\alpha_q\ln\beta_q+(1-\alpha_q)\ln\lambda_q+\beta_q\lambda_q\\
-		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln\lambda_q)+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)\\
+		&\qquad \qquad+\frac{n_q}{2}(\ln(2\pi)-\ln\lambda_q)+\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2\bigg)+\operatorname{const}\\
 	\end{split}.
 	\label{ham2}
 \end{equation}
 Sampling \EQref{ham2} yields a set of coefficients which can be used to compute $\mathbb{E}[f_{y_{n+1}}(\theta,x_{n+1})\mid D]$ which in turn (see \EQref{eq:q5} and \EQref{eq:expected_cost1}) can be used to compute $U^*(\tilde{D})$.
 
 
-\subsection{Making Inference About the Model of Nature}
-In some instances, the robot is interested in inference related to the model of Nature. The observation $x_{n+1}\in \Omega_X$ by definition does not have an associated known action of Nature and thus by \axref{ax:observation_relevance} is disregarded in this context. From \EQref{eq:decision_rule3}
-\begin{equation}
-	U^*(D) = \arg\min_{U(D)} \mathbb{E}_{Y_{n+1}\mid D}[C(U(D), Y_{n+1})\mid D]
-	\label{eq:best_decision}
-\end{equation}
-where $y_{n+1} \in \Omega_Y$ is interpreted as an action related to the model of Nature, e.g. Nature picking a given systematic that generates data.
-
-
-\subsubsection{Selecting the Robot's Model}
-\label{sec:model_selection}
-Suppose the Robot must choose between two competing models, aiming to select the one that best represents Nature's true model. The two competing models could e.g. be two different functions $f$ in regression or two different probability distribution assignments. In this case the Robot has actions $u_1$ and $u_2$ representing picking either model and Nature has two actions $y^{(1)}$ and $y^{(2)}$ which represent which model that in truth fit Nature's true model best. From \EQref{eq:best_decision}
-\begin{equation}
-	\begin{split}
-		\mathbb{E}_{Y_{n+1}\mid D}[C(u_1, Y_{n+1})|D] =&  \sum_{y_{n+1} = y^{(1)},y^{(2)}}C(u_1,y_{n+1})p(y_{n+1}|D),\\
-		\mathbb{E}_{Y_{n+1}\mid D}[C(u_2, Y_{n+1})|D] =&  \sum_{y_{n+1} = y^{(1)},y^{(2)}}C(u_2,y_{n+1})p(y_{n+1}|D).
-	\end{split}
-\end{equation}
-Since there is no input $x_{n+1}$ in this case, the decision rule $U$ is fixed (i.e. it does not depend on $x_{n+1}$) given data $D$. $U^*(D) = u_1$ is picked iff 
-\begin{equation}
-	\mathbb{E}_{Y_{n+1}\mid D}[C(u_1, Y_{n+1})|D]<\mathbb{E}_{Y_{n+1}\mid D}[C(u_2, Y_{n+1})|D],
-\end{equation}
-meaning
-\begin{equation}
-	\frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}>\frac{C(u_1,y^{(2)})-C(u_2,y^{(2)})}{C(u_2,y^{(1)})-C(u_1,y^{(1)})}.
-\end{equation}
-The ratio $\frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written as follows
-\begin{equation}
-	\begin{split}
-		\text{posterior ratio} &= \frac{p(y^{(1)}|D)}{p(y^{(2)}|D)}\\
-		& = \frac{p(D_y|y^{(1)},D_x)p(y^{(1)})}{p(D_s|y^{(2)}2,D_x)p(y^{(2)})},
-	\end{split}
-\end{equation}
-where for the second equality it has been used that the normalization $p(D)$ cancels out between the denominator and nominator and \axref{ax:observation_relevance} has been employed. Given there is no a priori bias towards any model,
-\begin{equation}
-	p(y^{(1)}) = p(y^{(2)})
-\end{equation}
-meaning
-\begin{equation}
-	\text{posterior ratio} = \frac{p(D_y|y^{(1)},D_x)}{p(D_y|y^{(2)},D_x)}.
-	\label{eq:bayes_factor}
-\end{equation}
-$p(D_y|y^{(1)},D_x)$ and $p(D_y|y^{(2)},D_x)$ can then be expanded via marginalization, the chain rule and Bayes theorem until they can be evaluated either analytically or numerically. \EQref{eq:bayes_factor} is referred to as Bayes factor\index{Bayes factor} and as a rule of thumb
-
-\begin{definition}[Bayes Factor Interpretation Rule of Thumb]
-	If the probability of either of two models being the model of Nature is more than 3 times likely than the other, the likelier model is accepted. Otherwise the result does not significantly favor either model.
-\end{definition}
-
-\subsubsection{Bayesian Parameter Estimation}
-Let $w\in \Omega_W$ represent a parameter with the associated random variable $W$. In case of parameter estimation, the action of Nature is identified with the parameter of interest from the model of Nature's and the Robot's action with the act of estimating the parameters value, meaning (\EQref{eq:decision_rule3})
+\subsection{Bayesian Parameter Estimation}
+In the special case of parameter estimation, Nature’s action is identified with the unknown parameter $W \in \Omega_W$ that governs the statistical model $f$. The Robot’s goal is to infer the value of $W$ from the observed dataset $D = \{(x_i, y_i)\}_{i=1}^n$. Hence, the Robot’s action corresponds to producing an estimate of $W$, denoted by $U(D) \in \Omega_U = \Omega_W$. By \thref{theorem:opt_decision_rule}, the optimal decision rule can be written
 \begin{equation}
 	U^*(D)=\arg\min_{U(D)}\mathbb{E}_{W|D}[C(U(D), W)|D],
 \end{equation}
@@ -285,14 +236,7 @@ with
 \begin{equation}
 	\mathbb{E}_{W|D}[C(U(D), W)|D] = \int C(U(D),w)p(w|D) \mathrm{d}w.
 \end{equation}
-At this point, the Robot can select a cost function like in \secref{sec:assing_cost} and proceed by expanding $p(w|D)$ similarly to \EQref{eq:pa2}. Picking the quadratic cost (\dfref{def:quadratic_cost}) yields 
-\begin{equation}
-	\begin{split}
-		U^*(D) = \mathbb{E}_{W|D}[W|D]
-	\end{split}
-	\label{eq:hest2}
-\end{equation}
-$p(w|D)$ in \EQref{eq:hest2} can be expanded as shown in \EQref{eq:pa2}.
+At this point, the Robot can select a cost function like in \secref{sec:assing_cost} and proceed by expanding $p(w|D)$ similarly to \EQref{eq:pa2}.
 
 \begin{example}
 	Consider the scenario where two sets of costumers are subjected to two different products, $A$ and $B$. After exposure to the product, the costumer will be asked whether or not they are satisfied and they will be able to answer "yes" or "no" to this. Denote the probability of a costumer liking product $A/B$ by $w_A/w_B$, respectively. In this context, the probabilities $w_A/w_B$ are parameters of Natures model (similar to how the probability is a parameters for a binomial distribution). What will be of interest is the integral of the joint probability distribution where $w_B>w_A$, meaning
@@ -321,3 +265,50 @@ $p(w|D)$ in \EQref{eq:hest2} can be expanded as shown in \EQref{eq:pa2}.
 	\end{equation}
 	
 \end{example}
+
+
+\subsection{Bayesian Model Selection}
+\label{sec:model_selection}
+In Bayesian model selection, the goal of the Robot is to identify which of several competing models best represents Nature’s true data-generating process. Each model corresponds to a distinct probabilistic hypothesis about how the data were generated, characterized by its own parameters and likelihood function. Let 
+\begin{equation}
+	M \colon \Omega \to \Omega_M = \{1, \dots, K\}
+\end{equation}
+be a random variable representing Nature’s choice of model, where each $m \in \Omega_M$ indexes a candidate model $\mathcal{M}_m $. The Robot’s action space is $\Omega_U = \Omega_M$, meaning it must choose a model index $u \in \{1, \dots, K\}$. Given the observed dataset $D = \{(x_i, y_i)\}_{i=1}^n$, the Robot aims to minimize the expected cost (similar to \thref{theorem:opt_decision_rule})
+\begin{equation}
+	U^*(D) = \argmin_{U(D) \in \Omega_M} \mathbb{E}_{M|D}[C(U(D), M) \mid D],
+	\label{eq:model_selection_expected_cost}
+\end{equation}
+where $C(u, m)$ denotes the cost (or loss) incurred by selecting model $u$ when Nature’s true model is $m$. Expanding~\eqref{eq:model_selection_expected_cost} gives
+\begin{equation}
+	\mathbb{E}_{M|D}[C(U(D), M) \mid D]
+	= \sum_{m=1}^{K} C(U(D), m)\, p(m \mid D),
+	\label{eq:model_selection_cost_expanded}
+\end{equation}
+where $p(m \mid D)$ denotes the posterior probability that model $m$ is the true model given data $D$. Typically, $K=2$, in which case $U^*(D) = u^{(1)}$ is picked iff 
+\begin{equation} 
+	\mathbb{E}_{M\mid D}[C(u^{(1)}, M)|D]<\mathbb{E}_{M\mid D}[C(u^{(2)}, M)|D], 
+\end{equation} 
+meaning 
+\begin{equation} 
+	\frac{p(m^{(1)}|D)}{p(m^{(2)}|D)}>\frac{C(u^{(1)},m^{(1)})-C(u^{(2)},m^{(2)})}{C(u^{(2)},m^{(1)})-C(u^{(1)},m^{(1)})}. 
+\end{equation} 
+The ratio $\frac{p(m^{(1)}|D)}{p(m^{(2)}|D)}$ is referred to as the posterior ratio\index{Posterior ratio}. Using Bayes theorem it can be re-written as follows 
+\begin{equation} 
+	\begin{split} 
+		\text{posterior ratio} &= \frac{p(m^{(1)}|D)}{p(m^{(2)}|D)}\\ & = \frac{p(D_y|m^{(1)},D_x)p(m^{(1)})}{p(D_s|m^{(2)},D_x)p(m^{(2)})}, 
+	\end{split}
+\end{equation} 
+where for the second equality it has been used that the normalization $p(D)$ cancels out between the denominator and nominator and \axref{ax:observation_relevance} has been employed. Given there is no a priori bias towards any model, 
+\begin{equation} 
+	p(m^{(1)}) = p(m^{(2)}) 
+\end{equation} 
+meaning 
+\begin{equation} 
+	\text{posterior ratio} = \frac{p(D_y|m^{(1)},D_x)}{p(D_y|m^{(2)},D_x)}. 
+	\label{eq:bayes_factor} 
+\end{equation} 
+$p(D_y|m^{(1)},D_x)$ and $p(D_y|m^{(2)},D_x)$ can then be expanded via marginalization, the chain rule and Bayes theorem until they can be evaluated either analytically or numerically. \EQref{eq:bayes_factor} is referred to as Bayes factor\index{Bayes factor} and as a rule of thumb 
+
+\begin{definition}[Bayes Factor Interpretation Rule of Thumb] 
+	If the probability of either of two models being the model of Nature is more than 3 times likely than the other, the likelier model is accepted. Otherwise the result does not significantly favor either model. 
+\end{definition}
