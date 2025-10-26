@@ -41,7 +41,7 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\begin{equation}
 		(\Omega_X^{n+1},\mathcal{F}_X^{n+1}), \quad(\Omega_Y^{n+1},\mathcal{F}_Y^{n+1}), \quad ((\Omega_X \times \Omega_Y)^{n+1}, (\mathcal{F}_X \otimes \mathcal{F}_Y)^{n+1}).
 	\end{equation}
-	Suppose that the joint image measure $\mathbb{P}_{(X,Y)_{1:n+1}}$ depends on an unknown parameter $w \in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}. Let
+	Suppose that the joint image measure $\mathbb{P}_{(X,Y)_{1:n+1}}$ depends on the unknown parameter $w \in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}. Let
 	\begin{equation}
 		\mathcal{P}' = \{ \mathbb{P}^w_{(X,Y)_{1:n+1}} \colon w \in \Omega_W \},
 	\end{equation}
@@ -55,13 +55,14 @@ In this game, two players interact under uncertainty: the Robot, who seeks to ma
 	\end{equation}
 	mapping the new observation $x_{n+1}$ and past dataset $D$ to an action. The Robot incurs a penalty determined by a cost function\index{Cost function}
 	\begin{equation}
-		C \colon \Omega_U \times \Omega_Y \to \mathbb{R},
+		C \colon \Omega_U \times \Omega_N \to \mathbb{R},
 	\end{equation}
-	which assigns a numerical cost to each pair $(u,y) \in \Omega_U \times \Omega_Y$. The Robot's goal is to minimize the expected cost~\cite{murphy2023probabilistic}
+	which assigns a numerical cost to each pair $(u, n) \in \Omega_U \times \Omega_N$, where $\Omega_N$ denotes Nature’s action space. The Robot's goal is to minimize the expected cost~\cite{murphy2023probabilistic}, which for prediction is given by
 	\begin{equation}
 		\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}[C(U(x_{n+1},D), Y_{n+1})].
 		\label{eq:expcost}
 	\end{equation}
+	
 \end{definition}
 
 \begin{remark}[Superscript Notation]

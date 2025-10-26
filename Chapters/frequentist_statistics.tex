@@ -10,12 +10,12 @@ Since $w$ is not known to the Robot, the central task becomes to estimate $w$ fr
 	\item[\textit{i)}] Parameter estimation: use past data $D$ to construct an estimator $\hat{w}(D)$ of the fixed but unknown parameters $w$.
 	\item[\textit{ii)}] Prediction/decision: given a new observation $x$ and the parameter estimate $\hat{w}(D)$, apply the decision rule $U$ to determine an action.
 \end{enumerate}
-To avoid notational ambiguity, a distinction is made between the decision rule used for prediction, denoted $U$, and the decision rule used for parameter estimation, denoted $\hat{w}$. The practical decision rule for a new observation $x_{n+1} \in \Omega_X$ therefore takes the form\footnote{\EQref{eq:decision_rule_frequentist} justifies the unified notation $U(\tilde{D})$ for the decision rule in \dfref{def:statistical_game} and \rmref{rem:frequentist_bayesian_expected_cost}.}
+The practical decision rule for a new observation $x_{n+1} \in \Omega_X$ therefore takes the form\footnote{\EQref{eq:decision_rule_frequentist} justifies the unified notation $U(\tilde{D})$ for the decision rule in \dfref{def:statistical_game} and \rmref{rem:frequentist_bayesian_expected_cost}.}
 \begin{equation}
 	U^*(x_{n+1}, \hat{w}^*(D)),
 	\label{eq:decision_rule_frequentist}
 \end{equation}
-where $\hat{w}^*(D)$ denotes the optimal parameter decision rule, obtained from past data $D$, and the final action is determined by minimizing the expected cost as specified in \dfref{def:statistical_game} and \rmref{rem:frequentist_bayesian_expected_cost}.
+where $\hat{w}^*(D)$ denotes the optimal parameter decision rule, obtained from past data $D$, and the action $U^*$ is determined by minimizing the expected cost as specified in \dfref{def:statistical_game} and \rmref{rem:frequentist_bayesian_expected_cost}.
 
 
 \subsection{Frequentist Regression}
@@ -47,14 +47,14 @@ where $w = \{\theta, \xi,\dots\}$ denotes the collection of fixed, unknown param
 \label{chp:frequentist_classification}
 The setup for Frequentist classification initially mirrors that of Bayesian classification (\secref{chp:baycl}), but start diverging at the level of the cost function
 \begin{equation}
-	C(U(x_{n+1},w), y_{n+1}) = 1 - \delta_{U(x_{n+1},w),y_{n+1}} + (\lambda-1)\delta_{U(x_{n+1},w), \operatorname{reject}}.
+	C(U(x_{n+1},w), y_{n+1}) = 1 - \delta_{U(x_{n+1},w),y_{n+1}} + (\psi-1)\delta_{U(x_{n+1},w), \operatorname{reject}}.
 \end{equation}
 Let $\hat{w}^*(D)$ denote the optimal Frequentist estimator of the model parameters obtained from past data $D$. The optimal decision rule for a new observation $x_{n+1}$ is (\thref{theorem:opt_decision_rule} and \EQref{eq:conditional_cost_discrete})
 \begin{equation}
 	\begin{split}
 		U^*(x_{n+1}, \hat{w}^*(D)) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1}) \mid x_{n+1}, \hat{w}(D)] \\
 		&= \argmin_{U(\tilde{D})} \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|x_{n+1}, \hat{w}(D)) \\
-		&= \argmin_{U(\tilde{D})} \Big(1 - f_{U(\tilde{D})}(\hat{\theta}^*(D), x_{n+1}) + (\lambda-1)\delta_{u, \operatorname{reject}}\Big).
+		&= \argmin_{U(\tilde{D})} \Big(1 - f_{U(\tilde{D})}(\hat{\theta}^*(D), x_{n+1}) + (\psi-1)\delta_{u, \operatorname{reject}}\Big).
 	\end{split}
 	\label{freq:decision_classification}
 \end{equation}
@@ -90,7 +90,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 \end{remark}
 
 \begin{example}
-	In practice, the true sampling distribution of an estimator $\hat{w}(D)$ is rarely available in closed form. The \emph{bootstrap} provides an approximation technique based solely on the observed dataset. Let $D = \{(x_i,y_i)\}_{i=1}^n$ be the dataset. A bootstrap\index{Bootstrapping} sample $D^{b}$ is constructed by sampling $n$ observations with replacement from $D$. Repeating this procedure $B$ times yields bootstrap replicates $\hat{w}(D^{1}), \ldots, \hat{w}(D^{B})$, whose empirical distribution approximates the sampling distribution of $\hat{w}(D)$. 
+	In practice, the true sampling distribution of an estimator $\hat{w}(D)$ is rarely available in closed form. The bootstrap\index{Bootstrapping} provides an approximation technique based solely on the observed dataset. Let $D = \{(x_i,y_i)\}_{i=1}^n$ be the dataset. A bootstrap sample $D^{b}$ is constructed by sampling $n$ observations with replacement from $D$. Repeating this procedure $B$ times yields bootstrap replicates $\hat{w}(D^{1}), \ldots, \hat{w}(D^{B})$, whose empirical distribution approximates the sampling distribution of $\hat{w}(D)$. 
 	
 	Common quantities derived from the bootstrap include:
 	\begin{itemize}
@@ -98,15 +98,18 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		\begin{equation}
 			\widehat{\operatorname{Var}}_{\mathrm{boot}}[\hat{w}] = \frac{1}{B-1}\sum_{b=1}^B \left(\hat{w}(D^{b}) - \overline{\hat{w}}^{*}\right)^2,
 		\end{equation}
-		where $\overline{\hat{w}}^{*} = \frac{1}{B}\sum_{b=1}^B \hat{w}(D^{b})$.
+		where
+		\begin{equation}
+			\overline{\hat{w}}^{*} = \frac{1}{B}\sum_{b=1}^B \hat{w}(D^{b}).
+		\end{equation}
 		\item The bootstrap confidence interval, constructed from quantiles of the bootstrap distribution of $\hat{w}$.
 	\end{itemize}
 \end{example}
 
-
+\newpage
 \begin{definition}[Fisher Information]
 	\label{def:fisher_information}
-	Take $D_y= \{y_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_y | D_x, w, I)$ denote the likelihood of observing Natures actions $D_y$ given observed data $D_x$ and $w$. The Fisher information\index{Fisher information} is defined as
+	Take $D_y= \{y_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_y | D_x, w)$ denote the likelihood of observing Natures actions $D_y$ given observed data $D_x$ and $w$. The Fisher information\index{Fisher information} is defined as
 	\begin{equation}
 		\begin{split}
 			\mathcal{I}(w) &\equiv \mathbb{E} \bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_y|D_x, w)\bigg)^2 \Bigg| D_x, w\bigg]\\
@@ -138,15 +141,17 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{theorem}[Fisher Information for Independent Observations]
 	\label{thm:fisher_sample}
-	Take $D_y= \{y_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a parameter of the model. Assume the likelihood factorizes as
+	Take $D_y= \{y_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be the parameters of Natures model. In case Natures actions are independent and identically distributed (IID)\index{IID} the likelihood factorizes as
 	\begin{equation}
 		p(D_y | D_x, w) = \prod_{i=1}^{n} p(y_i | x_i, w).
 	\end{equation}
 	Then, the Fisher information of the full dataset is
 	\begin{equation}
-		\mathcal{I}(w) 
-		= \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(D_y | D_x, w)\Big)^2 \Bigg| D_x, w \Bigg] 
-		= \sum_{i=1}^{n} \mathcal{I}_i(w),
+		\begin{split}
+			\mathcal{I}(w) 
+			&= \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(D_y | D_x, w)\Big)^2 \Bigg| D_x, w \Bigg]\\
+			&= \sum_{i=1}^{n} \mathcal{I}_i(w),
+		\end{split}
 	\end{equation}
 	where $\mathcal{I}_i(w)$ is the Fisher information of the $i$-th observation:
 	\begin{equation}
@@ -156,7 +161,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{definition}[Maximum Likelihood Estimator (MLE) Decision Rule]
 	\label{def:MLE}
-	Take $D_y= \{y_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be a fixed but unknown parameter. The Maximum Likelihood Estimator (MLE) decision rule \index{Maximum likelihood estimator} $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_y$ given $D_x$
+	Take $D_y= \{y_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be the parameters of Natures model. The Maximum Likelihood Estimator (MLE) decision rule \index{Maximum likelihood estimator} $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_y$ given $D_x$
 	\begin{equation}
 		\hat{w}_{\mathrm{MLE}}(D) \equiv \argmax_{w \in \Omega_W} p(D_y | D_x, w).
 	\end{equation}
@@ -164,7 +169,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{theorem}[Asymptotic Sampling Distribution of the MLE]
 	\label{thm:unbiased_mle}
-	Let $\hat{w}_{\mathrm{MLE}}(D)$ denote the Maximum Likelihood Estimator (MLE) of the fixed-but-unknown parameter $w$. Under standard regularity conditions, the sampling distribution of $\hat{w}_{\mathrm{MLE}}$ satisfies
+	Let $\hat{w}_{\mathrm{MLE}}(D)$ denote the Maximum Likelihood Estimator (MLE)\index{Maximum likelihood} of the fixed-but-unknown parameter $w$. Under standard regularity conditions, the sampling distribution of $\hat{w}_{\mathrm{MLE}}$ satisfies
 	\begin{equation}
 		\sqrt{n}\,\big(\hat{w}_{\mathrm{MLE}} - w\big) \xrightarrow{\text{d}} \operatorname{Norm}\big(0, \mathcal{I}(w)^{-1}\big),
 	\end{equation}
@@ -175,7 +180,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{definition}[Minimax Decision Rule]
 	\label{def:minimax}
-	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum\index{Minimax} expected cost, meaning (\EQref{eq:conditional_expected_cost})
+	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum\index{Minimax} expected cost, meaning
 	\begin{equation}
 		\begin{split}
 			\hat{w}' &\equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w]\\
@@ -184,10 +189,9 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 \end{definition}
 
-
 \begin{theorem}[Mean Squared Error (MSE)]
 	\label{theorem:MSE}
-	The expectation of the quadratic cost function (\dfref{def:quadratic_cost}) can be written
+	The expectation of the quadratic cost function for the parameter estimate can be written
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}[C(\hat{w}, w)|w] &= \mathbb{E}[(\hat{w}-w)^2|w]\\ 
@@ -200,7 +204,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\begin{equation}
 		\operatorname{Bias}[\hat{w}|w]\equiv w-\mathbb{E}[\hat{w}].
 	\end{equation}
-	If $\mathbb{E}[C(\hat{w}, w)|w] \to 0$ as $n \to \infty$, then $\hat{w}$ is a weakly consistent estimator of $w$, i.e., $\hat{w} \xrightarrow{p} w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, there is bias-variance which means that both cannot be minimized at the same time. 
+	If $\mathbb{E}[C(\hat{w}, w)|w] \to 0$ as $n \to \infty$, then $\hat{w}$ is a weakly consistent estimator of $w$, i.e., $\hat{w} \xrightarrow{p} w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, both cannot be minimized at the same time. 
 \end{theorem}
 
 \begin{corollary}[MLE is Approximately Minimax for quadratic Loss]
@@ -208,11 +212,11 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	Under certain regularity conditions, the Maximum Likelihood decision rule (MLE) $\hat{w}_{\text{MLE}}$ is approximately minimax for the quadratic cost function (\dfref{def:quadratic_cost}), meaning it approximately minimizes the maximum expected cost\index{Minimax}.
 	
 	\begin{proof}
-		From theorem \thref{theorem:MSE}
+		From \thref{theorem:MSE}
 		\begin{equation}
 			\mathbb{E}[(\hat{w}-w)^2|w] = \operatorname{Var}[\hat{w}|w]+\operatorname{Bias}[\hat{w}|w]^2.
 		\end{equation}
-		Under the regularity conditions where the MLE is unbiased and has asymptotically minimal variance, the bias term vanish, meaning $\operatorname{Bias}[\hat{w}_{\text{MLE}}|w] = 0$ and the variance term $\operatorname{Var}[\hat{w}_{\text{MLE}}|w]$ is minimized among a class of estimators. Thus, the expected quadratic cost for the MLE can be approximated by
+		Under the regularity conditions where the MLE\index{Maximum likelihood} is unbiased and has asymptotically minimal variance, the bias term vanish, meaning $\operatorname{Bias}[\hat{w}_{\text{MLE}}|w] = 0$ and the variance term $\operatorname{Var}[\hat{w}_{\text{MLE}}|w]$ is minimized among a class of estimators. Thus, the expected quadratic cost for the MLE can be approximated by
 		\begin{equation}
 			\begin{split}
 				\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2|w] &\approx \operatorname{Var}[\hat{w}_{\text{MLE}}|w]\\
@@ -237,105 +241,96 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	In Bayesian statistics, predictions are obtained by integrating over the posterior distribution of parameters, rather than relying on a single point estimate. This integration inherently regularizes the model, mitigating overfitting and underfitting.
 \end{example}
 
-
 \begin{example}
-	Take $D_y= \{y_i\}_{i=1}^n$ with $Y_i \sim \mathrm{Ber}(w)$, and let $w\in [0,1]$ be the unknown parameter. Determine the quadratic cost of three different decision rules for estimating $w$: the arithmetic sample mean, the constant $0.5$, and the first observation $y_1$.
-	
+	\label{ex:bernoulli_quad_cost}
+	\index{Example: Bernoulli parameter estimation}
+	Consider a dataset $D_y = \{y_i\}_{i=1}^n$ consisting of independent and identically distributed (IID)\index{IID} random variables
+	\begin{equation}
+		Y_i \sim \mathrm{Ber}(w), \, w \in [0,1]
+	\end{equation}
+	and the goal of estimating the unknown parameter $w$. 
 	\begin{itemize}
-		\item Arithmetic mean:
-		\begin{equation}
-			\hat{w}(D_y) = \frac{1}{n} \sum_{i=1}^n y_i
-		\end{equation}
-		with
-		\begin{equation}
-			\begin{split}
-				\mathbb{E}[\hat{w}(D_y)|w] &=  \int \hat{w}(D_y) p(D_y|w) \mathrm{d}D_y\\
-				& = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[Y_{i}|w]\\
-				& = w,\\
-				\operatorname{Var}[\hat{w}(D_y)|w,I] & =\int  (\hat{w}(D_y)-\mathbb{E}[\hat{w}(D_y)|w])^2 p(D_y|w) \mathrm{d}D_y\\
-				 &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[Y_{i}|w]\\
-				 & = \frac{w(1-w)}{n},\\
-				\mathbb{E}[(\hat{w}(D_y)-w)^2|w,I] &= \operatorname{Var}[\hat{w}(D_y)|w]+(\mathbb{E}[\hat{w}(D_y)|w]-w)^2\\
-				& = \frac{w(1-w)}{n}.
-			\end{split}
+		\item \textbf{Arithmetic mean:} 
+		\(
+		\hat{w}(D_y) = \frac{1}{n}\sum_{i=1}^n y_i
+		\)
+		with 
+		\begin{equation} 
+			\begin{split} 
+				\mathbb{E}[\hat{w}(D_y)|w] &= \int \hat{w}(D_y) p(D_y|w) \mathrm{d}D_y\\ & = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[Y_{i}|w]\\ & = w,\\ \operatorname{Var}[\hat{w}(D_y)|w] & =\int (\hat{w}(D_y)-\mathbb{E}[\hat{w}(D_y)|w])^2 p(D_y|w) \mathrm{d}D_y\\ &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[Y_{i}|w]\\ & = \frac{w(1-w)}{n},\\ \mathbb{E}[(\hat{w}(D_y)-w)^2|w] &= \operatorname{Var}[\hat{w}(D_y)|w]+(\mathbb{E}[\hat{w}(D_y)|w]-w)^2\\ & = \frac{w(1-w)}{n}. 
+			\end{split} 
 		\end{equation}
 		
-		\item Constant estimate:
-		\begin{equation}
-			\hat{w} = 0.5
-		\end{equation}
-		with
-		\begin{equation}
-			\begin{split}
-				\mathbb{E}[\hat{w}|w] &= 0.5,\\
-				\operatorname{Var}[\hat{w}|w] &= 0,\\
-				\mathbb{E}[(\hat{w}-w)^2|w] &= (0.5 - w)^2.
-			\end{split}
-		\end{equation}
+		\item \textbf{Constant estimator:} 
+		\(
+		\hat{w}(D_y) = 0.5
+		\)
+		with 
+		\begin{equation} 
+			\begin{split} 
+				\mathbb{E}[\hat{w}|w] &= 0.5,\\ \operatorname{Var}[\hat{w}|w] &= 0,\\ \mathbb{E}[(\hat{w}-w)^2|w] &= (0.5 - w)^2. 
+			\end{split} 
+			\end{equation}
 		
-		\item First observation:
-		\begin{equation}
-			\hat{w}(D_y) = y_1
-		\end{equation}
-		with
-		\begin{equation}
-			\begin{split}
-				\mathbb{E}[\hat{w}(D_y)|w] &= \mathbb{E}[Y_1|w]\\
-				& = w,\\
-				\operatorname{Var}[\hat{w}(D_y)|w] &= \operatorname{Var}[Y_1|w] +(\mathbb{E}[\hat{w}(D_y)|w]-w)^2\\
-				&= w(1-w),\\
-				\mathbb{E}[(\hat{w}(D_y)-w)^2|w] &= w(1-w).
-			\end{split}
+		\item \textbf{First observation:} 
+		\(
+		\hat{w}(D_y) = y_1
+		\)
+		with 
+		\begin{equation} 
+			\begin{split} 
+				\mathbb{E}[\hat{w}(D_y)|w] &= \mathbb{E}[Y_1|w]\\ & = w,\\ \operatorname{Var}[\hat{w}(D_y)|w] &= \operatorname{Var}[Y_1|w] +(\mathbb{E}[\hat{w}(D_y)|w]-w)^2\\ &= w(1-w),\\ \mathbb{E}[(\hat{w}(D_y)-w)^2|w] &= w(1-w).
+			\end{split} 
 		\end{equation}
 	\end{itemize}
-	The arithmetic mean minimizes the quadratic cost over the entire range of $w$, while the constant $0.5$ performs better for specific values of $w$. The cost of using $y_1$ is independent of $n$, making it less favorable as the sample size increases.
+	The arithmetic mean minimizes the quadratic cost across all $w$, whereas the constant estimator may perform better only for particular values of $w$. The variance of the first-observation estimator does not decrease with sample size $n$, making it suboptimal as $n$ increases.
 \end{example}
 
-
 \begin{example}
-	Take $D_y= \{y_i\}_{i=1}^n$ with $Y_i\sim \mathrm{Ber}(w)$, and let $w\in [0,1]$ be the unknown parameter. Determine the maximum likelihood estimate of $w$.\newline
-	
-	\noindent In this case
-	\begin{equation}
-		\begin{split}
-			p(D_y|D_x,w) & =p(D_y|w)\\
-			& = \prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}.
-		\end{split}
-	\end{equation}
-	Let $l(w)\equiv \ln p(D_y|D_x,w)$, then
-	\begin{equation}
-		\begin{split}
-			\argmax_wl(w) & = \argmax_wp(D_y|w)\\
-			&= \argmax_w\ln \bigg(\prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}\bigg)\\
-			&=\argmax_w \bigg[\ln w\sum_{i=1}^ny_i + \ln(1-w)\sum_{i=1}^n(1-y_i)\bigg]
-		\end{split}
-	\end{equation}
+	\label{ex:bernoulli_mle}
+	The likelihood function for \exref{ex:bernoulli_quad_cost} is
+	\begin{equation} 
+		\begin{split} 
+			p(D_y|D_x,w) & =p(D_y|w)\\ & = \prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}. 
+		\end{split} 
+	\end{equation} 
+	Let $l(w)\equiv \ln p(D_y|D_x,w)$, then 
+	\begin{equation} 
+		\begin{split} 
+			\argmax_wl(w) & = \argmax_wp(D_y|w)\\ &= \argmax_w\ln \bigg(\prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}\bigg)\\ &=\argmax_w \bigg[\ln w\sum_{i=1}^ny_i + \ln(1-w)\sum_{i=1}^n(1-y_i)\bigg] 
+		\end{split} 
+	\end{equation} 
 	Now 
-	\begin{equation}
-		\frac{d}{dw}l(w)=\frac{\sum_{i=1}^ny_i}{w}-\frac{n-\sum_{i=1}^ny_i}{1-w}
-	\end{equation}
-	Requiring the derivative to vanish means the maximum likelihood estimate of $w$ is given by
-	\begin{equation}
-		\hat{w}_{\text{MLE}}(D_y)=\frac{1}{n}\sum_{i=1}^ny_i.
-	\end{equation}
-\end{example}
+	\begin{equation} 
+		\frac{d}{dw}l(w)=\frac{\sum_{i=1}^ny_i}{w}-\frac{n-\sum_{i=1}^ny_i}{1-w} 
+	\end{equation} 
+	Requiring the derivative to vanish means the maximum likelihood estimate\index{Maximum likelihood} of $w$ is given by 
+	\begin{equation} 
+		\hat{w}_{\text{MLE}}(D_y)=\frac{1}{n}\sum_{i=1}^ny_i. 
+	\end{equation} 
+\end{example} 
+
 \begin{example}
-	Take $D_y= \{y_i\}_{i=1}^n$ with $Y_i\sim \mathrm{Exp}(w)$, and let $w> 0$ be the unknown parameter. Determine the maximum likelihood estimate of $w$.\newline
-	
-	\noindent In this case
+	\label{ex:exponential_mle}
+	Consider a dataset $D_y = \{y_i\}_{i=1}^n$ consisting of independent and identically distributed (IID)\index{IID} random variables
 	\begin{equation}
-		\begin{split}
-			p(D_y|D_x,w)& =p(D_y|w)\\
-			& =\prod_{i=1}^nw e^{-w y_i}.
-		\end{split}
+		Y_i \sim \mathrm{Exp}(w), \, w>0.
 	\end{equation}
-	Let $l(w)\equiv \ln p(D_y|D_x,w)$, then
+	The likelihood function is
 	\begin{equation}
-		\frac{d}{dw}l(w)=\frac{n}{w}-\sum_{i=1}^ny_i
+		p(D_y \mid w) = \prod_{i=1}^n w e^{-w y_i}.
 	\end{equation}
-	Requiring the derivative to vanish means the maximum likelihood estimate of $w$ is given by
+	The log-likelihood is
 	\begin{equation}
-		\hat{w}_{\text{MLE}}(D_y)=\frac{1}{\frac{1}{n}\sum_{i=1}^ny_i}.
+		l(w) = n \ln w - w \sum_{i=1}^n y_i.
 	\end{equation}
+	Differentiating and setting to zero gives the maximum likelihood estimate\index{Maximum likelihood}:
+	\begin{equation}
+		\hat{w}_{\mathrm{MLE}}(D_y) = \frac{n}{\sum_{i=1}^n y_i} = \frac{1}{\bar{y}},
+	\end{equation}
+	where $\bar{y}$ is the sample mean.
 \end{example}
 
+\begin{example}
+	The posterior mean derived in \exref{ex:heteroscedastic_bayes} coincides with the maximum likelihood estimate of the common mean. This equivalence arises because the prior on the parameter was assumed to be uniform, and therefore does not influence the posterior. In general, for a non-informative prior, the Bayes estimator under a quadratic loss reduces to the maximum likelihood estimator.
+\end{example}

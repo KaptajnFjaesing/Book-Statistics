@@ -228,9 +228,19 @@ Sampling \EQref{ham2} yields a set of coefficients which can be used to compute 
 
 
 \subsection{Bayesian Parameter Estimation}
-In the special case of parameter estimation, Nature’s action is identified with the unknown parameter $W \in \Omega_W$ that governs the statistical model $f$. The Robot’s goal is to infer the value of $W$ from the observed dataset $D = \{(x_i, y_i)\}_{i=1}^n$. Hence, the Robot’s action corresponds to producing an estimate of $W$, denoted by $U(D) \in \Omega_U = \Omega_W$. By \thref{theorem:opt_decision_rule}, the optimal decision rule can be written
+Aside from prediction-based decisions, the Robot may also make decisions concerning the Model of Nature, such as estimating unknown parameter values. In this case, the expected cost takes the general form
 \begin{equation}
-	U^*(D)=\argmin_{U(D)}\mathbb{E}_{W\mid D}[C(U(D), W)\mid D],
+	\mathbb{E}_{(X,Y)_{1\colon n}, N}^{\mathcal{P}'}[C(U(D), N)],
+	\label{eq:expcost_nature}
+\end{equation}
+where $N$ denotes Nature's action. For parameter estimation, $N = W$ corresponds to the parameter of interest. By convention, the decision rule used specifically for parameter estimation is denoted
+\begin{equation}
+	\hat{w}(D) \in \Omega_U = \Omega_W
+\end{equation}
+emphasizing its role as an estimator rather than a generic action $U(D)$. The optimal estimator follows from \thref{theorem:opt_decision_rule} as
+\begin{equation}
+	\hat{w}^*(D)
+	= \argmin_{\hat{w}(D)} \mathbb{E}_{W\mid D}[C(\hat{w}(D), W)\mid D],
 	\label{eq:param_decision}
 \end{equation}
 with
@@ -242,7 +252,6 @@ At this point, the Robot can select a cost function like in \secref{sec:assing_c
 
 \begin{example}
 	\label{ex:heteroscedastic_bayes}
-	\index{Example: Heteroscedastic Normal model}
 	Consider two sensors that produce noisy measurements
 	\begin{equation}
 		D = \{ y_i^{(1)} \}_{i=1}^{N^{(1)}} \cup \{ y_j^{(2)} \}_{j=1}^{N^{(2)}}.
@@ -254,8 +263,8 @@ At this point, the Robot can select a cost function like in \secref{sec:assing_c
 	interpreted as Nature’s true mean value, from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to a measurable space $(\Omega_W,\mathcal{F}_W)$. The two sensors produce conditionally independent observations with known but distinct noise variances $\nu_1, \nu_2 > 0$, where $\nu_1 \neq \nu_2$. By \EQref{eq:param_decision} with a quadratic cost function yields the optimal decision rule 
 	\begin{equation}
 		\begin{split}
-			U^*(D) &=\argmin_{U(D)}\mathbb{E}_{W|D}[C(U(D), W)|D]\\
-			&= \argmin_{U(D)}\int (U(D) - w)^2p(w\mid D) \mathrm{d}w \\
+			\hat{w}^*(D) &=\argmin_{U(D)}\mathbb{E}_{W|D}[C(\hat{w}(D), W)|D]\\
+			&= \argmin_{\hat{w}(D)}\int (\hat{w}(D) - w)^2p(w\mid D) \mathrm{d}w \\
 			&= \int w p(w\mid D) \mathrm{d}w
 		\end{split}
 		\label{eq:deci}
@@ -309,7 +318,7 @@ At this point, the Robot can select a cost function like in \secref{sec:assing_c
 	Using \EQref{eq:posterior1} in \EQref{eq:deci} means
 	\begin{equation}
 		\begin{split}
-			U^*(D) = \tilde{w}.
+			\hat{w}^*(D) = \tilde{w}.
 		\end{split}
 	\end{equation}
 	Hence, the Robot’s optimal action is to report the weighted average of the two sample means, where each weight is inversely proportional to the corresponding sensor variance.
