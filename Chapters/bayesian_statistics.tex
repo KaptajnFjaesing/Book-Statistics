@@ -105,7 +105,7 @@ The precision is constructed as a wide gamma distribution\index{Gamma distributi
 	= \prod_{q=1}^{\tilde{n}} \frac{\lambda_q^\frac{n_q}{2}}{(2\pi)^\frac{n_q}{2}}e^{-\frac{\lambda_q}{2}\sum_{l=1}^{n_q}\theta_l^2}\frac{\beta_q^{\alpha_q}}{\Gamma(\alpha_q)}\lambda_q^{\alpha_q-1}e^{-\beta_q \lambda_q}
 	\label{eq:prior}
 \end{equation}
-where $\alpha_q,\beta_q$ are prior parameters and $\tilde{n}$ is the number of hyper parameters. In the completely general case $\tilde{n}$ would equal the number of parameters $\theta$, such that each parameter has an independent precision. In practice, the Robot may consider assigning some parameters the same precision, e.g. for parameters in the same layer in a neural network. Since $p(\xi)$ is analogous to $p(\lambda)$ -- in that both are prior distributions for precision parameters -- $p(\xi)$ is assumed to be a wide gamma distribution, then
+where $\alpha_q,\beta_q$ are prior parameters and $\tilde{n}$ is the number of hyper parameters. In the completely general case $\tilde{n}$ would equal the number of parameters $\theta$, such that each parameter has an independent precision. In practice, the Robot may consider assigning some parameters the same precision, e.g. for parameters in the same layer in a neural network. Since $p(\xi)$ is analogous to $p(\lambda)$ -- in that both are prior distributions for precision parameters -- $p(\xi)$ is assumed to be a wide gamma distribution\index{Gamma distribution}, then
 \begin{equation}
 	\begin{split}
 		p(\xi) & = \text{Ga}(\xi|\tilde{\alpha},\tilde{\beta})\\

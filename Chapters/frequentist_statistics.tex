@@ -235,20 +235,66 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{proof}
 \end{corollary}
 
-\begin{example}
-	The bias-variance decomposition (\thref{theorem:MSE}) is a concept relevant to Frequentist statistics, where a single point estimate of the parameters is used. This decomposition illustrates the tradeoff between underfitting and overfitting: high bias corresponds to underfitting, while high variance corresponds to overfitting. \newline
+\begin{remark}[Over/Under-fitting]
+	The bias-variance decomposition (\thref{theorem:MSE}) is a concept relevant to Frequentist statistics, where a single point estimate of the parameters is used. This decomposition illustrates the tradeoff between underfitting and overfitting\index{Overfitting}\index{Underfitting}: high bias corresponds to underfitting, while high variance corresponds to overfitting. \newline
 	
 	In Bayesian statistics, predictions are obtained by integrating over the posterior distribution of parameters, rather than relying on a single point estimate. This integration inherently regularizes the model, mitigating overfitting and underfitting.
-\end{example}
+\end{remark}
+
+\begin{remark}[Frequentist Regression]
+	\label{rm:frequentist_regression}
+	According to \EQref{freq:decision}, the optimal decision rule for the Robot in the Frequentist regression setting depends on the observed data $x_{n+1}$ and on the optimal decision rule for parameter estimation, $\hat{w}^*(D)$. As defined in \dfref{def:minimax}, the optimal parameter decision rule under the quadratic cost of \EQref{freq:decision} coincides, according to \corref{cor:MLE_minimax}, approximately with the maximum likelihood estimate of \dfref{def:MLE}.
+	
+	To illustrate this concretely, consider a dataset $D = \{(x_i, y_i)\}_{i=1}^n$ consisting of IID pairs, where each observation follows the probabilistic model in \EQref{freq:dist}. The parameters of interest are $\theta \in \Omega_\Theta \subset \Omega_W$, representing the regression coefficients. The precision parameter $\xi \in \Omega_W$, denoting the inverse variance of the noise, is treated as a nuisance parameter, as it does not directly affect the decision rule in \EQref{freq:decision}.
+	
+	By equation \EQref{freq:dist}\index{Normal distribution}, the likelihood is given by
+	\begin{equation}
+		p(D_y \mid D_x, \theta, \xi) 
+		= \bigg(\frac{\xi}{2\pi}\bigg)^{\!\frac{n}{2}}
+		\prod_{i=1}^n e^{-\frac{\xi}{2}\big(f(\theta, x_i) - y_i\big)^2}.
+		\label{eq:freq_reg_likelihood}
+	\end{equation}
+	Since the natural logarithm is a monotonic transformation, the MLE can equivalently be obtained by minimizing the negative log-likelihood, also called the \textit{loss function}\index{Loss function},
+	\begin{equation}
+		\begin{split}
+			\ell(\theta, \xi)
+			&= -\ln p(D_y \mid D_x, \theta, \xi) \\
+			&= \frac{n}{2}[\ln(2\pi) -\ln\xi]
+			+ \frac{\xi}{2}\sum_{i=1}^n \big(f(\theta, x_i) - y_i\big)^2.
+		\end{split}
+	\end{equation}
+	
+	The loss function $\ell$ plays a role analogous to the Hamiltonian in the Bayesian formulation of \EQref{eqh2}. Indeed, one can view $\ell$ as a subset of $H$, in the sense that it captures the same data-fit term but omits the prior and momentum contributions. Despite this structural similarity, their purposes differ: $\ell$ is minimized to obtain a single optimal parameter estimate, whereas $H$ is sampled to generate an ensemble of parameter values for computing the expected value of $f$.
+	
+	Maximization with respect to $\theta$, for fixed $\xi$, is equivalent to minimizing the sum of squared residuals,
+	\begin{equation}
+		\hat{\theta}_{\text{MLE}}
+		= \argmin_{\theta}
+		\sum_{i=1}^n \big(f(\theta, x_i) - y_i\big)^2.
+	\end{equation}
+\end{remark}
+
+\begin{remark}[Philosophical Tension within Frequentist Statistics]
+	\label{rm:philosophical_challenge}
+	The structural similarity between the loss function and the Hamiltonian, described in \rmref{rm:frequentist_regression}, extends naturally through the introduction of regularization and ensemble learning. Bayesian models inherently mitigate overfitting and promote model stability through prior distributions that constrain parameter uncertainty. In contrast, the Frequentist framework must introduce analogous mechanisms explicitly. For example, ridge regression corresponds directly to imposing a Gaussian prior on the regression coefficients, making it equivalent to Bayesian linear regression with a conjugate prior. Likewise, ensemble methods such as bagging approximate Bayesian model averaging by combining predictions from multiple fitted models, thereby capturing parameter uncertainty through resampling rather than explicit probabilistic inference.
+	
+	In such cases, the Frequentist decision rule (\EQref{freq:decision}) increasingly resembles the Bayesian one (\EQref{eq:q3}), blurring the practical distinction between the two paradigms. This convergence exposes a philosophical tension within Frequentist statistics: in seeking to replicate the robustness of Bayesian methods, it implicitly incorporates subjective elements--through modeling choices, regularization assumptions, or ensemble constructions--thus challenging its foundational claim of objectivity (\dfref{def:objective_probability}). 
+	
+	To be clear, this incorporation of subjectivity does not undermine the mathematical validity of the Frequentist definition of probability as a long-run relative frequency (\dfref{def:objective_probability}). Rather, it challenges the philosophical claim of epistemic objectivity, since regularization and ensemble methods implicitly encode subjective choices that parallel the role of priors in Bayesian inference.
+\end{remark}
+
 
 \begin{example}
 	\label{ex:bernoulli_quad_cost}
-	\index{Example: Bernoulli parameter estimation}
-	Consider a dataset $D_y = \{y_i\}_{i=1}^n$ consisting of independent and identically distributed (IID)\index{IID} random variables
+	Consider a statistical experiment in which the actions of Nature are Bernoulli\index{Bernoulli distribution} random variables with unknown parameter $w \in \Omega_W = [0,1]$. Each observed outcome $y_i \in \{0,1\}$ satisfies
 	\begin{equation}
-		Y_i \sim \mathrm{Ber}(w), \, w \in [0,1]
+		p(1 \mid w) = w, \qquad p(0 \mid w) = 1-w,
 	\end{equation}
-	and the goal of estimating the unknown parameter $w$. 
+	and the Robot observes the dataset
+	\begin{equation}
+		D_y = \{y_i\}_{i=1}^n.
+	\end{equation}
+	The goal of the Robot is to estimate the unknown parameter $w$ based on $D_y$.
 	\begin{itemize}
 		\item \textbf{Arithmetic mean:} 
 		\(
@@ -294,17 +340,17 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 			p(D_y|D_x,w) & =p(D_y|w)\\ & = \prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}. 
 		\end{split} 
 	\end{equation} 
-	Let $l(w)\equiv \ln p(D_y|D_x,w)$, then 
+	Let $\ell(w)\equiv -\ln p(D_y|D_x,w)$, then 
 	\begin{equation} 
 		\begin{split} 
-			\argmax_wl(w) & = \argmax_wp(D_y|w)\\ &= \argmax_w\ln \bigg(\prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}\bigg)\\ &=\argmax_w \bigg[\ln w\sum_{i=1}^ny_i + \ln(1-w)\sum_{i=1}^n(1-y_i)\bigg] 
+			\argmin_wl(w) & = \argmax_wp(D_y|w)\\ &= \argmax_w\ln \bigg(\prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}\bigg)\\ &=\argmin_w \bigg[ \ln(1-w)\sum_{i=1}^n(y_i-1)-\ln w\sum_{i=1}^ny_i\bigg] 
 		\end{split} 
-	\end{equation} 
-	Now 
+	\end{equation}  
+	Requiring
 	\begin{equation} 
-		\frac{d}{dw}l(w)=\frac{\sum_{i=1}^ny_i}{w}-\frac{n-\sum_{i=1}^ny_i}{1-w} 
-	\end{equation} 
-	Requiring the derivative to vanish means the maximum likelihood estimate\index{Maximum likelihood} of $w$ is given by 
+		\frac{\partial }{\partial w}\ell(w)=\frac{n-\sum_{i=1}^ny_i}{1-w}-\frac{\sum_{i=1}^ny_i}{w}
+	\end{equation}
+	 to vanish means the maximum likelihood estimate\index{Maximum likelihood} of $w$ is given by 
 	\begin{equation} 
 		\hat{w}_{\text{MLE}}(D_y)=\frac{1}{n}\sum_{i=1}^ny_i. 
 	\end{equation} 
@@ -312,25 +358,29 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{example}
 	\label{ex:exponential_mle}
-	Consider a dataset $D_y = \{y_i\}_{i=1}^n$ consisting of independent and identically distributed (IID)\index{IID} random variables
+	Consider a statistical experiment in which the actions of Nature are independent and identically distributed random variables with exponential distribution\index{Exponential distribution} and unknown rate parameter $w>0$. Each observed outcome $y_i \in \mathbb{R}_{>0}$ satisfies
 	\begin{equation}
-		Y_i \sim \mathrm{Exp}(w), \, w>0.
+		p(y_i \mid w) = \frac{e^{-\frac{y_i}{w}}}{w}, \quad i = 1, \dots, n,
 	\end{equation}
-	The likelihood function is
+	and the Robot observes the dataset
 	\begin{equation}
-		p(D_y \mid w) = \prod_{i=1}^n w e^{-w y_i}.
+		D_y = \{y_i\}_{i=1}^n.
 	\end{equation}
-	The log-likelihood is
+	The goal of the Robot is to estimate the unknown parameter $w$ based on $D_y$. The likelihood is
 	\begin{equation}
-		l(w) = n \ln w - w \sum_{i=1}^n y_i.
+		p(D_y \mid w) = \prod_{i=1}^n \frac{e^{-\frac{y_i}{w}}}{w}.
+	\end{equation}
+	The loss function is
+	\begin{equation}
+		\ell(w) = \frac{\sum_{i=1}^n y_i}{w}-n \ln w.
 	\end{equation}
 	Differentiating and setting to zero gives the maximum likelihood estimate\index{Maximum likelihood}:
 	\begin{equation}
-		\hat{w}_{\mathrm{MLE}}(D_y) = \frac{n}{\sum_{i=1}^n y_i} = \frac{1}{\bar{y}},
+		\hat{w}_{\mathrm{MLE}}(D_y) = \frac{\sum_{i=1}^n y_i}{n}.
 	\end{equation}
-	where $\bar{y}$ is the sample mean.
 \end{example}
 
 \begin{example}
 	The posterior mean derived in \exref{ex:heteroscedastic_bayes} coincides with the maximum likelihood estimate of the common mean. This equivalence arises because the prior on the parameter was assumed to be uniform, and therefore does not influence the posterior. In general, for a non-informative prior, the Bayes estimator under a quadratic loss reduces to the maximum likelihood estimator.
 \end{example}
+
