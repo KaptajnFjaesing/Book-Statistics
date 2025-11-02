@@ -1,0 +1,156 @@
+\chapter{Framing of Statistics}
+In this book, statistics is framed as a game against Nature, following conventions from decision theory~\cite{lavalle2006planning}. 
+In this game, two players interact under uncertainty: the Robot, who seeks to make optimal decisions, and Nature, who determines the state of the world.
+
+\begin{definition}[Robot]
+	\label{def:robot}
+	The Robot is the decision maker in the statistical game.\index{Robot}
+	It selects actions or decisions based on available information with the aim of achieving an optimal outcome under uncertainty.
+\end{definition}
+
+\begin{definition}[Nature]
+	\label{def:nature}
+	Nature represents the inherent uncertainty in the environment and the data-generating process\index{Nature}.
+	It determines the true state of the world, which influences the outcomes of the statistical experiment, but it does not act strategically or make decisions in the usual sense.
+\end{definition}
+
+
+\begin{definition}[Statistical Prediction Game]
+	\label{def:statistical_game}
+	The interaction between the Robot and Nature is formalized as a statistical game under uncertainty. Let
+	\begin{equation}
+		(\Omega, \mathcal{F}, \mathbb{P})
+	\end{equation}
+	be a probability space. Consider $n+1$ pairs of random variables\index{Random variable}
+	\begin{equation}
+		(X_1, Y_1), \dots, (X_n, Y_n), (X_{n+1}, Y_{n+1}) \colon \Omega \to \Omega_X \times \Omega_Y,
+	\end{equation}
+	where $(X_i,Y_i)$ for $i=1,\dots,n$ correspond to past observations collected as data, and $(X_{n+1},Y_{n+1})$ corresponds to a new observation $X_{n+1}$ with unknown outcome $Y_{n+1}$ to be predicted. Define the dataset\index{Dataset} as the collection of past realizations
+	\begin{equation}
+		D = \{(x_i, y_i)\}_{i=1}^n \in (\Omega_X \times \Omega_Y)^n,
+	\end{equation}
+	where $x_i \in \Omega_X$ and $y_i \in \Omega_Y$ are realizations of $X_i$ and $Y_i$, respectively. Each pair $(x_i, y_i)\in D$ corresponds to one past round of the game. The image measures of the random variables
+	\begin{equation}
+		\begin{split}
+			\mathbb{P}_{X_{1:n+1}} &= \mathbb{P} \circ (X_1,\dots,X_{n+1})^{-1},\\
+			\mathbb{P}_{Y_{1:n+1}} &= \mathbb{P} \circ (Y_1,\dots,Y_{n+1})^{-1},\\
+			\mathbb{P}_{(X,Y)_{1:n+1}} &= \mathbb{P} \circ ((X_1,Y_1),\dots,(X_{n+1},Y_{n+1}))^{-1},
+		\end{split}
+	\end{equation}
+	are defined on the measurable spaces
+	\begin{equation}
+		(\Omega_X^{n+1},\mathcal{F}_X^{n+1}), \quad(\Omega_Y^{n+1},\mathcal{F}_Y^{n+1}), \quad ((\Omega_X \times \Omega_Y)^{n+1}, (\mathcal{F}_X \otimes \mathcal{F}_Y)^{n+1}).
+	\end{equation}
+	Suppose that the image measure $\mathbb{P}_{(X,Y)_{1:n+1}}$ depends on the unknown parameter $w \in \Omega_W$, where $\Omega_W$ is the parameter space\index{Parameter space}. Let
+	\begin{equation}
+		\mathcal{P}' = \{ \mathbb{P}^w_{(X,Y)_{1:n+1}} \colon w \in \Omega_W \},
+	\end{equation}
+	denote a parametric family of joint image measures\index{Parametric family of image measures} on $(\Omega_X \times \Omega_Y)^{n+1}$. The statistical model\index{Statistical model} of the game is then defined as the triple
+	\begin{equation}
+		((\Omega_X \times \Omega_Y)^{n+1}, (\mathcal{F}_X \otimes \mathcal{F}_Y)^{n+1}, \mathcal{P}').
+	\end{equation}
+	In the game, the Robot selects an action $u_{n+1} \in \Omega_U$ according to a decision rule\index{Decision rule}
+	\begin{equation}
+		U \colon \Omega_X \times (\Omega_X \times \Omega_Y)^n \to \Omega_U,
+	\end{equation}
+	mapping the new observation $x_{n+1}$ and past dataset $D$ to an action. The Robot incurs a penalty determined by a cost function\index{Cost function}
+	\begin{equation}
+		C \colon \Omega_U \times \Omega_Y \to \mathbb{R},
+	\end{equation}
+	which assigns a numerical cost to each pair $(u, n) \in \Omega_U \times \Omega_Y$. The Robot's goal is to minimize the expected cost~\cite{murphy2023probabilistic}, which for prediction is given by
+	\begin{equation}
+		\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}[C(U(x_{n+1},D), Y_{n+1})].
+		\label{eq:expcost}
+	\end{equation}
+	
+\end{definition}
+
+\begin{remark}[Superscript Notation]
+	\label{rem:superscript_w}
+	The superscript $w$ in $\mathbb{P}_Z^w$ serves as an index identifying a particular member of a family of probability measures or densities. It reflects dependence on an underlying parameter $w \in \Omega_W$ without specifying whether $w$ is fixed, unknown, or random.
+
+	The superscript $\mathcal{P}'$ indicates that the object is taken with respect to a member or mixture of the parametric family. The superscript notation provides a unified notation across different statistical paradigms (see \rmref{rem:notation} and \rmref{rem:frequentist_bayesian_expected_cost}).
+\end{remark}
+
+
+\newpage
+\begin{remark}[Notation of Statistics]
+	\label{rem:notation}
+	The expected cost of \dfref{def:statistical_game} (\EQref{eq:expcost}) can be written as follows
+	\begin{equation}
+		\begin{split}
+			&\mathbb{E}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}\big[C(U(x_{n+1},D),Y_{n+1})\big] \\
+			&\quad= \int_{(\Omega_X\times\Omega_Y)^{n+1}}
+			C\big(U(x_{n+1},D),y_{n+1}\big)\;
+			\mathrm{d}\mathbb{P}_{(X,Y)_{1\colon n+1}}^{\mathcal{P}'}(D,x_{n+1},y_{n+1}).
+		\end{split}
+		\label{eq:expcost2}
+	\end{equation}
+	\EQref{eq:expcost2} can be further decomposed by specifying the cost function or by factorizing the joint image measure using \thref{theorem:chain_rule}, \thref{theorem:bayes_theorem}, or \thref{theorem:law_of_total_probability}. In such cases, the notation of probability theory can become cumbersome. Therefore, when the context is sufficiently clear, statistical notation is often relaxed by omitting distributional subscripts, superscripts, and explicit integral domains. In this notation, \EQref{eq:expcost2} becomes
+	\begin{equation}
+			\mathbb{E}\big[\,C(U(\tilde{D}) ,Y_{n+1})\big] = \int C\big(U(\tilde{D}),y_{n+1}\big) \mathrm{d}\mathbb{P}(\tilde{D},y_{n+1}),
+		\label{eq:expcost3}
+	\end{equation}	
+	where $\tilde{D}= \{x_{n+1},D\}$ is used to further compress the notation.
+\end{remark}
+
+\begin{theorem}[Optimal Decision Rule]
+	\label{theorem:opt_decision_rule}
+	Following \dfref{def:statistical_game}, the optimal decision rule for the Robot is
+	\begin{equation}
+		\begin{split}
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]\\
+			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}.
+		\end{split}
+		\label{eq:decision_rule3}
+	\end{equation}
+	
+\end{theorem}
+\begin{proof}
+	From \dfref{def:statistical_game}
+	\begin{equation}
+		U^*(\tilde{D}) = \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})],
+		\label{eq:decision_rule_x}
+	\end{equation}	
+	where the expected cost (\EQref{eq:expcost}) can be written
+	\begin{equation}
+			\mathbb{E}\big[\,C(U(\tilde{D}) ,Y_{n+1})\big]= \int C\big(U(\tilde{D}),y_{n+1}\big) \mathrm{d}\mathbb{P}(\tilde{D},y_{n+1}).
+		\label{eq:conditional_expected_cost}
+	\end{equation}
+	From \thref{theorem:total_expectation}
+	\begin{equation}
+		\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})] = \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})\mid \tilde{D}]].
+		\label{eq:total2}
+	\end{equation}
+	Using \EQref{eq:total2} in \EQref{eq:decision_rule_x}
+	\begin{equation}
+		\begin{split}
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D}) } \mathbb{E}[\mathbb{E}[C(U(\tilde{D}) , Y_{n+1})\mid \tilde{D}]]\\
+			&= \argmin_{U(\tilde{D})} \int p(\tilde{D}) \mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] \mathrm{d}\tilde{D}.
+		\end{split}
+		\label{eq:decision_rule2}
+	\end{equation}
+	Since $p(\tilde{D})$ is a non-negative function, the minimizer of the integral is the same as the minimizer of the conditional expectation, meaning
+	\begin{equation}
+		\begin{split}
+			U^*(\tilde{D}) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]\\
+			& = \argmin_{U(\tilde{D})}\int  C(U(\tilde{D}),y_{n+1}) p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}.
+		\end{split}
+	\end{equation}
+\end{proof}
+
+\begin{example}
+	The random variables $X_i$ represent the observations the Robot has available that are related to the decisions of Nature. However, this information may not be given, in which case $\{x_{n+1},D_x\}=\emptyset$ and consequently
+	\begin{equation}
+		\begin{split}
+			\tilde{D} &=\{y_i\}_{i=1}^n\\
+			&\equiv D_y.
+		\end{split}
+	\end{equation}
+	In this case, the Robot is forced to model the decisions of Nature without observations. From \thref{theorem:opt_decision_rule} the optimal action for the Robot can be written
+	\begin{equation}
+		U^*(D_y) = \argmin_{U(D_y)} \mathbb{E}[C(U(D_y), Y_{n+1})\mid D_y]
+		\label{eq:best_decision1}
+	\end{equation}
+\end{example}
+

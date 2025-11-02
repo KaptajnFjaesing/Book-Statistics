@@ -1,0 +1,309 @@
+\chapter{Assigning a Cost Function}
+\label{chp:assing_cost}
+The cost function from \dfref{def:statistical_game} associates a numerical penalty to the Robot's action and thus the details of it determine the decisions made by the Robot. Under certain conditions, a cost function can be shown to exist~\cite{lavalle2006planning}, however, there is no systematic way of producing or deriving the cost function beyond applied logic. In general, the topic can be split into considering a continuous and discrete action space, $\Omega_U$. 	
+
+\section{Continuous Action Space}
+In case of a continuous action space, the cost function is typically picked from a set of standard choices.	
+\begin{definition}[Linear Cost Function]
+	\label{def:linear_cost_function}
+	The linear cost function is defined as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1}) \equiv \mid U(\tilde{D})-y_{n+1}\mid .
+	\end{equation}	
+\end{definition}
+
+\begin{theorem}[Median Decision Rule]
+	\label{theorem:median_decision_rule}
+	The linear cost function (\dfref{def:linear_cost_function}) leads to the median decision rule
+	\begin{equation}
+		\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1} = \frac{1}{2}.
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	From \thref{theorem:opt_decision_rule}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] &= \int_{-\infty}^{\infty} \mid U(\tilde{D})-y_{n+1}\mid  p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}\\
+			&= \int_{-\infty}^{U(\tilde{D})} (y_{n+1}-U(\tilde{D}))p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}\\
+			&\quad+\int_{U(\tilde{D})}^\infty  (U(\tilde{D})-y_{n+1})p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}.\\
+		\end{split}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			0 &=\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(\tilde{D})}\\
+			&= (U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})\mid \tilde{D})+\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}\\
+			&\quad+(U^*(\tilde{D})-U^*(\tilde{D}))p(U^*(\tilde{D})\mid \tilde{D})-\int_{U^*(\tilde{D})}^\infty  p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}.
+		\end{split}
+	\end{equation}
+	This leads to
+	\begin{equation}
+		\begin{split}
+			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1} &= \int_{U^*(\tilde{D})}^\infty p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}\\
+			&= 1- \int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}\\
+			&\Downarrow\\
+			\int_{-\infty}^{U^*(\tilde{D})} p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}& = \frac{1}{2}.
+		\end{split}
+	\end{equation}	
+\end{proof}
+
+\begin{definition}[Quadratic Cost Function]
+	\label{def:quadratic_cost}
+	The quadratic cost function is defined as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1}) \equiv (U(\tilde{D})-y_{n+1})^2.
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[Expectation Decision Rule]
+	\label{theorem:expectation_decision_rule}
+	The quadratic cost function (\dfref{def:quadratic_cost}) leads to the expectation decision rule
+	\begin{equation}
+		U^*(\tilde{D}) = \mathbb{E}[Y_{n+1}\mid \tilde{D}].
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	From \thref{theorem:opt_decision_rule}
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] &= \int (U(\tilde{D})-y_{n+1})^2 p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}\\
+			&\Downarrow\\
+			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]}{\partial U(\tilde{D})}\bigg|_{U(\tilde{D})=U^*(x)} &= 2U^*(\tilde{D})-2\int y_{n+1}p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}\\
+			&=0\\
+			&\Downarrow\\
+			U^*(\tilde{D})& = \int y_{n+1}p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}\\
+			&= \mathbb{E}[Y_{n+1}\mid \tilde{D}].
+		\end{split}
+	\end{equation}
+\end{proof}
+
+\begin{definition}[0-1 Cost Function]
+	\label{def:0_1_cost_function}
+	The 0-1 cost function is defined as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1}) \equiv 1-\delta(U(\tilde{D})-y_{n+1}).
+	\end{equation}
+\end{definition}
+
+\begin{theorem}[MAP Decision Rule]
+	\label{theorem:MAP}
+	The 0-1 cost function (\dfref{def:0_1_cost_function}) leads to the maximum a posteriori (MAP) decision rule
+	\begin{equation}
+		\frac{\partial p_{Y_{n+1}\mid X_{n+1},(X,Y)_{1\colon n}}(U(\tilde{D})\mid \tilde{D})}{\partial U(\tilde{D})}\bigg| _{U(\tilde{D})=U^*(\tilde{D})}=0,
+	\end{equation}
+	where the distribution subscript has been included (see \rmref{rem:notation}).
+\end{theorem}
+
+\begin{proof}
+	From \thref{theorem:opt_decision_rule}
+	\begin{equation}
+		\mathbb{E}[C((\tilde{D}), Y_{n+1})\mid \tilde{D}] = 1-\int \delta(U(\tilde{D})-y_{n+1}) p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}
+	\end{equation}
+	\begin{equation}
+		\begin{split}
+			\frac{\partial \mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]}{\partial U(\tilde{D})}\bigg| _{U(\tilde{D})=U^*(\tilde{D})} &= -\frac{\partial p(U(\tilde{D})\mid \tilde{D})}{\partial U(\tilde{D})}\bigg| _{U(\tilde{D})=U^*(\tilde{D})}\\
+			&=0.\\
+		\end{split}
+	\end{equation}
+\end{proof}
+
+
+\begin{example}
+	The median decision rule is symmetric with respect to
+	\begin{equation}
+		z(\tilde{D},y_{n+1}) \equiv U(\tilde{D})-y_{n+1},
+	\end{equation}
+	meaning underestimation ($z<0$) and overestimation ($z>0$) is penalized equally. This decision rule can be generalized by adopting the cost function
+	\begin{equation}
+		C(U(\tilde{D}), y_{n+1}) = \alpha\cdot \operatorname{swish}(z(\tilde{D},y_{n+1}),\beta)
+		+(1-\alpha)\cdot \operatorname{swish}(-z(\tilde{D},y_{n+1}),\beta),
+	\end{equation}
+	where
+	\begin{equation}
+		\operatorname{swish}(z,\beta) = \frac{z}{1+e^{-\beta z}}.
+	\end{equation}
+	Taking $\alpha \ll 1$ means $z<0$ will be penalized relatively more than $z>0$. The expected cost is
+	\begin{equation}
+		\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] = \int C(U(\tilde{D}),y_{n+1}) p(y_{n+1}\mid \tilde{D})\mathrm{d}y_{n+1}.
+	\end{equation}
+	The derivative of the cost function with respect to the decision rule can be approximated as follows
+	\begin{equation}
+		\begin{split}
+			\frac{dC}{dU} & = \frac{dC}{dz}\frac{dz}{dU}\\
+			& = \bigg(\frac{\alpha}{1+e^{-\beta z}}-\frac{1-\alpha}{1+e^{\beta z}}\\
+			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU}\\
+			&= \frac{\beta z e^{\beta z}-e^{\beta z}-1}{(1+e^{\beta z})^2}+\alpha+\mathcal{O}(\alpha^2)\\
+			&\approx  \alpha -\frac{1}{(1+e^{\beta z})^2}
+		\end{split}
+	\end{equation}
+	leading to the derivative of the expected cost
+	\begin{equation}
+		\begin{split}
+			\frac{d\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]}{dU(\tilde{D})} &\approx \int \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}\bigg)p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}\\
+			& = \alpha -\int \frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}p(y_{n+1}\mid \tilde{D}) \mathrm{d} y_{n+1}.\\
+		\end{split}
+	\end{equation}
+	For large $\beta$, $\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}$ approaches the indicator $\mathbb{1}\{y_{n+1}>U(\tilde{D})\}$. Hence,
+	\begin{equation}
+		\int_{-\infty}^{\infty} p(y_{n+1}\mid \tilde{D})\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2} \mathrm{d}y_{n+1} \approx \int_{U(\tilde{D})}^{\infty} p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}
+	\end{equation}
+	This means the optimal decision rule can be written as follows
+	\begin{equation}
+		\alpha \approx \int_{U^*(\tilde{D})}^{\infty} p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}.
+		\label{eq:quantile_decision_rule}
+	\end{equation}
+	The optimal decision $U^*(\tilde{D})$ is the $\alpha$-quantile of the conditional distribution $p(y_{n+1}\mid \tilde{D})$. This rule is known as the quantile decision rule.
+\end{example}
+
+\section{Discrete Action Space}
+In case of a continuous action space, the conditional expected loss from \thref{theorem:opt_decision_rule} can be written
+\begin{equation}
+	\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}\mid \tilde{D}),
+	\label{eq:conditional_cost_discrete}
+\end{equation}
+where the cost function can be represented in matrix form as follows
+\begin{center}
+	\begin{tabular}{ c  c  c  c  c  }
+		&& $Y_{n+1}$& & \\
+		&& $y^{(1)}$ & \dots & $y^{(\text{dim}(\Omega_Y))}$ \\
+		\cline{3-5}
+		$U(\tilde{D})$ & $u^{(1)}$& \multicolumn{1}{| l}{$C(u^{(1)}, y^{(1)})$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l| }{$C(u^{(1)}, y^{(\text{dim}(\Omega_Y))})$} \\
+		& \vdots & \multicolumn{1}{| l}{\vdots} &\multicolumn{1}{l}{\vdots}&\multicolumn{1}{l| }{\vdots} \\
+		& $u^{(\text{dim}(\Omega_U))}$ & \multicolumn{1}{| l}{$C(u^{(\text{dim}(\Omega_U))}, y^{(1)})$} &\multicolumn{1}{l}{\dots}&\multicolumn{1}{l| }{$C(u^{(\text{dim}(\Omega_U))}, y^{(\text{dim}(\Omega_Y)}))$} \\
+		\cline{3-5}
+	\end{tabular}
+\end{center}
+Note that the upper index represent realized values of $y_{n+1}$ whereas a lower index represent datapoints.
+
+\begin{example}
+	\label{ex:confusion}
+	Consider a binary classification problem with action space $\Omega_U = \{u^{(1)},u^{(2)}\}$ and Nature's state space $\Omega_Y = \{y^{(1)}, y^{(2)}\}$, where $u^{(1)}$ corresponds to predicting class $y^{(1)}$ and $u^{(2)}$ to predicting class $y^{(2)}$. Let
+	\begin{equation}
+		D = \{(x_i,y_i)\}_{i=1}^n
+	\end{equation}
+	denote the data, where $y_i \in \Omega_Y$ are observed realizations of Nature's states. Let $U(x_{n+1},D)$ be a classifier based on the probability 
+	\begin{equation}
+		p_{Y_{n+1}\mid X_{n+1}, (X,Y)_{1\colon n}}(y_{n+1} \mid  x_{n+1}, D).
+	\end{equation}
+	Define a threshold $k\in[0,1]$ and the decision rule
+	\begin{equation}
+		U_m(x_{n+1},D) =
+		\begin{cases}
+			u^{(1)}, & p_{Y_{n+1}\mid X_{n+1}, (X,Y)_{1\colon n}}(y^{(2)} \mid  x_{n+1}, D) < m,\\
+			u^{(2)}, & p_{Y_{n+1}\mid X_{n+1}, (X,Y)_{1\colon n}}(y^{(2)} \mid  x_{n+1}, D) \ge m.
+		\end{cases}
+		\label{eq:decision_rule31}
+	\end{equation}
+	For a fixed threshold $m$, classifier performance is summarized in the confusion matrix
+	\begin{center}
+		\begin{tabular}{ c  c  c c}
+			&& $Y_{n+1}$ &  \\
+			&& $y^{(1)}$ & $y^{(2)}$ \\
+			\cline{3-4}
+			$U_m(x_{n+1},D)$ & $u^{(1)}$& \multicolumn{1}{| l}{TP(k)} & \multicolumn{1}{l| }{FP(k)}\\
+			& $u^{(2)}$& \multicolumn{1}{| l}{FN(k)} & \multicolumn{1}{l| }{TN(k)}\\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+\end{example}
+
+\begin{example}
+	Consider a binary classification problem with action space $\Omega_U = \{u^{(1)},u^{(2)}\}$ and Nature's state space $\Omega_Y = \{y^{(1)}, y^{(2)}\}$, where $u^{(1)}$ corresponds to predicting class $y^{(1)}$ and $u^{(2)}$ to predicting class $y^{(2)}$. Let
+	\begin{equation}
+		D = \{(x_i,y_i)\}_{i=1}^n
+	\end{equation}
+	denote the data, where $y_i \in \Omega_Y$ are observed realizations of Nature's states and let the cost function be defined by the matrix
+	\begin{center}
+		\begin{tabular}{ c  c  c  c }
+			&& $Y_{n+1}$& \\
+			&& $y^{(1)}$ & $y^{(2)}$  \\
+			\cline{3-4}
+			$U(x_{n+1,D})$ & $u^{(1)}$& \multicolumn{1}{| l}{$0$} &\multicolumn{1}{l| }{$\lambda_{12}$}  \\
+			& $u^{(2)}$& \multicolumn{1}{| l}{$\lambda_{21}$} & \multicolumn{1}{l| }{$0$} \\
+			\cline{3-4}
+		\end{tabular}
+	\end{center}
+	where $\lambda_{12}$ denotes the cost of predicting $y^{(1)}$ when the true state is $y^{(2)}$, and $\lambda_{21}$ the cost of the reverse error.  The decision $U(\tilde{D})$ is determined by minimizing the conditional expected cost (\EQref{eq:conditional_cost_discrete})
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] & = \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}\mid \tilde{D})\\
+			& = C(U(\tilde{D}),y^{(1)})p(y^{(1)}\mid \tilde{D})\\
+			& \quad+C(U(\tilde{D}),y^{(2)})p(y^{(2)}\mid \tilde{D}).\\
+		\end{split}
+	\end{equation}
+	For the different possible actions
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(u^{(1)}, Y_{n+1})\mid \tilde{D}] &= \lambda_{12}p(y^{(2)}\mid \tilde{D}),\\
+			\mathbb{E}[C(u^{(2)}, Y_{n+1})\mid \tilde{D}] &= \lambda_{21}p(y^{(1)}\mid \tilde{D}),\\
+		\end{split}
+	\end{equation}
+	$U(\tilde{D})=u_1$ iff
+	\begin{equation}
+		\mathbb{E}[C(u^{(1)},Y_{n+1})\mid \tilde{D}]<\mathbb{E}[C(u^{(1)},Y_{n+1})\mid \tilde{D}])
+	\end{equation}
+	meaning
+	\begin{equation}
+		\begin{split}
+			\lambda_{12}p(y^{(2)}\mid \tilde{D})&<\lambda_{21}p(y^{(1)}\mid \tilde{D})\\
+			&=\lambda_{21}(1-p(y^{(2)}\mid \tilde{D}))
+		\end{split}
+	\end{equation}
+	meaning $U(\tilde{D}) = u_1$ iff
+	\begin{equation}
+		p(y^{(2)}\mid \tilde{D})<\frac{\lambda_{21}}{\lambda_{12}+\lambda_{21}}=m.
+		\label{eq:threshold31}
+	\end{equation}
+	\EQref{eq:threshold31} is equivalent to \EQref{eq:decision_rule31} from \exref{ex:confusion}. The difference between the two is that if $\lambda_{12}$ and $\lambda_{21}$ are specified, $m$ is specified. In \exref{ex:confusion} $m$ was left as a free parameter.
+\end{example}
+
+
+\begin{example}
+	In many classification problems the Robot has the option of assigning $x_{n+1}$ to class $k\in K$ or, if the Robot is too uncertain, choosing a reject option. If the cost for rejection is less than the cost of falsely classifying the object, it may be the optimal action. Define the cost function as follows
+	\begin{equation}
+		C(U(\tilde{D}),y_{n+1})=\begin{cases}
+			0 & \text{if correct classification ($U(\tilde{D})=y_{n+1}$)}\\
+			\lambda_r & \text{if reject option ($U(\tilde{D})=\operatorname{reject}$)}\\
+			\lambda_s & \text{if wrong classification ($U(\tilde{D})\neq y_{n+1}$)}\\
+		\end{cases}.
+	\end{equation}
+	The conditional expected cost if the Robot does not pick the reject option, meaning $U(\tilde{D})\in \Omega_U\setminus\operatorname{reject}$, is
+	\begin{equation}
+		\begin{split}
+			\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}] & = \sum_{y_{n+1}\in \Omega_Y} C(U(\tilde{D}),y_{n+1})p(y_{n+1}\mid \tilde{D})\\
+			&= \lambda_s(1-p(U(\tilde{D})\mid \tilde{D})),
+		\end{split}
+		\label{eq:cost1a}
+	\end{equation}
+	where for the second equality it has been used that the cost of a correct classification is $0$. For the third equality it has been used that summing over all but $y_{n+1} =U(\tilde{D})$ is equal to $1-p(U(\tilde{D})\mid \tilde{D})$. The larger $p(U(\tilde{D})\mid \tilde{D})$, the smaller the expected cost (for $\lambda_s>0$), meaning the expected cost is minimized for the largest probability. The conditional expected cost if the Robot picks the reject option is
+	\begin{equation}
+		\mathbb{E}[C(\operatorname{reject}, Y_{n+1})\mid \tilde{D}]=\lambda_r,
+		\label{eq:cost2a}
+	\end{equation}
+	and from \EQref{eq:cost1a} and \EQref{eq:cost2a} it follows that picking 
+	\begin{equation}
+		\argmax_{U(\tilde{D})\in \Omega_U\setminus \operatorname{reject}} p(U(\tilde{D})\mid \tilde{D})
+	\end{equation}
+	is the best option among classes $U(\tilde{D})\neq \operatorname{reject}$. To be the best option overall, it also needs to have lower cost than the reject option. Using \EQref{eq:cost1a} and \EQref{eq:cost2a} yields
+	\begin{equation}
+		(1-p(U(\tilde{D})\mid \tilde{D}))\lambda_s< \lambda_r,
+	\end{equation}
+	meaning
+	\begin{equation}
+		p(U(\tilde{D})\mid \tilde{D})\geq 1-\frac{\lambda_r}{\lambda_s}.
+	\end{equation}
+	Qualitatively, as $\frac{\lambda_r}{\lambda_s}$ is increased from $0$ to $1$, the behavior of the Robot changes smoothly. When
+	\begin{equation}
+		\frac{\lambda_r}{\lambda_s}=0,
+	\end{equation}
+	rejection is rated as a successful classification -- i.e., there is no cost associated with it -- and thus becomes the best option unless
+	\begin{equation}
+		p(U(\tilde{D})\mid \tilde{D})=1,
+	\end{equation}
+	corresponding to knowing the correct class with absolute certainty. In other words, in this limit rejection is optimal unless the Robot is completely certain of the correct class. Conversely, when
+	\begin{equation}
+		\frac{\lambda_r}{\lambda_s}=1,
+	\end{equation}
+	rejection is rated as a misclassification -- i.e., $\lambda_r=\lambda_s$ -- and thus always incurs a cost. In this case, rejection is never chosen. For values of $\frac{\lambda_r}{\lambda_s}$ between these limits, an interpolation of interpretations applies, where rejection is preferred only when the Robot's uncertainty exceeds the corresponding threshold.
+\end{example}

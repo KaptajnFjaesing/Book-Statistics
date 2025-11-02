@@ -194,7 +194,7 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 	This means
 	\begin{equation}
 		\begin{split}
-			p_{Z}^w(0|w) &= m e^{-1-w_0}\\
+			p_{Z}^w(0 \mid w) &= m e^{-1-w_0}\\
 			&= \frac{1}{1+ e^{- w_1}}\\
 			& = 1-\eta
 		\end{split}
@@ -242,7 +242,7 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 	\end{equation}
 	Finally, substituting $e^{-w_0}$ and $e^{-w_1}$ into $p_{Z}^w(z \mid w)$ gives the maximum entropy distribution
 	\begin{equation}
-		p_{Z}^w(z|w) = \binom{n}{z} \eta^z (1-\eta)^{n-z},
+		p_{Z}^w(z\mid w) = \binom{n}{z} \eta^z (1-\eta)^{n-z},
 	\end{equation}
 	which is the Binomial distribution\index{Maximum entropy}\index{Binomial distribution}.
 \end{example}
@@ -251,7 +251,7 @@ The constants $w_j$ are determined by the imposed constraints. The resulting pro
 \begin{example}
 	Consider a discrete random variable $Z$ with sample space $\Omega_Z = \mathbb{N}_0$ with a known mean $\eta$. In this case
 	\begin{equation}
-		p_{Z}^w(z|w) = m_Z(z) e^{-1-w_0 - w_1 z}.
+		p_{Z}^w(z\mid w) = m_Z(z) e^{-1-w_0 - w_1 z}.
 		\label{eq:qsa}
 	\end{equation}
 	Take the counting measure\index{Counting measure} $m_Z(z) = 1/z!$ and impose the normalization constraint

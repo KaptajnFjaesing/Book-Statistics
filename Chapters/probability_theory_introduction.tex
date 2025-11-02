@@ -211,12 +211,12 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{proof}
 	From the definition of conditional probability in \dfref{def:conditional_probability}
 	\begin{equation}
-		\mathbb{P}(E_1 \cap E_2 \cap E_3) = \mathbb{P}(E_1|E_2 \cap E_n)\mathbb{P}(E_2 \cap E_3).
+		\mathbb{P}(E_1 \cap E_2 \cap E_3) = \mathbb{P}(E_1\mid E_2 \cap E_n)\mathbb{P}(E_2 \cap E_3).
 		\label{eq:p1}
 	\end{equation}
 	Using the definition of conditional probability again
 	\begin{equation}
-		\mathbb{P}(E_2 \cap E_3) = \mathbb{P}(E_2| E_3)\mathbb{P}(E_3).
+		\mathbb{P}(E_2 \cap E_3) = \mathbb{P}(E_2\mid  E_3)\mathbb{P}(E_3).
 	\end{equation}
 	which leads to \thref{theorem:chain_rule}.
 \end{proof}
@@ -235,14 +235,14 @@ Probability theory is a foundational branch of mathematics that provides the for
 	Bayes theorem follows directly from applying \thref{theorem:chain_rule} and applying the concept of symmetry as follows
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(E_1 \cap E_2) &= \mathbb{P}(E_1| E_2)\mathbb{P}(E_2) \\
-			& = \mathbb{P}(E_2|E_1)\mathbb{P}(E_1)
+			\mathbb{P}(E_1 \cap E_2) &= \mathbb{P}(E_1\mid  E_2)\mathbb{P}(E_2) \\
+			& = \mathbb{P}(E_2\mid E_1)\mathbb{P}(E_1)
 		\end{split}
 		\label{eq:c2}
 	\end{equation}
 	from which
 	\begin{equation}
-		\mathbb{P}(E_1| E_2) = \frac{\mathbb{P}(E_2| E_1)\mathbb{P}(E_1)}{\mathbb{P}(E_2)}
+		\mathbb{P}(E_1\mid  E_2) = \frac{\mathbb{P}(E_2\mid  E_1)\mathbb{P}(E_1)}{\mathbb{P}(E_2)}
 	\end{equation}
 	which is \thref{theorem:bayes_theorem}.
 \end{proof}
@@ -283,7 +283,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	For the roll with the fair die considered in \exref{ex:die1}\index{Die example}, the sample space\index{Sample space} is $\Omega = \{ \epsdice{1}, \epsdice{2}, \epsdice{3}, \epsdice{4}, \epsdice{5}, \epsdice{6} \}$. Let $E_1 = \{\epsdice{2}, \epsdice{4}, \epsdice{6}\}$ and $E_2 = \{\epsdice{4}\}$ be two events, then from \dfref{def:conditional_probability}
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(E_1|E_2) &= \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}\\
+			\mathbb{P}(E_1\mid E_2) &= \frac{\mathbb{P}(E_1 \cap E_2)}{\mathbb{P}(E_2)}\\
 			& = 1
 		\end{split}
 	\end{equation}
@@ -532,7 +532,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\end{equation}
 	be random variables\index{Random variable} from the probability space $(\Omega, \mathcal{F}, \mathbb{P})$ to measurable spaces\index{Measurable space} $(\Omega_X, \mathcal{F}_X)$ and $(\Omega_Y, \mathcal{F}_Y)$, respectively. Let $\mathbb{P}_{X,Y}$ denote the joint probability measure on the measurable space $(\Omega_X \times \Omega_Y, \mathcal{F}_X \otimes \mathcal{F}_Y)$. Then
 	\begin{equation}
-		\mathbb{E}_X[X] = \mathbb{E}_Y\big[\mathbb{E}_{X|Y}[X \mid Y]\big].
+		\mathbb{E}_X[X] = \mathbb{E}_Y\big[\mathbb{E}_{X\mid Y}[X \mid Y]\big].
 	\end{equation}
 \end{theorem}
 
@@ -543,8 +543,8 @@ Probability theory is a foundational branch of mathematics that provides the for
 			\mathbb{E}_X[X] 
 			&= \int_{\Omega_X} x \mathrm{d}\mathbb{P}_X(x)\\
 			&= \int_{\Omega_X}\int_{\Omega_Y} x \mathrm{d}\mathbb{P}_{X,Y}(x,y)\\
-			&= \int_{\Omega_Y}\int_{\Omega_X} x \mathrm{d}\mathbb{P}_{X|Y=y}(x)\mathrm{d}\mathbb{P}_Y(y)\\
-			&= \mathbb{E}_Y[\mathbb{E}_{X|Y}[X\mid Y]].
+			&= \int_{\Omega_Y}\int_{\Omega_X} x \mathrm{d}\mathbb{P}_{X\mid Y=y}(x)\mathrm{d}\mathbb{P}_Y(y)\\
+			&= \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]].
 		\end{split}
 	\end{equation}
 	or equivalently in terms of the probability densities
@@ -553,8 +553,8 @@ Probability theory is a foundational branch of mathematics that provides the for
 			\mathbb{E}_X[X] 
 			&= \int_{\Omega_X} x p_X(x) \mathrm{d}\mu_X(x)\\
 			&= \int_{\Omega_Y} \int_{\Omega_X} x p_{X,Y}(x,y) \mathrm{d}\mu_X(x) \mathrm{d}\mu_Y(y)\\
-			&= \int_{\Omega_Y} p_Y(y) \left( \int_{\Omega_X} x p_{X|Y}(x\mid y) \mathrm{d}\mu_X(x) \right) \mathrm{d}\mu_Y(y)\\
-			&= \mathbb{E}_Y[\mathbb{E}_{X|Y}[X\mid Y]]
+			&= \int_{\Omega_Y} p_Y(y) \left( \int_{\Omega_X} x p_{X\mid Y}(x\mid y) \mathrm{d}\mu_X(x) \right) \mathrm{d}\mu_Y(y)\\
+			&= \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]]
 		\end{split}
 	\end{equation}
 	where $p_{X,Y}$ is the probability density with respect to $\mu_{X,Y} = \mu_X \otimes \mu_Y$.
@@ -986,13 +986,13 @@ Probability theory is a foundational branch of mathematics that provides the for
 	Let "s" denote the event of being sick, "h" the event of being healthy, "p" the event of a positive test and "n" the event of a negative test. Using \thref{theorem:bayes_theorem} and \thref{theorem:law_of_total_probability}
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(\text{s}|\text{p}) &= \frac{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p})}\\
-			&= \frac{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p}|\text{s})\mathbb{P}(\text{s})+\mathbb{P}(\text{p}|\text{h})\mathbb{P}(\text{h})}\\
+			\mathbb{P}(\text{s}\mid \text{p}) &= \frac{\mathbb{P}(\text{p}\mid \text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p})}\\
+			&= \frac{\mathbb{P}(\text{p}\mid \text{s})\mathbb{P}(\text{s})}{\mathbb{P}(\text{p}\mid \text{s})\mathbb{P}(\text{s})+\mathbb{P}(\text{p}\mid \text{h})\mathbb{P}(\text{h})}\\
 		\end{split}
 	\end{equation}
-	where $\mathbb{P}(\text{p}|\text{s}) = 0.99$, $\mathbb{P}(s) = \frac{1}{10\, 000}$, $\mathbb{P}(\text{p}|\text{h})=1-\mathbb{P}(\text{n}|\text{h})$, $\mathbb{P}(\text{n}|\text{h})=0.99$ and $\mathbb{P}(\text{h})=1-\mathbb{P}(\text{s})$. This means
+	where $\mathbb{P}(\text{p}\mid \text{s}) = 0.99$, $\mathbb{P}(s) = \frac{1}{10\, 000}$, $\mathbb{P}(\text{p}\mid \text{h})=1-\mathbb{P}(\text{n}\mid \text{h})$, $\mathbb{P}(\text{n}\mid \text{h})=0.99$ and $\mathbb{P}(\text{h})=1-\mathbb{P}(\text{s})$. This means
 	\begin{equation}
-		\mathbb{P}(\text{s}|\text{p}) \simeq 0.0098.
+		\mathbb{P}(\text{s}\mid \text{p}) \simeq 0.0098.
 	\end{equation}		
 \end{example}
 
@@ -1003,40 +1003,40 @@ Probability theory is a foundational branch of mathematics that provides the for
 	
 	Let $z_i$ denote the prize being behind the $i$'th door, $o_i$ the action of opening the $i$'th door and $c_i$ the action of choosing the $i$'th door. The door with the largest probability of containing the prize should be picked, meaning
 	\begin{equation}
-		z^*=\argmax_z(\mathbb{P}(z|o_3 \cap c_1)).
+		z^*=\argmax_z(\mathbb{P}(z\mid o_3 \cap c_1)).
 	\end{equation}
 	Since the host cannot open the door containing the prize, 
 	\begin{equation}
-		\mathbb{P}(z_3|o_3 \cap c_1)=0
+		\mathbb{P}(z_3\mid o_3 \cap c_1)=0
 	\end{equation}
-	 and only $\mathbb{P}(z_1|o_3 \cap c_1)$ and $\mathbb{P}(z_2|o_3 \cap c_1)$ will have to be considered. Using \thref{theorem:bayes_theorem}
+	 and only $\mathbb{P}(z_1\mid o_3 \cap c_1)$ and $\mathbb{P}(z_2\mid o_3 \cap c_1)$ will have to be considered. Using \thref{theorem:bayes_theorem}
 	\begin{equation}
-		\mathbb{P}(z_1|o_3 \cap c_1) = \frac{\mathbb{P}(o_3|c_1 \cap z_1)\mathbb{P}(c_1 \cap z_1)}{\mathbb{P}(o_3 \cap c_1)}
+		\mathbb{P}(z_1\mid o_3 \cap c_1) = \frac{\mathbb{P}(o_3\mid c_1 \cap z_1)\mathbb{P}(c_1 \cap z_1)}{\mathbb{P}(o_3 \cap c_1)}
 	\end{equation}
 	where from \thref{theorem:law_of_total_probability}
 	\begin{equation}
 		\begin{split}
 			\mathbb{P}(o_3 \cap c_1)&=\sum_i\mathbb{P}(o_3 \cap c_1 \cap z_i)\\
 			&=\mathbb{P}(o_3 \cap c_1 \cap z_1)+\mathbb{P}(o_3 \cap c_1 \cap z_2)+\mathbb{P}(o_3 \cap c_1 \cap z_3)\\
-			&= \mathbb{P}(o_3|c_1 \cap z_1)\mathbb{P}(c_1 \cap z_1)+\mathbb{P}(o_3|c_1 \cap z_2)\mathbb{P}(c_1 \cap z_2)\\
-			&\quad+\mathbb{P}(o_3|c_1 \cap z_3)\mathbb{P}(c_1 \cap z_3).
+			&= \mathbb{P}(o_3\mid c_1 \cap z_1)\mathbb{P}(c_1 \cap z_1)+\mathbb{P}(o_3\mid c_1 \cap z_2)\mathbb{P}(c_1 \cap z_2)\\
+			&\quad+\mathbb{P}(o_3\mid c_1 \cap z_3)\mathbb{P}(c_1 \cap z_3).
 		\end{split}
 	\end{equation}
-	$\mathbb{P}(o_3|c_1 \cap z_3)=0$ since the host will not open the door with the prize. $p(o_3|c_1 \cap z_2)=1$ since the host has no other option in this case. $\mathbb{P}(o_3|c_1 \cap z_1)=\frac{1}{2}$ since the host has two options in this case. There is no connection between the choice of door and position of the prize, so $\mathbb{P}(c_1 \cap z_j)=\mathbb{P}(c_1)\mathbb{P}(z_j)$ and initially $\mathbb{P}(z_j)=\mathbb{P}(z_k)$ $\forall j,k\in \{1,2,3\}$. Hence
+	$\mathbb{P}(o_3\mid c_1 \cap z_3)=0$ since the host will not open the door with the prize. $p(o_3\mid c_1 \cap z_2)=1$ since the host has no other option in this case. $\mathbb{P}(o_3\mid c_1 \cap z_1)=\frac{1}{2}$ since the host has two options in this case. There is no connection between the choice of door and position of the prize, so $\mathbb{P}(c_1 \cap z_j)=\mathbb{P}(c_1)\mathbb{P}(z_j)$ and initially $\mathbb{P}(z_j)=\mathbb{P}(z_k)$ $\forall j,k\in \{1,2,3\}$. Hence
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(z_1|o_3 \cap c_1) &= \frac{\mathbb{P}(o_3|c_1 \cap z_1)}{\sum_i\mathbb{P}(o_3|c_1 \cap z_i)}\\
+			\mathbb{P}(z_1\mid o_3 \cap c_1) &= \frac{\mathbb{P}(o_3\mid c_1 \cap z_1)}{\sum_i\mathbb{P}(o_3\mid c_1 \cap z_i)}\\
 			&=\frac{1}{3}.
 		\end{split}
 	\end{equation}
 	Similarly
 	\begin{equation}
 		\begin{split}
-			\mathbb{P}(z_2|o_3 \cap c_1) &= \frac{\mathbb{P}(o_3|c_1 \cap z_2)}{\sum_i\mathbb{P}(o_3|c_1 \cap z_i)}\\
+			\mathbb{P}(z_2\mid o_3 \cap c_1) &= \frac{\mathbb{P}(o_3\mid c_1 \cap z_2)}{\sum_i\mathbb{P}(o_3\mid c_1 \cap z_i)}\\
 			&=\frac{2}{3}.
 		\end{split}
 	\end{equation}
-	Since $\mathbb{P}(z_2|o_3 \cap c_1)>\mathbb{P}(z_1|o_3 \cap c_1)>\mathbb{P}(z_3|o_3 \cap c_1)$, door number $2$ is the optimal choise. Hence,answer "b)" is correct. The intuition behind the answer is the information the contestant has at the time of making the decision; initially, there is no a priori information and so $\mathbb{P}(z_1|o_3 \cap c_1)=\frac{1}{3}$. At this time, there is $\frac{2}{3}$ probability that the prize is behind doors $2,3$. When the gameshow host open door $3$, this probability converge on door $2$.
+	Since $\mathbb{P}(z_2\mid o_3 \cap c_1)>\mathbb{P}(z_1\mid o_3 \cap c_1)>\mathbb{P}(z_3\mid o_3 \cap c_1)$, door number $2$ is the optimal choise. Hence,answer "b)" is correct. The intuition behind the answer is the information the contestant has at the time of making the decision; initially, there is no a priori information and so $\mathbb{P}(z_1\mid o_3 \cap c_1)=\frac{1}{3}$. At this time, there is $\frac{2}{3}$ probability that the prize is behind doors $2,3$. When the gameshow host open door $3$, this probability converge on door $2$.
 \end{example}
 
 \begin{example}

@@ -22,14 +22,14 @@ where $\hat{w}^*(D)$ denotes the optimal parameter decision rule, obtained from 
 \label{chp:frequentist_regression}
 Regression involves the Robot constructing a model,
 \begin{equation}
-	f: \Omega_\Theta \times \Omega_X \to \Omega_Y,
+	f\colon \Omega_\Theta \times \Omega_X \to \Omega_Y,
 \end{equation}
 with associated parameters $\theta \in \Omega_\Theta\subseteq \Omega_W$, that estimates Nature's actions $y_{n+1}\in \Omega_Y$ based on observed data $x_{n+1}\in \Omega_X=\mathbb{R}$. The model $f$ acts as a proxy for the Robot in that it on behalf of the Robot estimates the action of Nature given an input. Hence, in providing an estimate, the model must make a choice, similar to the Robot and thus the Robot must pick a cost function for the model. In this study, the quadratic cost function from \dfref{def:quadratic_cost} will be considered to review the subject.
 
 
 Assuming the actions of Nature follow a normal distribution with the function $f$ as mean and an unknown precision $\xi \in \Omega_{W}$
 \begin{equation}
-	p(y_{n+1}|x_{n+1},w)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(\theta,x_{n+1})-y_{n+1})^2},
+	p(y_{n+1}\mid x_{n+1},w)=\sqrt{\frac{\xi}{2\pi}} e^{-\frac{\xi}{2}(f(\theta,x_{n+1})-y_{n+1})^2},
 	\label{freq:dist}
 \end{equation}
 where $w = \{\theta, \xi,\dots\}$ denotes the collection of fixed, unknown parameters. Under the quadratic cost function from \dfref{def:quadratic_cost}, the optimal decision rule is the conditional expectation of $Y_{n+1}$ given $(x_{n+1},w)$ (\thref{theorem:expectation_decision_rule}),
@@ -53,7 +53,7 @@ Let $\hat{w}^*(D)$ denote the optimal Frequentist estimator of the model paramet
 \begin{equation}
 	\begin{split}
 		U^*(x_{n+1}, \hat{w}^*(D)) &= \argmin_{U(\tilde{D})} \mathbb{E}[C(U(\tilde{D}), Y_{n+1}) \mid x_{n+1}, \hat{w}(D)] \\
-		&= \argmin_{U(\tilde{D})} \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}|x_{n+1}, \hat{w}(D)) \\
+		&= \argmin_{U(\tilde{D})} \sum_{y_{n+1}\in \Omega_Y}C(U(\tilde{D}),y_{n+1})p(y_{n+1}\mid x_{n+1}, \hat{w}(D)) \\
 		&= \argmin_{U(\tilde{D})} \Big(1 - f_{U(\tilde{D})}(\hat{\theta}^*(D), x_{n+1}) + (\psi-1)\delta_{u, \operatorname{reject}}\Big).
 	\end{split}
 	\label{freq:decision_classification}
@@ -109,11 +109,11 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 \newpage
 \begin{definition}[Fisher Information]
 	\label{def:fisher_information}
-	Take $D_y= \{y_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_y | D_x, w)$ denote the likelihood of observing Natures actions $D_y$ given observed data $D_x$ and $w$. The Fisher information\index{Fisher information} is defined as
+	Take $D_y= \{y_i\}_{i=1}^n$, $D_x= \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be an unknown parameter of the model. Let $p(D_y \mid  D_x, w)$ denote the likelihood of observing Natures actions $D_y$ given observed data $D_x$ and $w$. The Fisher information\index{Fisher information} is defined as
 	\begin{equation}
 		\begin{split}
-			\mathcal{I}(w) &\equiv \mathbb{E} \bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_y|D_x, w)\bigg)^2 \Bigg| D_x, w\bigg]\\
-			&= \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_y|D_x, w) \Bigg| D_x, w\bigg].
+			\mathcal{I}(w) &\equiv \mathbb{E} \bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_y\mid D_x, w)\bigg)^2 \, \Bigg| \,  D_x, w\bigg]\\
+			&= \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_y\mid D_x, w) \,\Bigg| \,  D_x, w\bigg].
 		\end{split}
 	\end{equation}
 \end{definition}
@@ -135,7 +135,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{align}
 	since $\int p(D_y \mid D_x, w) \mathrm{d}D_y = 1$. Therefore
 	\begin{equation}
-		\mathcal{I}(w) = \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w) \bigg| D_x, w\bigg].
+		\mathcal{I}(w) = \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w) \,\bigg|\,  D_x, w\bigg].
 	\end{equation}
 \end{proof}
 
@@ -143,19 +143,19 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\label{thm:fisher_sample}
 	Take $D_y= \{y_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be the parameters of Natures model. In case Natures actions are independent and identically distributed (IID)\index{IID} the likelihood factorizes as
 	\begin{equation}
-		p(D_y | D_x, w) = \prod_{i=1}^{n} p(y_i | x_i, w).
+		p(D_y \mid  D_x, w) = \prod_{i=1}^{n} p(y_i \mid  x_i, w).
 	\end{equation}
 	Then, the Fisher information of the full dataset is
 	\begin{equation}
 		\begin{split}
 			\mathcal{I}(w) 
-			&= \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(D_y | D_x, w)\Big)^2 \Bigg| D_x, w \Bigg]\\
+			&= \mathbb{E}\Bigg[\Big(\frac{\partial}{\partial w} \ln p(D_y \mid  D_x, w)\Big)^2 \,\Bigg|\,  D_x, w \Bigg]\\
 			&= \sum_{i=1}^{n} \mathcal{I}_i(w),
 		\end{split}
 	\end{equation}
 	where $\mathcal{I}_i(w)$ is the Fisher information of the $i$-th observation:
 	\begin{equation}
-		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Bigg(\frac{\partial}{\partial w} \ln p(y_i | x_i, w)\Bigg)^2 \Bigg| x_i, w\Bigg].
+		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Bigg(\frac{\partial}{\partial w} \ln p(y_i \mid  x_i, w)\Bigg)^2 \,\Bigg|\,  x_i, w\Bigg].
 	\end{equation}
 \end{theorem}
 
@@ -163,7 +163,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\label{def:MLE}
 	Take $D_y= \{y_i\}_{i=1}^n$ , $D_x = \{x_i\}_{i=1}^n$ and let $w \in \Omega_W$ be the parameters of Natures model. The Maximum Likelihood Estimator (MLE) decision rule \index{Maximum likelihood estimator} $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_y$ given $D_x$
 	\begin{equation}
-		\hat{w}_{\mathrm{MLE}}(D) \equiv \argmax_{w \in \Omega_W} p(D_y | D_x, w).
+		\hat{w}_{\mathrm{MLE}}(D) \equiv \argmax_{w \in \Omega_W} p(D_y \mid  D_x, w).
 	\end{equation}
 \end{definition}
 
@@ -183,8 +183,8 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	A decision rule $\hat{w}'$ is said to be minimax if it minimize the maximum\index{Minimax} expected cost, meaning
 	\begin{equation}
 		\begin{split}
-			\hat{w}' &\equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)|w]\\
-			& = \inf_{\hat{w}}\sup_{w\in \Omega_W}\int  C(\hat{w}(D),w) p(D|w) \mathrm{d}D.
+			\hat{w}' &\equiv \inf_{\hat{w}}\sup_{w\in \Omega_W}\mathbb{E}[C(\hat{w},w)\mid w]\\
+			& = \inf_{\hat{w}}\sup_{w\in \Omega_W}\int  C(\hat{w}(D),w) p(D\mid w) \mathrm{d}D.
 		\end{split}
 	\end{equation}
 \end{definition}
@@ -194,17 +194,17 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	The expectation of the quadratic cost function for the parameter estimate can be written
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}[C(\hat{w}, w)|w] &= \mathbb{E}[(\hat{w}-w)^2|w]\\ 
-			&= \mathbb{E}[(\hat{w}-\mathbb{E}[\hat{w}])^2|w]+(w-\mathbb{E}[\hat{w}])^2\\
-			&=\operatorname{Var}[\hat{w}|w]+\operatorname{Bias}[\hat{w}|w]^2\\
+			\mathbb{E}[C(\hat{w}, w)\mid w] &= \mathbb{E}[(\hat{w}-w)^2\mid w]\\ 
+			&= \mathbb{E}[(\hat{w}-\mathbb{E}[\hat{w}])^2\mid w]+(w-\mathbb{E}[\hat{w}])^2\\
+			&=\operatorname{Var}[\hat{w}\mid w]+\operatorname{Bias}[\hat{w}\mid w]^2\\
 		\end{split}
 		\label{eq:MSE}
 	\end{equation}
 	where the bias of the estimator of $\hat{w}$ is defined as follows
 	\begin{equation}
-		\operatorname{Bias}[\hat{w}|w]\equiv w-\mathbb{E}[\hat{w}].
+		\operatorname{Bias}[\hat{w}\mid w]\equiv w-\mathbb{E}[\hat{w}].
 	\end{equation}
-	If $\mathbb{E}[C(\hat{w}, w)|w] \to 0$ as $n \to \infty$, then $\hat{w}$ is a weakly consistent estimator of $w$, i.e., $\hat{w} \xrightarrow{p} w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, both cannot be minimized at the same time. 
+	If $\mathbb{E}[C(\hat{w}, w)\mid w] \to 0$ as $n \to \infty$, then $\hat{w}$ is a weakly consistent estimator of $w$, i.e., $\hat{w} \xrightarrow{p} w$. There can be different consistent estimates that converge towards $w$ at different speeds. It is desirable for an estimate to be consistent and with small (quadratic) cost, meaning that both the bias and variance of the estimator should be small. In many cases, however, both cannot be minimized at the same time. 
 \end{theorem}
 
 \begin{corollary}[MLE is Approximately Minimax for quadratic Loss]
@@ -214,22 +214,22 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\begin{proof}
 		From \thref{theorem:MSE}
 		\begin{equation}
-			\mathbb{E}[(\hat{w}-w)^2|w] = \operatorname{Var}[\hat{w}|w]+\operatorname{Bias}[\hat{w}|w]^2.
+			\mathbb{E}[(\hat{w}-w)^2\mid w] = \operatorname{Var}[\hat{w}\mid w]+\operatorname{Bias}[\hat{w}\mid w]^2.
 		\end{equation}
-		Under the regularity conditions where the MLE\index{Maximum likelihood} is unbiased and has asymptotically minimal variance, the bias term vanish, meaning $\operatorname{Bias}[\hat{w}_{\text{MLE}}|w] = 0$ and the variance term $\operatorname{Var}[\hat{w}_{\text{MLE}}|w]$ is minimized among a class of estimators. Thus, the expected quadratic cost for the MLE can be approximated by
+		Under the regularity conditions where the MLE\index{Maximum likelihood} is unbiased and has asymptotically minimal variance, the bias term vanish, meaning $\operatorname{Bias}[\hat{w}_{\text{MLE}}\mid w] = 0$ and the variance term $\operatorname{Var}[\hat{w}_{\text{MLE}}\mid w]$ is minimized among a class of estimators. Thus, the expected quadratic cost for the MLE can be approximated by
 		\begin{equation}
 			\begin{split}
-				\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2|w] &\approx \operatorname{Var}[\hat{w}_{\text{MLE}}|w]\\
+				\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2\mid w] &\approx \operatorname{Var}[\hat{w}_{\text{MLE}}\mid w]\\
 				&\approx \frac{\operatorname{tr}[\mathcal{I}(w)^{-1}]}{n},
 			\end{split}
 		\end{equation}
 		where \thref{thm:unbiased_mle} was used for the second line. The Cramer-Rao lower bound~\citep{Rao1973Linear} for variance states that 
 		\begin{equation}
-			\operatorname{Var}[\hat{w}|w]\geq \frac{\text{tr}[\mathcal{I}(w)^{-1}]}{n},
+			\operatorname{Var}[\hat{w}\mid w]\geq \frac{\text{tr}[\mathcal{I}(w)^{-1}]}{n},
 		\end{equation}
 		implying that the MLE decision rule acheives the smallest possible variance asymptotically and therefore that 
 		\begin{equation}
-			\sup_{w\in \Omega_W}\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2|w]\approx \inf_{\hat{w}} \sup_{w \in \Omega_W} \mathbb{E}[(\hat{w} - w)^2|w],
+			\sup_{w\in \Omega_W}\mathbb{E}[(\hat{w}_{\text{MLE}}-w)^2\mid w]\approx \inf_{\hat{w}} \sup_{w \in \Omega_W} \mathbb{E}[(\hat{w} - w)^2\mid w],
 		\end{equation}
 		meaning the MLE decision rule is approximately the minimax decision rule under quadractic cost.
 	\end{proof}
@@ -276,7 +276,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 
 \begin{remark}[Philosophical Tension within Frequentist Statistics]
 	\label{rm:philosophical_challenge}
-	The structural similarity between the loss function and the Hamiltonian, described in \rmref{rm:frequentist_regression}, extends naturally through the introduction of regularization and ensemble learning. Bayesian models inherently mitigate overfitting and promote model stability through prior distributions that constrain parameter uncertainty. In contrast, the Frequentist framework must introduce analogous mechanisms explicitly. For example, ridge regression corresponds directly to imposing a Gaussian prior on the regression coefficients, making it equivalent to Bayesian linear regression with a conjugate prior. Likewise, ensemble methods such as bagging approximate Bayesian model averaging by combining predictions from multiple fitted models, thereby capturing parameter uncertainty through resampling rather than explicit probabilistic inference.
+	The structural similarity between the loss function and the Hamiltonian, described in \rmref{rm:frequentist_regression}, extends naturally through the introduction of regularization and ensemble learning. Bayesian models inherently mitigate overfitting and promote model stability through prior distributions that constrain parameter uncertainty. In contrast, the Frequentist framework must introduce analogous mechanisms explicitly. For example, ridge regression\citep{Plaut1986} corresponds directly to imposing a Gaussian prior on the regression coefficients, making it equivalent to Bayesian linear regression with a conjugate prior. Likewise, ensemble methods such as bagging approximate Bayesian model averaging by combining predictions from multiple fitted models, thereby capturing parameter uncertainty through resampling rather than explicit probabilistic inference.
 	
 	In such cases, the Frequentist decision rule (\EQref{freq:decision}) increasingly resembles the Bayesian one (\EQref{eq:q3}), blurring the practical distinction between the two paradigms. This convergence exposes a philosophical tension within Frequentist statistics: in seeking to replicate the robustness of Bayesian methods, it implicitly incorporates subjective elements--through modeling choices, regularization assumptions, or ensemble constructions--thus challenging its foundational claim of objectivity (\dfref{def:objective_probability}). 
 	
@@ -303,7 +303,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with 
 		\begin{equation} 
 			\begin{split} 
-				\mathbb{E}[\hat{w}(D_y)|w] &= \int \hat{w}(D_y) p(D_y|w) \mathrm{d}D_y\\ & = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[Y_{i}|w]\\ & = w,\\ \operatorname{Var}[\hat{w}(D_y)|w] & =\int (\hat{w}(D_y)-\mathbb{E}[\hat{w}(D_y)|w])^2 p(D_y|w) \mathrm{d}D_y\\ &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[Y_{i}|w]\\ & = \frac{w(1-w)}{n},\\ \mathbb{E}[(\hat{w}(D_y)-w)^2|w] &= \operatorname{Var}[\hat{w}(D_y)|w]+(\mathbb{E}[\hat{w}(D_y)|w]-w)^2\\ & = \frac{w(1-w)}{n}. 
+				\mathbb{E}[\hat{w}(D_y)\mid w] &= \int \hat{w}(D_y) p(D_y\mid w) \mathrm{d}D_y\\ & = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[Y_{i}\mid w]\\ & = w,\\ \operatorname{Var}[\hat{w}(D_y)\mid w] & =\int (\hat{w}(D_y)-\mathbb{E}[\hat{w}(D_y)\mid w])^2 p(D_y\mid w) \mathrm{d}D_y\\ &= \frac{1}{n^2} \sum_{i=1}^n \operatorname{Var}[Y_{i}\mid w]\\ & = \frac{w(1-w)}{n},\\ \mathbb{E}[(\hat{w}(D_y)-w)^2\mid w] &= \operatorname{Var}[\hat{w}(D_y)\mid w]+(\mathbb{E}[\hat{w}(D_y)\mid w]-w)^2\\ & = \frac{w(1-w)}{n}. 
 			\end{split} 
 		\end{equation}
 		
@@ -314,7 +314,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with 
 		\begin{equation} 
 			\begin{split} 
-				\mathbb{E}[\hat{w}|w] &= 0.5,\\ \operatorname{Var}[\hat{w}|w] &= 0,\\ \mathbb{E}[(\hat{w}-w)^2|w] &= (0.5 - w)^2. 
+				\mathbb{E}[\hat{w}\mid w] &= 0.5,\\ \operatorname{Var}[\hat{w}\mid w] &= 0,\\ \mathbb{E}[(\hat{w}-w)^2\mid w] &= (0.5 - w)^2. 
 			\end{split} 
 			\end{equation}
 		
@@ -325,7 +325,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		with 
 		\begin{equation} 
 			\begin{split} 
-				\mathbb{E}[\hat{w}(D_y)|w] &= \mathbb{E}[Y_1|w]\\ & = w,\\ \operatorname{Var}[\hat{w}(D_y)|w] &= \operatorname{Var}[Y_1|w] +(\mathbb{E}[\hat{w}(D_y)|w]-w)^2\\ &= w(1-w),\\ \mathbb{E}[(\hat{w}(D_y)-w)^2|w] &= w(1-w).
+				\mathbb{E}[\hat{w}(D_y)\mid w] &= \mathbb{E}[Y_1\mid w]\\ & = w,\\ \operatorname{Var}[\hat{w}(D_y)\mid w] &= \operatorname{Var}[Y_1\mid w] +(\mathbb{E}[\hat{w}(D_y)\mid w]-w)^2\\ &= w(1-w),\\ \mathbb{E}[(\hat{w}(D_y)-w)^2\mid w] &= w(1-w).
 			\end{split} 
 		\end{equation}
 	\end{itemize}
@@ -337,13 +337,13 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	The likelihood function for \exref{ex:bernoulli_quad_cost} is
 	\begin{equation} 
 		\begin{split} 
-			p(D_y|D_x,w) & =p(D_y|w)\\ & = \prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}. 
+			p(D_y\mid D_x,w) & =p(D_y\mid w)\\ & = \prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}. 
 		\end{split} 
 	\end{equation} 
-	Let $\ell(w)\equiv -\ln p(D_y|D_x,w)$, then 
+	Let $\ell(w)\equiv -\ln p(D_y\mid D_x,w)$, then 
 	\begin{equation} 
 		\begin{split} 
-			\argmin_wl(w) & = \argmax_wp(D_y|w)\\ &= \argmax_w\ln \bigg(\prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}\bigg)\\ &=\argmin_w \bigg[ \ln(1-w)\sum_{i=1}^n(y_i-1)-\ln w\sum_{i=1}^ny_i\bigg] 
+			\argmin_wl(w) & = \argmax_wp(D_y\mid w)\\ &= \argmax_w\ln \bigg(\prod_{i=1}^nw^{y_i}(1-w)^{1-y_i}\bigg)\\ &=\argmin_w \bigg[ \ln(1-w)\sum_{i=1}^n(y_i-1)-\ln w\sum_{i=1}^ny_i\bigg] 
 		\end{split} 
 	\end{equation}  
 	Requiring
