@@ -113,7 +113,7 @@ where $\alpha_q,\beta_q$ are prior parameters and $\tilde{n}$ is the number of h
 	\end{split}
 	\label{p7}
 \end{equation}
-At this point the optimal decision rule (\EQref{eq:q1}) is fully specified and can be approximated by obtaining samples from $p(\theta,\xi,\lambda\mid D)$ via Hamiltonian Monte Carlo (HMC)~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012} (see \appref{app:HMC} for a review of HMC). The centerpiece in the HMC algorithm is the Hamiltonian defined as follows~\citep{Neal:1996,Neal2012}
+At this point the optimal decision rule (\EQref{eq:q1}) is fully specified and can be approximated by obtaining samples from $p(\theta,\xi,\lambda\mid D)$ via Hamiltonian Monte Carlo (HMC)~\citep{Hammersley1964,Duane:1987de,Neal:1996,Neal2012}. The centerpiece in the HMC algorithm is the Hamiltonian defined as follows~\citep{Neal:1996,Neal2012}
 \begin{equation}
 	H \equiv  \sum_{q=1}^{\tilde{n}}\sum_{l=1}^{n_q}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\xi,\lambda\mid D)+\operatorname{const},
 	\label{eqh}
@@ -157,7 +157,7 @@ denotes the $K$-dimensional probability simplex, so that for $x_i \in \Omega_X$ 
 	p(y_{n+1} \mid x_{n+1}, \theta) = f_{y_{n+1}}(\theta,x_{n+1}),
 	\label{f_dist2}
 \end{equation}
-where $f_{y_{n+1}}(\theta,x_{n+1})$ denotes the $y_{n+1}$-th component of $f(\theta,x_{n+1})$. In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\Omega_U=\Omega_Y\cup \{\operatorname{reject}\}$. To review this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function (\dfref{def:0_1_cost_function}), with the addition of a reject option at cost $\psi$. This means
+where $f_{y_{n+1}}(\theta,x_{n+1})$ denotes the $y_{n+1}$'th component of $f(\theta,x_{n+1})$. In this case, the Robot's action space is equal to Natures action space, with the possible addition of a reject option, $\Omega_U=\Omega_Y\cup \{\operatorname{reject}\}$. To review this subject the Robot will be considered to be penalized equally in case of a classification error, which corresponds to the $0-1$ cost function (\dfref{def:0_1_cost_function}), with the addition of a reject option at cost $\psi$. This means
 \begin{equation}
 	C(U(\tilde{D}),y_{n+1}) = 1- \delta_{U(\tilde{D}),y_{n+1}}+(\psi-1)\delta_{U(\tilde{D}),\operatorname{reject}}.
 \end{equation}
@@ -201,7 +201,7 @@ where $p(\theta\mid \lambda)p(\lambda)$ is given by \EQref{eq:prior}. Assuming t
 	\end{split}
 	\label{lik}
 \end{equation}
-At this point the optimal decision rule (\EQref{eq:expected_cost1}) is fully specified and can be approximated by HMC similarly to the regression case (see \appref{app:HMC} for a review of HMC). In this case, the model can be represented by the Hamiltonian 
+At this point the optimal decision rule (\EQref{eq:expected_cost1}) is fully specified and can be approximated by HMC similarly to the regression case. In this case, the model can be represented by the Hamiltonian 
 \begin{equation}
 	H \equiv  \sum_{q}\sum_{l}\frac{p_{l}^2}{2m_{l}}-\ln p(\theta,\lambda\mid D)+\operatorname{const}
 	\label{ham3}

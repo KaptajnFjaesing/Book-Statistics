@@ -563,7 +563,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{theorem}[Expectation of product of independent random variables]
 	\label{theorem:expectation_independent}
 	\index{Independent random variables}
-	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If the random variables are independent\index{Independen random variables} the expectation can be written
+	Let $X\colon \Omega \to \Omega_X$ and $Y\colon \Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If the random variables are independent\index{Independent random variables} the expectation can be written
 	\begin{equation}
 		\mathbb{E}_{X,Y}[XY]=\mathbb{E}_X[X]\mathbb{E}_Y[Y].
 	\end{equation}
@@ -602,7 +602,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		X\colon \Omega \to \Omega_X \quad \text{and}\quad Y\colon \Omega \to \Omega_Y
 	\end{equation}
-	 be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent\index{Independen random variables}, then their covariance is
+	 be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. If $X$ and $Y$ are independent\index{Independent random variables}, then their covariance is
 	\begin{equation}
 		\operatorname{Cov}_{X,Y}[X,Y] = 0.
 	\end{equation}
@@ -627,9 +627,9 @@ Probability theory is a foundational branch of mathematics that provides the for
 	Correlation and covariance are both measures of the relationship between two random variables\index{Random variable}. While covariance indicates the extent to which two variables change together, correlation provides a standardized measure of this relationship, taking into account the scales of the variables.
 \end{remark}
 
-\begin{definition}[Change of Variables for PDFs]
+\begin{definition}[Change of Variables]
 	\label{def:change_of_variables}
-	\index{Change of variables for PDFs}
+	\index{Change of variables}
 	Let
 	\begin{equation}
 		X\colon \Omega \to \Omega_X
@@ -646,7 +646,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		Y= g(X).
 	\end{equation}
-	Then $Y$ admits a PDF $p_Y$ with respect to the Lebesgue measure on $\Omega_Y = g(\Omega_X)$, given by~\cite{Sivia2006}
+	Then $Y$ admits a probability density function $p_Y$ with respect to the Lebesgue measure on $\Omega_Y = g(\Omega_X)$, given by~\cite{Sivia2006}
 	\begin{equation}
 		p_Y(y) = p_X\bigl(g^{-1}(y)\bigr), \left| \frac{d}{dy} g^{-1}(y) \right|, \quad y \in \Omega_Y.
 	\end{equation}
@@ -781,7 +781,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		X_1\colon\Omega \to \Omega_{X_1}, \dots, X_n\colon\Omega \to \Omega_{X_n}
 	\end{equation}
-	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent\index{Independen random variables}, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to
+	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent\index{Independent random variables}, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to
 	\begin{equation}
 		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\Big|_{X = \mathbb{E}_X[X]}\right)^2 \operatorname{Var}_{X_i}[X_i]
 		\label{eq:error_prop}
@@ -798,7 +798,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 
 \begin{example}
 	\index{Example: Error propagation}
-	A company produces square plates with dimensions characterized by two independent\index{Independen random variables} random variables\index{Normal distribution}\index{Random variable}
+	A company produces square plates with dimensions characterized by two independent\index{Independent random variables} random variables\index{Normal distribution}\index{Random variable}
 	\begin{equation}
 		X\sim \operatorname{Norm}(2m,(0.01m)^2), \quad Y\sim \operatorname{Norm}(3m,(0.02m)^2).
 	\end{equation} 
