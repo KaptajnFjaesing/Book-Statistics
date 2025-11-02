@@ -3,15 +3,13 @@
 _A Comprehensive Introduction to Bayesian and Frequentist Statistics_  
 
 ## Overview  
-**Book-Statistics** is a statistics book that provides a clear and thorough introduction to both **Bayesian** and **Frequentist** statistics, exploring how both frameworks can be derived from probability theory. 
-The book aims to bridge the gap between theoretical foundations and practical applications, making statistical inference accessible to students, researchers, and practitioners.  
+**Book-Statistics** offers a clear and rigorous introduction to both **Bayesian** and **Frequentist** statistics, showing how each framework emerges naturally from the foundations of probability theory. The book bridges the gap between theory and practice, providing readers with a unified understanding of statistical inference that is both conceptually sound and practically applicable. It is intended for students, researchers, and practitioners seeking a deeper grasp of modern statistical reasoning.
 
 ### Key Topics Covered  
 - Fundamentals of probability theory  
-- Bayesian inference and prior distributions  
-- Frequentist methods, hypothesis testing, and confidence intervals  
-- Comparing Bayesian and Frequentist approaches  
-- Applications in real-world statistical modeling  
+- Formal development of the Bayesian and Frequentist paradigms
+- Regression, classification, and parameter estimation in each framework
+- Comparative analysis of Bayesian and Frequentist methodologies
 
 ## Citation  
 If you would like to reference this book, you can use the following BibTeX entry:  
