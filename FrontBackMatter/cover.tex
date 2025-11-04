@@ -11,10 +11,10 @@
 
 
 % --- book sizes ---
-\newlength{\bookwidth}   \setlength{\bookwidth}{158mm}
-\newlength{\bookheight}  \setlength{\bookheight}{236mm}
-\newlength{\spinewidth}  \setlength{\spinewidth}{10.4mm} % <-- change X here
-\newlength{\bleed}       \setlength{\bleed}{17mm}
+\newlength{\bookwidth}   \setlength{\bookwidth}{155mm}
+\newlength{\bookheight}  \setlength{\bookheight}{220mm}
+\newlength{\spinewidth}  \setlength{\spinewidth}{6.4mm}
+\newlength{\bleed}       \setlength{\bleed}{5mm}
 
 \newlength{\totalwidth}  \setlength{\totalwidth}{\dimexpr 2\bookwidth+\spinewidth+2\bleed\relax}
 \newlength{\totalheight} \setlength{\totalheight}{\dimexpr \bookheight+2\bleed\relax}
@@ -27,7 +27,7 @@ margin=0pt
 ]{geometry}
 
 
-\pgfmathsetmacro{\frontcenterfactor}{((158 - 10)*0.5 + 10)/158} % The text should be centered at a box starting 1 cm from the left
+\pgfmathsetmacro{\frontcenterfactor}{((155 - 10)*0.5 + 10)/155} % The text should be centered at a box starting 1 cm from the left
 
 \begin{document}
 	\noindent % ensure nothing (not even an indent) appears before the picture
@@ -50,6 +50,9 @@ margin=0pt
 			%\draw[thick] (\bookwidth+\spinewidth,0) rectangle (2\bookwidth+\spinewidth,\bookheight);
 			 \fill[darkroyalblue, opacity=1] (\bookwidth+\spinewidth,0) rectangle (2\bookwidth+\spinewidth,\bookheight);
 			
+			\node[anchor=south east, inner sep=0pt]
+			at (\bookwidth - 10mm, 10mm)
+			{\includegraphics[width=40mm,height=20mm]{0220093121.png}};
 		\end{scope}
 		
 		% front image (fills front cover area)
@@ -59,19 +62,19 @@ margin=0pt
 		
 		% front title + author (tweak positions/sizes as needed)
 		\node[align=center,text width=\dimexpr\bookwidth-20mm\relax,
-		font=\fontsize{35}{32}\selectfont]
+		font=\fontsize{26}{32}\selectfont]
 		at (\dimexpr\bleed+\bookwidth+\spinewidth+\frontcenterfactor\bookwidth\relax,
 		\dimexpr\bleed+0.6\bookheight\relax)
 		{\textcolor{white}{INTRODUCTION\\ TO STATISTICS}};
 		
 		\node[align=center,text width=\dimexpr\bookwidth-20mm\relax,
-		font=\fontsize{22}{20}\selectfont]
+		font=\fontsize{18}{20}\selectfont]
 		at (\dimexpr\bleed+\bookwidth+\spinewidth+\frontcenterfactor\bookwidth\relax,
 		\dimexpr\bleed+0.48\bookheight\relax)
-		{\textcolor{white}{THEORY, METHOD AND \\APPLICATION}};
+		{\textcolor{white}{THEORY, METHODS AND \\APPLICATIONS}};
 		
 		\node[align=center,text width=\dimexpr\bookwidth-20mm\relax,
-		font=\fontsize{16}{20}\selectfont]
+		font=\fontsize{14}{20}\selectfont]
 		at (\dimexpr\bleed+\bookwidth+\spinewidth+\frontcenterfactor\bookwidth\relax,
 		\dimexpr\bleed+0.3\bookheight\relax)
 		{\textcolor{white}{JONAS PETERSEN}};
@@ -79,16 +82,14 @@ margin=0pt
 		% spine text (rotate -90 or 90 depending on the desired orientation)
 		\node[anchor=center,rotate=-90,transform shape,font=\fontsize{10}{16}\selectfont]
 		at (\dimexpr\bleed+\bookwidth+0.5\spinewidth\relax,
-		\dimexpr\bleed+0.9\bookheight\relax)
+		\dimexpr\bleed+0.88\bookheight\relax)
 		{\textcolor{white}{JONAS PETERSEN}};
 		
 		\node[anchor=center,rotate=-90,transform shape,font=\fontsize{10}{16}\selectfont]
 		at (\dimexpr\bleed+\bookwidth+0.5\spinewidth\relax,
-		\dimexpr\bleed+0.65\bookheight\relax)
+		\dimexpr\bleed+0.63\bookheight\relax)
 		{\textcolor{white}{INTRODUCTION TO STATISTICS}};
-		
-		
-		
+
 	\end{tikzpicture}
 
 \end{document}
