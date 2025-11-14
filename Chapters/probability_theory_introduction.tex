@@ -806,8 +806,8 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		\label{eq:var1}
 		\begin{split}
-			\operatorname{Var}_{X,Y}[XY]&=\mathbb{E}_{X,Y}[(XY)^2]-(\mathbb{E}_{X,Y}[XY])^2\\
-			&=(\operatorname{Var}_X[X]+\mathbb{E}_X[X]\bigg)\bigg(\operatorname{Var}_Y[Y]+\mathbb{E}_Y[Y])-\mathbb{E}_X[X]^2\mathbb{E}_Y[Y]^2\\
+			\operatorname{Var}_{X,Y}[XY]&=\mathbb{E}_{X,Y}[(XY)^2]-\mathbb{E}_{X,Y}[XY]^2\\
+			&=(\operatorname{Var}_X[X]+\mathbb{E}_X[X])(\operatorname{Var}_Y[Y]+\mathbb{E}_Y[Y])-\mathbb{E}_X[X]^2\mathbb{E}_Y[Y]^2\\
 			&=\mathbb{E}_Y[Y]^2\operatorname{Var}_X[X]+\mathbb{E}_X[X]^2\operatorname{Var}_Y[Y]+\operatorname{Var}_X[X]\operatorname{Var}_Y[Y]
 		\end{split}
 	\end{equation}
@@ -829,6 +829,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	
 \end{example}
 
+\newpage
 \begin{example}
 	Consider a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ describing two children with unknown sexes. Let
 	\begin{equation}

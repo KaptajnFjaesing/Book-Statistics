@@ -130,9 +130,9 @@ In case of a continuous action space, the cost function is typically picked from
 	The derivative of the cost function with respect to the decision rule can be approximated as follows
 	\begin{equation}
 		\begin{split}
-			\frac{dC}{dU} & = \frac{dC}{dz}\frac{dz}{dU}\\
+			\frac{\partial C}{\partial U} & = \frac{\partial C}{\partial z}\frac{\partial z}{\partial U}\\
 			& = \bigg(\frac{\alpha}{1+e^{-\beta z}}-\frac{1-\alpha}{1+e^{\beta z}}\\
-			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{dz}{dU}\\
+			&\qquad+\frac{\alpha\beta e^{-\beta z}z}{(1+e^{-\beta z})^2}+\frac{(1-\alpha)\beta e^{\beta z}z}{(1+e^{\beta z})^2}\bigg)\frac{\partial z}{\partial U}\\
 			&= \frac{\beta z e^{\beta z}-e^{\beta z}-1}{(1+e^{\beta z})^2}+\alpha+\mathcal{O}(\alpha^2)\\
 			&\approx  \alpha -\frac{1}{(1+e^{\beta z})^2}
 		\end{split}
@@ -140,7 +140,7 @@ In case of a continuous action space, the cost function is typically picked from
 	leading to the derivative of the expected cost
 	\begin{equation}
 		\begin{split}
-			\frac{d\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]}{dU(\tilde{D})} &\approx \int \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}\bigg)p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}\\
+			\frac{\partial\mathbb{E}[C(U(\tilde{D}), Y_{n+1})\mid \tilde{D}]}{\partial U(\tilde{D})} &\approx \int \bigg(\alpha -\frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}\bigg)p(y_{n+1}\mid \tilde{D}) \mathrm{d}y_{n+1}\\
 			& = \alpha -\int \frac{1}{(1+e^{\beta z(\tilde{D},y_{n+1})})^2}p(y_{n+1}\mid \tilde{D}) \mathrm{d} y_{n+1}.\\
 		\end{split}
 	\end{equation}
