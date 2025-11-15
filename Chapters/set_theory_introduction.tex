@@ -29,7 +29,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	Given an object $o$ and a set $A$, the notation $o \in A$ denotes that $o$ is an element (or member) of $A$. If $o \notin A$, then $o$ is not an element of $A$.
 \end{definition}
 
-\begin{definition}[Cartesian Product]
+\begin{definition}[Cartesian product]
 	\label{def:cartesian_product}
 	The Cartesian product of sets $A$ and $B$, denoted by $A \times B$, is defined as the set containing all ordered pairs $(a, b)$, where $a$ is in $A$ and $b$ is in $B$.
 \end{definition}
@@ -53,7 +53,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	By this definition, a set is always a subset of itself.
 \end{definition}
 
-\begin{definition}[Proper Subset]
+\begin{definition}[Proper subset]
 	\label{def:proper_subset}
 	The set $A$ is called a proper subset of the set $B$, denoted $A \subset B$, if $A \subseteq B$ and $A \neq B$. This means that $A$ is a subset of $B$ but $A$ is not equal to $B$; there is at least one element in $B$ that is not in $A$.
 	\begin{figure}[H]
@@ -73,11 +73,11 @@ Set theory is a foundational branch of mathematics that provides the language an
 	Suppose $A = \{\twemoji{banana}, \twemoji{apple}, \twemoji{eggplant}\}$, then $\{\twemoji{banana}, \twemoji{apple}\}$ and $\{\twemoji{apple}\}$ are proper subsets of $A$, meaning $\{\twemoji{banana}, \twemoji{apple}\},\{\twemoji{apple}\}\subset  A$. $\{\twemoji{banana}, \twemoji{carrot}\}$, on the other hand, is not a subset of $A$, meaning $\{\twemoji{banana}, \twemoji{carrot}\}\not\subset  A$.
 \end{example}
 
-\begin{definition}[Empty Set]
+\begin{definition}[Empty set]
 	The empty set\index{Empty set}, denoted by $\emptyset$ or $\{\}$, is the set that contains no elements.
 \end{definition}
 
-\begin{definition}[Power Set]
+\begin{definition}[Power set]
 	\label{def:power_set}
 	The power set\index{Power set} of a set $A$, denoted by $2^A$, is defined as the set containing all possible subsets of $A$, including $A$ itself and the empty set.
 \end{definition}
@@ -92,14 +92,9 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{equation}
 \end{example}
 
-\begin{definition}[Universal Set]
+\begin{definition}[Universal set]
 	\label{def:universal_set}
 	The universal set\index{Universal set}, denoted by $\Omega$, is the set that contains all the objects or elements under consideration in a particular discussion or problem. It is the largest set in the context of a given study.
-\end{definition}
-
-\begin{definition}[Closure]
-	\label{def:closure}
-	The set $A$ is said to be closed under a certain operation if, for every pair of elements $x,y\in A$, the result of applying the operation to $x$ $y$ is also in $A$.
 \end{definition}
 
 \begin{definition}[Closure]
@@ -109,14 +104,13 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{equation}
 \end{definition}
 
-\newpage
 \begin{example}
-	Let $\mathcal{E} = \{ 2k \mid k \in \mathbb{Z} \}$ denote the set of even integers.
+	Let $\mathcal{E} = \{ 2k \colon k \in \mathbb{Z} \}$ denote the set of even integers.
 	Then $\mathcal{E}$ is closed under addition, since for any $x, y \in \mathcal{E}$,
 	\begin{equation}
 		x + y \in \mathcal{E}.
 	\end{equation}
-	In contrast, the set of odd integers $\mathbb{O} = \{ 2k + 1 \mid k \in \mathbb{Z} \}$ is not closed under addition, because $x + y$ is even when $x, y \in \mathbb{O}$.
+	In contrast, the set of odd integers $\mathbb{O} = \{ 2k + 1 \colon k \in \mathbb{Z} \}$ is not closed under addition, because $x + y$ is even when $x, y \in \mathbb{O}$.
 \end{example}
 
 \begin{definition}[Union]
@@ -129,7 +123,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{figure}
 \end{definition}
 
-\begin{definition}[Finite and Infinite Unions]
+\begin{definition}[Finite and infinite unions]
 	For a collection of sets $\{A_i\}$, the union is denoted by $\bigcup_{i} A_i$ and is defined as the set containing all elements that are in at least one of the sets $A_i$.
 \end{definition}
 
@@ -143,7 +137,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{figure}
 \end{definition}
 
-\begin{definition}[Finite and Infinite Intersections]
+\begin{definition}[Finite and infinite intersections]
 	For a collection of sets $\{A_i\}$, the intersection is denoted by $\bigcap_{i} A_i$ and is defined as the set containing all elements that are common to all sets $A_i$.
 \end{definition}
 
@@ -180,7 +174,7 @@ Set theory is a foundational branch of mathematics that provides the language an
 	\end{figure}
 \end{definition}
 
-\begin{definition}[Symmetric Difference]
+\begin{definition}[Symmetric difference]
 	The symmetric difference of sets $A$ and $B$, denoted by $A \Delta B$, is defined as the set containing all elements that are in either $A$ or $B$ but not in both, meaning $A \Delta B = (A \cap B)^c$. \figref{fig:set_complementation} shows the symmetric difference between sets $A$ and $B$.
 \end{definition}
 

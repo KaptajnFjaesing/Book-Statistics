@@ -61,7 +61,7 @@ Let $\hat{w}^*(D)$ denote the optimal Frequentist estimator of the model paramet
 From \EQref{freq:decision_classification}, it follows that within the Frequentist paradigm, classification reduces to a problem of parameter estimation.
 
 
-\begin{remark}[Bayesian versus Frequentist Regression and Classification]
+\begin{remark}[Bayesian versus Frequentist regression and classification]
 	Contrasting \EQref{freq:decision} and \EQref{eq:q3} for regression and \EQref{freq:decision_classification} and \EQref{eq:expected_cost1} for classification, the mathematical difference in relation to prediction between the two paradigms can be written as shown in Table \ref{tab:comare}.
 	\begin{table}[h!]
 		\centering
@@ -107,7 +107,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{itemize}
 \end{example}
 
-\begin{definition}[Fisher Information]
+\begin{definition}[Fisher information]
 	\label{def:fisher_information}
 	Let $D_y = \{y_i\}_{i=1}^n$ denote Nature’s actions, $D_x = \{x_i\}_{i=1}^n$ the corresponding observations, and let $w \in \Omega_W$ be an unknown parameter of the model.  
 	Let $p(D_y \mid D_x, w)$ denote the likelihood\index{Likelihood} of observing $D_y$ given $D_x$ and $w$.  
@@ -143,7 +143,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 \end{proof}
 
-\begin{theorem}[Fisher Information for Independent Observations]
+\begin{theorem}[Fisher information for independent observations]
 	\label{thm:fisher_sample}
 	Let $D_y = \{y_i\}_{i=1}^n$ denote Nature’s actions and $D_x = \{x_i\}_{i=1}^n$ the corresponding observations, and let $w \in \Omega_W$ be the parameters of Nature’s model. If the data are independently and identically distributed (IID)\index{IID}, the likelihood\index{Likelihood} factorizes as
 	\begin{equation}
@@ -164,7 +164,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 \end{theorem}
 
 \newpage
-\begin{definition}[Maximum Likelihood Estimator (MLE) Decision Rule]
+\begin{definition}[Maximum likelihood estimator (MLE) decision rule]
 	\label{def:MLE}
 	Let $D_y = \{y_i\}_{i=1}^n$ denote Nature’s actions, $D_x = \{x_i\}_{i=1}^n$ the corresponding observations, and let $w \in \Omega_W$ be the parameters of Nature’s model.  
 	The Maximum Likelihood Estimator (MLE)\index{Maximum likelihood estimator} decision rule $\hat{w}_{\mathrm{MLE}}$ is the value of $w$ that maximizes the likelihood of observing $D_y$ given $D_x$:
@@ -173,7 +173,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 \end{definition}
 
-\begin{theorem}[Asymptotic Sampling Distribution of the MLE]
+\begin{theorem}[Asymptotic sampling distribution of the MLE]
 	\label{thm:unbiased_mle}
 	Let $\hat{w}_{\mathrm{MLE}}(D)$ denote the Maximum Likelihood Estimator (MLE)\index{Maximum likelihood} of the fixed-but-unknown parameter $w$.  
 	Under standard regularity conditions, the sampling distribution of $\hat{w}_{\mathrm{MLE}}$ satisfies
@@ -184,7 +184,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	That is, the sampling distribution of the MLE becomes approximately normal, centered at the true parameter $w$ with variance given by the inverse Fisher information.
 \end{theorem}
 
-\begin{definition}[Minimax Decision Rule]
+\begin{definition}[Minimax decision rule]
 	\label{def:minimax}
 	A decision rule $\hat{w}'$ is said to be minimax if it minimizes the maximum\index{Minimax} expected cost, that is,
 	\begin{equation}
@@ -195,7 +195,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 \end{definition}
 
-\begin{theorem}[Mean Squared Error (MSE)]
+\begin{theorem}[Mean squared error (MSE)]
 	\label{theorem:MSE}
 	The expectation of the quadratic cost function for a parameter estimate can be written as
 	\begin{equation}
@@ -216,7 +216,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	In practice, however, these two quantities often cannot be minimized simultaneously.
 \end{theorem}
 
-\begin{corollary}[MLE is Approximately Minimax for Quadratic Loss]
+\begin{corollary}[MLE is approximately minimax for quadratic loss]
 	\label{cor:MLE_minimax}
 	Under standard regularity conditions, the Maximum Likelihood Estimator (MLE)\index{Maximum likelihood} $\hat{w}_{\text{MLE}}$ is approximately minimax for the quadratic cost function, meaning it approximately minimizes the maximum expected cost\index{Minimax}.
 	\begin{proof}
@@ -246,16 +246,13 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{proof}
 \end{corollary}
 
-
-
-
-\begin{remark}[Over/Under-fitting]
+\begin{remark}[Over/under-fitting]
 	The bias-variance decomposition (\thref{theorem:MSE}) is a concept relevant to Frequentist statistics, where a single point estimate of the parameters is used.\index{Bias-variance tradeoff} This decomposition illustrates the tradeoff between underfitting and overfitting\index{Overfitting}\index{Underfitting}: high bias corresponds to underfitting, while high variance corresponds to overfitting. \newline
 	
 	In Bayesian statistics, predictions are obtained by integrating over the posterior distribution of parameters, rather than relying on a single point estimate. This integration inherently regularizes the model, mitigating overfitting and underfitting.
 \end{remark}
 
-\begin{remark}[Frequentist Regression]
+\begin{remark}[Frequentist regression]
 	\label{rm:frequentist_regression}
 	According to \EQref{freq:decision}, the optimal decision rule for the Robot in the Frequentist regression setting depends on the observed data $x_{n+1}$ and on the optimal decision rule for parameter estimation, $\hat{w}^*(D)$. As defined in \dfref{def:minimax}, the optimal parameter decision rule under the quadratic cost of \EQref{freq:decision} coincides, according to \corref{cor:MLE_minimax}, approximately with the maximum likelihood estimate of \dfref{def:MLE}.
 	
@@ -288,7 +285,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 \end{remark}
 
-\begin{remark}[Philosophical Tension within Frequentist Statistics]
+\begin{remark}[Philosophical tension within Frequentist statistics]
 	\label{rm:philosophical_challenge}
 	The structural similarity between the loss function and the Hamiltonian, described in \rmref{rm:frequentist_regression}, extends naturally through the introduction of regularization and ensemble learning. Bayesian models inherently mitigate overfitting and promote model stability through prior distributions that constrain parameter uncertainty. In contrast, the Frequentist framework must introduce analogous mechanisms explicitly. For example, ridge regression\citep{Plaut1986} corresponds directly to imposing a Gaussian prior on the regression coefficients, making it equivalent to Bayesian linear regression with a conjugate prior. Likewise, ensemble methods such as bagging approximate Bayesian model averaging by combining predictions from multiple fitted models, thereby capturing parameter uncertainty through resampling rather than explicit probabilistic inference.
 	
@@ -343,7 +340,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 			\end{split} 
 		\end{equation}
 	\end{itemize}
-	The arithmetic mean minimizes the quadratic cost across all $w$, whereas the constant estimator may perform better only for particular values of $w$. The variance of the first-observation estimator does not decrease with sample size $n$, making it suboptimal as $n$ increases.
+	The arithmetic mean minimizes the quadratic cost across all $w$, whereas the constant estimator may perform better only for particular values of $w$. The variance of the first-observation estimator does not decrease with sample size $n$, making it sub-optimal as $n$ increases.
 \end{example}
 
 \begin{example}
