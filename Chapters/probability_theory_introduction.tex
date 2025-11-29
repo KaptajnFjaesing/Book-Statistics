@@ -583,6 +583,42 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\end{equation}
 \end{proof}
 
+
+\begin{theorem}[Law of total variance]
+	\label{theorem:total_variance}
+	\index{Law of total variance}
+	Let\index{Variance}
+	\begin{equation}
+		X\colon \Omega \to \Omega_X,\qquad Y\colon \Omega \to \Omega_Y
+	\end{equation}
+	be random variables from the probability space $(\Omega,\mathcal{F},\mathbb{P})$ to measurable spaces $(\Omega_X,\mathcal{F}_X)$ and $(\Omega_Y,\mathcal{F}_Y)$, respectively. Then
+	\begin{equation}
+		\operatorname{Var}_X[X] = \mathbb{E}_Y[\operatorname{Var}_{X\mid Y}[X\mid Y]] + \operatorname{Var}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]].
+	\end{equation}
+\end{theorem}
+
+\begin{proof}
+	By \dfref{def:variance} and \thref{theorem:total_expectation}
+	\begin{equation}
+		\begin{split}
+			\operatorname{Var}_X[X] &= \mathbb{E}_X[X^2] - \mathbb{E}_X[X]^2\\
+			&= \mathbb{E}_Y\big[\mathbb{E}_{X\mid Y}[X^2\mid Y]\big] - \mathbb{E}_Y\big[\mathbb{E}_{X\mid Y}[X\mid Y]\big]^2
+		\end{split}
+	\end{equation}
+	where by \dfref{def:variance}\index{Variance}
+	\begin{equation}
+		\mathbb{E}_{X\mid Y}[X^2\mid Y] = \operatorname{Var}_{X\mid Y}[X\mid Y] + \mathbb{E}_{X\mid Y}[X\mid Y]^2
+	\end{equation}
+	meaning
+	\begin{equation}
+		\begin{split}
+			\operatorname{Var}_X[X]
+			&= \mathbb{E}_Y[\operatorname{Var}_{X\mid Y}[X\mid Y]] + \mathbb{E}_Y[(\mathbb{E}_{X\mid Y}[X\mid Y])^2] - \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]]^2\\
+			& =\mathbb{E}_Y[\operatorname{Var}_{X\mid Y}[X\mid Y]] + \operatorname{Var}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]].
+		\end{split}
+	\end{equation}
+\end{proof}
+
 \begin{definition}[Covariance]
 	\label{def:covariance}
 	\index{Covariance}
