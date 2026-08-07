@@ -541,7 +541,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 			\mathbb{E}_X[X] 
 			&= \int_{\Omega_X} x \mathrm{d}\mathbb{P}_X(x)\\
 			&= \int_{\Omega_X}\int_{\Omega_Y} x \mathrm{d}\mathbb{P}_{X,Y}(x,y)\\
-			&= \int_{\Omega_Y}\int_{\Omega_X} x \mathrm{d}\mathbb{P}_{X\mid Y=y}(x)\mathrm{d}\mathbb{P}_Y(y)\\
+			&= \int_{\Omega_Y}\int_{\Omega_X} x \mathrm{d}\mathbb{P}_{X\mid Y}(x)\mathrm{d}\mathbb{P}_Y(y)\\
 			&= \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]].
 		\end{split}
 	\end{equation}
@@ -613,7 +613,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}_X[X]
-			&= \mathbb{E}_Y[\operatorname{Var}_{X\mid Y}[X\mid Y]] + \mathbb{E}_Y[(\mathbb{E}_{X\mid Y}[X\mid Y])^2] - \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]]^2\\
+			&= \mathbb{E}_Y[\operatorname{Var}_{X\mid Y}[X\mid Y]] + \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]^2] - \mathbb{E}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]]^2\\
 			& =\mathbb{E}_Y[\operatorname{Var}_{X\mid Y}[X\mid Y]] + \operatorname{Var}_Y[\mathbb{E}_{X\mid Y}[X\mid Y]].
 		\end{split}
 	\end{equation}
@@ -689,7 +689,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 \newpage
 \begin{example}
 	\index{Example: Variance of a sum}
-	Let $X\colon \Omega \to \Omega_X$ and $Y\colon\Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Using \dfref{def:variance} and \dfref{def:covariance}, the variance\index{Variance} of a sum can be written
+	Let $X\colon \Omega \to \Omega_X$ and $Y\colon\Omega \to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$. Using \dfref{def:variance} and \dfref{def:covariance}, the variance\index{Variance} of $X\pm Y$ can be written
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}_{X,Y}[X\pm Y] &= \mathbb{E}_{X,Y}[(X\pm Y-\mathbb{E}_{X,Y}[X \pm Y])^2]\\
@@ -756,56 +756,129 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\begin{equation}
 		X_1\colon\Omega \to \Omega_{X_1}, \dots, X_n\colon\Omega \to \Omega_{X_n}
 	\end{equation}
-	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$, and let
+	be continuous random variables defined on a probability space
+	$(\Omega,\mathcal{F},\mathbb{P})$, and let
 	\begin{equation}
-		g\colon\Omega_{X_1} \times \dots \times \Omega_{X_n} \to \mathbb{R}
+		g\colon
+		\Omega_{X_1}\times\cdots\times\Omega_{X_n}
+		\to\mathbb{R}
 	\end{equation}
-	be a differentiable function of these variables. Denote for shorthand
+	be a differentiable function. Denote for shorthand
 	\begin{equation}
-		X = (X_1, \dots, X_n)
+		X=(X_1,\dots,X_n),
 	\end{equation}
-	and
+	and let
 	\begin{equation}
-		\mathbb{E}_X[X] = (\mathbb{E}_{X_1}[X_1], \dots, \mathbb{E}_{X_n}[X_n]).
+		x=(x_1,\dots,x_n)
+		\in
+		\Omega_{X_1}\times\cdots\times\Omega_{X_n}
 	\end{equation}
-	Then the variance\index{Variance} of $g(X)$, which quantifies the uncertainty in $g$ due to the uncertainties in $X_1, \dots, X_n$, satisfies the first-order approximation
+	be an arbitrary point. Then the variance of $g(X)$ satisfies the first-order approximation
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}_X[g(X)] &= \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
-			\\&\quad+ \sum_{i \neq j} \frac{\partial g(X)}{\partial X_i}\frac{\partial g(X)}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
-			&\quad+ \mathcal{O}(\|X - \mathbb{E}_X[X]\|^3).
+			\operatorname{Var}_X[g(X)]
+			&=
+			\sum_{i=1}^n
+			\left(
+			\frac{\partial g(X)}{\partial X_i}
+			\bigg|_{X=x}
+			\right)^2
+			\operatorname{Var}_{X_i}[X_i]
+			\\
+			&\quad+
+			\sum_{i\neq j}
+			\frac{\partial g(X)}{\partial X_i}
+			\frac{\partial g(X)}{\partial X_j}
+			\bigg|_{X=x}
+			\operatorname{Cov}_{X_i,X_j}[X_i,X_j]
+			\\
+			&\quad+
+			\mathcal{O}(\|X-x\|^3).
 		\end{split}
-		\label{eq:var_approx}
 	\end{equation}
 \end{theorem}
 
 \begin{proof}
-	$g(X)$ can be written as a Taylor expansion\index{Taylor expansion} around $\mathbb{E}_X[X]$ as follows
+	The Taylor expansion of $g(X)$ around $x$ is
 	\begin{equation}
 		\begin{split}
-			g(X) = &g(\mathbb{E}_X[X]) + \sum_{i=1}^n  \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]} (X_i - \mathbb{E}_{X_i}[X_i])\\
-			& + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2).
+			g(X)
+			&=
+			g(x)
+			+
+			\sum_{i=1}^n
+			\frac{\partial g(X)}{\partial X_i}
+			\bigg|_{X=x}
+			(X_i-x_i)+
+			\mathcal{O}(\|X-x\|^2).
 		\end{split}
-		\label{e1}
 	\end{equation}
 	Consequently
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}_X[g(X)] &= g(\mathbb{E}_X[X])+ \sum_{i=1}^n \frac{\partial g(X)}{\partial X_i} \bigg|_{X = \mathbb{E}_X[X]}\, \cancelto{0}{\mathbb{E}_{X_i}[X_i - \mathbb{E}_{X_i}[X_i]]}\\
-			&\quad  + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
-			& = g(\mathbb{E}_X[X]) + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\\
+			\mathbb{E}_X[g(X)]
+			&=
+			g(x)
+			+
+			\sum_{i=1}^n
+			\frac{\partial g(X)}{\partial X_i}
+			\bigg|_{X=x}
+			(\mathbb{E}_{X_i}[X_i]-x_i)+
+			\mathcal{O}(\|X-x\|^2).
 		\end{split}
-		\label{e2}
 	\end{equation}
-	meaning the variance\index{Variance} of $g$ can be approximated as follows
+	Subtracting,
 	\begin{equation}
 		\begin{split}
-			\operatorname{Var}_X[g(X)] &= \mathbb{E}_X\big[(g(X) - \mathbb{E}_X[g(X)])^2\big] \\
-			&= \mathbb{E}_X\bigg[\bigg( \sum_{i=1}^n (X_i - \mathbb{E}_{X_i}[X_i]) \frac{\partial g}{\partial X_i}\bigg|_{X=\mathbb{E}_X[X]}\\
-			&\qquad\qquad + \mathcal{O}(\|X - \mathbb{E}_X[X]\|^2)\bigg)^2\bigg] \\
-			&= \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\bigg|_{X = \mathbb{E}_X[X]}\right)^{\!2} \operatorname{Var}_{X_i}[X_i]
-			\\&\quad+ \sum_{i \neq j} \frac{\partial g(X)}{\partial X_i}\frac{\partial g(X)}{\partial X_j}\bigg|_{X = \mathbb{E}_X[X]} \operatorname{Cov}_{X_i,X_j}[X_i, X_j]\\
-			&\quad+ \mathcal{O}(\|X - \mathbb{E}_X[X]\|^3).
+			g(X)-\mathbb{E}_X[g(X)]
+			&=
+			\sum_{i=1}^n
+			\frac{\partial g(X)}{\partial X_i}
+			\bigg|_{X=x}
+			(X_i-\mathbb{E}_{X_i}[X_i])+
+			\mathcal{O}(\|X-x\|^2).
+		\end{split}
+	\end{equation}
+	Therefore,
+	\begin{equation}
+		\begin{split}
+			\operatorname{Var}_X[g(X)]
+			&=
+			\mathbb{E}_X
+			\bigg[\bigg(
+			g(X)-\mathbb{E}_X[g(X)]
+			\bigg)^2
+			\bigg]\\
+			&=
+			\mathbb{E}_X
+			\!\left[
+			\left(
+			\sum_{i=1}^n
+			(X_i-\mathbb{E}_{X_i}[X_i])
+			\frac{\partial g(X)}{\partial X_i}
+			\bigg|_{X=x}
+			+
+			\mathcal{O}(\|X-x\|^2)
+			\right)^2
+			\right]
+			\\
+			&=
+			\sum_{i=1}^n
+			\left(
+			\frac{\partial g(X)}{\partial X_i}
+			\bigg|_{X=x}
+			\right)^2
+			\operatorname{Var}_{X_i}[X_i]
+			\\
+			&\quad+
+			\sum_{i\neq j}
+			\frac{\partial g(X)}{\partial X_i}
+			\frac{\partial g(X)}{\partial X_j}
+			\bigg|_{X=x}
+			\operatorname{Cov}_{X_i,X_j}[X_i,X_j]
+			\\
+			&\quad+
+			\mathcal{O}(\|X-x\|^3).
 		\end{split}
 	\end{equation}
 \end{proof}
@@ -818,16 +891,8 @@ Probability theory is a foundational branch of mathematics that provides the for
 	\end{equation}
 	be continuous random variables\index{Random variable} defined on a probability space\index{Probability space} $(\Omega, \mathcal{F}, \mathbb{P})$.	If the random variables $X_1, \dots, X_n$ are independent\index{Independent random variables}, then according to \thref{theorem:covariance_of_independent_variables} $\mathrm{Cov}_{X_i,X_j}[X_i, X_j] = 0$ $\forall i \neq j$. In this case, \thref{theorem:error_propagation} simplifies to\index{Variance}
 	\begin{equation}
-		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\Big|_{X = \mathbb{E}_X[X]}\right)^2 \operatorname{Var}_{X_i}[X_i]
+		\operatorname{Var}_{X}[g(X)] \approx \sum_{i=1}^n \left(\frac{\partial g(X)}{\partial X_i}\Big|_{X = x}\right)^2 \operatorname{Var}_{X_i}[X_i].
 		\label{eq:error_prop}
-	\end{equation}
-	where 
-	\begin{equation}
-		X = (X_1, \dots, X_n)
-	\end{equation}
-	and
-	\begin{equation}
-		\mathbb{E}_X[X] = (\mathbb{E}_{X_1}[X_1], \dots, \mathbb{E}_{X_n}[X_n]).
 	\end{equation}
 \end{remark}
 
@@ -1114,7 +1179,7 @@ Probability theory is a foundational branch of mathematics that provides the for
 			& = 2\pm 2\operatorname{Corr}_{X,Y}[X,Y].
 		\end{split}
 	\end{equation}
-	 From \EQref{eq:corr_deriv} the result follows
+	Meaning
 	\begin{equation}
 		-1\leq \operatorname{Corr}_{X,Y}[X,Y]\leq 1.
 	\end{equation}	
