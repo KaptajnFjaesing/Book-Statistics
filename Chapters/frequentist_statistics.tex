@@ -107,41 +107,87 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{itemize}
 \end{example}
 
-\begin{definition}[Fisher information]
-	\label{def:fisher_information}
+\begin{definition}[Fisher information]\label{def:fisher_information}
 	Let $D_y = \{y_i\}_{i=1}^n$ denote Nature’s actions, $D_x = \{x_i\}_{i=1}^n$ the corresponding observations, and let $w \in \Omega_W$ be an unknown parameter of the model.  
 	Let $p(D_y \mid D_x, w)$ denote the likelihood\index{Likelihood} of observing $D_y$ given $D_x$ and $w$.  
 	The Fisher information\index{Fisher information} is defined as
 	\begin{equation}
-		\begin{split}
 			\mathcal{I}(w)
-			&\equiv \mathbb{E}\bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w)\bigg)^2 \,\Bigg|\, D_x, w\bigg] \\
-			&= \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w) \,\Bigg|\, D_x, w\bigg].
-		\end{split}
+			\equiv \mathbb{E}\bigg[\bigg(\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w)\bigg)^2 \Bigg|  D_x, w\bigg] 
 	\end{equation}
 \end{definition}
 
 
-\begin{proof}
-	In general
+\begin{theorem}[Fisher information as the variance]
+	\label{theorem:fisher_information_variance}
+	Under the assumptions of \dfref{def:fisher_information}
 	\begin{equation}
-		\mathbb{E}\bigg[\bigg(\frac{\partial}{\partial w} \ln p\bigg)^2\bigg] 
-		= \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p\bigg] + 
-		\bigg(\mathbb{E}\bigg[\frac{\partial}{\partial w} \ln p\bigg]\bigg)^2.
+		\mathcal{I}(w \mid D_x)
+		=
+		\operatorname{Var}\left[
+		\frac{\partial}{\partial w}
+		\ln p(D_y \mid D_x,w)
+		\,\middle|\,D_x,w
+		\right].
 	\end{equation}
-	Now
-	\begin{align}
-		\mathbb{E}\bigg[\frac{\partial}{\partial w} \ln p\bigg] 
-		&= \int \bigg(\frac{\partial}{\partial w} \ln p\bigg)  p \mathrm{d}D_y \\
-		&= \int \frac{\partial}{\partial w} p \mathrm{d}D_y\\
-		&= \frac{\partial}{\partial w} \int  p \mathrm{d}D_y \\
-		&= 0,
-	\end{align}
-	since $\int p(D_y \mid D_x, w) \mathrm{d}D_y = 1$. Therefore
+\end{theorem}
+
+
+\begin{proof}
+	By the definition of variance,
 	\begin{equation}
-		\mathcal{I}(w) = \operatorname{Var}\bigg[\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w) \,\bigg|\,  D_x, w\bigg].
+			\mathbb{E}\left[
+			\left(
+			\frac{\partial}{\partial w}
+			\ln p
+			\right)^2 \,\Bigg|\, D_x,w
+			\right]
+			=
+			\operatorname{Var}\left[
+			\frac{\partial}{\partial w}
+			\ln p \,\Bigg|\, D_x,w
+			\right]+
+			\mathbb{E}\left[
+			\frac{\partial}{\partial w}
+			\ln p \,\Bigg|\, D_x,w
+			\right]^2,
+	\end{equation}
+	where
+	\begin{align}
+		\mathbb{E}\left[\frac{\partial}{\partial w}\ln p \mid D_x,w\right]
+		&=
+		\int
+		\frac{\partial}{\partial w}
+		p\ln p
+		 \mathrm{d}D_y
+		\\
+		&=
+		\int
+		\frac{\partial}{\partial w}
+		p
+		\mathrm{d}D_y
+		\\
+		&=
+		\frac{\partial}{\partial w}
+		\int
+		p
+		\mathrm{d}D_y=
+		\frac{\partial}{\partial w}1
+		=
+		0
+	\end{align}
+	and $p=p(D_y\mid D_x,w)$. Consequently,
+	\begin{equation}
+		\mathcal{I}(w \mid D_x)
+		=
+		\operatorname{Var}\left[
+		\frac{\partial}{\partial w}
+		\ln p(D_y \mid D_x,w)
+		\,\middle|\,D_x,w
+		\right].
 	\end{equation}
 \end{proof}
+
 
 \begin{theorem}[Fisher information for independent observations]
 	\label{thm:fisher_sample}
@@ -208,7 +254,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	\end{equation}
 	where the bias of the estimator $\hat{w}$ is defined as
 	\begin{equation}
-		\operatorname{Bias}[\hat{w}\mid w] \equiv w - \mathbb{E}[\hat{w}].
+		\operatorname{Bias}[\hat{w}\mid w] \equiv \mathbb{E}[\hat{w}] - w.
 	\end{equation}
 	If $\mathbb{E}[C(\hat{w}, w)\mid w] \to 0$ as $n \to \infty$, then $\hat{w}$ is a weakly consistent estimator\index{Weakly consistent estimator} of $w$, i.e., $\hat{w} \xrightarrow{p} w$.  
 	Different consistent estimators may converge to $w$ at different rates.  
