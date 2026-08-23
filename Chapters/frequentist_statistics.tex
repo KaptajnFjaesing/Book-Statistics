@@ -118,8 +118,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 \end{definition}
 
 
-\begin{theorem}[Fisher information as the variance]
-	\label{theorem:fisher_information_variance}
+\begin{theorem}[Fisher information as the variance]\label{theorem:fisher_information_variance}
 	Under the assumptions of \dfref{def:fisher_information}
 	\begin{equation}
 		\mathcal{I}(w \mid D_x)
@@ -165,18 +164,19 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 		\int
 		\frac{\partial}{\partial w}
 		p
-		\mathrm{d}D_y
-		\\
+		\mathrm{d}D_y\\ 
 		&=
 		\frac{\partial}{\partial w}
 		\int
 		p
-		\mathrm{d}D_y=
+		\mathrm{d}D_y\\
+		&=
 		\frac{\partial}{\partial w}1
-		=
+		\\
+		&=
 		0
 	\end{align}
-	and $p=p(D_y\mid D_x,w)$. Consequently,
+	and $p=p(D_y\mid D_x,w)$ for brevity. Consequently,
 	\begin{equation}
 		\mathcal{I}(w \mid D_x)
 		=
@@ -194,6 +194,7 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 	Let $D_y = \{y_i\}_{i=1}^n$ denote Nature’s actions and $D_x = \{x_i\}_{i=1}^n$ the corresponding observations, and let $w \in \Omega_W$ be the parameters of Nature’s model. If the data are independently and identically distributed (IID)\index{IID}, the likelihood\index{Likelihood} factorizes as
 	\begin{equation}
 		p(D_y \mid D_x, w) = \prod_{i=1}^{n} p(y_i \mid x_i, w).
+		\label{eq:fisher2}
 	\end{equation}
 	Then, the Fisher information\index{Fisher information} of the full dataset is
 	\begin{equation}
@@ -202,14 +203,15 @@ As shown in \secref{chp:frequentist_regression} and \secref{chp:frequentist_clas
 			&= \mathbb{E}\Bigg[\Bigg(\frac{\partial}{\partial w} \ln p(D_y \mid D_x, w)\Bigg)^2 \,\Bigg|\, D_x, w \Bigg] \\
 			&= \sum_{i=1}^{n} \mathcal{I}_i(w),
 		\end{split}
+		\label{eq:fisher1}
 	\end{equation}
-	where $\mathcal{I}_i(w)$ denotes the Fisher information contributed by the $i$th observation:
+	where $\mathcal{I}_i(w)$ denotes the Fisher information contributed by the $i$th observation
 	\begin{equation}
 		\mathcal{I}_i(w) = \mathbb{E}\Bigg[\Bigg(\frac{\partial}{\partial w} \ln p(y_i \mid x_i, w)\Bigg)^2 \,\Bigg|\, x_i, w\Bigg].
 	\end{equation}
+	The second equality in \EQref{eq:fisher1} follows from \EQref{eq:fisher2} and \thref{theorem:fisher_information_variance}.
 \end{theorem}
 
-\newpage
 \begin{definition}[Maximum likelihood estimator (MLE) decision rule]
 	\label{def:MLE}
 	Let $D_y = \{y_i\}_{i=1}^n$ denote Nature’s actions, $D_x = \{x_i\}_{i=1}^n$ the corresponding observations, and let $w \in \Omega_W$ be the parameters of Nature’s model.  
