@@ -1137,35 +1137,33 @@ Probability theory is a foundational branch of mathematics that provides the for
 \begin{example}
 	\index{Example: Correlation coefficient}
 	\index{Probability density function}
-	Let $X\colon\Omega \to \Omega_X$ and $Y\colon\Omega\to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$ and suppose $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. In this case \index{Expected value}\index{Correlation}\index{Covariance}\index{Variance}
-	\begin{equation}
-		\operatorname{Corr}_{X,Y}[X,Y] = \operatorname{Corr}_{X}[X,X^2].
-	\end{equation}
-	Using \dfref{def:correlation} and \dfref{def:covariance}
+	Let $X\colon\Omega \to \Omega_X$ and $Y\colon\Omega\to \Omega_Y$ be continuous random variables\index{Random variable} defined on the probability space\index{Probability space} $(\Omega,\mathcal{F},\mathbb{P})$ and suppose $X\sim \operatorname{Unif}(a=-1, b=1)$ and $Y=X^2$. By \dfref{def:correlation} \index{Expected value}\index{Correlation}\index{Covariance}\index{Variance}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Corr}_{X}[X,X^2] & = \frac{\operatorname{Cov}_{X}[X,X^2]}{\sqrt{\operatorname{Var}_X[X]\operatorname{Var}_X[X^2]}}\\
+			\operatorname{Corr}_{X,Y}[X,Y] & = \frac{\operatorname{Cov}_{X}[X,X^2]}{\sqrt{\operatorname{Var}_X[X]\operatorname{Var}_X[X^2]}}\\
 			& = \frac{\mathbb{E}_{X}[X^3]-\mathbb{E}_X[X]\mathbb{E}_X[X^2]}{\sqrt{\operatorname{Var}_X[X]\operatorname{Var}_X[X^2]}}\\
 		\end{split}
+		\label{ex:eq_corr}
 	\end{equation}
-	In this case for the nominator\index{Covariance}\index{Expected value}\index{Variance}
+	where by \rmref{remark:expectation_continuous}
 	\begin{equation}
 		\begin{split}
-			\operatorname{Cov}_{X}[X,X^2] &= \int_{\Omega_X} x^3 p_X(x) \mathrm{d}x-\int_{\Omega_X} xp_X(x) \mathrm{d}x\int_{\Omega_X} x^2p_X(x) \mathrm{d}x\\
-			&= \frac{1}{b-a}\int_{a}^{b}x^3\mathrm{d}x-\frac{1}{(b-a)^2}\int_{a}^{b} x \mathrm{d}x\int_{a}^{b} x^2 \mathrm{d}x\\
+			\operatorname{Corr}_{X}[X,X^2] &= \int_{\Omega_X} x^3 p_X(x) \mathrm{d}x-\int_{\Omega_X} x'p_X(x') \mathrm{d}x'\int_{\Omega_X} x^2p_X(x) \mathrm{d}x\\
+			&= \frac{1}{b-a}\int_{a}^{b}x^3\mathrm{d}x-\frac{1}{(b-a)^2}\int_{a}^{b} x' \mathrm{d}x'\int_{a}^{b} x^2 \mathrm{d}x\\
 			&= \frac{1}{12}(a-b)^2(a+b)\\
-			&=0
+			&=0.
 		\end{split}
+		\label{ex:eq_cov}
 	\end{equation}
-	where the last equality comes from the fact that $a+b = 0$ in this case. However, we need to make sure the denominator does not diverge
+	and the last equality comes from the fact that $a+b = 0$ in this example. According to \EQref{ex:eq_corr} and \EQref{ex:eq_cov} the correlation between $X$ and $Y$ vanish as long as the denominator
 	\begin{equation}
 		\begin{split}
 			\operatorname{Var}_X[X]\operatorname{Var}_X[X^2] & =\big(\mathbb{E}_X[X^2]-\mathbb{E}_X[X]^2\big) \big(\mathbb{E}_X[X^4]-\mathbb{E}_X[X^2]^2\big)\\
 			& = \frac{1}{540}(b-a)^4(4a^2+7ab+4b^2)\\
-			&\neq 0.
+			&\neq 0
 		\end{split}
 	\end{equation}
-	It denominator does not diverge, so the factorized $a+b$ from the nominator makes $\operatorname{Corr}_{X}[X,X^2]=0$.
+	does not diverge. By \thref{theorem:covariance_of_independent_variables} independent random variables have zero covariance. However, as this example illustrates, random variables with zero covariance are not necessarily independent.
 \end{example}
 
 \begin{example}
